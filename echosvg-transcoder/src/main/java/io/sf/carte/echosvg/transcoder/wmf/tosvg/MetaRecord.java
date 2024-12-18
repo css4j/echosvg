@@ -31,27 +31,16 @@ import java.util.List;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class MetaRecord /* implements Serializable */ {
+public class MetaRecord implements java.io.Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	public int functionId;
 	public int numPoints;
 
-	private final List<Object> ptVector = new ArrayList<>();
+	private final List<Integer> ptVector = new ArrayList<>();
 
 	public MetaRecord() {
-	}
-
-	public void EnsureCapacity(int cc) {
-	}
-
-	/**
-	 * when you are storing Integer-objects, consider using addElement( int )
-	 * instead.
-	 * 
-	 * @param obj
-	 */
-	public void AddElement(Object obj) {
-		ptVector.add(obj);
 	}
 
 	/**
@@ -70,7 +59,7 @@ public class MetaRecord /* implements Serializable */ {
 	 * <code>int</code>.
 	 */
 	public Integer ElementAt(int offset) {
-		return (Integer) ptVector.get(offset);
+		return ptVector.get(offset);
 	}
 
 	/**
@@ -81,13 +70,16 @@ public class MetaRecord /* implements Serializable */ {
 	 * @return the intValue of the element at offset
 	 */
 	public final int elementAt(int offset) {
-		return (Integer) ptVector.get(offset);
+		return ptVector.get(offset);
 	}
 
 	/**
 	 * A record that contain byte arrays elements.
 	 */
 	public static class ByteRecord extends MetaRecord {
+
+		private static final long serialVersionUID = 1L;
+
 		public final byte[] bstr;
 
 		public ByteRecord(byte[] bstr) {
@@ -95,7 +87,10 @@ public class MetaRecord /* implements Serializable */ {
 		}
 	}
 
-	public static class StringRecord extends MetaRecord /* implements Serializable */ {
+	public static class StringRecord extends MetaRecord {
+
+		private static final long serialVersionUID = 1L;
+
 		public final String text;
 
 		public StringRecord(String newText) {
