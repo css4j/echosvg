@@ -19,8 +19,8 @@
 package io.sf.carte.echosvg.test.svg;
 
 import io.sf.carte.echosvg.transcoder.ErrorHandler;
-import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
+import io.sf.carte.echosvg.transcoder.svg.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.test.DummyErrorHandler;
 
 /**

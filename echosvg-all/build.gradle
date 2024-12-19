@@ -14,6 +14,11 @@ dependencies {
 	api project(':echosvg-swing')
 	api project(':echosvg-slideshow')
 	api project(':echosvg-svgpp')
+	api project(':echosvg-transcoder')
+	api project(':echosvg-transcoder-api')
+	api project(':echosvg-transcoder-svg')
+	api project(':echosvg-transcoder-svg2svg')
+	api project(':echosvg-transcoder-tosvg')
 	api project(':echosvg-ttf2svg')
 	api project(':echosvg-svgrasterizer')
 
@@ -40,6 +45,10 @@ dependencies {
 	jacocoAggregation project(':echosvg-swing')
 	jacocoAggregation project(':echosvg-test')
 	jacocoAggregation project(':echosvg-transcoder')
+	jacocoAggregation project(':echosvg-transcoder-api')
+	jacocoAggregation project(':echosvg-transcoder-svg')
+	jacocoAggregation project(':echosvg-transcoder-svg2svg')
+	jacocoAggregation project(':echosvg-transcoder-tosvg')
 	jacocoAggregation project(':echosvg-ttf2svg')
 	jacocoAggregation project(':echosvg-util')
 	jacocoAggregation project(':echosvg-xml')
@@ -204,6 +213,26 @@ tasks.register('prepareModularSources') {
 		}
 		ant.copy(todir: "$buildDir/src/io.sf.carte.echosvg.transcoder") {
 			fileset(dir: "$rootDir/echosvg-transcoder/src/main/java") {
+				include(name: '**/*')
+			}
+		}
+		ant.copy(todir: "$buildDir/src/io.sf.carte.echosvg.transcoder.api") {
+			fileset(dir: "$rootDir/echosvg-transcoder-api/src/main/java") {
+				include(name: '**/*')
+			}
+		}
+		ant.copy(todir: "$buildDir/src/io.sf.carte.echosvg.transcoder.svg") {
+			fileset(dir: "$rootDir/echosvg-transcoder-svg/src/main/java") {
+				include(name: '**/*')
+			}
+		}
+		ant.copy(todir: "$buildDir/src/io.sf.carte.echosvg.transcoder.svg2svg") {
+			fileset(dir: "$rootDir/echosvg-transcoder-svg2svg/src/main/java") {
+				include(name: '**/*')
+			}
+		}
+		ant.copy(todir: "$buildDir/src/io.sf.carte.echosvg.transcoder.tosvg") {
+			fileset(dir: "$rootDir/echosvg-transcoder-tosvg/src/main/java") {
 				include(name: '**/*')
 			}
 		}

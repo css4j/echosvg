@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2022 Carlos Amengual
+ * Copyright (c) 2020-2024 Carlos Amengual
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,25 +15,13 @@
  */
 
 /**
- * SVG transcoder.
+ * SVG transcoder meta-module.
  */
 module io.sf.carte.echosvg.transcoder {
-	exports io.sf.carte.echosvg.transcoder;
-	exports io.sf.carte.echosvg.transcoder.image;
-	exports io.sf.carte.echosvg.transcoder.image.resources;
-	exports io.sf.carte.echosvg.transcoder.keys;
-	exports io.sf.carte.echosvg.transcoder.print;
-	exports io.sf.carte.echosvg.transcoder.svg2svg;
-	exports io.sf.carte.echosvg.transcoder.util;
-	exports io.sf.carte.echosvg.transcoder.wmf;
-	exports io.sf.carte.echosvg.transcoder.wmf.tosvg;
 
-	requires transitive io.sf.carte.echosvg.bridge;
-	requires transitive io.sf.carte.echosvg.svggen;
-	requires io.sf.carte.echosvg.codec;
-	requires io.sf.carte.echosvg.i18n;
-	requires io.sf.carte.echosvg.xml;
+	requires transitive io.sf.carte.echosvg.transcoder.api;
+	requires transitive io.sf.carte.echosvg.transcoder.svg;
+	requires transitive io.sf.carte.echosvg.transcoder.svg2svg;
+	requires transitive io.sf.carte.echosvg.transcoder.tosvg;
 
-	requires io.sf.carte.xml.dtd;
-	requires io.sf.carte.css4j.awt;
 }

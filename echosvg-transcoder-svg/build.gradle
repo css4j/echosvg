@@ -1,0 +1,17 @@
+plugins {
+	id 'echosvg.java-conventions'
+}
+
+dependencies {
+	api project(':echosvg-transcoder-api')
+	api project(':echosvg-bridge')
+	implementation project(':echosvg-codec')
+	implementation "io.sf.carte:css4j-awt:$css4jAwtVersion"
+	compileOnly "xml-apis:xml-apis:$xmlApisVersion" // Required by Java 8 compat
+}
+
+description = 'io.sf.carte:echosvg-transcoder-svg'
+
+publishing.publications.maven(MavenPublication).pom {
+	description = "EchoSVG SVG image transcoders"
+}

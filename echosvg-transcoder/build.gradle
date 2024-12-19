@@ -3,15 +3,14 @@ plugins {
 }
 
 dependencies {
-	api project(':echosvg-bridge')
-	api project(':echosvg-svggen')
-	implementation project(':echosvg-codec')
-	implementation "io.sf.carte:css4j-awt:$css4jAwtVersion"
-	compileOnly "xml-apis:xml-apis:$xmlApisVersion" // Required by Java 8 compat
+	api project(':echosvg-transcoder-api')
+	api project(':echosvg-transcoder-svg')
+	api project(':echosvg-transcoder-svg2svg')
+	api project(':echosvg-transcoder-tosvg')
 }
 
 description = 'io.sf.carte:echosvg-transcoder'
 
 publishing.publications.maven(MavenPublication).pom {
-	description = "EchoSVG SVG transcoder"
+	description = "EchoSVG SVG transcoder aggregate module"
 }

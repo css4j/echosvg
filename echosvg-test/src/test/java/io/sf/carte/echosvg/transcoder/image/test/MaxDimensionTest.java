@@ -23,10 +23,10 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
-import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
 import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
+import io.sf.carte.echosvg.transcoder.svg.SVGAbstractTranscoder;
 
 /**
  * Test the ImageTranscoder with the KEY_MAX_WIDTH and/or the KEY_MAX_HEIGHT

@@ -22,7 +22,7 @@
 module io.sf.carte.echosvg.svgrasterizer {
 	exports io.sf.carte.echosvg.apps.rasterizer;
 
-	requires transitive io.sf.carte.echosvg.transcoder;
+	requires transitive io.sf.carte.echosvg.transcoder.svg;
 	requires io.sf.carte.echosvg.i18n;
 
 	requires transitive java.desktop;
