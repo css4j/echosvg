@@ -38,6 +38,10 @@ module io.sf.carte.echosvg {
 	requires transitive io.sf.carte.echosvg.svgpp;
 	requires transitive io.sf.carte.echosvg.swing;
 	requires transitive io.sf.carte.echosvg.transcoder;
+	requires transitive io.sf.carte.echosvg.transcoder.api;
+	requires transitive io.sf.carte.echosvg.transcoder.svg;
+	requires transitive io.sf.carte.echosvg.transcoder.svg2svg;
+	requires transitive io.sf.carte.echosvg.transcoder.tosvg;
 	requires transitive io.sf.carte.echosvg.ttf2svg;
 	requires transitive io.sf.carte.echosvg.util;
 	requires transitive io.sf.carte.echosvg.util.gui;

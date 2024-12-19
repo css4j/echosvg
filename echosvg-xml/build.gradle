@@ -4,7 +4,7 @@ plugins {
 
 dependencies {
 	api project(':echosvg-util')
-	implementation project(':echosvg-i18n')
+	api project(':echosvg-i18n')
 }
 
 description = 'io.sf.carte:echosvg-xml'

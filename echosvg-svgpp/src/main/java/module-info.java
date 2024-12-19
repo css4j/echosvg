@@ -16,6 +16,7 @@
  * limitations under the License.
  *
  */
+
 /**
  * SVG Pretty Printer Application.
  */
@@ -24,7 +25,7 @@ module io.sf.carte.echosvg.svgpp {
 	exports io.sf.carte.echosvg.apps.svgpp;
 
 	requires io.sf.carte.echosvg.i18n;
-	requires io.sf.carte.echosvg.transcoder;
+	requires io.sf.carte.echosvg.transcoder.svg2svg;
 
 	requires java.xml;
 

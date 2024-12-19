@@ -30,11 +30,11 @@ import java.nio.charset.StandardCharsets;
 
 import org.w3c.dom.Document;
 
-import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
 import io.sf.carte.echosvg.transcoder.TranscoderOutput;
 import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
+import io.sf.carte.echosvg.transcoder.svg.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.test.DummyErrorHandler;
 import io.sf.carte.echosvg.transcoder.util.CSSTranscodingHelper;
 

@@ -22,8 +22,8 @@ import java.net.MalformedURLException;
 
 import org.junit.jupiter.api.Test;
 
-import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
+import io.sf.carte.echosvg.transcoder.svg.SVGAbstractTranscoder;
 
 /**
  * Checks for regressions in rendering of a document with a given alternate

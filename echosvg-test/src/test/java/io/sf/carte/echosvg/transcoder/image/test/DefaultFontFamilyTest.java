@@ -27,10 +27,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import io.sf.carte.echosvg.test.TestFonts;
-import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
 import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
+import io.sf.carte.echosvg.transcoder.svg.SVGAbstractTranscoder;
 
 /**
  * Test the ImageTranscoder with the KEY_DEFAULT_FONT_FAMILY transcoding hint.

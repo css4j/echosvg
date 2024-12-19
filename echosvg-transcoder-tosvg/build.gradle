@@ -1,0 +1,15 @@
+plugins {
+	id 'echosvg.java-conventions'
+}
+
+dependencies {
+	api project(':echosvg-transcoder-api')
+	api project(':echosvg-svggen')
+	implementation project(':echosvg-anim')
+}
+
+description = 'io.sf.carte:echosvg-transcoder-tosvg'
+
+publishing.publications.maven(MavenPublication).pom {
+	description = "EchoSVG WMF to SVG transcoder"
+}
