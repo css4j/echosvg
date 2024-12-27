@@ -27,6 +27,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ServiceLoader;
 
+import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -60,7 +61,8 @@ import io.sf.carte.echosvg.util.HaltingThread;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, ContentHandler, ErrorHandler {
+public class SAXDocumentFactory extends DocumentBuilder
+		implements LexicalHandler, DocumentFactory, ContentHandler, ErrorHandler {
 
 	/**
 	 * The DOM implementation used to create the document.
@@ -278,15 +280,16 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 				} catch (SAXNotRecognizedException | SAXNotSupportedException e) {
 				}
 			} else {
-				SAXParser saxParser;
 				try {
-					saxParser = saxFactory.newSAXParser();
+					SAXParser saxParser = saxFactory.newSAXParser();
 					reader = saxParser.getXMLReader();
 				} catch (ParserConfigurationException | SAXException e) {
 					e.printStackTrace();
 					return null; // That should never happen
 				}
+				// saxFactory has secure defaults
 			}
+			reader.setEntityResolver(createEntityResolver());
 		}
 
 		return reader;
@@ -422,7 +425,10 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 	@Override
 	public Document createDocument(String ns, String root, String uri, XMLReader r) throws IOException {
 		r.setContentHandler(this);
-		r.setEntityResolver(createEntityResolver());
+		if (r.getEntityResolver() == null) {
+			r.setEntityResolver(createEntityResolver());
+		}
+
 		try {
 			r.parse(uri);
 		} catch (SAXException e) {
@@ -432,6 +438,7 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 			}
 			throw new SAXIOException(e);
 		}
+
 		currentNode = null;
 		Document ret = document;
 		document = null;
@@ -440,7 +447,7 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 		return ret;
 	}
 
-	private EntityResolver createEntityResolver() {
+	private static EntityResolver createEntityResolver() {
 		return new ResourceEntityResolver();
 	}
 
@@ -527,9 +534,18 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 		saxFactory = SAXParserFactory.newInstance();
 		try {
 			saxFactory.setFeature(javax.xml.XMLConstants.FEATURE_SECURE_PROCESSING, true);
+		} catch (SAXNotRecognizedException | SAXNotSupportedException | ParserConfigurationException e) {
+		}
+		try {
 			// saxFactory.setFeature("http://xml.org/sax/features/namespaces", true); // Default
 			saxFactory.setFeature("http://xml.org/sax/features/namespace-prefixes", true);
+		} catch (SAXNotRecognizedException | SAXNotSupportedException | ParserConfigurationException e) {
+		}
+		try {
 			saxFactory.setFeature("http://xml.org/sax/features/xmlns-uris", true);
+		} catch (SAXNotRecognizedException | SAXNotSupportedException | ParserConfigurationException e) {
+		}
+		try {
 			saxFactory.setFeature("http://xml.org/sax/features/external-general-entities", false);
 			saxFactory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 		} catch (SAXNotRecognizedException | SAXNotSupportedException | ParserConfigurationException e) {
@@ -555,11 +571,10 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 	 * @exception IOException if an error occurred while reading the document.
 	 */
 	protected Document createDocument(InputSource is) throws IOException {
-		try {
-			parser.setContentHandler(this);
-			parser.setEntityResolver(createEntityResolver());
-			parser.setErrorHandler((errorHandler == null) ? this : errorHandler);
+		parser.setContentHandler(this);
+		parser.setErrorHandler((errorHandler == null) ? this : errorHandler);
 
+		try {
 			parser.setFeature("http://xml.org/sax/features/validation", isValidating);
 			parser.setProperty("http://xml.org/sax/properties/lexical-handler", this);
 			parser.parse(is);
@@ -613,6 +628,13 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 	@Override
 	public void setValidating(boolean isValidating) {
 		this.isValidating = isValidating;
+		if (parser.getEntityResolver() == null) {
+			if (isValidating) {
+				parser.setEntityResolver(createEntityResolver());
+			} else {
+				secureReader();
+			}
+		}
 	}
 
 	/**
@@ -634,12 +656,71 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 	/**
 	 * Sets a custom error handler.
 	 */
+	@Override
 	public void setErrorHandler(ErrorHandler eh) {
 		errorHandler = eh;
 	}
 
 	public DOMImplementation getDOMImplementation(String ver) {
 		return implementation;
+	}
+
+	@Override
+	public DOMImplementation getDOMImplementation() {
+		return implementation;
+	}
+
+	@Override
+	public Document parse(InputSource is) throws SAXException, IOException {
+		return parseDocument(is);
+	}
+
+	@Override
+	public boolean isNamespaceAware() {
+		try {
+			return parser.getFeature("http://xml.org/sax/features/namespaces");
+		} catch (SAXNotRecognizedException | SAXNotSupportedException e) {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isXIncludeAware() {
+		try {
+			return parser.getFeature("http://apache.org/xml/features/xinclude");
+		} catch (SAXNotRecognizedException | SAXNotSupportedException e) {
+			return false;
+		}
+	}
+
+	@Override
+	public void setEntityResolver(EntityResolver er) {
+		parser.setEntityResolver(er);
+		if (er == null) {
+			secureReader();
+		}
+	}
+
+	private void secureReader() {
+		this.isValidating = false;
+		try {
+			parser.setFeature("http://xml.org/sax/features/validation", false);
+		} catch (SAXNotRecognizedException | SAXNotSupportedException e) {
+		}
+		try {
+			parser.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+		} catch (SAXNotRecognizedException | SAXNotSupportedException e) {
+		}
+		try {
+			parser.setFeature("http://xml.org/sax/features/external-general-entities", false);
+			parser.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+		} catch (SAXNotRecognizedException | SAXNotSupportedException e) {
+		}
+	}
+
+	@Override
+	public Document newDocument() {
+		return implementation.createDocument(null, null, null);
 	}
 
 	/**

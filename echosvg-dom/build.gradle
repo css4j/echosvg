@@ -7,8 +7,16 @@ dependencies {
 	api project(':echosvg-ext')
 	api project(':echosvg-xml')
 	implementation project(':echosvg-i18n')
-	compileOnly "xml-apis:xml-apis:$xmlApisVersion" // Required by Java 8 compat
-	api "io.sf.carte:xml-dtd:${xmlDtdVersion}"
+	if (!project.getPluginManager().hasPlugin('eclipse')) {
+		compileOnly "xml-apis:xml-apis:$xmlApisVersion" // Required by Java 8 compat
+	}
+	implementation "io.sf.carte:xml-dtd:${xmlDtdVersion}"
+	testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+	useJUnitPlatform()
 }
 
 description = 'io.sf.carte:echosvg-dom'
