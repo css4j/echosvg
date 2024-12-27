@@ -20,6 +20,7 @@ package io.sf.carte.echosvg.anim.dom;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
@@ -114,7 +115,7 @@ public class SVGOMDocument extends AbstractStylableDocument
 	/**
 	 * Map of CSSNavigableDocumentListeners to an array of wrapper DOM listeners.
 	 */
-	protected HashMap<CSSNavigableDocumentListener, EventListener[]> cssNavigableDocumentListeners = new HashMap<>();
+	protected transient HashMap<CSSNavigableDocumentListener, EventListener[]> cssNavigableDocumentListeners = new HashMap<>();
 
 	/**
 	 * The main {@link AnimatedAttributeListener} that redispatches to all listeners
@@ -125,7 +126,7 @@ public class SVGOMDocument extends AbstractStylableDocument
 	/**
 	 * List of {@link AnimatedAttributeListener}s attached to this document.
 	 */
-	protected LinkedList<AnimatedAttributeListener> animatedAttributeListeners = new LinkedList<>();
+	protected transient LinkedList<AnimatedAttributeListener> animatedAttributeListeners = new LinkedList<>();
 
 	/**
 	 * The SVG context.
@@ -532,7 +533,9 @@ public class SVGOMDocument extends AbstractStylableDocument
 	/**
 	 * DOM node inserted listener wrapper.
 	 */
-	protected static class DOMNodeInsertedListenerWrapper implements EventListener {
+	protected static class DOMNodeInsertedListenerWrapper implements EventListener, Serializable {
+
+		private static final long serialVersionUID = 1L;
 
 		/**
 		 * The CSSNavigableDocumentListener.
@@ -560,7 +563,9 @@ public class SVGOMDocument extends AbstractStylableDocument
 	/**
 	 * DOM node removed listener wrapper.
 	 */
-	protected static class DOMNodeRemovedListenerWrapper implements EventListener {
+	protected static class DOMNodeRemovedListenerWrapper implements EventListener, Serializable {
+
+		private static final long serialVersionUID = 1L;
 
 		/**
 		 * The CSSNavigableDocumentListener.
@@ -588,7 +593,9 @@ public class SVGOMDocument extends AbstractStylableDocument
 	/**
 	 * DOM subtree modified listener wrapper.
 	 */
-	protected static class DOMSubtreeModifiedListenerWrapper implements EventListener {
+	protected static class DOMSubtreeModifiedListenerWrapper implements EventListener, Serializable {
+
+		private static final long serialVersionUID = 1L;
 
 		/**
 		 * The CSSNavigableDocumentListener.
@@ -616,7 +623,9 @@ public class SVGOMDocument extends AbstractStylableDocument
 	/**
 	 * DOM character data modified listener wrapper.
 	 */
-	protected static class DOMCharacterDataModifiedListenerWrapper implements EventListener {
+	protected static class DOMCharacterDataModifiedListenerWrapper implements EventListener, Serializable {
+
+		private static final long serialVersionUID = 1L;
 
 		/**
 		 * The CSSNavigableDocumentListener.
@@ -644,7 +653,9 @@ public class SVGOMDocument extends AbstractStylableDocument
 	/**
 	 * DOM attribute modified listener wrapper.
 	 */
-	protected static class DOMAttrModifiedListenerWrapper implements EventListener {
+	protected static class DOMAttrModifiedListenerWrapper implements EventListener, Serializable {
+
+		private static final long serialVersionUID = 1L;
 
 		/**
 		 * The CSSNavigableDocumentListener.
@@ -674,7 +685,9 @@ public class SVGOMDocument extends AbstractStylableDocument
 	/**
 	 * Listener class for animated attribute changes.
 	 */
-	protected class AnimAttrListener implements AnimatedAttributeListener {
+	protected class AnimAttrListener implements AnimatedAttributeListener, Serializable {
+
+		private static final long serialVersionUID = 1L;
 
 		/**
 		 * Called to notify an object of a change to the animated value of an animatable
