@@ -63,7 +63,9 @@ public class GenericDOMImplementation extends AbstractDOMImplementation {
 	public Document createDocument(String namespaceURI, String qualifiedName, DocumentType doctype)
 			throws DOMException {
 		Document result = new GenericDocument(doctype, this);
-		result.appendChild(result.createElementNS(namespaceURI, qualifiedName));
+		if (qualifiedName != null) {
+			result.appendChild(result.createElementNS(namespaceURI, qualifiedName));
+		}
 		return result;
 	}
 
