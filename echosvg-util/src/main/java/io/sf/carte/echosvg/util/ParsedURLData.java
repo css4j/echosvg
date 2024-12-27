@@ -21,6 +21,7 @@ package io.sf.carte.echosvg.util;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -39,7 +40,9 @@ import java.util.zip.ZipException;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class ParsedURLData {
+public class ParsedURLData implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	protected static final String HTTP_USER_AGENT_HEADER = "User-Agent";
 
@@ -124,8 +127,8 @@ public class ParsedURLData {
 	public String contentType = null;
 	public String contentEncoding = null;
 
-	public InputStream stream = null;
-	public boolean hasBeenOpened = false;
+	public transient InputStream stream = null;
+	public transient boolean hasBeenOpened = false;
 
 	/**
 	 * The extracted type/subtype from the Content-Type header.
@@ -548,7 +551,6 @@ public class ParsedURLData {
 	 *                  (may be null)
 	 */
 	public InputStream openStreamRaw(String userAgent, Iterator<String> mimeTypes) throws IOException {
-
 		InputStream ret = openStreamInternal(userAgent, mimeTypes, null);
 		stream = null;
 		return ret;
