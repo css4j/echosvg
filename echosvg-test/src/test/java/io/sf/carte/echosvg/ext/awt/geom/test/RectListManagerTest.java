@@ -40,7 +40,7 @@ import java.util.StringTokenizer;
 import org.junit.jupiter.api.Test;
 
 import io.sf.carte.echosvg.ext.awt.geom.RectListManager;
-import io.sf.carte.echosvg.test.TestLocations;
+import io.sf.carte.echosvg.test.misc.TestLocations;
 import io.sf.carte.echosvg.util.Base64Util;
 
 /**

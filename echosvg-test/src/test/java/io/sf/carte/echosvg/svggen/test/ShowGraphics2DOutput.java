@@ -37,7 +37,7 @@ import io.sf.carte.echosvg.bridge.BridgeContext;
 import io.sf.carte.echosvg.bridge.GVTBuilder;
 import io.sf.carte.echosvg.bridge.UserAgentAdapter;
 import io.sf.carte.echosvg.svggen.SVGGraphics2D;
-import io.sf.carte.echosvg.test.ScriptUtil;
+import io.sf.carte.echosvg.test.misc.ScriptUtil;
 
 /**
  * Checks that the content generated from the SVGGraphics2D and to which an

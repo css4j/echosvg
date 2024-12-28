@@ -27,13 +27,15 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import java.io.IOException;
 import java.io.StringReader;
 
-import org.junit.jupiter.api.Test;
-import org.w3c.dom.DOMException;
-import org.w3c.dom.Document;
+import javax.xml.parsers.DocumentBuilder;
 
+import org.junit.jupiter.api.Test;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+
+import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
 import io.sf.carte.echosvg.dom.AbstractElement;
-import io.sf.carte.echosvg.dom.GenericDOMImplementation;
-import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
 import io.sf.carte.echosvg.w3c.dom.ElementTraversal;
 
 /**
@@ -48,9 +50,12 @@ public class ElementTraversalTest {
 	private String DOC = "<a><b/><c>.<?x?>.</c><d>.<?x?><e/><f/><?x?>.</d><g><h/>.<i/></g></a>";
 
 	@Test
-	public void test() throws DOMException, IOException {
-		SAXDocumentFactory df = new SAXDocumentFactory(GenericDOMImplementation.getDOMImplementation());
-		Document doc = df.createDocument("http://example.org/", new StringReader(DOC));
+	public void test() throws SAXException, IOException {
+		DocumentBuilder df = new SAXSVGDocumentFactory();
+
+		InputSource source = new InputSource(new StringReader(DOC));
+		source.setSystemId("http://example.org/");
+		Document doc = df.parse(source);
 
 		AbstractElement a = (AbstractElement) doc.getDocumentElement();
 		AbstractElement b = (AbstractElement) a.getFirstChild();

@@ -31,10 +31,10 @@ import java.net.URL;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import io.sf.carte.echosvg.test.TestFonts;
-import io.sf.carte.echosvg.test.TestLocations;
 import io.sf.carte.echosvg.test.image.ImageCompareUtil;
 import io.sf.carte.echosvg.test.image.TempImageFiles;
+import io.sf.carte.echosvg.test.misc.TestFonts;
+import io.sf.carte.echosvg.test.misc.TestLocations;
 import io.sf.carte.echosvg.test.svg.SVGRenderingAccuracyTest;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 

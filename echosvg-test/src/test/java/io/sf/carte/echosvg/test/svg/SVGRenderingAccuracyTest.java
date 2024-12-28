@@ -29,8 +29,8 @@ import java.net.URL;
 import org.w3c.dom.Document;
 
 import io.sf.carte.echosvg.bridge.UserAgent;
-import io.sf.carte.echosvg.test.TestLocations;
 import io.sf.carte.echosvg.test.image.ImageComparator;
+import io.sf.carte.echosvg.test.misc.TestLocations;
 import io.sf.carte.echosvg.transcoder.ErrorHandler;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;

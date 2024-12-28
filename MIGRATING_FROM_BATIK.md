@@ -80,3 +80,11 @@ Batik:
 
 13) The `css.engine.value.css2` package was renamed to `css.engine.value.css`,
    given that CSS as a whole isn't versioned anymore.
+
+14) You can keep using the old `transcoder` module, but that one was split in
+   four sub-modules. For example, for converting SVG to any image format (like
+   PNG) you only need the `echosvg-transcoder-svg` module. Note that if you have
+   a user agent that inherits from the `SVGAbstractTranscoderUserAgent`, that
+   class is now located inside a new `SVGAbstractTranscoder` class that was
+   created in the `io.sf.carte.echosvg.transcoder.svg` package, which shadows
+   the old class of the same name located at `io.sf.carte.echosvg.transcoder`.

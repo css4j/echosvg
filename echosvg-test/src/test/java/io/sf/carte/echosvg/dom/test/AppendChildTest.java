@@ -18,8 +18,9 @@
  */
 package io.sf.carte.echosvg.dom.test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 import java.net.URL;
@@ -30,42 +31,42 @@ import org.w3c.dom.Document;
 import org.w3c.dom.DocumentFragment;
 import org.w3c.dom.Element;
 
-import io.sf.carte.echosvg.dom.GenericDOMImplementation;
+import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
 import io.sf.carte.echosvg.dom.util.DocumentFactory;
-import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
 
 /**
  * This class tests the appendChild method.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class AppendChildTest {
 
 	@Test
 	public void test() throws IOException {
-		testAppendChild("io/sf/carte/echosvg/dom/dummyXML3.xml", "doc", "root");
+		testAppendChild("io/sf/carte/echosvg/dom/svg/test.svg", "svg", "nodeID");
 	}
 
 	void testAppendChild(String testFileName, String rootTag, String targetId) throws IOException {
-		DocumentFactory df = new SAXDocumentFactory(GenericDOMImplementation.getDOMImplementation());
+		DocumentFactory df = new SAXSVGDocumentFactory();
 
 		URL url = getClass().getClassLoader().getResource(testFileName);
-		Document doc = df.createDocument(null, rootTag, url.toString(), url.openStream());
+		Document doc = df.createDocument("http://www.w3.org/2000/svg", rootTag, url.toString(), url.openStream());
 
 		Element e = doc.getElementById(targetId);
 
 		assertNotNull(e);
 
-		Document otherDocument = df.createDocument(null, rootTag, url.toString(), url.openStream());
+		Document otherDocument = df.createDocument("http://www.w3.org/2000/svg", rootTag, url.toString(),
+				url.openStream());
 
 		DocumentFragment docFrag = otherDocument.createDocumentFragment();
-		try {
-			docFrag.appendChild(doc.getDocumentElement());
-			fail("Must throw excepyion.");
-		} catch (DOMException ex) {
-		}
+
+		DOMException ex = assertThrows(DOMException.class, () -> docFrag.appendChild(doc.getDocumentElement()));
+		assertEquals(DOMException.WRONG_DOCUMENT_ERR, ex.code);
 	}
 
 }

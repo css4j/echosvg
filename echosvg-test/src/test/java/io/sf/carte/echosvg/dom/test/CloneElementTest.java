@@ -22,16 +22,20 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+
+import javax.xml.parsers.DocumentBuilder;
 
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
-import io.sf.carte.echosvg.dom.GenericDOMImplementation;
-import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
+import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
 
 /**
  * This class tests the non-deep cloneNode method for elements.
@@ -43,15 +47,20 @@ import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
 public class CloneElementTest {
 
 	@Test
-	public void test() throws IOException {
-		testCloneElement("io/sf/carte/echosvg/dom/dummyXML3.xml", "doc", "elt2");
+	public void test() throws Exception {
+		testCloneElement("io/sf/carte/echosvg/dom/dummyXML3.xml", "elt2");
 	}
 
-	void testCloneElement(String testFileName, String rootTag, String targetId) throws IOException {
-		SAXDocumentFactory df = new SAXDocumentFactory(GenericDOMImplementation.getDOMImplementation());
+	void testCloneElement(String testFileName, String targetId) throws IOException, SAXException {
+		DocumentBuilder df = new SAXSVGDocumentFactory();
 
+		Document doc;
 		URL url = getClass().getClassLoader().getResource(testFileName);
-		Document doc = df.createDocument(null, rootTag, url.toString(), url.openStream());
+		InputSource source = new InputSource(url.toString());
+		try (InputStream is = url.openStream()) {
+			source.setByteStream(is);
+			doc = df.parse(source);
+		}
 
 		Element e = doc.getElementById(targetId);
 

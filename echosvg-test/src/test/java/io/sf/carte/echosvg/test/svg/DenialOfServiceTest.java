@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Timeout;
 
 import io.sf.carte.echosvg.css.engine.CSSCircularityException;
 import io.sf.carte.echosvg.css.engine.CSSResourceLimitException;
-import io.sf.carte.echosvg.test.TestFonts;
+import io.sf.carte.echosvg.test.misc.TestFonts;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 
 /**

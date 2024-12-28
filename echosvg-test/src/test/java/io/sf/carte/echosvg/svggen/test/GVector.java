@@ -23,7 +23,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
-import io.sf.carte.echosvg.test.TestFonts;
+import io.sf.carte.echosvg.test.misc.TestFonts;
 
 /**
  * This test validates the convertion of Java 2D GlyphVectors SVG Shapes.

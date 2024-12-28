@@ -33,12 +33,13 @@ import java.nio.charset.StandardCharsets;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 
+import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
 import io.sf.carte.echosvg.dom.GenericDOMImplementation;
 import io.sf.carte.echosvg.svggen.SVGGeneratorContext;
 import io.sf.carte.echosvg.svggen.SVGGeneratorContext.GraphicContextDefaults;
 import io.sf.carte.echosvg.svggen.SVGGraphics2D;
-import io.sf.carte.echosvg.test.TestFonts;
-import io.sf.carte.echosvg.test.TestUtil;
+import io.sf.carte.echosvg.test.misc.TestFonts;
+import io.sf.carte.echosvg.test.xml.XmlUtil;
 import io.sf.carte.echosvg.util.SVGConstants;
 
 /**
@@ -153,7 +154,7 @@ public class SVGAccuracyTest {
 		//
 		byte[] data = bos.toByteArray();
 
-		String failMessage = TestUtil.xmlDiff(refURL, data, null);
+		String failMessage = XmlUtil.xmlDiff(refURL, data, null, new SAXSVGDocumentFactory());
 
 		if (failMessage != null) {
 			save(bos.toByteArray());

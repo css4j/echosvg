@@ -22,16 +22,20 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.XMLFilter;
 
-import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
 import io.sf.carte.echosvg.svggen.SVGGraphics2D;
 import io.sf.carte.echosvg.transcoder.AbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
@@ -40,7 +44,6 @@ import io.sf.carte.echosvg.transcoder.TranscodingHints;
 import io.sf.carte.echosvg.transcoder.keys.BooleanKey;
 import io.sf.carte.echosvg.transcoder.keys.FloatKey;
 import io.sf.carte.echosvg.transcoder.keys.IntegerKey;
-import io.sf.carte.echosvg.util.Platform;
 import io.sf.carte.echosvg.util.SVGConstants;
 
 /**
@@ -94,13 +97,6 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * @version $Id$
  */
 public abstract class ToSVGAbstractTranscoder extends AbstractTranscoder implements SVGConstants {
-
-	public static float PIXEL_TO_MILLIMETERS;
-	public static float PIXEL_PER_INCH;
-	static {
-		PIXEL_TO_MILLIMETERS = 25.4f / Platform.getScreenResolution();
-		PIXEL_PER_INCH = Platform.getScreenResolution();
-	}
 
 	public static final int TRANSCODER_ERROR_BASE = 0xff00;
 	public static final int ERROR_NULL_INPUT = TRANSCODER_ERROR_BASE + 0;
@@ -156,14 +152,40 @@ public abstract class ToSVGAbstractTranscoder extends AbstractTranscoder impleme
 		// Use SVGGraphics2D to generate SVG content
 		Document doc;
 		if (output.getDocument() == null) {
-			DOMImplementation domImpl = SVGDOMImplementation.getDOMImplementation();
-
-			doc = domImpl.createDocument(SVG_NAMESPACE_URI, SVG_SVG_TAG, null);
+			doc = createDocument();
 		} else {
 			doc = output.getDocument();
 		}
 
 		return doc;
+	}
+
+	private static Document createDocument() {
+		DOMImplementation domImpl;
+		try {
+			Class<?> domCls = Class.forName("io.sf.carte.echosvg.anim.dom.SVGDOMImplementation");
+			Method m = domCls.getMethod("getDOMImplementation");
+			domImpl = (DOMImplementation) m.invoke(null);
+		} catch (Exception e) {
+			domImpl = getJDKDOMImplementation();
+		}
+
+		return domImpl.createDocument(SVG_NAMESPACE_URI, SVG_SVG_TAG, null);
+	}
+
+	private static DOMImplementation getJDKDOMImplementation() {
+		// First obtain a DocumentBuilderFactory
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		factory.setNamespaceAware(true);
+
+		DocumentBuilder builder;
+		try {
+			builder = factory.newDocumentBuilder();
+		} catch (ParserConfigurationException e) {
+			throw new IllegalStateException(e);
+		}
+
+		return builder.getDOMImplementation();
 	}
 
 	/**

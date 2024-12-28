@@ -16,22 +16,18 @@
  * limitations under the License.
  *
  */
+
 /**
- * SVG Test components.
+ * SVG test components.
  */
 module io.sf.carte.echosvg.test {
-	exports io.sf.carte.echosvg.test;
-	exports io.sf.carte.echosvg.test.image;
 	exports io.sf.carte.echosvg.test.svg;
 	exports io.sf.carte.echosvg.test.swing;
 
 	requires transitive io.sf.carte.echosvg.swing;
 	requires io.sf.carte.echosvg.i18n;
 	requires io.sf.carte.echosvg.transcoder;
-
-	requires io.sf.jclf.text;
-
-	requires transitive java.desktop;
+	requires io.sf.carte.echosvg.test.util;
 
 	/*
 	 * Required by tests.

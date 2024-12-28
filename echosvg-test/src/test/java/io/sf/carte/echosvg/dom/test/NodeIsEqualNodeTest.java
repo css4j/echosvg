@@ -26,17 +26,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.IOException;
 import java.io.StringReader;
 
+import javax.xml.parsers.DocumentBuilder;
+
 import org.junit.jupiter.api.Test;
-import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
+import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
 import io.sf.carte.echosvg.dom.AbstractElement;
-import io.sf.carte.echosvg.dom.GenericDOMImplementation;
-import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
 
 /**
- * Tests the {@link Node#isEqualNode(Node)} method.
+ * Tests the {@link Node#isEqualNode(Node)} method in the SVG implementation.
  *
  * @author For later modifications, see Git history.
  * @version $Id$
@@ -47,9 +49,12 @@ public class NodeIsEqualNodeTest {
 			"<a><b class=\"foo\" lang=\"en\"/><b lang=\"en\" class=\"foo\"/><c class=\"bar\">.<?x?>.</c><c class=\"bar\">.<?x?>..</c></a>";
 
 	@Test
-	public void test() throws DOMException, IOException {
-		SAXDocumentFactory df = new SAXDocumentFactory(GenericDOMImplementation.getDOMImplementation());
-		Document doc = df.createDocument("http://example.org/", new StringReader(DOC));
+	public void test() throws SAXException, IOException {
+		DocumentBuilder df = new SAXSVGDocumentFactory();
+
+		InputSource source = new InputSource(new StringReader(DOC));
+		source.setSystemId("http://example.org/");
+		Document doc = df.parse(source);
 
 		AbstractElement a = (AbstractElement) doc.getDocumentElement();
 		Node b1 = a.getFirstChild();

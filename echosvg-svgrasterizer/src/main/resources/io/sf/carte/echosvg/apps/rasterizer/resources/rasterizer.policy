@@ -128,7 +128,27 @@ grant codeBase "file:${app.dev.base}/echosvg-test-swing${app.dev.classdir}" {
   permission java.security.AllPermission;
 };
 
+grant codeBase "file:${app.dev.base}/echosvg-test-util${app.dev.classdir}" {
+  permission java.security.AllPermission;
+};
+
 grant codeBase "file:${app.dev.base}/echosvg-transcoder${app.dev.classdir}" {
+  permission java.security.AllPermission;
+};
+
+grant codeBase "file:${app.dev.base}/echosvg-transcoder-api${app.dev.classdir}" {
+  permission java.security.AllPermission;
+};
+
+grant codeBase "file:${app.dev.base}/echosvg-transcoder-svg${app.dev.classdir}" {
+  permission java.security.AllPermission;
+};
+
+grant codeBase "file:${app.dev.base}/echosvg-transcoder-svg2svg${app.dev.classdir}" {
+  permission java.security.AllPermission;
+};
+
+grant codeBase "file:${app.dev.base}/echosvg-transcoder-tosvg${app.dev.classdir}" {
   permission java.security.AllPermission;
 };
 

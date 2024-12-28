@@ -22,7 +22,7 @@ module io.sf.carte.echosvg.transcoder.api {
 	exports io.sf.carte.echosvg.transcoder;
 	exports io.sf.carte.echosvg.transcoder.keys;
 
-	requires io.sf.carte.echosvg.anim;
+	requires io.sf.carte.echosvg.dom;
 
 	requires transitive java.desktop;
 

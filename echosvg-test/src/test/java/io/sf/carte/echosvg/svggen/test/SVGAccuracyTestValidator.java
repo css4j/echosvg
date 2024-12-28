@@ -41,18 +41,52 @@ import org.junit.jupiter.api.Test;
 public class SVGAccuracyTestValidator {
 
 	/**
-	 * Checks that test fails if: + Rendering sequence generates an exception +
-	 * There is no reference image + Reference SVG differs from the generated SVG
+	 * Checks that test fails if Rendering sequence generates an exception.
+	 * 
+	 * @throws IOException
+	 */
+	@Test
+	public void testPainterException() throws IOException {
+		new PainterWithException().test();
+	}
+
+	/**
+	 * Checks that test fails if the reference URL is null
+	 * 
+	 * @throws IOException
+	 */
+	@Test
+	public void testNullReferenceURL() throws IOException {
+		new NullReferenceURL().test();
+	}
+
+	/**
+	 * Checks that test fails if the reference URL points to nothing.
+	 * 
+	 * @throws IOException
+	 */
+	@Test
+	public void testNonexistentReferenceURL() throws IOException {
+		new InexistantReferenceURL().test();
+	}
+
+	/**
+	 * Checks that test fails if Reference SVG differs from the generated SVG
+	 * 
+	 * @throws IOException
+	 */
+	@Test
+	public void testDiffWithReferenceImage() throws IOException {
+		new DiffWithReferenceImage().test();
+	}
+
+	/**
 	 * Checks that test works if SVG and reference SVG are identical
 	 * 
 	 * @throws IOException
 	 */
 	@Test
-	public void testSVGAccuracyValidator() throws IOException {
-		new PainterWithException().test();
-		new NullReferenceURL().test();
-		new InexistantReferenceURL().test();
-		new DiffWithReferenceImage().test();
+	public void testSameAsReferenceImage() throws IOException {
 		new SameAsReferenceImage().test();
 	}
 

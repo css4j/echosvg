@@ -16,7 +16,7 @@
  * limitations under the License.
  *
  */
-package io.sf.carte.echosvg.test;
+package io.sf.carte.echosvg.test.misc;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;

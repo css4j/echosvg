@@ -24,7 +24,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.font.FontRenderContext;
 
-import io.sf.carte.echosvg.test.TestFonts;
+import io.sf.carte.echosvg.test.misc.TestFonts;
 
 /**
  * This test validates the convertion of Java 2D Fonts into SVG font attributes.

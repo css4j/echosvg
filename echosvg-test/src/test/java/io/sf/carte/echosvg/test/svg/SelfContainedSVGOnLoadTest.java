@@ -38,8 +38,8 @@ import io.sf.carte.echosvg.bridge.BridgeContext;
 import io.sf.carte.echosvg.bridge.GVTBuilder;
 import io.sf.carte.echosvg.bridge.UserAgent;
 import io.sf.carte.echosvg.bridge.UserAgentAdapter;
-import io.sf.carte.echosvg.test.ScriptUtil;
-import io.sf.carte.echosvg.test.TestLocations;
+import io.sf.carte.echosvg.test.misc.ScriptUtil;
+import io.sf.carte.echosvg.test.misc.TestLocations;
 
 /**
  * This test takes an SVG file as an input. It processes the input SVG (meaning

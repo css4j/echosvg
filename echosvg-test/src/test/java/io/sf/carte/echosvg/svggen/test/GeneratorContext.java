@@ -32,10 +32,10 @@ import io.sf.carte.echosvg.svggen.CachedImageHandlerBase64Encoder;
 import io.sf.carte.echosvg.svggen.DefaultStyleHandler;
 import io.sf.carte.echosvg.svggen.GenericImageHandler;
 import io.sf.carte.echosvg.svggen.SVGGeneratorContext;
+import io.sf.carte.echosvg.svggen.SVGGeneratorContext.GraphicContextDefaults;
 import io.sf.carte.echosvg.svggen.SVGGraphics2D;
 import io.sf.carte.echosvg.svggen.SVGIDGenerator;
-import io.sf.carte.echosvg.svggen.SVGGeneratorContext.GraphicContextDefaults;
-import io.sf.carte.echosvg.test.TestFonts;
+import io.sf.carte.echosvg.test.misc.TestFonts;
 import io.sf.carte.echosvg.util.SVGConstants;
 
 /**

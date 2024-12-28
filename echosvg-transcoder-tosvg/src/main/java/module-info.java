@@ -24,5 +24,5 @@ module io.sf.carte.echosvg.transcoder.tosvg {
 
 	requires transitive io.sf.carte.echosvg.transcoder.api;
 	requires transitive io.sf.carte.echosvg.svggen;
-	requires io.sf.carte.echosvg.anim;
+	requires static io.sf.carte.echosvg.anim;
 }

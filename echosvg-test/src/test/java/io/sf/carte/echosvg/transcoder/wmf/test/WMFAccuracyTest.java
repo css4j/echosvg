@@ -18,7 +18,7 @@
  */
 package io.sf.carte.echosvg.transcoder.wmf.test;
 
-import static io.sf.carte.echosvg.test.TestFonts.isFontAvailable;
+import static io.sf.carte.echosvg.test.misc.TestFonts.isFontAvailable;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
@@ -32,8 +32,9 @@ import java.nio.charset.StandardCharsets;
 
 import org.junit.jupiter.api.Test;
 
-import io.sf.carte.echosvg.test.TestLocations;
-import io.sf.carte.echosvg.test.TestUtil;
+import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
+import io.sf.carte.echosvg.test.misc.TestLocations;
+import io.sf.carte.echosvg.test.xml.XmlUtil;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
 import io.sf.carte.echosvg.transcoder.TranscoderOutput;
@@ -43,9 +44,15 @@ import io.sf.carte.echosvg.transcoder.wmf.tosvg.WMFTranscoder;
  * This test validates that a given WMF file is properly converted to an SVG
  * document by comparing the generated SVG document to a known, valid SVG
  * reference.
- *
- * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Unlike the test with the same name in the transcoder-tosvg module, this test
+ * uses the DOM implementation from the anim module.
+ * </p>
+ * <p>
+ * Original author: <a href="mailto:deweese@apache.org">Thomas DeWeese</a>.
+ * For later modifications, see Git history.
+ * </p>
+ * 
  * @version $Id$
  */
 public class WMFAccuracyTest {
@@ -58,6 +65,10 @@ public class WMFAccuracyTest {
 	private static final String WMF_EXTENSION = ".wmf";
 	private static final String SVG_EXTENSION = ".svg";
 	private static final char PATH_SEPARATOR = '/';
+
+	private static boolean hasArial = isFontAvailable("Arial");
+
+	private static boolean hasCourierNew = isFontAvailable("Courier New");
 
 	/**
 	 * Painter which performs an arbitrary rendering sequence.
@@ -73,10 +84,6 @@ public class WMFAccuracyTest {
 	 * File where the generated SVG might be saved
 	 */
 	private File saveSVG;
-
-	private boolean hasArial = isFontAvailable("Arial");
-
-	private boolean hasCourierNew = isFontAvailable("Courier New");
 
 	@Test
 	public void testBlackShapes() throws IOException, TranscoderException {
@@ -136,7 +143,7 @@ public class WMFAccuracyTest {
 		wmft.transcode(input, output);
 
 		byte[] data = out.toByteArray();
-		String failMessage = TestUtil.xmlDiff(refURL, data, saveSVG);
+		String failMessage = XmlUtil.xmlDiff(refURL, data, saveSVG, new SAXSVGDocumentFactory());
 
 		if (failMessage != null) {
 			fail(failMessage);

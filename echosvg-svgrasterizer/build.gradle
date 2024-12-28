@@ -11,13 +11,16 @@ sourceSets {
 
 dependencies {
 	api project(':echosvg-transcoder-svg')
-	testImplementation project(':echosvg-test')
+	testImplementation project(':echosvg-test-util')
 	testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 test {
 	useJUnitPlatform()
+}
+
+tasks.withType(Test) {
 	if (JavaVersion.current() > JavaVersion.VERSION_11) {
 		systemProperty('java.security.manager', 'allow')
 	}

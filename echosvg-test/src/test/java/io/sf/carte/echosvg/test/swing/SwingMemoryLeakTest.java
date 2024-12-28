@@ -27,8 +27,8 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import io.sf.carte.echosvg.script.rhino.RhinoClassShutter;
-import io.sf.carte.echosvg.test.ScriptUtil;
-import io.sf.carte.echosvg.test.TestLocations;
+import io.sf.carte.echosvg.test.misc.ScriptUtil;
+import io.sf.carte.echosvg.test.misc.TestLocations;
 
 /**
  * Swing Memory Leak Tests

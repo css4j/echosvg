@@ -29,8 +29,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import io.sf.carte.echosvg.bridge.BridgeException;
-import io.sf.carte.echosvg.test.ScriptUtil;
-import io.sf.carte.echosvg.test.TestLocations;
+import io.sf.carte.echosvg.test.misc.ScriptUtil;
+import io.sf.carte.echosvg.test.misc.TestLocations;
 import io.sf.carte.echosvg.transcoder.Transcoder;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;

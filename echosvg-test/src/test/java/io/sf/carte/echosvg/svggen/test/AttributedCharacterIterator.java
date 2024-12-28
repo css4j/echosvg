@@ -37,7 +37,7 @@ import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
 import java.text.AttributedString;
 
-import io.sf.carte.echosvg.test.TestFonts;
+import io.sf.carte.echosvg.test.misc.TestFonts;
 
 /**
  * This test validates the convertion of Java 2D AffineTransform into SVG

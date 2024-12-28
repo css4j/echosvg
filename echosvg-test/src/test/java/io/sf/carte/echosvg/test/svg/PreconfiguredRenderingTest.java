@@ -21,7 +21,7 @@ package io.sf.carte.echosvg.test.svg;
 import java.io.File;
 import java.net.MalformedURLException;
 
-import io.sf.carte.echosvg.test.ScriptUtil;
+import io.sf.carte.echosvg.test.misc.ScriptUtil;
 
 /**
  * Convenience class for creating a SVGRenderingAccuracyTest with predefined

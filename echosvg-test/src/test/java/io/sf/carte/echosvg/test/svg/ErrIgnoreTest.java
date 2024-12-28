@@ -31,7 +31,7 @@ import io.sf.carte.echosvg.bridge.ErrorConstants;
 import io.sf.carte.echosvg.bridge.UserAgent;
 import io.sf.carte.echosvg.dom.util.DocumentFactory;
 import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
-import io.sf.carte.echosvg.test.TestLocations;
+import io.sf.carte.echosvg.test.misc.TestLocations;
 import io.sf.carte.echosvg.transcoder.ErrorHandler;
 import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
 import io.sf.carte.echosvg.transcoder.test.DummyErrorHandler;

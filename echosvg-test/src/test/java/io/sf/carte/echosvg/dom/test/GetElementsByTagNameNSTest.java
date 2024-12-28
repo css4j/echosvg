@@ -21,17 +21,20 @@ package io.sf.carte.echosvg.dom.test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+
+import javax.xml.parsers.DocumentBuilder;
 
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
-import io.sf.carte.echosvg.dom.GenericDOMImplementation;
-import io.sf.carte.echosvg.dom.util.DocumentFactory;
-import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
+import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
 
 /**
  * This class tests the getElementsByTagNameNS method.
@@ -43,15 +46,20 @@ import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
 public class GetElementsByTagNameNSTest {
 
 	@Test
-	public void test() throws IOException {
-		testGetElementsByTagNameNS("io/sf/carte/echosvg/dom/dummyXML4.xml", "doc", "elt4");
+	public void test() throws Exception {
+		testGetElementsByTagNameNS("io/sf/carte/echosvg/dom/dummyXML4.xml", "elt4");
 	}
 
-	void testGetElementsByTagNameNS(String testFileName, String rootTag, String tagName) throws IOException {
-		DocumentFactory df = new SAXDocumentFactory(GenericDOMImplementation.getDOMImplementation());
+	void testGetElementsByTagNameNS(String testFileName, String tagName) throws IOException, SAXException {
+		DocumentBuilder df = new SAXSVGDocumentFactory();
 
+		Document doc;
 		URL url = getClass().getClassLoader().getResource(testFileName);
-		Document doc = df.createDocument(null, rootTag, url.toString(), url.openStream());
+		InputSource source = new InputSource(url.toString());
+		try (InputStream is = url.openStream()) {
+			source.setByteStream(is);
+			doc = df.parse(source);
+		}
 
 		Element root = doc.getDocumentElement();
 		NodeList lst = root.getElementsByTagNameNS(null, tagName);

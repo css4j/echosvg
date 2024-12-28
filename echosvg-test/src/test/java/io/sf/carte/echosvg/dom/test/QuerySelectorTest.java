@@ -25,19 +25,22 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+
+import javax.xml.parsers.DocumentBuilder;
 
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
+import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
 import io.sf.carte.echosvg.dom.AbstractElement;
 import io.sf.carte.echosvg.dom.AbstractParentNode;
-import io.sf.carte.echosvg.dom.GenericDOMImplementation;
-import io.sf.carte.echosvg.dom.util.DocumentFactory;
-import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
 
 /**
  * Test the matches, querySelector and querySelectorAll methods.
@@ -47,71 +50,71 @@ import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
 public class QuerySelectorTest {
 
 	@Test
-	public void testTypeSelectors() throws IOException {
-		testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", "doc", "elt2", "elt2", "elt2",
+	public void testTypeSelectors() throws SAXException, IOException {
+		testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", "elt2", "elt2", "elt2",
 				1);
-		testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", "doc", "elt4", "elt4", "", 1);
+		testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", "elt4", "elt4", "", 1);
 	}
 
 	@Test
-	public void testAttributeSelectors() throws IOException {
-		testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", "doc", "[attr='value1']", "doc",
+	public void testAttributeSelectors() throws SAXException, IOException {
+		testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", "[attr='value1']", "doc",
 				"root", 1);
-		testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", "doc", "[attr2='value2']",
+		testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", "[attr2='value2']",
 				"elt2", "elt2", 1);
 	}
 
 	@Test
-	public void testIdSelectors() throws IOException {
-		testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", "doc", "elt2#elt2", "elt2",
+	public void testIdSelectors() throws SAXException, IOException {
+		testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", "elt2#elt2", "elt2",
 				"elt2", 1);
 	}
 
 	@Test
-	public void testPseudoClassEmpty() throws IOException {
-		testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", "doc", ":empty", "elt1", "", 2);
+	public void testPseudoClassEmpty() throws SAXException, IOException {
+		testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", ":empty", "elt1", "", 2);
 	}
 
 	@Test
-	public void testPseudoClassRoot() throws IOException {
-		testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", "doc", ":root", "doc", "root",
+	public void testPseudoClassRoot() throws SAXException, IOException {
+		testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", ":root", "doc", "root",
 				1);
 	}
 
 	@Test
-	public void testPseudoClassLastChild() throws IOException {
-		testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", "doc", ":last-child", "doc",
+	public void testPseudoClassLastChild() throws SAXException, IOException {
+		testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", ":last-child", "doc",
 				"root", 3);
 	}
 
 	@Test
-	public void testPseudoClassFirstLastChild() throws IOException {
-		testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", "doc",
+	public void testPseudoClassFirstLastChild() throws SAXException, IOException {
+		testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml",
 				":first-child,:last-child", "doc", "root", 4);
 	}
 
 	@Test
-	public void testPseudoClassNthChild() throws IOException {
-		testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", "doc", ":nth-child(3)", "elt3",
+	public void testPseudoClassNthChild() throws SAXException, IOException {
+		testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", ":nth-child(3)", "elt3",
 				"", 1);
 	}
 
 	@Test
-	public void testDescendant() throws IOException {
-		testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", "doc", "doc elt4", "elt4", "",
+	public void testDescendant() throws SAXException, IOException {
+		testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", "doc elt4", "elt4", "",
 				1);
 	}
 
 	@Test
-	public void testChild() throws IOException {
-		testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", "doc", "elt3>elt4", "elt4", "",
+	public void testChild() throws SAXException, IOException {
+		testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", "elt3>elt4", "elt4", "",
 				1);
 	}
 
 	@Test
 	public void testSyntaxError() throws IOException {
 		DOMException ex = assertThrows(DOMException.class,
-				() -> testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", "doc", "! . !", "",
+				() -> testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", "! . !", "",
 						"", 0));
 		assertEquals(DOMException.SYNTAX_ERR, ex.code);
 	}
@@ -119,19 +122,23 @@ public class QuerySelectorTest {
 	@Test
 	public void testNSError() throws IOException {
 		DOMException ex = assertThrows(DOMException.class,
-				() -> testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", "doc", "n|doc", "",
+				() -> testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", "n|doc", "",
 						"", 0));
 		assertEquals(DOMException.NAMESPACE_ERR, ex.code);
 	}
 
-	void testQuerySelector(String testFileName, String rootTag, String selector, String tagName,
-			String nodeID, int listCount) throws IOException {
-		DocumentFactory df = new SAXDocumentFactory(
-				GenericDOMImplementation.getDOMImplementation());
+	void testQuerySelector(String testFileName, String selector, String tagName,
+			String nodeID, int listCount) throws SAXException, IOException {
+		DocumentBuilder df = new SAXSVGDocumentFactory();
 
 		// Load the document
+		Document doc;
 		URL url = getClass().getClassLoader().getResource(testFileName);
-		Document doc = df.createDocument(null, rootTag, url.toString(), url.openStream());
+		InputSource source = new InputSource(url.toString());
+		try (InputStream is = url.openStream()) {
+			source.setByteStream(is);
+			doc = df.parse(source);
+		}
 
 		AbstractParentNode docNode = (AbstractParentNode) doc;
 

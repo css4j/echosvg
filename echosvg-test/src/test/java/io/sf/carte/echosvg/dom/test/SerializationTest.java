@@ -23,18 +23,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URL;
 
+import javax.xml.parsers.DocumentBuilder;
+
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
 
-import io.sf.carte.echosvg.dom.GenericDOMImplementation;
-import io.sf.carte.echosvg.dom.util.DocumentFactory;
-import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
+import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
 
 /**
  * To test the Java serialization.
@@ -46,16 +46,21 @@ import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
 public class SerializationTest {
 
 	@Test
-	public void test() throws IOException, ClassNotFoundException {
-		testSerialization("io/sf/carte/echosvg/dom/dummyXML.xml", "doc");
-		testSerialization("io/sf/carte/echosvg/dom/dummyXML2.xml", "doc");
+	public void test() throws Exception {
+		testSerialization("io/sf/carte/echosvg/dom/dummyXML.xml");
+		testSerialization("io/sf/carte/echosvg/dom/dummyXML2.xml");
 	}
 
-	void testSerialization(String testFileName, String rootTag) throws IOException, ClassNotFoundException {
-		DocumentFactory df = new SAXDocumentFactory(GenericDOMImplementation.getDOMImplementation(), null);
+	void testSerialization(String testFileName) throws Exception {
+		DocumentBuilder df = new SAXSVGDocumentFactory();
 
+		Document doc;
 		URL url = getClass().getClassLoader().getResource(testFileName);
-		Document doc = df.createDocument(null, rootTag, url.toString(), url.openStream());
+		InputSource source = new InputSource(url.toString());
+		try (InputStream is = url.openStream()) {
+			source.setByteStream(is);
+			doc = df.parse(source);
+		}
 
 		File ser1 = File.createTempFile("doc1", "ser");
 		File ser2 = File.createTempFile("doc2", "ser");

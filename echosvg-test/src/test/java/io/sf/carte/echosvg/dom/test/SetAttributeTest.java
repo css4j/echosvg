@@ -23,16 +23,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+
+import javax.xml.parsers.DocumentBuilder;
 
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
-import io.sf.carte.echosvg.dom.GenericDOMImplementation;
-import io.sf.carte.echosvg.dom.util.DocumentFactory;
-import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
+import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
 
 /**
  * @author <a href="mailto:shillion@ilog.fr">Stephane Hillion</a>
@@ -42,17 +45,22 @@ import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
 public class SetAttributeTest {
 
 	@Test
-	public void test() throws IOException {
-		testSetAttribute("io/sf/carte/echosvg/dom/dummyXML.xml", "doc", "root",
+	public void test() throws IOException, SAXException {
+		testSetAttribute("io/sf/carte/echosvg/dom/dummyXML.xml", "root",
 				"targetAttribute", "targetValue");
 	}
 
-	void testSetAttribute(String testFileName, String rootTag, String targetId, String targetAttribute,
-			String targetValue) throws IOException {
-		DocumentFactory df = new SAXDocumentFactory(GenericDOMImplementation.getDOMImplementation(), null);
+	void testSetAttribute(String testFileName, String targetId, String targetAttribute,
+			String targetValue) throws IOException, SAXException {
+		DocumentBuilder df = new SAXSVGDocumentFactory();
 
+		Document doc;
 		URL url = getClass().getClassLoader().getResource(testFileName);
-		Document doc = df.createDocument(null, rootTag, url.toString(), url.openStream());
+		InputSource source = new InputSource(url.toString());
+		try (InputStream is = url.openStream()) {
+			source.setByteStream(is);
+			doc = df.parse(source);
+		}
 
 		Element e = doc.getElementById(targetId);
 

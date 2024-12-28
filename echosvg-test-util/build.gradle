@@ -1,0 +1,36 @@
+plugins {
+	id 'echosvg.java-conventions'
+}
+
+sourceSets {
+	// Tests
+	test {
+		resources.srcDirs += ["$rootDir/test-resources"]
+	}
+}
+
+dependencies {
+	implementation project(':echosvg-awt-util')
+	implementation project(':echosvg-i18n')
+	implementation "io.sf.jclf:jclf-text:${jclfTextVersion}"
+	implementation "io.sf.carte:xml-dtd:${xmlDtdVersion}"
+	implementation "io.sf.carte:carte-util:${carteUtilVersion}"
+
+	testRuntimeOnly project(':echosvg-codec')
+	testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+description = 'io.sf.carte:echosvg-test-util'
+
+publishing.publications.maven(MavenPublication).pom {
+	description = "EchoSVG testing utilities"
+}
+
+test {
+	useJUnitPlatform()
+}
+
+tasks.withType(ProcessResources).configureEach {
+	dependsOn ':echosvg-test-scripts:copyScriptJars',':echosvg-test-scripts:copyPolicyJar'
+}

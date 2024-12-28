@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-	implementation project(':echosvg-anim')
+	implementation project(':echosvg-dom')
 }
 
 description = 'io.sf.carte:echosvg-transcoder-api'

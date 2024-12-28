@@ -22,7 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-import io.sf.carte.echosvg.test.TestUtil;
+import io.sf.carte.echosvg.test.xml.XmlUtil;
 
 /**
  * Produce image-based filenames.
@@ -40,7 +40,7 @@ public class TempImageFiles implements ImageFileBuilder {
 	 * 
 	 * @param projectBuildURL the url to the project's build directory. You
 	 *                        generally have to call
-	 *                        {@link TestUtil#getProjectBuildURL(Class, String)} to
+	 *                        {@link XmlUtil#getProjectBuildURL(Class, String)} to
 	 *                        obtain that. If {@code null}, then OS-supplied
 	 *                        temporary files will be produced.
 	 */
@@ -53,7 +53,7 @@ public class TempImageFiles implements ImageFileBuilder {
 	 * 
 	 * @param projectBuildURL the url to the project's build directory. You
 	 *                        generally have to call
-	 *                        {@link TestUtil#getProjectBuildURL(Class, String)} to
+	 *                        {@link XmlUtil#getProjectBuildURL(Class, String)} to
 	 *                        obtain that. If {@code null}, then OS-supplied
 	 *                        temporary files will be produced.
 	 * @param imageSubpath    the subpath to images (for example in Gradle layout it

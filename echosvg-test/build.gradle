@@ -31,8 +31,9 @@ dependencies {
 	implementation project(':echosvg-i18n')
 	implementation project(':echosvg-extension')
 	implementation project(':echosvg-transcoder')
+	implementation project(':echosvg-test-util')
 	api project(':echosvg-swing')
-	implementation "io.sf.jclf:jclf-text:${jclfTextVersion}"
+
 	// Required by tests
 	implementation project(':echosvg-codec')
 	testImplementation testFixtures(project(':echosvg-util'))
@@ -42,14 +43,16 @@ dependencies {
 	testImplementation "nu.validator:htmlparser:${htmlParserVersion}"
 	testImplementation "commons-io:commons-io:${commonsIOVersion}"
 	if (!project.getPluginManager().hasPlugin('eclipse')) {
-		testImplementation ("xml-apis:xml-apis:$xmlApisVersion")
+		compileOnly "xml-apis:xml-apis:$xmlApisVersion" // Required by Java 8 compat
 	}
+
 	itestImplementation project(':echosvg-test')
+
 	jmhImplementation "org.openjdk.jmh:jmh-core:${jmhVersion}"
 	jmhAnnotationProcessor "org.openjdk.jmh:jmh-generator-annprocess:${jmhVersion}"
 	jmhImplementation project(':echosvg-anim')
 	jmhImplementation project(':echosvg-svggen')
-	jmhImplementation "xml-apis:xml-apis:$xmlApisVersion"
+	jmhCompileOnly "xml-apis:xml-apis:$xmlApisVersion" // Required by Java 8 compat
 }
 
 if (project.getPluginManager().hasPlugin('eclipse')) {

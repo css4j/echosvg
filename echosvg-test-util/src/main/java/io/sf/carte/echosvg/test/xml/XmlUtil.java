@@ -16,7 +16,7 @@
  * limitations under the License.
  *
  */
-package io.sf.carte.echosvg.test;
+package io.sf.carte.echosvg.test.xml;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -27,91 +27,34 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.file.Paths;
+import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import javax.xml.XMLConstants;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
-import org.w3c.dom.svg.SVGDocument;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
-import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
+import io.sf.carte.doc.xml.dtd.DefaultEntityResolver;
+import io.sf.carte.util.agent.AgentUtil;
 import io.sf.jclf.text.TokenParser;
 
-public class TestUtil {
+/**
+ * XML-related comparison utilities.
+ */
+public class XmlUtil {
 
-	private TestUtil() {
-	}
-
-	/**
-	 * Get the URL of the root project directory.
-	 * 
-	 * @param cl             a class provided by the project.
-	 * @param projectDirname the directory name of the subproject from which this is
-	 *                       executed.
-	 * @return the URL.
-	 */
-	public static String getRootProjectURL(Class<?> cl, String projectDirname) {
-		String resName = cl.getName().replace(".", "/") + ".class";
-		URL url = ResourceLoader.getInstance().getResource(cl, resName);
-		if (url == null) {
-			url = cwdURL();
-		}
-		String sUrl = url.toExternalForm();
-		int testDirIdx = sUrl.lastIndexOf(projectDirname);
-		if (testDirIdx != -1) {
-			sUrl = sUrl.substring(0, testDirIdx);
-		} // If no projectDirname, we probably got the root via CWD
-		return sUrl;
-	}
-
-	private static URL cwdURL() {
-		try {
-			return Paths.get(".").toAbsolutePath().normalize().toUri().toURL();
-		} catch (MalformedURLException e) {
-			return null;
-		}
-	}
-
-	/**
-	 * Get the URL of the Gradle-style project build directory.
-	 * 
-	 * @param cl             a class provided by the project.
-	 * @param projectDirname the directory name of the subproject from which this is
-	 *                       executed.
-	 * @return the URL.
-	 */
-	public static String getProjectBuildURL(Class<?> cl, String projectDirname) {
-		String resName = cl.getName().replace(".", "/") + ".class";
-		URL url = ResourceLoader.getInstance().getResource(cl, resName);
-		String classUrl;
-		if (url == null) {
-			url = cwdURL();
-			File f = new File(url.getFile(), projectDirname);
-			if (f.exists()) {
-				// CWD is root directory
-				try {
-					url = new URL(url.getProtocol(), url.getHost(), url.getPort(), f.getAbsolutePath());
-				} catch (MalformedURLException e) {
-					return null;
-				}
-				classUrl = url.toExternalForm();
-			} else {
-				// CWD is the project directory instead of root
-				classUrl = url.toExternalForm();
-				if (classUrl.lastIndexOf(projectDirname) == -1) {
-					return null;
-				}
-			}
-		} else {
-			classUrl = url.toExternalForm();
-		}
-		int testDirIdx = classUrl.lastIndexOf(projectDirname);
-		String buildDir = classUrl.substring(5, testDirIdx + projectDirname.length()) + "/build/";
-		return buildDir;
+	private XmlUtil() {
 	}
 
 	/**
@@ -129,11 +72,45 @@ public class TestUtil {
 	 * @throws IOException if a I/O error happened while comparing.
 	 */
 	public static String xmlDiff(URL refURL, byte[] data, File candidateFile) throws IOException {
-		BufferedReader dataReader, refReader;
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		try {
-			InputStream is = refURL.openStream();
-			Reader r = new InputStreamReader(is);
-			refReader = new BufferedReader(r);
+			dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+		} catch (ParserConfigurationException e) {
+			throw new IllegalStateException(e);
+		}
+
+		DocumentBuilder builder;
+		try {
+			builder = dbf.newDocumentBuilder();
+		} catch (ParserConfigurationException e) {
+			throw new IllegalStateException(e);
+		}
+
+		builder.setEntityResolver(new DefaultEntityResolver());
+
+		return xmlDiff(refURL, data, candidateFile, builder);
+	}
+
+	/**
+	 * Compare the XML file at {@code refURL} with the data in {@code data}.
+	 * <p>
+	 * If the data is different, save {@code data} to {@code candidateFile} and
+	 * return an error message.
+	 * </p>
+	 * 
+	 * @param refURL        the URL pointing to the reference data.
+	 * @param data          the data that has to be compared with the reference.
+	 * @param candidateFile the file to save {@code data} to. If {@code null}, the
+	 *                      data is not saved.
+	 * @param builder       the document builder to use.
+	 * @return a failure message, or {@code null} if the comparison matched.
+	 * @throws IOException if a I/O error happened while comparing.
+	 */
+	public static String xmlDiff(URL refURL, byte[] data, File candidateFile, DocumentBuilder builder)
+			throws IOException {
+		BufferedReader refReader;
+		try {
+			refReader = urlToReader(refURL);
 		} catch (FileNotFoundException e) {
 			save(data, candidateFile);
 			return e.getMessage();
@@ -144,13 +121,13 @@ public class TestUtil {
 
 		ByteArrayInputStream dataIS = new ByteArrayInputStream(data);
 		Reader r = new InputStreamReader(dataIS);
-		dataReader = new BufferedReader(r);
+		BufferedReader dataReader = new BufferedReader(r);
 
+		String refStr = "";
+		String dataStr = "";
+		int line = 0;
+		int cn = 0;
 		try {
-			String refStr = "";
-			String dataStr = "";
-			int line = 0;
-			int cn = 0;
 			while (refStr != null && dataStr != null) {
 
 				if (!refStr.equals(dataStr)) {
@@ -163,16 +140,24 @@ public class TestUtil {
 				dataStr = dataReader.readLine();
 				line++;
 			}
+		} catch (IOException e) {
+			save(data, candidateFile);
+			return "Error while comparing images: " + e.getMessage();
+		} finally {
+			try {
+				refReader.close();
+			} catch (IOException e) {
+			}
+		}
 
-			refReader.close();
-
+		try {
 			if (refStr == null && dataStr == null) {
 				// Test passed
 				return null;
 			}
 
 			// Check for false positives caused by element-content whitespace
-			if (compareDOM(refURL, data)) {
+			if (compareDOM(refURL, data, builder)) {
 				return null;
 			}
 
@@ -197,6 +182,26 @@ public class TestUtil {
 			save(data, candidateFile);
 			return "Error while comparing images: " + e.getMessage();
 		}
+	}
+
+	private static BufferedReader urlToReader(URL refURL) throws IOException {
+		URLConnection urlc = refURL.openConnection();
+		InputStream is = urlc.getInputStream();
+		String conType = urlc.getContentType();
+		String contentEncoding = urlc.getContentEncoding();
+		Reader r;
+		try {
+			r = AgentUtil.inputStreamToReader(is, conType, contentEncoding, StandardCharsets.UTF_8);
+		} catch (FileNotFoundException e) {
+			throw e;
+		} catch (IOException e) {
+			try {
+				is.close();
+			} catch (IOException e1) {
+			}
+			throw e;
+		}
+		return new BufferedReader(r);
 	}
 
 	/**
@@ -255,15 +260,33 @@ public class TestUtil {
 		return i;
 	}
 
-	private static boolean compareDOM(URL refURL, byte[] data) throws IOException {
-		InputStream newStream = new ByteArrayInputStream(data);
-		InputStream refStream = refURL.openStream();
-		String documentURI = refURL.toExternalForm();
+	private static boolean compareDOM(URL refURL, byte[] data, DocumentBuilder builder) throws IOException {
+		String uri = refURL.toExternalForm();
 
-		SAXSVGDocumentFactory factory = new SAXSVGDocumentFactory();
-		SVGDocument refDoc = factory.createDocument(documentURI, refStream, "utf-8");
-		refStream.close();
-		SVGDocument newDoc = factory.createDocument(documentURI, newStream, "utf-8");
+		BufferedReader refReader = urlToReader(refURL);
+		InputSource source = new InputSource(refReader);
+		source.setSystemId(uri);
+
+		Document refDoc;
+		try {
+			refDoc = builder.parse(source);
+		} catch (SAXException e) {
+			e.printStackTrace();
+			return false;
+		}
+
+		InputStream newStream = new ByteArrayInputStream(data);
+		InputStreamReader candReader = new InputStreamReader(newStream, StandardCharsets.UTF_8);
+		source = new InputSource(candReader);
+		source.setSystemId(uri);
+
+		Document newDoc;
+		try {
+			newDoc = builder.parse(source);
+		} catch (SAXException e) {
+			e.printStackTrace();
+			return false;
+		}
 
 		return isEquivalentNode(refDoc, newDoc);
 	}

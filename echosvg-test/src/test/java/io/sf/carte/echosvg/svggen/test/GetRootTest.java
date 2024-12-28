@@ -30,10 +30,10 @@ import org.w3c.dom.Document;
 
 import io.sf.carte.echosvg.dom.GenericDOMImplementation;
 import io.sf.carte.echosvg.svggen.SVGGeneratorContext;
+import io.sf.carte.echosvg.svggen.SVGGeneratorContext.GraphicContextDefaults;
 import io.sf.carte.echosvg.svggen.SVGGraphics2D;
 import io.sf.carte.echosvg.svggen.SVGGraphics2DIOException;
-import io.sf.carte.echosvg.svggen.SVGGeneratorContext.GraphicContextDefaults;
-import io.sf.carte.echosvg.test.TestFonts;
+import io.sf.carte.echosvg.test.misc.TestFonts;
 import io.sf.carte.echosvg.util.SVGConstants;
 
 /**

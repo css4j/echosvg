@@ -22,15 +22,18 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+
+import javax.xml.parsers.DocumentBuilder;
 
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
-import io.sf.carte.echosvg.dom.GenericDOMImplementation;
-import io.sf.carte.echosvg.dom.util.DocumentFactory;
-import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
+import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
 
 /**
  * This class tests the empty string value for an xmlns attribute.
@@ -42,16 +45,21 @@ import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
 public class NullNamespaceTest {
 
 	@Test
-	public void test() throws IOException {
-		testNullNamespace("io/sf/carte/echosvg/dom/dummyXML3.xml", "doc", "root");
-		testNullNamespace("io/sf/carte/echosvg/dom/dummyXML3.xml", "doc", "elt2");
+	public void test() throws Exception {
+		testNullNamespace("io/sf/carte/echosvg/dom/dummyXML3.xml", "root");
+		testNullNamespace("io/sf/carte/echosvg/dom/dummyXML3.xml", "elt2");
 	}
 
-	void testNullNamespace(String testFileName, String rootTag, String targetId) throws IOException {
-		DocumentFactory df = new SAXDocumentFactory(GenericDOMImplementation.getDOMImplementation());
+	void testNullNamespace(String testFileName, String targetId) throws IOException, SAXException {
+		DocumentBuilder df = new SAXSVGDocumentFactory();
 
+		Document doc;
 		URL url = getClass().getClassLoader().getResource(testFileName);
-		Document doc = df.createDocument(null, rootTag, url.toString(), url.openStream());
+		InputSource source = new InputSource(url.toString());
+		try (InputStream is = url.openStream()) {
+			source.setByteStream(is);
+			doc = df.parse(source);
+		}
 
 		Element e = doc.getElementById(targetId);
 

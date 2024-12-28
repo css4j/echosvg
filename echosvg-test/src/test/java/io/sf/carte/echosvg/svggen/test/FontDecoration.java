@@ -32,7 +32,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.sf.carte.echosvg.test.TestFonts;
+import io.sf.carte.echosvg.test.misc.TestFonts;
 
 /**
  * This test validates the convertion of Java 2D text with profiled colors into

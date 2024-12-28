@@ -16,10 +16,13 @@
  * limitations under the License.
  *
  */
-package io.sf.carte.echosvg.test;
+package io.sf.carte.echosvg.test.misc;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import io.sf.carte.echosvg.test.ResourceLoader;
+import io.sf.carte.echosvg.test.TestUtil;
 
 public class TestLocations {
 

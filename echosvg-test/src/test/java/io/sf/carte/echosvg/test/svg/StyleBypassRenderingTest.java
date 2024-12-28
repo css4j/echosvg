@@ -23,8 +23,8 @@ import java.io.IOException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import io.sf.carte.echosvg.test.ScriptUtil;
-import io.sf.carte.echosvg.test.TestFonts;
+import io.sf.carte.echosvg.test.misc.ScriptUtil;
+import io.sf.carte.echosvg.test.misc.TestFonts;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 
 /**

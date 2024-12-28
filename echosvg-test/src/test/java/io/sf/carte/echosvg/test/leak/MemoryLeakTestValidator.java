@@ -16,7 +16,7 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.test;
+package io.sf.carte.echosvg.test.leak;
 
 /**
  * One line Class Desc

@@ -28,7 +28,7 @@ import java.awt.TexturePaint;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 
-import io.sf.carte.echosvg.test.TestFonts;
+import io.sf.carte.echosvg.test.misc.TestFonts;
 
 /**
  * This test validates the convertion of the three elementary thypes of Java 2D

@@ -26,7 +26,7 @@ import org.w3c.dom.svg.SVGDocument;
 
 import io.sf.carte.echosvg.swing.JSVGCanvas;
 import io.sf.carte.echosvg.swing.svg.JSVGComponent;
-import io.sf.carte.echosvg.test.TestLocations;
+import io.sf.carte.echosvg.test.misc.TestLocations;
 
 /**
  * Test setDocument on JSVGComponent with non-EchoSVG SVGOMDocument.

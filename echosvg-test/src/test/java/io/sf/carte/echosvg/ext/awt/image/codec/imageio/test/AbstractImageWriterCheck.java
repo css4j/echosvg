@@ -40,11 +40,11 @@ import javax.imageio.ImageIO;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriter;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterParams;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterRegistry;
-import io.sf.carte.echosvg.test.TestLocations;
 import io.sf.carte.echosvg.test.TestUtil;
 import io.sf.carte.echosvg.test.image.ImageComparator;
 import io.sf.carte.echosvg.test.image.ImageFileBuilder;
 import io.sf.carte.echosvg.test.image.TempImageFiles;
+import io.sf.carte.echosvg.test.misc.TestLocations;
 
 /**
  * This test validates the operation of ImageIOImageWriter implementations.

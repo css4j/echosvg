@@ -57,11 +57,11 @@ import io.sf.carte.echosvg.ext.awt.image.codec.png.PNGImageDecoder;
 import io.sf.carte.echosvg.ext.awt.image.codec.png.PNGImageEncoder;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriter;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterRegistry;
-import io.sf.carte.echosvg.test.TestLocations;
 import io.sf.carte.echosvg.test.TestUtil;
 import io.sf.carte.echosvg.test.image.ImageComparator;
 import io.sf.carte.echosvg.test.image.ImageFileBuilder;
 import io.sf.carte.echosvg.test.image.TempImageFiles;
+import io.sf.carte.echosvg.test.misc.TestLocations;
 
 /**
  * This test validates the PNGEncoder operation. It creates a BufferedImage,

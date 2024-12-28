@@ -5,7 +5,15 @@ plugins {
 dependencies {
 	api project(':echosvg-transcoder-api')
 	api project(':echosvg-svggen')
-	implementation project(':echosvg-anim')
+	compileOnly project(':echosvg-anim')
+	testImplementation project(':echosvg-test-util')
+	testImplementation project(':echosvg-dom')
+	testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+	useJUnitPlatform()
 }
 
 description = 'io.sf.carte:echosvg-transcoder-tosvg'

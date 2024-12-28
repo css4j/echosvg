@@ -25,7 +25,6 @@ import org.w3c.dom.DOMException;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 
-import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
 import io.sf.carte.echosvg.dom.GenericDOMImplementation;
 import io.sf.carte.echosvg.dom.util.DocumentFactory;
 import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
@@ -157,25 +156,16 @@ public abstract class XMLAbstractTranscoder extends AbstractTranscoder {
 	 * @param documentElement the document element name.
 	 * @return the {@code DocumentFactory}.
 	 */
-	private DocumentFactory createDocumentFactory(String documentElement) {
-		DocumentFactory f;
+	protected DocumentFactory createDocumentFactory(String documentElement) {
 		DOMImplementation domImpl = (DOMImplementation) hints.get(KEY_DOM_IMPLEMENTATION);
 		if (domImpl == null) {
-			if ("html".equalsIgnoreCase(documentElement)) {
-				domImpl = GenericDOMImplementation.getDOMImplementation();
-				f = new SAXDocumentFactory(domImpl);
-			} else {
-				domImpl = SVGDOMImplementation.getDOMImplementation();
-				f = createDocumentFactory(domImpl);
-			}
-		} else {
-			f = createDocumentFactory(domImpl);
+			domImpl = GenericDOMImplementation.getDOMImplementation();
 		}
-		return f;
+		return createDocumentFactory(domImpl);
 	}
 
 	/**
-	 * Creates the <code>DocumentFactory</code> used to create the DOM tree.
+	 * Creates the <code>DocumentFactory</code> used to create the SVG DOM tree.
 	 * <p>
 	 * Override this method if you have to use another implementation of the
 	 * <code>DocumentFactory</code> (ie. for SVG, you have to use the

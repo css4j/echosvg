@@ -44,8 +44,8 @@ import io.sf.carte.echosvg.bridge.RelaxedExternalResourceSecurity;
 import io.sf.carte.echosvg.bridge.UserAgent;
 import io.sf.carte.echosvg.bridge.UserAgentAdapter;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
-import io.sf.carte.echosvg.test.ScriptUtil;
-import io.sf.carte.echosvg.test.TestLocations;
+import io.sf.carte.echosvg.test.misc.ScriptUtil;
+import io.sf.carte.echosvg.test.misc.TestLocations;
 import io.sf.carte.echosvg.util.ParsedURL;
 
 /**

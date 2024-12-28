@@ -31,7 +31,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.xpath.XPathEvaluator;
 import org.w3c.dom.xpath.XPathResult;
 
-import io.sf.carte.echosvg.dom.GenericDOMImplementation;
+import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
 import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
 
 /**
@@ -88,7 +88,7 @@ public class XPathTest {
 
 	private static Document createDocument(String xml) {
 		StringReader re = new StringReader(xml);
-		SAXDocumentFactory f = new SAXDocumentFactory(GenericDOMImplementation.getDOMImplementation());
+		SAXDocumentFactory f = new SAXSVGDocumentFactory();
 		f.setValidating(false);
 		try {
 			return f.createDocument("file:///memory", re);

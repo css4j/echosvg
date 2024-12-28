@@ -34,7 +34,7 @@ import io.sf.carte.echosvg.bridge.UpdateManager;
 import io.sf.carte.echosvg.dom.svg.SVGContext;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
 import io.sf.carte.echosvg.swing.JSVGCanvas;
-import io.sf.carte.echosvg.test.MemoryLeakTest;
+import io.sf.carte.echosvg.test.leak.MemoryLeakTest;
 
 /**
  * One line Class Desc

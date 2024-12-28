@@ -16,7 +16,7 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.test;
+package io.sf.carte.echosvg.test.leak;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.sf.carte.echosvg.test.misc.TestLocations;
 import io.sf.carte.echosvg.util.CleanerThread;
 
 /**
