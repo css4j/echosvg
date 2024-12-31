@@ -23,6 +23,8 @@ import java.io.InputStream;
 import java.io.Reader;
 
 import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
 /**
@@ -115,6 +117,20 @@ public interface DocumentFactory {
 	 * @exception IOException if an error occured while reading the document.
 	 */
 	Document createDocument(String ns, String root, String uri, Reader r) throws IOException;
+
+	/**
+	 * Parse the content of the given input source as an XML document and return a
+	 * new DOM {@link Document} object.
+	 *
+	 * @param is InputSource containing the content to be parsed.
+	 *
+	 * @return a new DOM Document object.
+	 *
+	 * @throws IOException              if any IO errors occur.
+	 * @throws SAXException             if any parse errors occur.
+	 * @throws IllegalArgumentException when <code>is</code> is <code>null</code>
+	 */
+	Document parse(InputSource is) throws SAXException, IOException;
 
 	/**
 	 * Returns the document descriptor associated with the latest created document.
