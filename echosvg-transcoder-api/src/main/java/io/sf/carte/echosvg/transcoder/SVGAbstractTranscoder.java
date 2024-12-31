@@ -25,7 +25,6 @@ import org.w3c.dom.DOMImplementation;
 
 import io.sf.carte.echosvg.dom.GenericDOMImplementation;
 import io.sf.carte.echosvg.dom.util.DocumentFactory;
-import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
 import io.sf.carte.echosvg.transcoder.keys.BooleanKey;
 import io.sf.carte.echosvg.transcoder.keys.FloatKey;
 import io.sf.carte.echosvg.transcoder.keys.LengthKey;
@@ -83,22 +82,20 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 	/**
 	 * Create a {@code DocumentFactory} appropriate for the given document element.
 	 * 
-	 * @param documentElement the document element name.
+	 * @param namespaceURI the document element namespace URI.
 	 * @return the {@code DocumentFactory}.
 	 */
 	@Override
-	protected DocumentFactory createDocumentFactory(String documentElement) {
+	protected DocumentFactory createDocumentFactory(String namespaceURI) {
 		DocumentFactory f;
-		if ("svg".equalsIgnoreCase(documentElement)) {
+		if (SVGConstants.SVG_NAMESPACE_URI.equalsIgnoreCase(namespaceURI) || namespaceURI == null) {
 			f = createSVGDocumentFactory();
 		} else {
 			DOMImplementation domImpl = (DOMImplementation) hints.get(KEY_DOM_IMPLEMENTATION);
 			if (domImpl == null) {
 				domImpl = GenericDOMImplementation.getDOMImplementation();
-				f = new SAXDocumentFactory(domImpl);
-			} else {
-				f = createDocumentFactory(domImpl);
 			}
+			f = createDocumentFactory(domImpl);
 		}
 		return f;
 	}
@@ -574,6 +571,7 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 	 *      </tr>
 	 *      </table>
 	 */
+	@Deprecated
 	public static final TranscodingHints.Key KEY_PIXEL_UNIT_TO_MILLIMETER = new FloatKey();
 
 	/**

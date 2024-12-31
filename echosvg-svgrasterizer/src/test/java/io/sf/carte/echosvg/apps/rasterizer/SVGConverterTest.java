@@ -40,6 +40,7 @@ import org.junit.jupiter.api.Test;
 import io.sf.carte.echosvg.test.TestUtil;
 import io.sf.carte.echosvg.test.image.ImageCompareUtil;
 import io.sf.carte.echosvg.test.image.TempImageFiles;
+import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.Transcoder;
 import io.sf.carte.echosvg.transcoder.TranscodingHints;
 import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
@@ -47,7 +48,6 @@ import io.sf.carte.echosvg.transcoder.XMLAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
 import io.sf.carte.echosvg.transcoder.image.JPEGTranscoder;
 import io.sf.carte.echosvg.transcoder.image.PNGTranscoder;
-import io.sf.carte.echosvg.transcoder.svg.SVGAbstractTranscoder;
 
 /**
  * Validates the operation of the <code>SVGRasterizer</code>. It validates the

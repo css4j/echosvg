@@ -32,13 +32,13 @@ import io.sf.carte.echosvg.bridge.UserAgent;
 import io.sf.carte.echosvg.test.image.ImageComparator;
 import io.sf.carte.echosvg.test.misc.TestLocations;
 import io.sf.carte.echosvg.transcoder.ErrorHandler;
+import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
 import io.sf.carte.echosvg.transcoder.TranscoderOutput;
 import io.sf.carte.echosvg.transcoder.XMLAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
 import io.sf.carte.echosvg.transcoder.image.PNGTranscoder;
-import io.sf.carte.echosvg.transcoder.svg.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.util.SVGConstants;
 
 /**
@@ -385,7 +385,7 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 		 * A Transcoder user agent that does not print a stack trace.
 		 */
 		class TestTranscoderUserAgent
-				extends SVGAbstractTranscoder.SVGAbstractTranscoderUserAgent {
+				extends io.sf.carte.echosvg.transcoder.svg.SVGAbstractTranscoder.SVGAbstractTranscoderUserAgent {
 		}
 
 		/**

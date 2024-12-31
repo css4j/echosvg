@@ -18,9 +18,9 @@
  */
 package io.sf.carte.echosvg.test.svg;
 
+import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.XMLAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
-import io.sf.carte.echosvg.transcoder.svg.SVGAbstractTranscoder;
 
 /**
  * Checks for regressions in rendering of SVG inside an XHTML document.

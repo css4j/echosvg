@@ -586,8 +586,8 @@ public abstract class SVGAbstractTranscoder extends io.sf.carte.echosvg.transcod
 	 * @param docWidth  Width of the document.
 	 * @param docHeight Height of the document.
 	 */
+	@Override
 	protected void setImageSize(float docWidth, float docHeight) {
-
 		// Compute the image's width and height according the hints
 		float imgWidth = -1;
 		if (hints.containsKey(KEY_WIDTH)) {

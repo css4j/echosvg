@@ -58,7 +58,6 @@ import io.sf.carte.doc.style.css.CSSCanvas;
 import io.sf.carte.doc.style.css.CSSComputedProperties;
 import io.sf.carte.doc.style.css.CSSDocument;
 import io.sf.carte.doc.style.css.CSSMediaException;
-import io.sf.carte.doc.style.css.CSSStyleSheetFactory;
 import io.sf.carte.doc.style.css.CSSTypedValue;
 import io.sf.carte.doc.style.css.CSSValue;
 import io.sf.carte.doc.style.css.CSSValue.CssType;
@@ -83,6 +82,7 @@ import io.sf.carte.echosvg.anim.dom.SVG12DOMImplementation;
 import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
 import io.sf.carte.echosvg.transcoder.DefaultErrorHandler;
 import io.sf.carte.echosvg.transcoder.ErrorHandler;
+import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.Transcoder;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
@@ -91,7 +91,6 @@ import io.sf.carte.echosvg.transcoder.TranscodingHints;
 import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
 import io.sf.carte.echosvg.transcoder.image.PNGTranscoder;
 import io.sf.carte.echosvg.transcoder.impl.SizingHelper;
-import io.sf.carte.echosvg.transcoder.svg.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.SVGConstants;
 import io.sf.carte.util.agent.AgentUtil;
@@ -787,7 +786,7 @@ public class CSSTranscodingHelper {
 				String conEnc = purl.getContentEncoding();
 				Reader userRe = AgentUtil.inputStreamToReader(is, conType, conEnc,
 						StandardCharsets.UTF_8);
-				((CSSStyleSheetFactory) document.getImplementation())
+				document.getImplementation()
 						.setUserStyleSheet(purl.getPostConnectionURL(), userRe);
 			}
 		}

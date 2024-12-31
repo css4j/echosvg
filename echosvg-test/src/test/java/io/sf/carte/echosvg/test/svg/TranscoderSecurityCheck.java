@@ -23,12 +23,12 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import io.sf.carte.echosvg.transcoder.ErrorHandler;
+import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
 import io.sf.carte.echosvg.transcoder.TranscoderOutput;
 import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
 import io.sf.carte.echosvg.transcoder.image.PNGTranscoder;
-import io.sf.carte.echosvg.transcoder.svg.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.test.DummyErrorHandler;
 
 /**

@@ -21,9 +21,10 @@ package io.sf.carte.echosvg.transcoder;
 
 import java.io.IOException;
 
-import org.w3c.dom.DOMException;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import io.sf.carte.echosvg.dom.GenericDOMImplementation;
 import io.sf.carte.echosvg.dom.util.DocumentFactory;
@@ -108,19 +109,8 @@ public abstract class XMLAbstractTranscoder extends AbstractTranscoder {
 	 */
 	private Document loadDocument(TranscoderInput input) throws TranscoderException {
 		String namespaceURI = (String) hints.get(KEY_DOCUMENT_ELEMENT_NAMESPACE_URI);
-		String documentElement = (String) hints.get(KEY_DOCUMENT_ELEMENT);
 
-		DocumentFactory f = createDocumentFactory(documentElement);
-
-		if (namespaceURI == null) {
-			handler.fatalError(
-					new TranscoderException("Unspecified transcoding hints: KEY_DOCUMENT_ELEMENT_NAMESPACE_URI"));
-			return null;
-		}
-		if (documentElement == null) {
-			handler.fatalError(new TranscoderException("Unspecified transcoding hints: KEY_DOCUMENT_ELEMENT"));
-			return null;
-		}
+		DocumentFactory f = createDocumentFactory(namespaceURI);
 
 		// parse the XML document
 		Object xmlParserValidating = hints.get(KEY_XML_PARSER_VALIDATING);
@@ -129,21 +119,16 @@ public abstract class XMLAbstractTranscoder extends AbstractTranscoder {
 
 		f.setXMLReader(input.getXMLReader());
 
-		String uri = input.getURI();
+		InputSource source = new InputSource();
+		source.setSystemId(input.getURI());
+		source.setByteStream(input.getInputStream());
+		source.setEncoding(input.getEncoding());
+		source.setCharacterStream(input.getReader());
 
 		Document document = null;
 		try {
-			if (input.getInputStream() != null) {
-				document = f.createDocument(namespaceURI, documentElement, uri, input.getInputStream(),
-						input.getEncoding());
-			} else if (input.getReader() != null) {
-				document = f.createDocument(namespaceURI, documentElement, uri, input.getReader());
-			} else if (uri != null) {
-				document = f.createDocument(namespaceURI, documentElement, uri, input.getEncoding());
-			}
-		} catch (DOMException ex) {
-			handler.fatalError(new TranscoderException(ex));
-		} catch (IOException ex) {
+			document = f.parse(source);
+		} catch (SAXException | IOException ex) {
 			handler.fatalError(new TranscoderException(ex));
 		}
 
@@ -153,10 +138,10 @@ public abstract class XMLAbstractTranscoder extends AbstractTranscoder {
 	/**
 	 * Create a {@code DocumentFactory} appropriate for the given document element.
 	 * 
-	 * @param documentElement the document element name.
+	 * @param namespaceURI the document element namespace URI.
 	 * @return the {@code DocumentFactory}.
 	 */
-	protected DocumentFactory createDocumentFactory(String documentElement) {
+	protected DocumentFactory createDocumentFactory(String namespaceURI) {
 		DOMImplementation domImpl = (DOMImplementation) hints.get(KEY_DOM_IMPLEMENTATION);
 		if (domImpl == null) {
 			domImpl = GenericDOMImplementation.getDOMImplementation();
@@ -235,16 +220,16 @@ public abstract class XMLAbstractTranscoder extends AbstractTranscoder {
 	 * </tr>
 	 * <tr>
 	 * <th style="text-align: end; vertical-align: top">Default:</th>
-	 * <td style="vertical-align: top">null</td>
+	 * <td style="vertical-align: top">Transcoder-dependent</td>
 	 * </tr>
 	 * <tr>
 	 * <th style="text-align: end; vertical-align: top">Required:</th>
-	 * <td style="vertical-align: top">Yes</td>
+	 * <td style="vertical-align: top">No</td>
 	 * </tr>
 	 * <tr>
 	 * <th style="text-align: end; vertical-align: top">Description:</th>
 	 * <td style="vertical-align: top">Specify the qualified name of the document type to be
-	 * created.</td>
+	 * created. The current implementation ignores this hint.</td>
 	 * </tr>
 	 * </table>
 	 */
@@ -264,15 +249,16 @@ public abstract class XMLAbstractTranscoder extends AbstractTranscoder {
 	 * </tr>
 	 * <tr>
 	 * <th style="text-align: end; vertical-align: top">Default:</th>
-	 * <td style="vertical-align: top">null</td>
+	 * <td style="vertical-align: top">Transcoder-dependent</td>
 	 * </tr>
 	 * <tr>
 	 * <th style="text-align: end; vertical-align: top">Required:</th>
-	 * <td style="vertical-align: top">Yes</td>
+	 * <td style="vertical-align: top">No</td>
 	 * </tr>
 	 * <tr>
 	 * <th style="text-align: end; vertical-align: top">Description:</th>
-	 * <td style="vertical-align: top">Specify the namespace URI of the document element.</td>
+	 * <td style="vertical-align: top">Specify the namespace URI of the document
+	 * element, to hint how the document should be parsed.</td>
 	 * </tr>
 	 * </table>
 	 */
