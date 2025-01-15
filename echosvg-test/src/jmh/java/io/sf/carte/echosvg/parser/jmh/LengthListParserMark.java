@@ -16,88 +16,69 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.parser;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+package io.sf.carte.echosvg.parser.jmh;
 
 import java.io.StringReader;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.util.Locale;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.openjdk.jmh.annotations.Benchmark;
+import org.openjdk.jmh.annotations.Fork;
+import org.openjdk.jmh.annotations.Measurement;
+import org.openjdk.jmh.annotations.Threads;
+import org.openjdk.jmh.annotations.Warmup;
+
+import io.sf.carte.echosvg.parser.LengthArrayProducer;
+import io.sf.carte.echosvg.parser.LengthListParser;
+import io.sf.carte.echosvg.parser.ParseException;
 
 /**
- * Test the length pair list parser.
+ * Check that there is no performance degradation in the length list parser.
  *
  * @version $Id$
  */
-public class LengthPairListParserTest {
+@Threads(4)
+@Fork(value = 2)
+@Measurement(iterations = 4, time = 10)
+@Warmup(iterations = 4, time = 10)
+public class LengthListParserMark {
 
-	private static DecimalFormat numFormat;
+	@Benchmark
+	public void markParser() {
+		runParser("3mm 27mm 8pt 43px");
+	}
 
-	@BeforeAll
-	static void setUpBeforeClass() {
-		DecimalFormatSymbols dfs = new DecimalFormatSymbols(Locale.ROOT);
-		numFormat = new DecimalFormat("#.#", dfs);
-		numFormat.setMinimumFractionDigits(0);
-		numFormat.setMaximumFractionDigits(5);
+	@Benchmark
+	public void markParserCalc() {
+		runParser("3mm 27mm calc(2*4pc) 43q");
 	}
 
 	/**
+	 * Parse the input.
 	 * 
-	 * @param sourceLength      The length to parse.
-	 * @param destinationLength The length after serialization.
+	 * @param source The source to parse.
 	 */
-	private void testLengthParser(String sourceLength, String destinationLength) {
-		TestHandler handler = new TestHandler();
-		LengthPairListParser pp = new LengthPairListParser(handler);
+	private void runParser(String source) throws ParseException {
+		HandlerImpl handler = new HandlerImpl();
+		LengthListParser pp = new LengthListParser(handler);
 
-		pp.parse(new StringReader(sourceLength));
-
-		assertEquals(destinationLength, handler.resultLength);
+		pp.parse(new StringReader(source));
 	}
 
-	@Test
-	public void test() {
-		testLengthParser("3 27; 8 43", " 3 27 8 43");
-		testLengthParser("3.1 27.2; 8.3 43.4", " 3.1 27.2 8.3 43.4");
-	}
-
-	@Test
-	public void testCalc() {
-		testLengthParser("3 27; calc(4 + 4) 43", " 3 27 8 43");
-	}
-
-	@Test
-	public void testInvalidUnit() {
-		assertThrows(ParseException.class, () -> testLengthParser("3 27dpi; 8 5", ""));
-	}
-
-	@Test
-	public void testInvalidUnitCalc() {
-		assertThrows(ParseException.class, () -> testLengthParser("3 calc(3*9dpi); 8 5", ""));
-	}
-
-	private class TestHandler extends LengthArrayProducer {
+	private class HandlerImpl extends LengthArrayProducer {
 
 		private StringBuilder buffer;
-		String resultLength;
 
-		TestHandler() {
+		HandlerImpl() {
 		}
 
 		@Override
 		public void startLengthList() {
 			super.startLengthList();
-			buffer = new StringBuilder();
+			buffer = new StringBuilder(32);
 		}
 
 		@Override
 		public void lengthValue(float v) {
-			buffer.append(' ').append(numFormat.format(v));
+			buffer.append(' ').append(v);
 		}
 
 		@Override
@@ -192,15 +173,6 @@ public class LengthPairListParserTest {
 
 		@Override
 		protected void setUnit(short unit) {
-			if (!LengthParser.handleUnit(unit, this)) {
-				throw new ParseException("Invalid unit.", -1, -1);
-			}
-		}
-
-		@Override
-		public void endLengthList() {
-			super.endLengthList();
-			resultLength = buffer.toString();
 		}
 
 	}

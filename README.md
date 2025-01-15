@@ -95,13 +95,13 @@ Pull Requests aimed to increase the code coverage would be welcome.
 ### Benchmarks
 
 This project uses [JMH](https://github.com/openjdk/jmh) for benchmarking. To run
-all the benchmarks (currently only one):
+all the benchmarks:
 ```shell
 ./gradlew runJmh
 ```
 To run specific benchmark(s) matched by a regular expression:
 ```shell
-./gradlew runJmh <regexp>
+./gradlew runJmh --args <regexp>
 ```
 A jmh-ready _fat Jar_ with all the dependencies is available at
 `echosvg-test/build/libs/echosvg-<version>-jmh.jar`, and is the recommended way to run
@@ -109,6 +109,7 @@ benchmarks:
 ```shell
 java -jar echosvg-test/build/libs/echosvg-<version>-jmh.jar <regexp>
 ```
+Java 17 or later is recommended.
 
 <br/>
 

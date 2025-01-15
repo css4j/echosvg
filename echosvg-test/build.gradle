@@ -44,6 +44,7 @@ dependencies {
 	testImplementation "commons-io:commons-io:${commonsIOVersion}"
 	if (!project.getPluginManager().hasPlugin('eclipse')) {
 		compileOnly "xml-apis:xml-apis:$xmlApisVersion" // Required by Java 8 compat
+		jmhCompileOnly "xml-apis:xml-apis:$xmlApisVersion" // Required by Java 8 compat
 	}
 
 	itestImplementation project(':echosvg-test')
@@ -52,11 +53,6 @@ dependencies {
 	jmhAnnotationProcessor "org.openjdk.jmh:jmh-generator-annprocess:${jmhVersion}"
 	jmhImplementation project(':echosvg-anim')
 	jmhImplementation project(':echosvg-svggen')
-	jmhCompileOnly "xml-apis:xml-apis:$xmlApisVersion" // Required by Java 8 compat
-}
-
-if (project.getPluginManager().hasPlugin('eclipse')) {
-	configurations.all*.exclude group: 'xml-apis', module: 'xml-apis'
 }
 
 description = 'io.sf.carte:echosvg-test'
