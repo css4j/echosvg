@@ -93,7 +93,7 @@ public class LengthListParser extends LengthParser {
 				}
 			}
 		} catch (CalcParseException e) {
-			cssParse(e);
+			cssParse();
 		} catch (NumberFormatException e) {
 			reportUnexpectedCharacterError(current);
 		}

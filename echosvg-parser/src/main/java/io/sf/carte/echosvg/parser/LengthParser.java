@@ -84,14 +84,15 @@ public class LengthParser extends AbstractParser {
 
 		try {
 			parseLength();
+			skipSpaces();
 		} catch (CalcParseException e) {
-			cssParse(e);
+			cssParse();
 		}
 
-		skipSpaces();
 		if (current != -1) {
 			reportError("end.of.stream.expected", new Object[] { current });
 		}
+
 		lengthHandler.endLength();
 	}
 
@@ -120,7 +121,7 @@ public class LengthParser extends AbstractParser {
 		case 'c':
 		case 'C':
 			// calc() ?
-			handleCalc();
+			checkForCalc();
 			return;
 		}
 

@@ -53,7 +53,7 @@ public abstract class NumberParser extends AbstractParser {
 		case 'c':
 		case 'C':
 			// calc() ?
-			handleCalc();
+			checkForCalc();
 			return 0.0f;
 		}
 

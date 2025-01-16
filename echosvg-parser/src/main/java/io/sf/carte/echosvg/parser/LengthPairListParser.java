@@ -75,7 +75,7 @@ public class LengthPairListParser extends LengthListParser {
 		} catch (NumberFormatException e) {
 			reportUnexpectedCharacterError(current);
 		} catch (CalcParseException e) {
-			cssParse(e);
+			cssParse();
 		}
 		((LengthListHandler) lengthHandler).endLengthList();
 	}

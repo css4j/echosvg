@@ -52,6 +52,7 @@ import io.sf.carte.echosvg.util.io.StringNormalizingReader;
  * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
  * For later modifications, see Git history.
  * </p>
+ * 
  * @version $Id$
  */
 public abstract class AbstractParser implements Parser {
@@ -169,24 +170,25 @@ public abstract class AbstractParser implements Parser {
 		} catch (IOException e) {
 			errorHandler.error(new ParseException(createErrorMessage("io.exception", null), e));
 		} catch (CalcParseException e) {
-			cssParse(e);
+			// This may be handled by parsing and be unneeded
+			cssParse();
 		}
 	}
 
 	/**
 	 * Reparse with a CSS parser.
 	 * 
-	 * @param cpe the exception triggered by {@code calc()}.
-	 * @throws ParseException
+	 * @throws ParseException if an I/O error occurs, or the error handler throws
+	 *                        one.
 	 */
-	void cssParse(CalcParseException cpe) throws ParseException {
+	void cssParse() throws ParseException {
 		// Unread 'calc('
 		PushbackReader pbre = new PushbackReader(reader, 5);
 		char[] cbuf = { 'c', 'a', 'l', 'c', '(' };
 		try {
 			pbre.unread(cbuf);
 		} catch (IOException e) {
-			errorHandler.error(cpe);
+			throw new ParseException(e);
 		}
 
 		/*
@@ -197,11 +199,13 @@ public abstract class AbstractParser implements Parser {
 		try {
 			lunit = parser.parsePropertyValue(pbre);
 		} catch (CSSException e) {
+			// The CSSException could eventually be a budget exception (DoS)
+			// but we settle for a syntax error
 			DOMException ex = new DOMException(DOMException.SYNTAX_ERR, e.getMessage());
 			ex.initCause(e);
 			ParseException pex = new ParseException(ex);
-			pex.lineNumber = cpe.getLineNumber();
-			pex.columnNumber = cpe.getColumnNumber();
+			pex.lineNumber = reader.getLine();
+			pex.columnNumber = reader.getColumn();
 			errorHandler.error(pex);
 			return;
 		} catch (IOException e) {
@@ -212,14 +216,14 @@ public abstract class AbstractParser implements Parser {
 			CSSValue cssvalue = (new ValueFactory()).createCSSValue(lunit);
 			handleStyleValue(cssvalue);
 		} catch (ParseException pex) {
-			pex.lineNumber = cpe.getLineNumber();
-			pex.columnNumber = cpe.getColumnNumber();
+			pex.lineNumber = reader.getLine();
+			pex.columnNumber = reader.getColumn();
 			errorHandler.error(pex);
 		} catch (Exception ex) {
 			// Most likely a DOMException
 			ParseException pex = new ParseException(ex);
-			pex.lineNumber = cpe.getLineNumber();
-			pex.columnNumber = cpe.getColumnNumber();
+			pex.lineNumber = reader.getLine();
+			pex.columnNumber = reader.getColumn();
 			errorHandler.error(pex);
 		}
 
@@ -361,7 +365,7 @@ public abstract class AbstractParser implements Parser {
 	protected abstract void doParse() throws ParseException, IOException;
 
 	/**
-	 * Handle a possible {@code calc()} value.
+	 * Check for a possible {@code calc()} value.
 	 * <p>
 	 * Any handling of numbers must deal with calc().
 	 * </p>
@@ -375,7 +379,7 @@ public abstract class AbstractParser implements Parser {
 	 * 
 	 * @throws IOException if an I/O error occurs.
 	 */
-	void handleCalc() throws IOException {
+	void checkForCalc() throws IOException {
 		int line = reader.getLine();
 		int column = reader.getColumn();
 
@@ -387,7 +391,7 @@ public abstract class AbstractParser implements Parser {
 		reader.read(calcBuf);
 
 		if (equalsAny(calcLCRef, calcUCRef, calcBuf)) {
-			throw new CalcParseException("Cannot handle calc().", line, column);
+			handleCalc(line, column);
 		} else {
 			reportError("character.unexpected", new Object[] { current }, line, column);
 		}
@@ -405,6 +409,23 @@ public abstract class AbstractParser implements Parser {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Handle a {@code calc()} value.
+	 * <p>
+	 * The base implementation just throws a {@link CalcParseException}. Although
+	 * subclasses may override this method to avoid the overload caused by
+	 * exceptions, it is recommended to handle {@code calc()} as an exception so the
+	 * associated handling cause a minimum penalty to normal (non-{@code calc()})
+	 * processing.
+	 * </p>
+	 * 
+	 * @param line   the line where {@code calc()} was found.
+	 * @param column the column where {@code calc()} was found.
+	 */
+	protected void handleCalc(int line, int column) throws CalcParseException {
+		throw new CalcParseException("Cannot handle calc().", line, column);
 	}
 
 	private void reportError(String key, Object[] objects, int line, int column) {

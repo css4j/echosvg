@@ -97,6 +97,8 @@ public class NumberListParser extends NumberParser {
 					break;
 				}
 			}
+		} catch (CalcParseException e) {
+			cssParse();
 		} catch (NumberFormatException e) {
 			reportUnexpectedCharacterError(current);
 		}

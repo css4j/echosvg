@@ -169,7 +169,7 @@ public class AngleParser extends NumberParser {
 		} catch (NumberFormatException e) {
 			reportUnexpectedCharacterError(current);
 		} catch (CalcParseException e) {
-			cssParse(e);
+			cssParse();
 		}
 		angleHandler.endAngle();
 	}

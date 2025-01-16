@@ -104,7 +104,7 @@ public class PointsParser extends NumberParser {
 				x = parseFloat();
 			} catch (CalcParseException e) {
 				processingY = false;
-				cssParse(e);
+				cssParse();
 				pointsHandler.endPoints();
 				return;
 			}
@@ -117,7 +117,7 @@ public class PointsParser extends NumberParser {
 			} catch (CalcParseException e) {
 				lastX = x;
 				processingY = true;
-				cssParse(e);
+				cssParse();
 				pointsHandler.endPoints();
 				return;
 			}
