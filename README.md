@@ -103,9 +103,13 @@ To run specific benchmark(s) matched by a regular expression:
 ```shell
 ./gradlew runJmh --args <regexp>
 ```
-A jmh-ready _fat Jar_ with all the dependencies is available at
+If you perform a full build or run
+```shell
+./gradlew jmhJar
+```
+a jmh-ready _fat Jar_ with all the dependencies is available at
 `echosvg-test/build/libs/echosvg-<version>-jmh.jar`, and is the recommended way to run
-benchmarks:
+the benchmarks:
 ```shell
 java -jar echosvg-test/build/libs/echosvg-<version>-jmh.jar <regexp>
 ```

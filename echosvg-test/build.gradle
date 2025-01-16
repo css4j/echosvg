@@ -160,9 +160,24 @@ tasks.register('jmhJar', Jar) {
 	}
 	with jar
 	duplicatesStrategy = 'exclude'
+	// Modularity does not apply here
 	exclude 'module-info.class'
+	// Provided by Java SE
 	exclude 'javax/**'
-	exclude 'org/w3c/css/**'
+	// The next ones are provided by java.xml module
+	exclude 'org/w3c/dom/*'
+	exclude 'org/w3c/dom/bootstrap/**'
+	exclude 'org/w3c/dom/events/**'
+	exclude 'org/w3c/dom/ls/**'
+	exclude 'org/w3c/dom/ranges/**'
+	exclude 'org/w3c/dom/traversal/**'
+	exclude 'org/w3c/dom/views/**'
+	exclude 'org/xml/**'
+	// Provided by jdk.xml.dom module
+	exclude 'org/w3c/dom/css/**'
+	exclude 'org/w3c/dom/html/**'
+	exclude 'org/w3c/dom/stylesheets/**'
+	exclude 'org/w3c/dom/xpath/**'
 }
 
 build.dependsOn jmhJar
