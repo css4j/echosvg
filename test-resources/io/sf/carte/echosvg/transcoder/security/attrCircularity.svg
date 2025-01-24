@@ -33,15 +33,15 @@
 /*<![CDATA[*/
 
 svg {
-  --pty3: attr(data-3 length,var(--pty1));
+  --pty3: attr(data-3 type(<length>),var(--pty1));
   font: 10pt 'Open Sans';
 }
 
 text {
-  --pty2: attr(data-2 length,var(--pty3));
-  --pty1: attr(data-1 length,attr(data-2 length,var(--pty2)));
+  --pty2: attr(data-2 type(<length>),var(--pty3));
+  --pty1: attr(data-1 type(<length>),attr(data-2 type(<length>),var(--pty2)));
   font-family: 'Roboto';
-  font-size: attr(nonexistent length, var(--pty1));
+  font-size: attr(nonexistent type(<length>), var(--pty1));
   text-anchor: middle;
 }
 

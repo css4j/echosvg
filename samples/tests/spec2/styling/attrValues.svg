@@ -41,15 +41,15 @@ circle, ellipse {
 
 @media screen and (100px <= width <= 900px) {
   circle, ellipse {
-    fill: attr(data-color color, #9ad6c2);
-    stroke: attr(data-stroke color);
-    stroke-width: attr(data-stroke-width length);
+    fill: attr(data-color type(<color>), #9ad6c2);
+    stroke: attr(data-stroke type(<color>));
+    stroke-width: attr(data-stroke-width type(<length>));
   }
 }
 
 text.itemdesc {
-  font: bold attr(data-font-size length,14pt) "Open Sans", sans-serif;
-  fill: attr(data-color color, var(--textColor));
+  font: bold attr(data-font-size type(<length>),14pt) "Open Sans", sans-serif;
+  fill: attr(data-color type(<color>), var(--textColor));
 }
 
 /*]]>*/

@@ -33,6 +33,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
@@ -49,7 +50,6 @@ import io.sf.carte.doc.style.css.CSSCanvas;
 import io.sf.carte.doc.style.css.CSSDocument;
 import io.sf.carte.doc.style.css.CSSRule;
 import io.sf.carte.doc.style.css.CSSTypedValue;
-import io.sf.carte.doc.style.css.CSSUnit;
 import io.sf.carte.doc.style.css.CSSValue;
 import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.CSSValueSyntax;
@@ -1199,16 +1199,10 @@ public abstract class CSSEngine {
 		final int REPLACE_COUNT_LIMIT = 0x20000; // Number of allowed lexical substitutions
 
 		/*
-		 * Prepare a working set of traversed custom properties
-		 */
-		Set<String> ptySet = new HashSet<>(customPtySet.size() + 8);
-		ptySet.addAll(customPtySet);
-
-		/*
 		 * Replace the PROXY (var(), attr()) values in the lexical chain
 		 */
 		LexicalUnit lu = lexval;
-		do {
+		topLoop: do {
 			if (lu.getLexicalUnitType() == LexicalType.VAR) {
 				sm.putCustomPtyRelative(propIdx, true);
 
@@ -1221,9 +1215,23 @@ public abstract class CSSEngine {
 				}
 
 				/*
+				 * Prepare a working set of traversed custom properties and attr()
+				 */
+				Set<String> ptySet = new HashSet<>(customPtySet.size() + 1);
+				ptySet.addAll(customPtySet);
+
+				/*
 				 * Obtain a value and replace this var() in the lexical chain
 				 */
-				newlu = getCustomPropertyValueOrFallback(sm, propertyName, param, parent, counter, ptySet);
+				newlu = getCustomPropertyValueOrFallback(sm, propertyName, param, parent, counter,
+						ptySet);
+
+				if (newlu != null) {
+					// We do not want to mess with a declared value, so clone it
+					newlu = newlu.clone();
+					// Verify whether we got another proxy value.
+					newlu = replaceLexicalProxy(sm, newlu, elt, parent, counter, ptySet, propIdx);
+				}
 
 				boolean isLexval = lu == lexval;
 				if (newlu == null) {
@@ -1233,12 +1241,11 @@ public abstract class CSSEngine {
 						// We are processing the first in the lexical chain, re-assign
 						lexval = lu;
 					}
+					ptySet.remove(propertyName);
 					continue;
 				}
 
 				if (newlu.getLexicalUnitType() != LexicalType.EMPTY) {
-					// We do not want to mess with a declared value, so clone it
-					newlu = newlu.clone();
 					try {
 						counter.replaceCounter += lu.countReplaceBy(newlu);
 					} catch (CSSBudgetException e) {
@@ -1252,24 +1259,36 @@ public abstract class CSSEngine {
 						// We are processing the first in the lexical chain, re-assign
 						lexval = newlu;
 					}
-					// Can we reset the circularity safeguard?
-					LexicalType ltype = lu.getLexicalUnitType();
-					if (ltype != LexicalType.VAR && ltype != LexicalType.ATTR) {
-						ptySet.clear();
-						ptySet.addAll(customPtySet);
-					}
 				} else {
 					// The current lexical unit can be removed
-					lu = lu.remove();
+					LexicalUnit nextlu = lu.remove();
+					if (nextlu != null) {
+						lu = nextlu;
+					} else {
+						lu = newlu;
+					}
 					if (isLexval) {
 						// We are processing the first in the lexical chain, re-assign
 						lexval = lu;
 					}
+					ptySet.remove(propertyName);
 				}
 				continue;
 			} else if (lu.getLexicalUnitType() == LexicalType.ATTR) {
 				boolean isLexval = lu == lexval;
+
+				/*
+				 * Prepare a working set of traversed custom properties and attr()
+				 */
+				Set<String> ptySet = new HashSet<>(customPtySet.size() + 1);
+				ptySet.addAll(customPtySet);
+
 				LexicalUnit newlu = replacementAttrUnit(sm, lu, elt, parent, counter, ptySet, propIdx);
+
+				if (newlu != null) {
+					// Verify whether we got another proxy value.
+					newlu = replaceLexicalProxy(sm, newlu, elt, parent, counter, ptySet, propIdx);
+				}
 
 				if (newlu == null) {
 					// The current lexical unit can be removed
@@ -1283,6 +1302,25 @@ public abstract class CSSEngine {
 
 				sm.putAttrTainted(propIdx, true);
 
+				// Handle EMPTY values
+				while (newlu.getLexicalUnitType() == LexicalType.EMPTY) {
+					LexicalUnit nextlu = newlu.remove();
+					if (nextlu == null) {
+						// The current lexical unit can be removed
+						lu = lu.remove();
+						if (lu == null) {
+							lu = newlu;
+						}
+						if (isLexval) {
+							// We are processing the first in the lexical chain, re-assign
+							lexval = lu;
+						}
+						continue topLoop;
+					} else {
+						newlu = nextlu;
+					}
+				}
+
 				try {
 					counter.replaceCounter += lu.countReplaceBy(newlu);
 				} catch (CSSBudgetException e) {
@@ -1292,42 +1330,206 @@ public abstract class CSSEngine {
 					throw createAttrResourceLimitException();
 				}
 
-				if (newlu.getLexicalUnitType() != LexicalType.EMPTY) {
-					// We do not want to mess with a declared value, so clone it
-					newlu = newlu.clone();
-					try {
-						counter.replaceCounter += lu.countReplaceBy(newlu);
-					} catch (CSSBudgetException e) {
-						throw createAttrResourceLimitException(e);
-					}
-					if (counter.replaceCounter >= REPLACE_COUNT_LIMIT) {
-						throw createAttrResourceLimitException();
-					}
-					lu = newlu;
-					if (isLexval) {
-						// We are processing the first in the lexical chain, re-assign
-						lexval = newlu;
-					}
-				} else {
-					// The current lexical unit can be removed
-					lu = lu.remove();
-					if (isLexval) {
-						// We are processing the first in the lexical chain, re-assign
-						lexval = lu;
-					}
+				lu = newlu;
+				if (isLexval) {
+					// We are processing the first in the lexical chain, re-assign
+					lexval = newlu;
 				}
 				continue;
 			} else {
 				LexicalUnit param = lu.getParameters();
 				if (param != null || (param = lu.getSubValues()) != null) {
 					// Ignore return value (it is a parameter or a sub-value)
-					replaceLexicalProxy(sm, param, elt, parent, counter, ptySet, propIdx);
+					replaceLexicalProxy(sm, param, elt, parent, counter, customPtySet, propIdx);
 				}
 			}
 			lu = lu.getNextLexicalUnit();
 		} while (lu != null);
 
 		return lexval;
+	}
+
+	private LexicalUnit replacementAttrUnit(StyleMap sm, LexicalUnit attr, CSSStylableElement elt,
+			CSSStylableElement parent, CounterRef counter, Set<String> checkSet, int propIdx) {
+		// Obtain attribute name and type (if set)
+		LexicalUnit lu = attr.getParameters();
+		if (lu.getLexicalUnitType() != LexicalType.IDENT) {
+			valueSyntaxError("Unexpected attribute name (" + lu.getCssText() + ") in " + attr.getCssText());
+			return null;
+		}
+		String attrname = lu.getStringValue();
+
+		if (!checkSet.add(attrname)) {
+			throw new CSSCircularityException(
+					"Circularity evaluating attr() '" + attrname + "': " + checkSet.toString());
+		}
+
+		CSSValueSyntax syn = null;
+		short unitConv = -1; // -1 means string
+		lu = lu.getNextLexicalUnit();
+		if (lu != null) {
+			if (lu.getLexicalUnitType() != LexicalType.OPERATOR_COMMA) {
+				switch (lu.getLexicalUnitType()) {
+				case IDENT:
+					String attrtype = lu.getStringValue().toLowerCase(Locale.ROOT);
+					if (!"string".equals(attrtype)) {
+						unitConv = UnitStringToId.unitFromString(attrtype);
+						if (unitConv == CSSUnit.CSS_OTHER) {
+							valueSyntaxError(
+									"Unexpected attribute type (" + lu.getCssText() + ") in "
+											+ attr.getCssText());
+							return null;
+						}
+					}
+					break;
+				case OPERATOR_MOD:
+					// %
+					unitConv = CSSUnit.CSS_PERCENTAGE;
+					break;
+				case TYPE_FUNCTION:
+					LexicalUnit param = lu.getParameters();
+					if (param.getLexicalUnitType() == LexicalType.SYNTAX) {
+						syn = param.getSyntax();
+						// Set some unit so it is not processed as string
+						unitConv = CSSUnit.CSS_NUMBER;
+						break;
+					}
+				default:
+					valueSyntaxError(
+							"Unexpected attribute type (" + lu.getCssText() + ") in " + attr.getCssText());
+					return lu == null ? null : lu.clone();
+				}
+
+				lu = lu.getNextLexicalUnit();
+				if (lu != null) {
+					if (lu.getLexicalUnitType() != LexicalType.OPERATOR_COMMA) {
+						valueSyntaxError(
+								"Expected comma, found: " + lu.getCssText() + " in " + attr.getCssText());
+						return null;
+					}
+					lu = lu.getNextLexicalUnit();
+					// Now lu contains the fallback
+				}
+			} else {
+				lu = lu.getNextLexicalUnit();
+				if (lu == null) {
+					// Ending with comma is wrong syntax
+					valueSyntaxError("Unexpected end after comma in value " + attr.getCssText());
+					return null;
+				}
+			}
+		}
+
+		// Obtain the attribute value
+		org.w3c.dom.Attr attrNode = elt.getAttributeNode(attrname);
+		String attrvalue = attrNode != null ? attrNode.getValue() : "";
+
+		Parser parser = createCSSParser();
+
+		/*
+		 * string type is a special case
+		 */
+		if (unitConv == -1) { // string
+			LexicalUnit substValue;
+			if (attrNode != null || lu == null) {
+				String s = ParseHelper.quote(attrvalue, '"');
+				try {
+					substValue = parser.parsePropertyValue(new StringReader(s));
+				} catch (IOException e) {
+					// This won't happen
+					substValue = null;
+				} catch (CSSParseException e) {
+					// Possibly a budget error
+					valueSyntaxError("Unexpected error parsing: " + s.substring(0, Math.min(s.length(), 255)), e);
+					// Process fallback
+					if (lu != null) {
+						substValue = lu.clone();
+					} else {
+						try {
+							substValue = parser.parsePropertyValue(new StringReader("\"\""));
+						} catch (CSSParseException | IOException e1) {
+							substValue = null; // cannot happen
+						}
+					}
+				}
+			} else {
+				// fallback cannot be null here
+				substValue = lu.clone();
+			}
+			// No further processing required
+			return substValue;
+		}
+
+		attrvalue = attrvalue.trim();
+
+		if (!attrvalue.isEmpty()) {
+			/*
+			 * Non-string types
+			 */
+
+			LexicalUnit substValue;
+			try {
+				substValue = parser.parsePropertyValue(new StringReader(attrvalue));
+			} catch (IOException e) {
+				// This won't happen
+				substValue = null;
+			} catch (CSSParseException e) {
+				valueSyntaxError("Error parsing attribute '" + attrname + "', value: " + attrvalue, e);
+				// Return fallback
+				if (lu != null) {
+					return lu.clone();
+				}
+				return null;
+			}
+
+			// Substitute proxy values before checking type.
+			substValue = replaceLexicalProxy(sm, substValue, elt, parent, counter, checkSet, propIdx);
+
+			if (substValue != null) {
+				// Now check that the value is of the correct type.
+				//
+				if (syn != null) {
+					if (substValue.matches(syn) == Match.TRUE) {
+						return substValue;
+					} else {
+						String message = "Attribute " + attrname + " with value '" + substValue
+								+ "' does not match type '" + syn.toString() + "'.";
+						if (lu == null) {
+							// Throw an exception to break the chain replacement
+							throw new DOMException(DOMException.TYPE_MISMATCH_ERR, message);
+						}
+						valueSyntaxError(message);
+					}
+				} else {
+					// Unit-based types
+					float f;
+					LexicalType luType = substValue.getLexicalUnitType();
+					if (luType == LexicalType.INTEGER) {
+						f = substValue.getIntegerValue();
+					} else if (luType == LexicalType.REAL) {
+						f = substValue.getFloatValue();
+					} else {
+						String message = "Attribute unit is not a <number>, instead is: "
+								+ CSSUnit.dimensionUnitString(substValue.getCssUnit());
+						// Check for fallback
+						if (lu != null) {
+							valueSyntaxError(message);
+							return lu.clone();
+						}
+						// Guaranteed-invalid
+						throw new DOMException(DOMException.TYPE_MISMATCH_ERR, message);
+					}
+					if (unitConv != CSSUnit.CSS_NUMBER) {
+						// Must convert to unit
+						substValue = ParseHelper.createDimensionLexicalUnit(unitConv, f);
+					}
+					return substValue;
+				}
+			}
+		}
+
+		// Return fallback
+		return lu == null ? null : lu.clone();
 	}
 
 	/**
@@ -1339,7 +1541,8 @@ public abstract class CSSEngine {
 	 * @param fallbackLU     the custom property fallback.
 	 * @param parent         the parent element, or {@code null} if no parent.
 	 * @param counter        the counter.
-	 * @param customPtySet   the set of custom property names, to prevent circular
+	 * @param customPtySet   check that the custom property name is not a member of
+	 *                       this set of custom property names, to prevent circular
 	 *                       dependencies.
 	 * @return the value of {@code customProperty} or the fallback if there is no
 	 *         value.
@@ -1352,23 +1555,23 @@ public abstract class CSSEngine {
 	private LexicalUnit getCustomPropertyValueOrFallback(StyleMap sm, String customProperty, LexicalUnit fallbackLU,
 			CSSStylableElement parent, CounterRef counter, Set<String> customPtySet)
 			throws DOMException, CSSSecurityException {
-		if (!customPtySet.add(customProperty)) {
+
+		if (customPtySet.contains(customProperty)) {
 			throw new CSSCircularityException(
-					"Circularity evaluating custom property " + customProperty + ": " + customPtySet.toString());
+					"Circularity evaluating custom property " + customProperty + ": "
+							+ customPtySet.toString());
+		}
+
+		if (!counter.increment()) {
+			throw createVarResourceLimitException(customProperty);
 		}
 
 		LexicalUnit custom = getCustomProperty(sm, customProperty, parent);
 
 		if (custom != null) {
-			if (counter.increment()) {
-				return custom;
-			} else {
-				throw createVarResourceLimitException(customProperty);
-			}
+			customPtySet.add(customProperty);
+			return custom;
 		}
-
-		// customProperty is null, no circularity.
-		customPtySet.remove(customProperty);
 
 		// Fallback
 		return fallbackLU;
@@ -1476,166 +1679,6 @@ public abstract class CSSEngine {
 			displayOrThrowError(ex);
 			return false;
 		}
-	}
-
-	private LexicalUnit replacementAttrUnit(StyleMap sm, LexicalUnit attr, CSSStylableElement elt,
-			CSSStylableElement parent, CounterRef counter, Set<String> ptySet, int propIdx) {
-		// Obtain attribute name and type (if set)
-		LexicalUnit lu = attr.getParameters();
-		if (lu.getLexicalUnitType() != LexicalType.IDENT) {
-			valueSyntaxError("Unexpected attribute name (" + lu.getCssText() + ") in " + attr.getCssText());
-			return null;
-		}
-		String attrname = lu.getStringValue();
-		String attrtype;
-		lu = lu.getNextLexicalUnit();
-		if (lu != null) {
-			if (lu.getLexicalUnitType() != LexicalType.OPERATOR_COMMA) {
-				switch (lu.getLexicalUnitType()) {
-				case IDENT:
-					attrtype = lu.getStringValue().toLowerCase(Locale.ROOT);
-					break;
-				case OPERATOR_MOD:
-					attrtype = "%";
-					break;
-				default:
-					valueSyntaxError(
-							"Unexpected attribute type (" + lu.getCssText() + ") in " + attr.getCssText());
-					return null;
-				}
-				lu = lu.getNextLexicalUnit();
-				if (lu != null) {
-					if (lu.getLexicalUnitType() != LexicalType.OPERATOR_COMMA) {
-						valueSyntaxError(
-								"Expected comma, found: " + lu.getCssText() + " in " + attr.getCssText());
-						return null;
-					}
-					lu = lu.getNextLexicalUnit();
-				}
-			} else {
-				lu = lu.getNextLexicalUnit();
-				if (lu == null) {
-					// Ending with comma is wrong syntax
-					valueSyntaxError("Unexpected end after comma in value " + attr.getCssText());
-					return null;
-				}
-				attrtype = null;
-			}
-		} else {
-			attrtype = null;
-		}
-
-		// Obtain the attribute value
-		String attrvalue = elt.getAttribute(attrname);
-
-		Parser parser = createCSSParser();
-
-		/*
-		 * string type is a special case
-		 */
-		if (attrtype == null || "string".equalsIgnoreCase(attrtype)) {
-			String s = ParseHelper.quote(attrvalue, '"');
-			LexicalUnit substValue;
-			try {
-				substValue = parser.parsePropertyValue(new StringReader(s));
-			} catch (IOException e) {
-				// This won't happen
-				substValue = null;
-			} catch (CSSParseException e) {
-				// Possibly a budget error
-				valueSyntaxError("Unexpected error parsing: " + s.substring(0, Math.min(s.length(), 255)), e);
-				// Process fallback
-				substValue = lu;
-				if (substValue != null) {
-					substValue = substValue.clone();
-				} else {
-					try {
-						return parser.parsePropertyValue(new StringReader("\"\""));
-					} catch (CSSParseException | IOException e1) {
-					}
-				}
-			}
-			// No further processing required
-			return replaceLexicalProxy(sm, substValue, elt, parent, counter, ptySet, propIdx);
-		}
-
-		if (!attrvalue.isEmpty()) {
-			/*
-			 * Non-string types
-			 */
-			attrvalue = attrvalue.trim();
-
-			// Let's see if the type is an actual type or an unit suffix
-			if (attrtype.length() <= 2 || UnitStringToId.unitFromString(attrtype) != CSSUnit.CSS_OTHER) {
-				attrvalue += attrtype;
-			}
-
-			LexicalUnit substValue;
-			try {
-				substValue = parser.parsePropertyValue(new StringReader(attrvalue));
-			} catch (IOException e) {
-				// This won't happen
-				substValue = null;
-			} catch (CSSParseException e) {
-				valueSyntaxError("Error parsing attribute '" + attrname + "', value: " + attrvalue, e);
-				// Return fallback
-				if (lu != null) {
-					return replaceLexicalProxy(sm, lu.clone(), elt, parent, counter, ptySet, propIdx);
-				}
-				return null;
-			}
-			try {
-				substValue = replaceLexicalProxy(sm, substValue, elt, parent, counter, ptySet, propIdx);
-			} catch (Exception e) {
-				valueSyntaxError("Circularity: " + attr.getCssText() + " references " + substValue.getCssText(), e);
-				// Return fallback
-				substValue = null;
-			}
-			if (substValue != null) {
-				substValue = replaceLexicalProxy(sm, substValue, elt, parent, counter, ptySet, propIdx);
-				// Now check that the value is of the correct type.
-				//
-				// If the attribute type length is 1 or 2, type can only be a unit suffix
-				// and there is no need to check.
-				if (attrtype.length() > 2 && !unitMatchesAttrType(substValue, attrtype)) {
-					substValue = null;
-					valueSyntaxError("Attribute value does not match type (" + attrtype + ").");
-				} else {
-					return substValue;
-				}
-			} else {
-				// Fallback
-				if (lu != null) {
-					substValue = replaceLexicalProxy(sm, lu.clone(), elt, parent, counter, ptySet, propIdx);
-				}
-				return substValue;
-			}
-		}
-
-		// Return fallback
-		return lu == null ? null : replaceLexicalProxy(sm, lu.clone(), elt, parent, counter, ptySet, propIdx);
-	}
-
-	private static boolean unitMatchesAttrType(LexicalUnit lunit, String attrtype) {
-		int len = attrtype.length();
-		if (len == 1) {
-			return "%".equals(attrtype) && lunit.getCssUnit() == CSSUnit.CSS_PERCENTAGE;
-		} else if (len == 2) {
-			return attrtype.equalsIgnoreCase(lunit.getDimensionUnitText());
-		}
-		if ("ident".equalsIgnoreCase(attrtype)) {
-			attrtype = "custom-ident";
-		}
-		CSSValueSyntax syn = SyntaxParser.createSimpleSyntax(attrtype);
-		if (syn == null) {
-			// Could be a 3-4 letter unit suffix, or an error
-			return attrtype.equalsIgnoreCase(lunit.getDimensionUnitText());
-		}
-		if (syn.getCategory() == CSSValueSyntax.Category.url) {
-			// There is no <url> syntax for security reasons
-			return false;
-		}
-		return lunit.matches(syn) == Match.TRUE;
 	}
 
 	private void valueSyntaxError(String message) {

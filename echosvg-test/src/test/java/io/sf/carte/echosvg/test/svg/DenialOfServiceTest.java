@@ -66,7 +66,7 @@ public class DenialOfServiceTest {
 	@Test
 	@Timeout(value = 2500, unit = TimeUnit.MILLISECONDS)
 	public void testAttrCircularity() throws TranscoderException, IOException {
-		assertThrows(CSSCircularityException.class, () -> testSecurity("attrCircularity.svg", 4));
+		assertThrows(CSSCircularityException.class, () -> testSecurity("attrCircularity.svg", 2));
 	}
 
 	/**
