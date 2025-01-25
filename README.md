@@ -235,15 +235,13 @@ repositories {
             releasesOnly()
         }
         content {
-            includeGroup 'io.sf.carte'
-            includeGroup 'io.sf.jclf'
-            includeGroup 'io.sf.graphics'
+			includeGroupByRegex 'io\\.sf\\..*'
         }
     }
 }
 ```
 please use that repository only for the artifact groups that it supplies
-(basically those listed in the above `includeGroup` statements).
+(basically those listed in the above `includeGroupByRegex` statement).
 
 Then, in your `build.gradle` file you can list the dependencies, for example:
 ```groovy
@@ -258,7 +256,7 @@ dependencies {
 }
 ```
 where `echosvgVersion` would be defined in a `gradle.properties` file (current
-version is `1.2.3`).
+version is `1.2.4`).
 
 <br/>
 
