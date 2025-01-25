@@ -94,8 +94,8 @@ public class FloatValue extends NumericValue implements CSSNumberValue, CSSUnitV
 	/**
 	 * Creates a new value.
 	 *
-	 * @param unit  the unit.
-	 * @param value the value expressed in that unit.
+	 * @param unitType   the unit.
+	 * @param floatValue the value expressed in that unit.
 	 */
 	public FloatValue(short unitType, float floatValue) {
 		this.unitType = unitType;

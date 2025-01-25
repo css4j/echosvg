@@ -32,7 +32,7 @@ public class LexicalValue extends AbstractValue {
 	/**
 	 * Creates a new LexicalValue object.
 	 * 
-	 * @param params the lexical unit with the {@code var()} function(s).
+	 * @param lunit the lexical unit with the {@code PROXY} function(s).
 	 */
 	public LexicalValue(LexicalUnit lunit) throws IllegalArgumentException {
 		super();

@@ -196,7 +196,7 @@ public abstract class AbstractValueManager extends AbstractValueFactory implemen
 
 	/**
 	 * Creates an INVALID_ACCESS_ERR exception.
-	 * @param unit the unit.
+	 * @param cv the value.
 	 */
 	protected DOMException createDOMException(Value cv) {
 		Object[] p = { cv.getCssText(), cv.getUnitType() };

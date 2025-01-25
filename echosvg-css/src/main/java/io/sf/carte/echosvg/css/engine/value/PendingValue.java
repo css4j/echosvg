@@ -34,7 +34,7 @@ public class PendingValue extends LexicalValue {
 	 * Creates a new PendingValue object.
 	 * 
 	 * @param shorthandName the shorthand name.
-	 * @param the lexical unit that is pending substitution.
+	 * @param lunit         the lexical unit that is pending substitution.
 	 */
 	public PendingValue(String shorthandName, LexicalUnit lunit) throws IllegalArgumentException {
 		super(lunit);
