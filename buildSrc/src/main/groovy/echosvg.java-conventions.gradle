@@ -100,14 +100,10 @@ tasks.register("${project.name}-jar-with-deps", Jar) {
 
 	archiveClassifier = 'with-deps'
 
-	dependsOn configurations.compileClasspath
 	dependsOn configurations.runtimeClasspath
 
 	doFirst {
 		from sourceSets.main.output
-		from {
-			configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-		}
 		from {
 			configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) }
 		}
