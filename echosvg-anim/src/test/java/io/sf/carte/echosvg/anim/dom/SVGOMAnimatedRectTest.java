@@ -16,7 +16,7 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.anim.dom.test;
+package io.sf.carte.echosvg.anim.dom;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -29,9 +29,6 @@ import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.svg.SVGRect;
 
-import io.sf.carte.echosvg.anim.dom.AbstractElement;
-import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
-import io.sf.carte.echosvg.anim.dom.SVGOMAnimatedRect;
 import io.sf.carte.echosvg.dom.svg.LiveAttributeException;
 import io.sf.carte.echosvg.parser.ParseException;
 import io.sf.carte.echosvg.util.SVGConstants;

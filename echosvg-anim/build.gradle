@@ -4,7 +4,15 @@ plugins {
 
 dependencies {
 	api project(':echosvg-svg-dom')
-	compileOnly "xml-apis:xml-apis:$xmlApisVersion" // Required by Java 8 compat
+	if (!project.getPluginManager().hasPlugin('eclipse')) {
+		compileOnly "xml-apis:xml-apis:$xmlApisVersion" // Required by Java 8 compat
+	}
+	testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+	useJUnitPlatform()
 }
 
 description = 'io.sf.carte:echosvg-anim'

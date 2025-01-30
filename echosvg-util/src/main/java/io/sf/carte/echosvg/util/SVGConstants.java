@@ -358,6 +358,7 @@ public interface SVGConstants extends CSSConstants, XMLConstants {
 	String SVG_DEFINITION_SRC_TAG = "definition-src";
 	String SVG_DEFS_TAG = "defs";
 	String SVG_DESC_TAG = "desc";
+	String SVG_DISCARD_TAG = "discard";
 	String SVG_ELLIPSE_TAG = "ellipse";
 	String SVG_FE_BLEND_TAG = "feBlend";
 	String SVG_FE_COLOR_MATRIX_TAG = "feColorMatrix";

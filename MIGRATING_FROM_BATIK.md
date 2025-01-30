@@ -88,3 +88,5 @@ Batik:
    class is now located inside a new `SVGAbstractTranscoder` class that was
    created in the `io.sf.carte.echosvg.transcoder.svg` package, which shadows
    the old class of the same name located at `io.sf.carte.echosvg.transcoder`.
+
+15) Field `SVGDOMImplementation.svg11Factories` was renamed to `svgFactories`.

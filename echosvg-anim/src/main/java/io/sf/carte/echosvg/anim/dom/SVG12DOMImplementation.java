@@ -160,7 +160,7 @@ public class SVG12DOMImplementation extends SVGDOMImplementation {
 	/**
 	 * The SVG element factories.
 	 */
-	protected static HashMap<String, ElementFactory> svg12Factories = new HashMap<>(svg11Factories);
+	protected static HashMap<String, ElementFactory> svg12Factories = new HashMap<>(svgFactories);
 
 	static {
 		svg12Factories.put(SVG12Constants.SVG_FLOW_DIV_TAG, new FlowDivElementFactory());
