@@ -9,6 +9,7 @@ description = 'io.sf.carte:echosvg-all'
 dependencies {
 	api project(':echosvg-script')
 	api project(':echosvg-ext')
+	api project(':echosvg-ext-swing')
 	api project(':echosvg-extension')
 	api project(':echosvg-gui-util')
 	api project(':echosvg-swing')
@@ -31,6 +32,7 @@ dependencies {
 	jacocoAggregation project(':echosvg-css')
 	jacocoAggregation project(':echosvg-dom')
 	jacocoAggregation project(':echosvg-ext')
+	jacocoAggregation project(':echosvg-ext-swing')
 	jacocoAggregation project(':echosvg-extension')
 	jacocoAggregation project(':echosvg-gui-util')
 	jacocoAggregation project(':echosvg-gvt')
@@ -148,6 +150,11 @@ tasks.register('prepareModularSources') {
 		}
 		ant.copy(todir: "$buildDir/src/io.sf.carte.echosvg.dom.svg") {
 			fileset(dir: "$rootDir/echosvg-svg-dom/src/main/java") {
+				include(name: '**/*')
+			}
+		}
+		ant.copy(todir: "$buildDir/src/io.sf.carte.echosvg.ext.swing") {
+			fileset(dir: "$rootDir/echosvg-ext-swing/src/main/java") {
 				include(name: '**/*')
 			}
 		}
@@ -301,6 +308,7 @@ tasks.register('modularJavadoc', Javadoc) {
 		"$buildDir/src/io.sf.carte.echosvg.css",
 		"$buildDir/src/io.sf.carte.echosvg.dom",
 		"$buildDir/src/io.sf.carte.echosvg.dom.svg",
+		"$buildDir/src/io.sf.carte.echosvg.ext.swing",
 		"$buildDir/src/io.sf.carte.echosvg.external",
 		"$buildDir/src/io.sf.carte.echosvg.extension",
 		"$buildDir/src/io.sf.carte.echosvg.gvt",

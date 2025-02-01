@@ -1,0 +1,14 @@
+plugins {
+	id 'echosvg.java-conventions'
+}
+
+dependencies {
+	implementation project(':echosvg-i18n')
+	implementation project(':echosvg-util')
+}
+
+description = 'io.sf.carte:echosvg-ext-swing'
+
+publishing.publications.maven(MavenPublication).pom {
+	description = 'EchoSVG swing utilities'
+}

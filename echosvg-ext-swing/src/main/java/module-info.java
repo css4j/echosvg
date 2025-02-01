@@ -17,18 +17,15 @@
  *
  */
 /**
- * Java2D SVG generator.
+ * EchoSVG swing utilities.
  */
-module io.sf.carte.echosvg.svggen {
-	exports io.sf.carte.echosvg.svggen;
-	exports io.sf.carte.echosvg.svggen.font;
-	exports io.sf.carte.echosvg.svggen.font.table;
+module io.sf.carte.echosvg.ext.swing {
 
-	requires transitive io.sf.carte.echosvg.awt;
-	requires io.sf.carte.echosvg.constants;
+	exports io.sf.carte.echosvg.ext.swing;
+
 	requires io.sf.carte.echosvg.i18n;
 	requires io.sf.carte.echosvg.util;
 
 	requires transitive java.desktop;
-	requires java.xml;
+
 }

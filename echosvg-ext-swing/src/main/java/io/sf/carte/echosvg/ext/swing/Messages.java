@@ -46,7 +46,7 @@ public class Messages {
 	/**
 	 * The localizable support for the error messages.
 	 */
-	protected static LocalizableSupport localizableSupport = new LocalizableSupport(RESOURCES,
+	static LocalizableSupport localizableSupport = new LocalizableSupport(RESOURCES,
 			Messages.class.getClassLoader());
 
 	/**

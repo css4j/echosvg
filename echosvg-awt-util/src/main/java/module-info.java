@@ -25,7 +25,6 @@
 module io.sf.carte.echosvg.awt {
 	exports io.sf.carte.echosvg.ext.awt.image.renderable;
 	exports io.sf.carte.echosvg.ext.awt;
-	exports io.sf.carte.echosvg.ext.swing;
 	exports io.sf.carte.echosvg.ext.awt.image.spi;
 	exports io.sf.carte.echosvg.ext.awt.image.rendered;
 	exports io.sf.carte.echosvg.ext.awt.image;

@@ -90,3 +90,7 @@ Batik:
    the old class of the same name located at `io.sf.carte.echosvg.transcoder`.
 
 15) Field `SVGDOMImplementation.svg11Factories` was renamed to `svgFactories`.
+
+16) Package `io.sf.carte.echosvg.ext.swing` was moved from `echosvg-awt-util` to
+   a new `io.sf.carte.echosvg.ext.swing` module (`echosvg-ext-swing` Gradle
+   name).
