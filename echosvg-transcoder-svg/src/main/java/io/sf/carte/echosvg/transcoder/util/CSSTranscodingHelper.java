@@ -225,11 +225,6 @@ public class CSSTranscodingHelper {
 	private final Transcoder transcoder;
 
 	/**
-	 * dark mode toggle.
-	 */
-	private boolean darkMode = false;
-
-	/**
 	 * dark mode initial value for the CSS {@code color} property.
 	 */
 	private static final CSSTypedValue darkmodeInitialColor = (CSSTypedValue) new ValueFactory()
@@ -263,11 +258,22 @@ public class CSSTranscodingHelper {
 
 	/**
 	 * Enables or disables dark mode.
+	 * <p>
+	 * This method just sets the
+	 * {@link SVGAbstractTranscoder#KEY_PREFERS_COLOR_SCHEME
+	 * KEY_PREFERS_COLOR_SCHEME} transcoding hint.
+	 * </p>
 	 * 
 	 * @param darkMode if {@code true}, dark mode will be enabled.
 	 */
 	public void setDarkMode(boolean darkMode) {
-		this.darkMode = darkMode;
+		String pcs;
+		if (darkMode) {
+			pcs = "dark";
+		} else {
+			pcs = "light";
+		}
+		this.transcoder.addTranscodingHint(SVGAbstractTranscoder.KEY_PREFERS_COLOR_SCHEME, pcs);
 	}
 
 	/**
@@ -1097,6 +1103,8 @@ public class CSSTranscodingHelper {
 
 			@Override
 			public CSSTypedValue getInitialColor() {
+				boolean darkMode = "dark".equalsIgnoreCase(
+						(String) transcoder.getTranscodingHints().get(SVGAbstractTranscoder.KEY_PREFERS_COLOR_SCHEME));
 				return darkMode ? darkmodeInitialColor : super.getInitialColor();
 			}
 
@@ -1224,7 +1232,15 @@ public class CSSTranscodingHelper {
 			 */
 			@Override
 			protected String getPrefersColorScheme() {
-				return darkMode ? "dark" : "light";
+				final String defPcs = "light";
+				String pcs;
+				try {
+					pcs = (String) transcoder.getTranscodingHints()
+							.getOrDefault(SVGAbstractTranscoder.KEY_PREFERS_COLOR_SCHEME, defPcs);
+				} catch (ClassCastException e) {
+					pcs = defPcs;
+				}
+				return pcs;
 			}
 
 			@Override
