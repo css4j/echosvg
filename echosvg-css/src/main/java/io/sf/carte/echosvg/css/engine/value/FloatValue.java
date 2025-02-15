@@ -43,6 +43,8 @@ import io.sf.carte.doc.style.css.property.NumberValue;
  */
 public class FloatValue extends NumericValue implements CSSNumberValue, CSSUnitValue {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Returns the CSS text associated with the given type/value pair.
 	 */

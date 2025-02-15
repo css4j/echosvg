@@ -40,6 +40,8 @@ import io.sf.carte.echosvg.css.engine.StyleMap;
  */
 public abstract class NumericDelegateValue<D extends CSSMathValue> extends NumericValue {
 
+	private static final long serialVersionUID = 1L;
+
 	private D delegate;
 
 	/**

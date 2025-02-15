@@ -33,6 +33,8 @@ import io.sf.carte.echosvg.css.engine.value.svg.SVGValueConstants;
  */
 public class LCHColorValue extends ColorValue implements CSSLCH {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * The lightness component.
 	 */

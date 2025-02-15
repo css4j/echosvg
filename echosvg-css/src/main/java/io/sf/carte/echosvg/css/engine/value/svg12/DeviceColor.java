@@ -30,6 +30,8 @@ import io.sf.carte.echosvg.css.engine.value.ColorValue;
 @Deprecated
 public class DeviceColor extends ColorValue {
 
+	private static final long serialVersionUID = 1L;
+
 	public static final String DEVICE_GRAY_COLOR_FUNCTION = "device-gray";
 	public static final String DEVICE_RGB_COLOR_FUNCTION = "device-rgb";
 	public static final String DEVICE_CMYK_COLOR_FUNCTION = "device-cmyk";

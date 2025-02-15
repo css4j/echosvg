@@ -31,6 +31,8 @@ import org.w3c.css.om.typed.CSSStyleValueList;
  */
 public class AbstractValueList<V extends Value> extends ComponentValue implements CSSStyleValueList<V> {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * The items.
 	 */

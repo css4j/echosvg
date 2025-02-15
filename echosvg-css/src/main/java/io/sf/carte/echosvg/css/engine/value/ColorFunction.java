@@ -36,6 +36,8 @@ import org.w3c.dom.DOMException;
  */
 public class ColorFunction extends ColorValue implements CSSColor {
 
+	private static final long serialVersionUID = 1L;
+
 	private IdentValue colorSpace;
 
 	/**

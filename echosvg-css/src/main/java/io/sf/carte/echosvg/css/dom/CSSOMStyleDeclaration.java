@@ -240,6 +240,8 @@ public class CSSOMStyleDeclaration implements CSSStyleDeclaration {
 	 */
 	public class StyleDeclarationValue extends CSSOMValue implements CSSOMValue.ValueProvider {
 
+		private static final long serialVersionUID = 1L;
+
 		/**
 		 * The property name.
 		 */

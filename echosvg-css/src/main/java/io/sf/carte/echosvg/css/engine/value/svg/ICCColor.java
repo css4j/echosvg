@@ -31,6 +31,8 @@ import io.sf.carte.echosvg.css.engine.value.AbstractValue;
  */
 public class ICCColor extends AbstractValue {
 
+	private static final long serialVersionUID = 1L;
+
 	public static final String ICC_COLOR_FUNCTION = "icc-color";
 
 	/**

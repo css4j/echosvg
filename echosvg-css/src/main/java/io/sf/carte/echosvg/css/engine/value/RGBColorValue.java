@@ -38,6 +38,8 @@ import io.sf.carte.echosvg.css.engine.value.svg.SVGValueConstants;
  */
 public class RGBColorValue extends ColorValue implements CSSRGB {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * The red component.
 	 */

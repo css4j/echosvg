@@ -28,6 +28,8 @@ import org.w3c.dom.DOMException;
  */
 public abstract class AbstractValue implements Value, Cloneable {
 
+	private static final long serialVersionUID = 1L;
+
 	ValueModificationHandler handler;
 
 	@Override

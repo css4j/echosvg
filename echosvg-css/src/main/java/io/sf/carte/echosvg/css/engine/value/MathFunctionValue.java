@@ -30,6 +30,8 @@ import io.sf.carte.doc.style.css.property.Evaluator;
  */
 public class MathFunctionValue extends NumericDelegateValue<CSSMathFunctionValue> {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Creates a new value.
 	 */

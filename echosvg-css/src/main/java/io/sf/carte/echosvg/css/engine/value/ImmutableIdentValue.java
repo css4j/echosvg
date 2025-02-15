@@ -29,6 +29,8 @@ import org.w3c.dom.DOMException;
  */
 class ImmutableIdentValue extends IdentValue {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Creates a new immutable IdentValue.
 	 * 

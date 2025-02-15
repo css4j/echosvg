@@ -28,6 +28,8 @@ import io.sf.carte.echosvg.css.engine.value.ColorValue;
  */
 public abstract class AbstractCIEColor extends ColorValue {
 
+	private static final long serialVersionUID = 1L;
+
 	/** The three color values. */
 	protected float[] values = new float[3];
 

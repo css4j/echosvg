@@ -27,6 +27,8 @@ import io.sf.carte.doc.style.css.nsac.LexicalUnit;
  */
 public class LexicalValue extends AbstractValue {
 
+	private static final long serialVersionUID = 1L;
+
 	private LexicalUnit lunit = null;
 
 	/**

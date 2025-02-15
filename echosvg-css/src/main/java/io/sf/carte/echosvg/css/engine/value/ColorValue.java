@@ -31,6 +31,8 @@ import org.w3c.css.om.unit.CSSUnit;
  */
 public abstract class ColorValue extends ComponentValue implements TypedValue, CSSColorValue {
 
+	private static final long serialVersionUID = 1L;
+
 	public static final String RGB_FUNCTION = "rgb";
 
 	public static final String CS_SRGB = "srgb";

@@ -28,6 +28,8 @@ import io.sf.carte.doc.style.css.nsac.LexicalUnit;
  */
 public class PendingValue extends LexicalValue {
 
+	private static final long serialVersionUID = 1L;
+
 	private String shorthandName;
 
 	/**

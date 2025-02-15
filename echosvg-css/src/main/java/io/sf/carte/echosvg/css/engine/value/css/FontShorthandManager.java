@@ -411,6 +411,8 @@ public class FontShorthandManager extends AbstractValueFactory implements Shorth
 
 		CalcValue calc = new CalcValue((CSSExpressionValue) cssValue) {
 
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected FloatValue absoluteValue(CSSStylableElement elt, String pseudo, CSSEngine engine,
 					int idx, StyleMap sm, FloatValue relative) {

@@ -31,6 +31,8 @@ import io.sf.carte.doc.style.css.parser.ParseHelper;
  */
 public class IdentValue extends AbstractStringValue implements CSSKeywordValue {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Creates a new IdentValue.
 	 * 

@@ -33,6 +33,8 @@ import io.sf.carte.doc.style.css.parser.ParseHelper;
  */
 public class StringValue extends AbstractStringValue implements CSSStringValue {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Creates a new StringValue.
 	 */

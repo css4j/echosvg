@@ -30,6 +30,8 @@ import io.sf.carte.echosvg.css.engine.value.ColorValue;
 @Deprecated
 public class ICCNamedColor extends ColorValue {
 
+	private static final long serialVersionUID = 1L;
+
 	public static final String ICC_NAMED_COLOR_FUNCTION = "icc-named-color";
 
 	/**

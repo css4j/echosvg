@@ -29,7 +29,7 @@ import org.w3c.dom.DOMException;
  * @author See Git history.
  * @version $Id$
  */
-public interface Value extends CSSVal, CSSStyleValue {
+public interface Value extends CSSVal, CSSStyleValue, java.io.Serializable {
 
 	/**
 	 * Gets the css unit as in CSS4J's {@code CSSUnit}.

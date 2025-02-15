@@ -24,6 +24,8 @@ package io.sf.carte.echosvg.css.engine.value;
  */
 public final class RevertValue extends KeywordValue {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * The only instance of this class.
 	 */

@@ -89,6 +89,8 @@ public abstract class AbstractValueManager extends AbstractValueFactory implemen
 
 		CalcValue calc = new CalcValue((CSSExpressionValue) cssValue) {
 
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected FloatValue absoluteValue(CSSStylableElement elt, String pseudo, CSSEngine engine,
 					int idx, StyleMap sm, FloatValue relative) {
@@ -132,6 +134,8 @@ public abstract class AbstractValueManager extends AbstractValueFactory implemen
 		}
 
 		MathFunctionValue calc = new MathFunctionValue((CSSMathFunctionValue) cssValue) {
+
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected FloatValue absoluteValue(CSSStylableElement elt, String pseudo, CSSEngine engine,

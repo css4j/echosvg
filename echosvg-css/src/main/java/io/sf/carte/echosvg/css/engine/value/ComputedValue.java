@@ -31,6 +31,8 @@ import org.w3c.dom.DOMException;
  */
 public class ComputedValue implements Value {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * The cascaded value.
 	 */

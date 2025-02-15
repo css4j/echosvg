@@ -197,6 +197,8 @@ public class CSSOMComputedStyle implements CSSStyleDeclaration {
 	 */
 	public class ComputedCSSValue extends CSSOMValue implements CSSOMValue.ValueProvider {
 
+		private static final long serialVersionUID = 1L;
+
 		/**
 		 * The index of the associated value.
 		 */

@@ -27,6 +27,8 @@ import org.w3c.dom.DOMException;
  */
 public abstract class ComponentValue extends AbstractValue {
 
+	private static final long serialVersionUID = 1L;
+
 	private ComponentModificationHandler componentHandler = new ComponentModificationHandler();
 
 	protected ComponentValue() {

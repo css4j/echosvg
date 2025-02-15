@@ -28,6 +28,8 @@ import org.w3c.dom.DOMException;
  */
 class ImmutableUnitValue extends FloatValue {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Creates a new value.
 	 */

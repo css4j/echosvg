@@ -39,6 +39,8 @@ import io.sf.carte.echosvg.css.engine.value.ValueModificationHandler;
  */
 public class CSSOMValue implements Value {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * The associated value.
 	 */

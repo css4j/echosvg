@@ -18,6 +18,7 @@
  */
 package io.sf.carte.echosvg.css.engine;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -35,7 +36,9 @@ import io.sf.carte.echosvg.css.engine.value.Value;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class StyleDeclaration {
+public class StyleDeclaration implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	protected static final int INITIAL_LENGTH = 8;
 

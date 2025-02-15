@@ -30,6 +30,8 @@ import org.w3c.dom.DOMException;
  */
 public class ListValue extends AbstractValueList<Value> {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Creates a ListValue.
 	 */
@@ -73,6 +75,9 @@ public class ListValue extends AbstractValueList<Value> {
 	}
 
 	private class UnmodifiableListValue extends ListValue {
+
+		private static final long serialVersionUID = 1L;
+
 		UnmodifiableListValue() {
 			super(ListValue.this.getSeparatorChar(), 1);
 		}

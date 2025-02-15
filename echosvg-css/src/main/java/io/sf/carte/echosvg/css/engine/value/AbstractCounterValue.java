@@ -29,6 +29,8 @@ import org.w3c.dom.DOMException;
  */
 abstract class AbstractCounterValue extends ComponentValue implements CSSCounterValue {
 
+	private static final long serialVersionUID = 1L;
+
 	private String identifier;
 	private Value listStyle = null;
 

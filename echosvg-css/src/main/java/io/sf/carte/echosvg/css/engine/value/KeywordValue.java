@@ -27,6 +27,8 @@ import org.w3c.css.om.typed.CSSKeywordValue;
  */
 abstract class KeywordValue extends AbstractValue implements CSSKeywordValue {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Creates a new UnsetValue object.
 	 */

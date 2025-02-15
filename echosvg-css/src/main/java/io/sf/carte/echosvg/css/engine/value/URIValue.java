@@ -31,6 +31,8 @@ import org.w3c.css.om.typed.CSSStringValue;
  */
 public class URIValue extends AbstractStringValue implements CSSStringValue {
 
+	private static final long serialVersionUID = 1L;
+
 	private String cssText;
 
 	/**

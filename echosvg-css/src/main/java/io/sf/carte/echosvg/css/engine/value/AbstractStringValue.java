@@ -29,6 +29,8 @@ import org.w3c.api.DOMTypeException;
  */
 public abstract class AbstractStringValue extends AbstractValue {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * The value of the string
 	 */

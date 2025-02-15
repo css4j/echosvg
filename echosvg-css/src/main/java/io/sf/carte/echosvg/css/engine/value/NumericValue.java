@@ -29,6 +29,8 @@ import org.w3c.css.om.unit.CSSUnit;
  */
 public abstract class NumericValue extends AbstractValue implements TypedValue, CSSNumericValue {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Creates a new value.
 	 */

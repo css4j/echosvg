@@ -30,6 +30,8 @@ import org.w3c.dom.DOMException;
  */
 class ImmutableRGBColorValue extends RGBColorValue {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Creates a new, opaque RGBColorValue.
 	 * 

@@ -26,6 +26,8 @@ import org.w3c.dom.DOMException;
  */
 class CounterValue extends AbstractCounterValue {
 
+	private static final long serialVersionUID = 1L;
+
 	public CounterValue() {
 		super();
 	}

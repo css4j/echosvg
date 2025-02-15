@@ -33,6 +33,8 @@ import io.sf.carte.echosvg.css.engine.value.svg.SVGValueConstants;
  */
 public class LabColorValue extends ColorValue implements CSSLab {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * The lightness component.
 	 */

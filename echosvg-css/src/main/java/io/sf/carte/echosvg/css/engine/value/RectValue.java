@@ -34,6 +34,8 @@ import org.w3c.dom.DOMException;
  */
 public class RectValue extends ComponentValue implements CSSRectValue {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * The top value.
 	 */
