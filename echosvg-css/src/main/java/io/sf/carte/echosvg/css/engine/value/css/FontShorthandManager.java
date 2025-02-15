@@ -316,8 +316,8 @@ public class FontShorthandManager extends AbstractValueFactory implements Shorth
 				setPendingLonghands(eng, ph, lunit, imp);
 				return;
 			}
-			if (calc.getPrimitiveType() != Type.EXPRESSION || ((CalcValue) calc).getNumericDelegate()
-					.matches(new SyntaxParser().parseSyntax("<length-percentage>")) != Match.TRUE) {
+			if (calc.getPrimitiveType() != Type.EXPRESSION
+					|| calc.matches(new SyntaxParser().parseSyntax("<length-percentage>")) != Match.TRUE) {
 				throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
 			}
 			fontSize = lu;
