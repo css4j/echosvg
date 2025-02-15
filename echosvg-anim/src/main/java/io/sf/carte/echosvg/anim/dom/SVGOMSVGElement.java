@@ -281,6 +281,7 @@ public class SVGOMSVGElement extends SVGStylableElement implements SVGSVGElement
 	/**
 	 * <b>DOM</b>: Implements {@link SVGSVGElement#getPixelUnitToMillimeterX()}.
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public float getPixelUnitToMillimeterX() {
 		return getSVGContext().getPixelUnitToMillimeter();
@@ -289,6 +290,7 @@ public class SVGOMSVGElement extends SVGStylableElement implements SVGSVGElement
 	/**
 	 * <b>DOM</b>: Implements {@link SVGSVGElement#getPixelUnitToMillimeterY()}.
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public float getPixelUnitToMillimeterY() {
 		return getSVGContext().getPixelUnitToMillimeter();
@@ -297,6 +299,7 @@ public class SVGOMSVGElement extends SVGStylableElement implements SVGSVGElement
 	/**
 	 * <b>DOM</b>: Implements {@link SVGSVGElement#getScreenPixelToMillimeterX()}.
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public float getScreenPixelToMillimeterX() {
 		return getSVGContext().getPixelUnitToMillimeter();
@@ -305,6 +308,7 @@ public class SVGOMSVGElement extends SVGStylableElement implements SVGSVGElement
 	/**
 	 * <b>DOM</b>: Implements {@link SVGSVGElement#getScreenPixelToMillimeterY()}.
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public float getScreenPixelToMillimeterY() {
 		return getSVGContext().getPixelUnitToMillimeter();
