@@ -1682,11 +1682,11 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
 			for (Node n = template.getNextSibling(); n != null; n = n.getNextSibling()) {
 				if (n instanceof XBLOMTemplateElement) {
 					defRec.template = (XBLOMTemplateElement) n;
+					addTemplateElementListeners(defRec.template, ir);
 					break;
 				}
 			}
 
-			addTemplateElementListeners(defRec.template, ir);
 			rebind(defRec.namespaceURI, defRec.localName, document.getDocumentElement());
 		}
 
