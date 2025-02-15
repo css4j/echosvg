@@ -58,7 +58,7 @@ public class FlowTextPainter extends StrokingTextPainter {
 	/**
 	 * A unique instance of this class.
 	 */
-	protected static TextPainter singleton = new FlowTextPainter();
+	private static TextPainter singleton = new FlowTextPainter();
 
 	/**
 	 * Returns a unique instance of this class.

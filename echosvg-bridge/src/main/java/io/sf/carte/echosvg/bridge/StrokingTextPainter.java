@@ -109,7 +109,7 @@ public class StrokingTextPainter extends BasicTextPainter {
 	/**
 	 * A unique instance of this class.
 	 */
-	protected static TextPainter singleton = new StrokingTextPainter();
+	private static TextPainter singleton = new StrokingTextPainter();
 
 	/**
 	 * Returns a unique instance of this class.
