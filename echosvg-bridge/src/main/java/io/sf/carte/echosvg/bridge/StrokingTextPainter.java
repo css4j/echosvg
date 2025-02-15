@@ -403,7 +403,10 @@ public class StrokingTextPainter extends BasicTextPainter {
 			// then use the default font
 			if (fonts.isEmpty()) {
 				// create a list of fonts of the correct size
-				fonts.add(getFontFamilyResolver().getDefault().deriveFont(fontSize, aci));
+				GVTFont font = getFontFamilyResolver().getDefault().deriveFont(fontSize, aci);
+				if (font != null) {
+					fonts.add(font);
+				}
 			}
 
 			// now for each char or group of chars in the string,

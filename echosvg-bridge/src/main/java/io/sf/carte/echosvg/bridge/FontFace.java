@@ -171,20 +171,24 @@ public abstract class FontFace extends GVTFontFace implements ErrorConstants {
 					break;
 				}
 			}
-			// todo : if the above loop fails to find a fontFaceElt, a null is passed to
-			// createFontFace()
 
 			SVGFontFaceElementBridge fontFaceBridge;
 			fontFaceBridge = (SVGFontFaceElementBridge) ctx.getBridge(SVG_NAMESPACE_URI, SVG_FONT_FACE_TAG);
+			if (fontFaceBridge == null || fontFaceElt == null) {
+				return null;
+			}
+
 			GVTFontFace gff = fontFaceBridge.createFontFace(ctx, fontFaceElt);
 
 			return new SVGFontFamily(gff, fontElt, ctx);
 		}
+
 		// Must be a reference to a 'Web Font'.
 		try {
 			return ctx.getFontFamilyResolver().loadFont(purl.openStream(), this);
 		} catch (Exception ex) {
 		}
+
 		return null;
 	}
 

@@ -90,7 +90,7 @@ public class SVGFontFamily implements GVTFontFamily {
 	 * @param aci  The character iterator containing the text to be rendered using
 	 *             the derived font.
 	 *
-	 * @return The derived font.
+	 * @return the derived GVT font, or {@code null} if it could not be created.
 	 */
 	@Override
 	public GVTFont deriveFont(float size, AttributedCharacterIterator aci) {
@@ -102,6 +102,7 @@ public class SVGFontFamily implements GVTFontFamily {
 	 * 
 	 * @param size  The required size of the derived font.
 	 * @param attrs The Attribute Map to get Values from.
+	 * @return the GVT font, or {@code null} if it could not be created.
 	 */
 	@Override
 	public GVTFont deriveFont(float size, Map<Attribute, ?> attrs) {
@@ -112,6 +113,10 @@ public class SVGFontFamily implements GVTFontFamily {
 		@SuppressWarnings("unchecked")
 		SoftReference<Element> sr = (SoftReference<Element>) attrs.get(TEXT_COMPOUND_ID);
 		Element textElement = sr.get();
+		if (textElement == null) {
+			// This should not happen, but could
+			return null;
+		}
 		return fontBridge.createFont(ctx, fontElement, textElement, size, fontFace);
 	}
 

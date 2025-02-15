@@ -1407,7 +1407,9 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 				usingComplexSVGFont = true;
 			}
 			GVTFont ft = fontFamily.deriveFont(fontSize, result);
-			fontList.add(ft);
+			if (ft != null) {
+				fontList.add(ft);
+			}
 		}
 
 		// Eventually this will need to go for SVG fonts it
