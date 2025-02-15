@@ -57,7 +57,7 @@ import io.sf.carte.echosvg.util.RunnableQueue;
  */
 public class UpdateManager {
 
-	static final int MIN_REPAINT_TIME;
+	private static final int MIN_REPAINT_TIME;
 	static {
 		int value = 20;
 		try {
@@ -621,10 +621,10 @@ public class UpdateManager {
 	}
 
 	List<SuspensionInfo> suspensionList = new ArrayList<>();
-	int nextSuspensionIndex = 1;
-	long allResumeTime = -1;
-	Timer repaintTriggerTimer = null;
-	TimerTask repaintTimerTask = null;
+	private int nextSuspensionIndex = 1;
+	private long allResumeTime = -1;
+	private Timer repaintTriggerTimer = null;
+	private TimerTask repaintTimerTask = null;
 
 	void createRepaintTimer() {
 		if (repaintTimerTask != null || allResumeTime < 0)
