@@ -98,7 +98,7 @@ public class IdentValue extends AbstractStringValue implements CSSKeywordValue {
 
 	@Override
 	public IdentValue clone() {
-		return new IdentValue(value);
+		return (IdentValue) super.clone();
 	}
 
 }

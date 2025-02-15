@@ -428,12 +428,12 @@ public class RGBColorValue extends ColorValue implements CSSRGB {
 
 	@Override
 	public RGBColorValue clone() {
-		RGBColorValue clon;
-		try {
-			clon = new RGBColorValue(red, green, blue, alpha);
-		} catch (DOMSyntaxException e) {
-			clon = null;
-		}
+		RGBColorValue clon = (RGBColorValue) super.clone();
+		clon.red = red.clone();
+		clon.green = green.clone();
+		clon.blue = blue.clone();
+		clon.pcntSpecified = pcntSpecified;
+		clon.alphaPcntSpecified = alphaPcntSpecified;
 		return clon;
 	}
 

@@ -275,7 +275,12 @@ public class FloatValue extends NumericValue implements CSSNumberValue, CSSUnitV
 
 	@Override
 	public FloatValue clone() {
-		return new FloatValue(unitType, floatValue);
+		FloatValue clon = (FloatValue) super.clone();
+		clon.floatValue = floatValue;
+		clon.unitType = unitType;
+		clon.calculated = calculated;
+		clon.specified = specified;
+		return clon;
 	}
 
 }

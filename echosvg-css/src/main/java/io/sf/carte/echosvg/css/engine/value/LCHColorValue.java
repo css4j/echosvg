@@ -195,12 +195,10 @@ public class LCHColorValue extends ColorValue implements CSSLCH {
 
 	@Override
 	public LCHColorValue clone() {
-		LCHColorValue clon;
-		try {
-			clon = new LCHColorValue(l, c, h, alpha);
-		} catch (DOMSyntaxException e) {
-			clon = null;
-		}
+		LCHColorValue clon = (LCHColorValue) super.clone();
+		clon.l = l.clone();
+		clon.c = c.clone();
+		clon.h = h.clone();
 		return clon;
 	}
 

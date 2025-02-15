@@ -68,7 +68,7 @@ public class StringValue extends AbstractStringValue implements CSSStringValue {
 
 	@Override
 	public StringValue clone() {
-		return new StringValue(value);
+		return (StringValue) super.clone();
 	}
 
 }

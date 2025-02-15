@@ -81,6 +81,10 @@ public abstract class AbstractStringValue extends AbstractValue {
 	}
 
 	@Override
-	public abstract AbstractStringValue clone();
+	public AbstractStringValue clone() {
+		AbstractStringValue clon = (AbstractStringValue) super.clone();
+		clon.value = value;
+		return clon;
+	}
 
 }

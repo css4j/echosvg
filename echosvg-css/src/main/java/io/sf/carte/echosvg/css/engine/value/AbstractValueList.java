@@ -76,10 +76,11 @@ public class AbstractValueList<V extends Value> extends ComponentValue implement
 	@SuppressWarnings("unchecked")
 	@Override
 	public AbstractValueList<V> clone() {
-		AbstractValueList<V> clon = new AbstractValueList<>(separator, items.size());
+		AbstractValueList<V> clon = (AbstractValueList<V>) super.clone();
 		for (V item : items) {
 			clon.items.add((V) item.clone());
 		}
+		clon.separator = separator;
 		return clon;
 	}
 

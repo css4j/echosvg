@@ -183,12 +183,10 @@ public class LabColorValue extends ColorValue implements CSSLab {
 
 	@Override
 	public LabColorValue clone() {
-		LabColorValue clon;
-		try {
-			clon = new LabColorValue(l, a, b, alpha);
-		} catch (DOMSyntaxException e) {
-			clon = null;
-		}
+		LabColorValue clon = (LabColorValue) super.clone();
+		clon.l = l.clone();
+		clon.a = a.clone();
+		clon.b = b.clone();
 		return clon;
 	}
 
