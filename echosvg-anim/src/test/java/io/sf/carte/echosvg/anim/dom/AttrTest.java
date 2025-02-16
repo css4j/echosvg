@@ -16,38 +16,32 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.dom.test;
+package io.sf.carte.echosvg.anim.dom;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
+import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
-
-import io.sf.carte.echosvg.dom.AbstractText;
+import org.w3c.dom.Element;
 
 /**
- * Tests Text.wholeText.
+ * Tests Attr.
  *
- * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
- * @author For later modifications, see Git history.
- * @version $Id$
  */
-public class TextWholeTextTest extends DOM3Test {
+public class AttrTest extends DOM3Test {
 
 	@Test
-	public void test() throws DOMException {
+	public void testToString() throws DOMException {
 		Document doc = newSVGDoc();
-		AbstractText n1 = (AbstractText) doc.createTextNode("abc");
-		AbstractText n2 = (AbstractText) doc.createTextNode("def");
-		AbstractText n3 = (AbstractText) doc.createCDATASection("ghi");
-		doc.getDocumentElement().appendChild(n1);
-		doc.getDocumentElement().appendChild(n2);
-		doc.getDocumentElement().appendChild(n3);
-
-		assertEquals("abcdefghi", n1.getWholeText());
-		assertEquals("abcdefghi", n2.getWholeText());
-		assertEquals("abcdefghi", n3.getWholeText());
+		Element g = doc.createElementNS(SVG_NAMESPACE_URI, "linearGradient");
+		g.setAttribute("gradientunits", "objectBoundingBox");
+		Attr attr = g.getAttributeNode("gradientunits");
+		assertEquals("gradientunits", attr.getName());
+		assertEquals("objectBoundingBox", attr.getValue());
+		assertEquals("objectBoundingBox", attr.getNodeValue());
+		assertEquals("gradientunits=\"objectBoundingBox\"", attr.toString());
 	}
 
 }

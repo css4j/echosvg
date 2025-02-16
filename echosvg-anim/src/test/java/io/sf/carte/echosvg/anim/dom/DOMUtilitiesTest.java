@@ -16,7 +16,7 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.dom.test;
+package io.sf.carte.echosvg.anim.dom;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -35,8 +35,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.Text;
 
-import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
-import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
 import io.sf.carte.echosvg.dom.util.DOMUtilities;
 import io.sf.carte.echosvg.util.SVGConstants;
 

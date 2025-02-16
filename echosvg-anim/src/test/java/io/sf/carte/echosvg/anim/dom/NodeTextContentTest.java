@@ -16,41 +16,40 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.dom.test;
+package io.sf.carte.echosvg.anim.dom;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
-import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.svg.SVGGElement;
-import org.w3c.dom.svg.SVGSVGElement;
+import org.w3c.dom.Node;
 
-import io.sf.carte.echosvg.dom.AbstractDocument;
+import io.sf.carte.echosvg.dom.AbstractElement;
 
 /**
- * Tests Document.renameNode.
+ * Tests Node.textContent.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class DocumentRenameNodeTest extends DOM3Test {
+public class NodeTextContentTest extends DOM3Test {
 
 	@Test
 	public void test() throws DOMException {
 		Document doc = newSVGDoc();
-		Element e2 = doc.createElementNS(SVG_NAMESPACE_URI, "g");
-		assertTrue(e2 instanceof SVGGElement);
-		e2 = (Element) ((AbstractDocument) doc).renameNode(e2, SVG_NAMESPACE_URI, "svg");
-		assertTrue(e2 instanceof SVGSVGElement);
-		Attr a = doc.createAttributeNS(null, "test");
-		a = (Attr) ((AbstractDocument) doc).renameNode(a, EX_NAMESPACE_URI, "test2");
-		assertEquals(EX_NAMESPACE_URI, a.getNamespaceURI());
-		assertEquals("test2", a.getLocalName());
+		AbstractElement e = (AbstractElement) doc.getDocumentElement();
+		e.appendChild(doc.createTextNode("abc"));
+		Element e2 = doc.createElementNS(SVG_NAMESPACE_URI, "text");
+		e2.appendChild(doc.createTextNode("def"));
+		e.appendChild(e2);
+		e.appendChild(doc.createCDATASection("ghi"));
+		String s = e.getTextContent();
+		e.setTextContent("blah");
+		assertTrue(s.equals("abcdefghi") && e.getFirstChild().getNodeType() == Node.TEXT_NODE
+				&& e.getFirstChild().getNodeValue().equals("blah") && e.getLastChild() == e.getFirstChild());
 	}
 
 }

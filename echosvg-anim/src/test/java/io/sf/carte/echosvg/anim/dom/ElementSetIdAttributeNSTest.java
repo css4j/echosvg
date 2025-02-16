@@ -16,52 +16,44 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.dom.test;
+package io.sf.carte.echosvg.anim.dom;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.UserDataHandler;
-
-import io.sf.carte.echosvg.dom.AbstractDocument;
-import io.sf.carte.echosvg.dom.AbstractNode;
+import org.w3c.dom.Element;
 
 /**
- * Tests Node.setUserData and Node.getUserData.
+ * Tests Element.setIdAttributeNS.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class NodeGetUserDataTest extends DOM3Test {
+public class ElementSetIdAttributeNSTest extends DOM3Test {
+
+	private static final String ATTR_NAME = "blah";
+
+	private static final String ATTR_VALUE = "abc";
 
 	@Test
 	public void test() throws DOMException {
-		UserHandler udh = new UserHandler();
-		Document doc = newDoc();
-		AbstractNode n = (AbstractNode) doc.createElementNS(null, "test");
-		n.setUserData("key", "val", udh);
-		((AbstractDocument) doc).renameNode(n, null, "abc");
-		assertEquals(1, udh.getCount());
-		assertEquals("val", n.getUserData("key"));
+		Document doc = newSVGDoc();
+		doc.getDocumentElement().setAttributeNS(null, ATTR_NAME, ATTR_VALUE);
+		assertTrue(setIdAttributeWorks(doc, true));
+		assertTrue(setIdAttributeWorks(doc, false));
 	}
 
-	private static class UserHandler implements UserDataHandler {
-
-		int count = 0;
-
-		@Override
-		public void handle(short op, String key, Object data, Node src, Node dest) {
-			count++;
+	private boolean setIdAttributeWorks(Document doc, boolean isId) {
+		doc.getDocumentElement().setIdAttributeNS(null, ATTR_NAME, isId);
+		Element e = doc.getElementById(ATTR_VALUE);
+		if (isId) {
+			return e == doc.getDocumentElement();
+		} else {
+			return e == null;
 		}
-
-		public int getCount() {
-			return count;
-		}
-
 	}
 
 }

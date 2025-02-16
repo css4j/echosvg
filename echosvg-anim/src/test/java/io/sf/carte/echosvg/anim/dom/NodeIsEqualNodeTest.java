@@ -17,7 +17,7 @@
 
  */
 
-package io.sf.carte.echosvg.dom.test;
+package io.sf.carte.echosvg.anim.dom;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -34,7 +34,6 @@ import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
 import io.sf.carte.echosvg.dom.AbstractElement;
 
 /**

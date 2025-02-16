@@ -16,9 +16,11 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.dom.test;
+
+package io.sf.carte.echosvg.anim.dom;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,30 +29,27 @@ import java.net.URL;
 import javax.xml.parsers.DocumentBuilder;
 
 import org.junit.jupiter.api.Test;
+import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
-
 /**
- * This class tests the getElementsByTagNameNS method.
- *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author <a href="mailto:shillion@ilog.fr">Stephane Hillion</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class GetElementsByTagNameNSTest {
+public class SetAttributeTest {
 
 	@Test
-	public void test() throws Exception {
-		testGetElementsByTagNameNS("io/sf/carte/echosvg/dom/dummyXML4.xml", "elt4");
+	public void test() throws IOException, SAXException {
+		testSetAttribute("io/sf/carte/echosvg/anim/dom/dummyXML.xml", "root",
+				"targetAttribute", "targetValue");
 	}
 
-	void testGetElementsByTagNameNS(String testFileName, String tagName) throws IOException, SAXException {
+	void testSetAttribute(String testFileName, String targetId, String targetAttribute,
+			String targetValue) throws IOException, SAXException {
 		DocumentBuilder df = new SAXSVGDocumentFactory();
 
 		Document doc;
@@ -61,17 +60,18 @@ public class GetElementsByTagNameNSTest {
 			doc = df.parse(source);
 		}
 
-		Element root = doc.getDocumentElement();
-		NodeList lst = root.getElementsByTagNameNS(null, tagName);
+		Element e = doc.getElementById(targetId);
 
-		assertEquals(1, lst.getLength());
+		assertNotNull(e);
 
-		Node n;
-		while ((n = root.getFirstChild()) != null) {
-			root.removeChild(n);
-		}
+		e.setAttribute(targetAttribute, targetValue);
+		assertEquals(targetValue, e.getAttribute(targetAttribute));
 
-		assertEquals(0, lst.getLength());
+		Attr attr = e.getAttributeNode(targetAttribute);
+
+		assertNotNull(attr);
+		assertEquals(targetValue, attr.getValue());
+		assertEquals(targetValue, attr.getNodeValue());
 	}
 
 }

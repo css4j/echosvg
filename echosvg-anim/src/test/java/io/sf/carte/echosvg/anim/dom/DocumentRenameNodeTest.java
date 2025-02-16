@@ -16,44 +16,41 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.dom.test;
+package io.sf.carte.echosvg.anim.dom;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
+import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.svg.SVGGElement;
+import org.w3c.dom.svg.SVGSVGElement;
+
+import io.sf.carte.echosvg.dom.AbstractDocument;
 
 /**
- * Tests Element.setIdAttributeNS.
+ * Tests Document.renameNode.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class ElementSetIdAttributeNSTest extends DOM3Test {
-
-	private static final String ATTR_NAME = "blah";
-
-	private static final String ATTR_VALUE = "abc";
+public class DocumentRenameNodeTest extends DOM3Test {
 
 	@Test
 	public void test() throws DOMException {
 		Document doc = newSVGDoc();
-		doc.getDocumentElement().setAttributeNS(null, ATTR_NAME, ATTR_VALUE);
-		assertTrue(setIdAttributeWorks(doc, true));
-		assertTrue(setIdAttributeWorks(doc, false));
-	}
-
-	private boolean setIdAttributeWorks(Document doc, boolean isId) {
-		doc.getDocumentElement().setIdAttributeNS(null, ATTR_NAME, isId);
-		Element e = doc.getElementById(ATTR_VALUE);
-		if (isId) {
-			return e == doc.getDocumentElement();
-		} else {
-			return e == null;
-		}
+		Element e2 = doc.createElementNS(SVG_NAMESPACE_URI, "g");
+		assertTrue(e2 instanceof SVGGElement);
+		e2 = (Element) ((AbstractDocument) doc).renameNode(e2, SVG_NAMESPACE_URI, "svg");
+		assertTrue(e2 instanceof SVGSVGElement);
+		Attr a = doc.createAttributeNS(null, "test");
+		a = (Attr) ((AbstractDocument) doc).renameNode(a, EX_NAMESPACE_URI, "test2");
+		assertEquals(EX_NAMESPACE_URI, a.getNamespaceURI());
+		assertEquals("test2", a.getLocalName());
 	}
 
 }

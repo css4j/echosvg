@@ -16,14 +16,9 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.dom.test;
+package io.sf.carte.echosvg.anim.dom;
 
 import org.w3c.dom.Document;
-
-import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
-import io.sf.carte.echosvg.anim.dom.SVGOMDocument;
-import io.sf.carte.echosvg.dom.GenericDOMImplementation;
-import io.sf.carte.echosvg.dom.GenericDocument;
 
 /**
  *
@@ -35,12 +30,7 @@ public class DOM3Test {
 	static String SVG_NAMESPACE_URI = "http://www.w3.org/2000/svg";
 	static String EX_NAMESPACE_URI = "http://www.example.org/";
 	static String XML_NAMESPACE_URI = "http://www.w3.org/XML/1998/namespace";
-	static String XMLNS_NAMESPACE_URI = "http://www.w3.org/2000/xmlns/";
 	static String XML_EVENTS_NAMESPACE_URI = "http://www.w3.org/2001/xml-events";
-
-	Document newDoc() {
-		return new GenericDocument(null, GenericDOMImplementation.getDOMImplementation());
-	}
 
 	Document newSVGDoc() {
 		Document doc = new SVGOMDocument(null, SVGDOMImplementation.getDOMImplementation());

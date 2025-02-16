@@ -16,10 +16,11 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.dom.test;
+package io.sf.carte.echosvg.anim.dom;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,27 +31,25 @@ import javax.xml.parsers.DocumentBuilder;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
-
 /**
- * This class tests the empty string value for an xmlns attribute.
+ * This class tests the hasChildNodes method.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class NullNamespaceTest {
+public class ReplaceChildTest {
 
 	@Test
 	public void test() throws Exception {
-		testNullNamespace("io/sf/carte/echosvg/dom/dummyXML3.xml", "root");
-		testNullNamespace("io/sf/carte/echosvg/dom/dummyXML3.xml", "elt2");
+		testReplaceChild("io/sf/carte/echosvg/anim/dom/dummyXML3.xml", "root");
 	}
 
-	void testNullNamespace(String testFileName, String targetId) throws IOException, SAXException {
+	void testReplaceChild(String testFileName, String targetId) throws IOException, SAXException {
 		DocumentBuilder df = new SAXSVGDocumentFactory();
 
 		Document doc;
@@ -65,7 +64,18 @@ public class NullNamespaceTest {
 
 		assertNotNull(e);
 
-		assertNull(e.getNamespaceURI());
+		Element fc = null;
+		for (Node n = e.getFirstChild(); n != null; n = n.getNextSibling()) {
+			if (n.getNodeType() == Node.ELEMENT_NODE) {
+				fc = (Element) n;
+				break;
+			}
+		}
+		Element ne = doc.createElementNS(null, "elt4");
+		e.replaceChild(ne, fc);
+
+		assertSame(e, ne.getParentNode());
+		assertNull(fc.getParentNode());
 	}
 
 }

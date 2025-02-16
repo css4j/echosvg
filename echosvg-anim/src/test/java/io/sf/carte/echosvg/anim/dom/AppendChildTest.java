@@ -16,7 +16,7 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.dom.test;
+package io.sf.carte.echosvg.anim.dom;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -31,7 +31,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.DocumentFragment;
 import org.w3c.dom.Element;
 
-import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
 import io.sf.carte.echosvg.dom.util.DocumentFactory;
 
 /**
@@ -47,7 +46,7 @@ public class AppendChildTest {
 
 	@Test
 	public void test() throws IOException {
-		testAppendChild("io/sf/carte/echosvg/dom/svg/test.svg", "svg", "nodeID");
+		testAppendChild("io/sf/carte/echosvg/anim/dom/test.svg", "svg", "nodeID");
 	}
 
 	void testAppendChild(String testFileName, String rootTag, String targetId) throws IOException {

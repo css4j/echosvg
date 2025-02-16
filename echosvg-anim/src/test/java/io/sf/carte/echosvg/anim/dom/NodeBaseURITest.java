@@ -16,40 +16,37 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.dom.test;
+package io.sf.carte.echosvg.anim.dom;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-
-import io.sf.carte.echosvg.dom.AbstractElement;
 
 /**
- * Tests Node.textContent.
+ * Tests Node.baseURI.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class NodeTextContentTest extends DOM3Test {
+public class NodeBaseURITest extends DOM3Test {
 
 	@Test
 	public void test() throws DOMException {
 		Document doc = newSVGDoc();
-		AbstractElement e = (AbstractElement) doc.getDocumentElement();
-		e.appendChild(doc.createTextNode("abc"));
-		Element e2 = doc.createElementNS(SVG_NAMESPACE_URI, "text");
-		e2.appendChild(doc.createTextNode("def"));
+		doc.setDocumentURI("http://example.com/blah");
+		Element e = doc.createElementNS(SVG_NAMESPACE_URI, "g");
+		doc.getDocumentElement().appendChild(e);
+		e.setAttributeNS(XML_NAMESPACE_URI, "xml:base", "http://example.org/base");
+		Element e2 = doc.createElementNS(SVG_NAMESPACE_URI, "g");
 		e.appendChild(e2);
-		e.appendChild(doc.createCDATASection("ghi"));
-		String s = e.getTextContent();
-		e.setTextContent("blah");
-		assertTrue(s.equals("abcdefghi") && e.getFirstChild().getNodeType() == Node.TEXT_NODE
-				&& e.getFirstChild().getNodeValue().equals("blah") && e.getLastChild() == e.getFirstChild());
+		e2.setAttributeNS(XML_NAMESPACE_URI, "xml:base", "/somewhere");
+		assertEquals("http://example.com/blah", doc.getBaseURI());
+		assertEquals("http://example.org/base", e.getBaseURI());
+		assertEquals("http://example.org/somewhere", e2.getBaseURI());
 	}
 
 }

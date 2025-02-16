@@ -16,33 +16,38 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.dom.test;
+package io.sf.carte.echosvg.anim.dom;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Test;
-import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
+import org.w3c.dom.Text;
 
 /**
- * Tests Attr.isId.
+ * Tests Text.replaceWholeText.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class AttrIsIdTest extends DOM3Test {
+public class TextReplaceWholeTextTest extends DOM3Test {
 
 	@Test
 	public void test() throws DOMException {
 		Document doc = newSVGDoc();
-		Element g = doc.createElementNS(SVG_NAMESPACE_URI, "g");
-		g.setAttributeNS(null, "id", "n1");
-		doc.getDocumentElement().appendChild(g);
-		Attr a = g.getAttributeNodeNS(null, "id");
-		assertTrue(a.isId());
+		Text n1 = doc.createTextNode("abc");
+		Text n2 = doc.createTextNode("def");
+		Text n3 = doc.createCDATASection("ghi");
+		doc.getDocumentElement().appendChild(n1);
+		doc.getDocumentElement().appendChild(n2);
+		doc.getDocumentElement().appendChild(n3);
+		n2.replaceWholeText("xyz");
+
+		assertEquals("xyz", doc.getDocumentElement().getFirstChild().getNodeValue());
+		assertNull(doc.getDocumentElement().getFirstChild().getNextSibling());
 	}
 
 }

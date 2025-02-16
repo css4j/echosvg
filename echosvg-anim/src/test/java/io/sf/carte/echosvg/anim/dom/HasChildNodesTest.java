@@ -16,10 +16,8 @@
    limitations under the License.
 
  */
+package io.sf.carte.echosvg.anim.dom;
 
-package io.sf.carte.echosvg.dom.test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.IOException;
@@ -29,29 +27,26 @@ import java.net.URL;
 import javax.xml.parsers.DocumentBuilder;
 
 import org.junit.jupiter.api.Test;
-import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
-
 /**
- * @author <a href="mailto:shillion@ilog.fr">Stephane Hillion</a>
+ * This class tests the hasChildNodes method.
+ *
+ * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SetAttributeTest {
+public class HasChildNodesTest {
 
 	@Test
-	public void test() throws IOException, SAXException {
-		testSetAttribute("io/sf/carte/echosvg/dom/dummyXML.xml", "root",
-				"targetAttribute", "targetValue");
+	public void test() throws Exception {
+		testHasChildNodes("io/sf/carte/echosvg/anim/dom/dummyXML3.xml", "root");
 	}
 
-	void testSetAttribute(String testFileName, String targetId, String targetAttribute,
-			String targetValue) throws IOException, SAXException {
+	void testHasChildNodes(String testFileName, String targetId) throws IOException, SAXException {
 		DocumentBuilder df = new SAXSVGDocumentFactory();
 
 		Document doc;
@@ -66,14 +61,9 @@ public class SetAttributeTest {
 
 		assertNotNull(e);
 
-		e.setAttribute(targetAttribute, targetValue);
-		assertEquals(targetValue, e.getAttribute(targetAttribute));
-
-		Attr attr = e.getAttributeNode(targetAttribute);
-
-		assertNotNull(attr);
-		assertEquals(targetValue, attr.getValue());
-		assertEquals(targetValue, attr.getNodeValue());
+		while (e.hasChildNodes()) {
+			e.removeChild(e.getFirstChild());
+		}
 	}
 
 }

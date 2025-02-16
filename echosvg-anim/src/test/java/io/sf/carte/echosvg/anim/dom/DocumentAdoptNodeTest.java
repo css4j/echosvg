@@ -16,37 +16,32 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.dom.test;
+package io.sf.carte.echosvg.anim.dom;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
-import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
- * Tests Node.baseURI.
+ * Tests Document.adoptNode.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class NodeBaseURITest extends DOM3Test {
+public class DocumentAdoptNodeTest extends DOM3Test {
 
 	@Test
-	public void test() throws DOMException {
-		Document doc = newSVGDoc();
-		doc.setDocumentURI("http://example.com/blah");
-		Element e = doc.createElementNS(SVG_NAMESPACE_URI, "g");
-		doc.getDocumentElement().appendChild(e);
-		e.setAttributeNS(XML_NAMESPACE_URI, "xml:base", "http://example.org/base");
-		Element e2 = doc.createElementNS(SVG_NAMESPACE_URI, "g");
-		e.appendChild(e2);
-		e2.setAttributeNS(XML_NAMESPACE_URI, "xml:base", "/somewhere");
-		assertEquals("http://example.com/blah", doc.getBaseURI());
-		assertEquals("http://example.org/base", e.getBaseURI());
-		assertEquals("http://example.org/somewhere", e2.getBaseURI());
+	public void test() throws Exception {
+		Document doc1 = newSVGDoc();
+		Document doc2 = newSVGDoc();
+		Element e = doc2.getDocumentElement();
+		e.setAttributeNS(EX_NAMESPACE_URI, "test", "blah");
+		doc1.adoptNode(e);
+		assertTrue(e.getOwnerDocument() == doc1
+				&& e.getAttributeNodeNS(EX_NAMESPACE_URI, "test").getOwnerDocument() == doc1);
 	}
 
 }

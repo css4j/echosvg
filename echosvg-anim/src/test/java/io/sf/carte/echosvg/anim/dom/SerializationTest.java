@@ -16,7 +16,7 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.dom.test;
+package io.sf.carte.echosvg.anim.dom;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -34,8 +34,6 @@ import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
-import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
-
 /**
  * To test the Java serialization.
  *
@@ -47,8 +45,8 @@ public class SerializationTest {
 
 	@Test
 	public void test() throws Exception {
-		testSerialization("io/sf/carte/echosvg/dom/dummyXML.xml");
-		testSerialization("io/sf/carte/echosvg/dom/dummyXML2.xml");
+		testSerialization("io/sf/carte/echosvg/anim/dom/dummyXML.xml");
+		testSerialization("io/sf/carte/echosvg/anim/dom/dummyXML2.xml");
 	}
 
 	void testSerialization(String testFileName) throws Exception {

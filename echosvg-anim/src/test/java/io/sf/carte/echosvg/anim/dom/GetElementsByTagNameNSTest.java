@@ -16,9 +16,9 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.dom.test;
+package io.sf.carte.echosvg.anim.dom;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,26 +29,26 @@ import javax.xml.parsers.DocumentBuilder;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
-
 /**
- * This class tests the hasChildNodes method.
+ * This class tests the getElementsByTagNameNS method.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class HasChildNodesTest {
+public class GetElementsByTagNameNSTest {
 
 	@Test
 	public void test() throws Exception {
-		testHasChildNodes("io/sf/carte/echosvg/dom/dummyXML3.xml", "root");
+		testGetElementsByTagNameNS("io/sf/carte/echosvg/anim/dom/dummyXML4.xml", "elt4");
 	}
 
-	void testHasChildNodes(String testFileName, String targetId) throws IOException, SAXException {
+	void testGetElementsByTagNameNS(String testFileName, String tagName) throws IOException, SAXException {
 		DocumentBuilder df = new SAXSVGDocumentFactory();
 
 		Document doc;
@@ -59,13 +59,17 @@ public class HasChildNodesTest {
 			doc = df.parse(source);
 		}
 
-		Element e = doc.getElementById(targetId);
+		Element root = doc.getDocumentElement();
+		NodeList lst = root.getElementsByTagNameNS(null, tagName);
 
-		assertNotNull(e);
+		assertEquals(1, lst.getLength());
 
-		while (e.hasChildNodes()) {
-			e.removeChild(e.getFirstChild());
+		Node n;
+		while ((n = root.getFirstChild()) != null) {
+			root.removeChild(n);
 		}
+
+		assertEquals(0, lst.getLength());
 	}
 
 }

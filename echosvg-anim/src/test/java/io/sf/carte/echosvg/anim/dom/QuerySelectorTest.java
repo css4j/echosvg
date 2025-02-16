@@ -16,7 +16,7 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.dom.test;
+package io.sf.carte.echosvg.anim.dom;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -38,7 +38,6 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
 import io.sf.carte.echosvg.dom.AbstractElement;
 import io.sf.carte.echosvg.dom.AbstractParentNode;
 
@@ -51,70 +50,70 @@ public class QuerySelectorTest {
 
 	@Test
 	public void testTypeSelectors() throws SAXException, IOException {
-		testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", "elt2", "elt2", "elt2",
+		testQuerySelector("io/sf/carte/echosvg/anim/dom/dummyXML4.xml", "elt2", "elt2", "elt2",
 				1);
-		testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", "elt4", "elt4", "", 1);
+		testQuerySelector("io/sf/carte/echosvg/anim/dom/dummyXML4.xml", "elt4", "elt4", "", 1);
 	}
 
 	@Test
 	public void testAttributeSelectors() throws SAXException, IOException {
-		testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", "[attr='value1']", "doc",
+		testQuerySelector("io/sf/carte/echosvg/anim/dom/dummyXML4.xml", "[attr='value1']", "doc",
 				"root", 1);
-		testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", "[attr2='value2']",
+		testQuerySelector("io/sf/carte/echosvg/anim/dom/dummyXML4.xml", "[attr2='value2']",
 				"elt2", "elt2", 1);
 	}
 
 	@Test
 	public void testIdSelectors() throws SAXException, IOException {
-		testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", "elt2#elt2", "elt2",
+		testQuerySelector("io/sf/carte/echosvg/anim/dom/dummyXML4.xml", "elt2#elt2", "elt2",
 				"elt2", 1);
 	}
 
 	@Test
 	public void testPseudoClassEmpty() throws SAXException, IOException {
-		testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", ":empty", "elt1", "", 2);
+		testQuerySelector("io/sf/carte/echosvg/anim/dom/dummyXML4.xml", ":empty", "elt1", "", 2);
 	}
 
 	@Test
 	public void testPseudoClassRoot() throws SAXException, IOException {
-		testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", ":root", "doc", "root",
+		testQuerySelector("io/sf/carte/echosvg/anim/dom/dummyXML4.xml", ":root", "doc", "root",
 				1);
 	}
 
 	@Test
 	public void testPseudoClassLastChild() throws SAXException, IOException {
-		testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", ":last-child", "doc",
+		testQuerySelector("io/sf/carte/echosvg/anim/dom/dummyXML4.xml", ":last-child", "doc",
 				"root", 3);
 	}
 
 	@Test
 	public void testPseudoClassFirstLastChild() throws SAXException, IOException {
-		testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml",
+		testQuerySelector("io/sf/carte/echosvg/anim/dom/dummyXML4.xml",
 				":first-child,:last-child", "doc", "root", 4);
 	}
 
 	@Test
 	public void testPseudoClassNthChild() throws SAXException, IOException {
-		testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", ":nth-child(3)", "elt3",
+		testQuerySelector("io/sf/carte/echosvg/anim/dom/dummyXML4.xml", ":nth-child(3)", "elt3",
 				"", 1);
 	}
 
 	@Test
 	public void testDescendant() throws SAXException, IOException {
-		testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", "doc elt4", "elt4", "",
+		testQuerySelector("io/sf/carte/echosvg/anim/dom/dummyXML4.xml", "doc elt4", "elt4", "",
 				1);
 	}
 
 	@Test
 	public void testChild() throws SAXException, IOException {
-		testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", "elt3>elt4", "elt4", "",
+		testQuerySelector("io/sf/carte/echosvg/anim/dom/dummyXML4.xml", "elt3>elt4", "elt4", "",
 				1);
 	}
 
 	@Test
 	public void testSyntaxError() throws IOException {
 		DOMException ex = assertThrows(DOMException.class,
-				() -> testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", "! . !", "",
+				() -> testQuerySelector("io/sf/carte/echosvg/anim/dom/dummyXML4.xml", "! . !", "",
 						"", 0));
 		assertEquals(DOMException.SYNTAX_ERR, ex.code);
 	}
@@ -122,7 +121,7 @@ public class QuerySelectorTest {
 	@Test
 	public void testNSError() throws IOException {
 		DOMException ex = assertThrows(DOMException.class,
-				() -> testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", "n|doc", "",
+				() -> testQuerySelector("io/sf/carte/echosvg/anim/dom/dummyXML4.xml", "n|doc", "",
 						"", 0));
 		assertEquals(DOMException.NAMESPACE_ERR, ex.code);
 	}

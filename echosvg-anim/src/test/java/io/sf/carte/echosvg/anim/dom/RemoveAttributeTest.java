@@ -16,9 +16,8 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.dom.test;
+package io.sf.carte.echosvg.anim.dom;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.IOException;
@@ -30,28 +29,26 @@ import javax.xml.parsers.DocumentBuilder;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
-
 /**
- * This class tests the non-deep cloneNode method for elements.
+ * This class tests the removeAttribute method.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class CloneElementTest {
+public class RemoveAttributeTest {
 
 	@Test
 	public void test() throws Exception {
-		testCloneElement("io/sf/carte/echosvg/dom/dummyXML3.xml", "elt2");
+		testRemoveAttribute("io/sf/carte/echosvg/anim/dom/dummyXML3.xml", "root", "attr");
+		testRemoveAttribute("io/sf/carte/echosvg/anim/dom/dummyXML3.xml", "root", "attr2");
 	}
 
-	void testCloneElement(String testFileName, String targetId) throws IOException, SAXException {
+	void testRemoveAttribute(String testFileName, String targetId, String targetAttr)
+			throws IOException, SAXException {
 		DocumentBuilder df = new SAXSVGDocumentFactory();
 
 		Document doc;
@@ -66,19 +63,7 @@ public class CloneElementTest {
 
 		assertNotNull(e);
 
-		Element celt = (Element) e.cloneNode(false);
-
-		NamedNodeMap attrs = e.getAttributes();
-
-		for (int i = 0; i < attrs.getLength(); i++) {
-			Node attr = attrs.item(i);
-			String ns = attr.getNamespaceURI();
-			String name = (ns == null) ? attr.getNodeName() : attr.getLocalName();
-			String val = attr.getNodeValue();
-			String val2 = celt.getAttributeNS(ns, name);
-			assertEquals(val, val2);
-		}
-
+		e.removeAttribute(targetAttr);
 	}
 
 }

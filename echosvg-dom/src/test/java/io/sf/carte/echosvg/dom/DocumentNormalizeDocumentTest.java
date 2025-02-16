@@ -16,7 +16,7 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.dom.test;
+package io.sf.carte.echosvg.dom;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -29,8 +29,6 @@ import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-
-import io.sf.carte.echosvg.dom.AbstractDocument;
 
 /**
  * Tests Document.normalizeDocument.
@@ -46,7 +44,7 @@ public class DocumentNormalizeDocumentTest extends DOM3Test {
 		Handler h = new Handler();
 
 		// cdata-sections == false
-		Document doc = newSVGDoc();
+		Document doc = newDoc();
 		DOMConfiguration conf = doc.getDomConfig();
 		conf.setParameter("cdata-sections", Boolean.FALSE);
 		Element e = doc.getDocumentElement();
@@ -58,7 +56,7 @@ public class DocumentNormalizeDocumentTest extends DOM3Test {
 				&& e.getFirstChild() == e.getLastChild());
 
 		// comments == false
-		doc = newSVGDoc();
+		doc = newDoc();
 		conf = doc.getDomConfig();
 		conf.setParameter("comments", Boolean.FALSE);
 		e = doc.getDocumentElement();
@@ -70,7 +68,7 @@ public class DocumentNormalizeDocumentTest extends DOM3Test {
 				&& e.getFirstChild() == e.getLastChild());
 
 		// element-content-whitespace == false
-		doc = newSVGDoc();
+		doc = newDoc();
 		conf = doc.getDomConfig();
 		conf.setParameter("element-content-whitespace", Boolean.FALSE);
 		e = doc.getDocumentElement();
@@ -82,7 +80,7 @@ public class DocumentNormalizeDocumentTest extends DOM3Test {
 				&& e.getFirstChild() == e.getLastChild());
 
 		// split-cdata-sections == true
-		doc = newSVGDoc();
+		doc = newDoc();
 		conf = doc.getDomConfig();
 		conf.setParameter("split-cdata-sections", Boolean.TRUE);
 		conf.setParameter("error-handler", h);
@@ -96,7 +94,7 @@ public class DocumentNormalizeDocumentTest extends DOM3Test {
 				&& e.getFirstChild().getNextSibling() == e.getLastChild() && h.get("cdata-sections-splitted") == 1);
 
 		// well-formed
-		doc = newSVGDoc();
+		doc = newDoc();
 		doc.setStrictErrorChecking(false);
 		conf = doc.getDomConfig();
 		conf.setParameter("error-handler", h);
@@ -109,7 +107,7 @@ public class DocumentNormalizeDocumentTest extends DOM3Test {
 		assertTrue(h.get("wf-invalid-character-in-node-name") == 1 && h.get("wf-invalid-character") == 3);
 
 		// namespaces
-		doc = newDoc();
+		doc = newEmptyDoc();
 		e = doc.createElementNS(null, "root");
 		doc.appendChild(e);
 		Element e2 = doc.createElementNS(null, "parent");
@@ -126,7 +124,7 @@ public class DocumentNormalizeDocumentTest extends DOM3Test {
 		assertTrue(a != null && a.getNodeName().equals("xmlns:ns")
 				&& a.getNodeValue().equals("http://www.example.org/ns2"));
 
-		doc = newDoc();
+		doc = newEmptyDoc();
 		e = doc.createElementNS(null, "root");
 		doc.appendChild(e);
 		e2 = doc.createElementNS("http://www.example.org/ns1", "ns:child1");
@@ -142,7 +140,7 @@ public class DocumentNormalizeDocumentTest extends DOM3Test {
 				&& a2 != null && a2.getNodeName().equals("xmlns:ns")
 				&& a2.getNodeValue().equals("http://www.example.org/ns1"));
 
-		doc = newDoc();
+		doc = newEmptyDoc();
 		e = doc.createElementNS(null, "root");
 		doc.appendChild(e);
 		e2 = doc.createElementNS("http://www.example.org/ns1", "child1");
@@ -155,7 +153,7 @@ public class DocumentNormalizeDocumentTest extends DOM3Test {
 				&& a2.getNodeValue().equals("http://www.example.org/ns2"));
 
 		// namespace-declarations == false
-		doc = newDoc();
+		doc = newEmptyDoc();
 		e = doc.createElementNS(null, "ex:root");
 		e.setAttributeNS(XMLNS_NAMESPACE_URI, "xmlns:ex", "http://www.example.org/ns1");
 		conf = doc.getDomConfig();

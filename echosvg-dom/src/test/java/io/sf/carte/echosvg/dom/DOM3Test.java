@@ -38,4 +38,8 @@ public class DOM3Test {
 		return GenericDOMImplementation.getDOMImplementation().createDocument(HTML_NAMESPACE_URI, "html", null);
 	}
 
+	Document newEmptyDoc() {
+		return new GenericDocument(null, GenericDOMImplementation.getDOMImplementation());
+	}
+
 }
