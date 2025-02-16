@@ -224,8 +224,8 @@ public class SVGConverter {
 	/** User stylesheet */
 	protected String userStylesheet = null;
 
-	/** Millimeters Per Pixel */
-	protected float pixelUnitToMillimeter = -1.0f;
+	/** Resolution in dpi */
+	protected float resolutionDPI = 96f;
 
 	/** Validation flag */
 	protected boolean validate = false;
@@ -414,18 +414,39 @@ public class SVGConverter {
 		return userStylesheet;
 	}
 
-	/**
-	 * Sets the millimeters per pixel constant. A negative value will cause the
-	 * default value (see
-	 * {@link io.sf.carte.echosvg.bridge.UserAgent#getPixelUnitToMillimeter}) to be
-	 * used.
-	 */
-	public void setPixelUnitToMillimeter(float pixelUnitToMillimeter) {
-		this.pixelUnitToMillimeter = pixelUnitToMillimeter;
+	public float getResolutionDPI() {
+		return resolutionDPI;
 	}
 
+	public void setResolutionDPI(float resolutionDPI) {
+		if (resolutionDPI > 0f) {
+			this.resolutionDPI = resolutionDPI;
+		} else {
+			this.resolutionDPI = 96f;
+		}
+	}
+
+	/**
+	 * Sets the millimeters per pixel constant.
+	 * @deprecated See {@link #setResolutionDPI(float)}.
+	 */
+	@Deprecated
+	public void setPixelUnitToMillimeter(float pixelUnitToMillimeter) {
+		if (pixelUnitToMillimeter > 0f) {
+			this.resolutionDPI = 25.4f / pixelUnitToMillimeter;
+		} else {
+			this.resolutionDPI = 96f;
+		}
+	}
+
+	/**
+	 * Gets the millimeters per pixel, according to resolution. See
+	 * {@link io.sf.carte.echosvg.bridge.UserAgent#getPixelUnitToMillimeter}).
+	 * @deprecated See {@link #getResolutionDPI()}.
+	 */
+	@Deprecated
 	public float getPixelUnitToMillimeter() {
-		return pixelUnitToMillimeter;
+		return 25.4f / resolutionDPI;
 	}
 
 	/**
@@ -855,10 +876,8 @@ public class SVGConverter {
 			map.put(SVGAbstractTranscoder.KEY_LANGUAGE, language);
 		}
 
-		// Sets the millimeters per pixel
-		if (pixelUnitToMillimeter > 0) {
-			map.put(SVGAbstractTranscoder.KEY_PIXEL_UNIT_TO_MILLIMETER, pixelUnitToMillimeter);
-		}
+		// Sets the resolution
+		map.put(SVGAbstractTranscoder.KEY_RESOLUTION_DPI, resolutionDPI);
 
 		// Set validation
 		if (validate) {

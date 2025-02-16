@@ -247,11 +247,11 @@ public class SVGConverterTest {
 
 		t.runTest();
 
-		// HintsConfigTest.KEY_PIXEL_UNIT_TO_MILLIMETER
-		t = new HintsConfigTest(new Object[][] { { SVGAbstractTranscoder.KEY_PIXEL_UNIT_TO_MILLIMETER, .5f } }) {
+		// HintsConfigTest.KEY_RESOLUTION_DPI
+		t = new HintsConfigTest(new Object[][] { { SVGAbstractTranscoder.KEY_RESOLUTION_DPI, 50.8f } }) {
 			@Override
 			protected void deltaConfigure(SVGConverter c) {
-				c.setPixelUnitToMillimeter(.5f);
+				c.setResolutionDPI(50.8f);
 			}
 		};
 
