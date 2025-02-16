@@ -35,6 +35,7 @@ import java.util.StringTokenizer;
  * @version $Id$
  */
 @Deprecated
+@SuppressWarnings({ "deprecation", "removal" })
 class SMApplicationSecurityEnforcer extends ApplicationSecurityEnforcer {
 
 	/**

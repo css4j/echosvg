@@ -79,7 +79,7 @@ test {
 	}
 
 	testLogging {
-		exceptionFormat 'full'
+		exceptionFormat = 'full'
 	}
 }
 

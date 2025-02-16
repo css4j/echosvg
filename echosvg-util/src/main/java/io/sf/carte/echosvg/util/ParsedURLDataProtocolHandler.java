@@ -137,6 +137,8 @@ public class ParsedURLDataProtocolHandler extends AbstractParsedURLProtocolHandl
 	 */
 	static class DataParsedURLData extends ParsedURLData {
 
+		private static final long serialVersionUID = 1L;
+
 		String charset;
 
 		@Override

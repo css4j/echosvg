@@ -27,8 +27,9 @@ import java.net.SocketPermission;
 import java.security.AllPermission;
 import java.security.Permission;
 import java.sql.SQLPermission;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.PropertyPermission;
-import java.util.Vector;
 
 import javax.sound.sampled.AudioPermission;
 
@@ -179,11 +180,12 @@ public class JarCheckPermissionsGranted implements ScriptHandler {
 
 		EventTarget root = (EventTarget) document.getDocumentElement();
 		root.addEventListener("SVGLoad", new EventListener() {
+			@SuppressWarnings({ "deprecation", "removal" })
 			@Override
 			public void handleEvent(Event evt) {
 				SecurityManager sm = System.getSecurityManager();
 				int successCnt = 0;
-				Vector unexpectedDenial = new Vector();
+				List<String> unexpectedDenial = new ArrayList<>();
 				int unexpectedDenialCnt = 0;
 				int unexpectedGrantsCnt = 0;
 
@@ -198,7 +200,7 @@ public class JarCheckPermissionsGranted implements ScriptHandler {
 							sm.checkPermission(p);
 							successCnt++;
 						} catch (SecurityException se) {
-							unexpectedDenial.add(permissions[i][0]);
+							unexpectedDenial.add((String) permissions[i][0]);
 							unexpectedDenialCnt++;
 						}
 					}
@@ -216,7 +218,7 @@ public class JarCheckPermissionsGranted implements ScriptHandler {
 					String unexpectedDenialString = "";
 
 					for (int i = 0; i < unexpectedDenialCnt; i++) {
-						unexpectedDenialString += unexpectedDenial.elementAt(i).toString();
+						unexpectedDenialString += unexpectedDenial.get(i).toString();
 					}
 
 					Element entry = null;

@@ -27,8 +27,9 @@ import java.net.SocketPermission;
 import java.security.AllPermission;
 import java.security.Permission;
 import java.sql.SQLPermission;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.PropertyPermission;
-import java.util.Vector;
 
 import javax.sound.sampled.AudioPermission;
 
@@ -196,12 +197,13 @@ public class JarCheckPermissionsDenied implements ScriptHandler {
 
 		EventTarget root = (EventTarget) document.getDocumentElement();
 		root.addEventListener("SVGLoad", new EventListener() {
+			@SuppressWarnings({ "deprecation", "removal" })
 			@Override
 			public void handleEvent(Event evt) {
 				SecurityManager sm = System.getSecurityManager();
 				int successCnt = 0;
-				Vector unexpectedGrants = new Vector();
-				Vector unexpectedDenial = new Vector();
+				List<String> unexpectedGrants = new ArrayList<>();
+				List<String> unexpectedDenial = new ArrayList<>();
 				int unexpectedDenialCnt = 0;
 				int unexpectedGrantsCnt = 0;
 
@@ -210,7 +212,7 @@ public class JarCheckPermissionsDenied implements ScriptHandler {
 						successCnt++;
 					}
 					for (int i = nGranted; i < permissions.length; i++) {
-						unexpectedGrants.add(permissions[i][0]);
+						unexpectedGrants.add((String) permissions[i][0]);
 						unexpectedGrantsCnt++;
 					}
 				} else {
@@ -221,7 +223,7 @@ public class JarCheckPermissionsDenied implements ScriptHandler {
 							System.out.println(">>>> Permision : " + p + " was granted");
 							successCnt++;
 						} catch (SecurityException se) {
-							unexpectedDenial.add(permissions[i][0]);
+							unexpectedDenial.add((String) permissions[i][0]);
 							unexpectedDenialCnt++;
 						}
 					}
@@ -230,7 +232,7 @@ public class JarCheckPermissionsDenied implements ScriptHandler {
 						try {
 							sm.checkPermission(p);
 							System.out.println(">>>> Permision : " + p + " was granted");
-							unexpectedGrants.add(permissions[i][0]);
+							unexpectedGrants.add((String) permissions[i][0]);
 							unexpectedGrantsCnt++;
 						} catch (SecurityException se) {
 							successCnt++;
@@ -251,11 +253,11 @@ public class JarCheckPermissionsDenied implements ScriptHandler {
 					String unexpectedDenialString = "";
 
 					for (int i = 0; i < unexpectedGrantsCnt; i++) {
-						unexpectedGrantsString += unexpectedGrants.elementAt(i).toString();
+						unexpectedGrantsString += unexpectedGrants.get(i).toString();
 					}
 
 					for (int i = 0; i < unexpectedDenialCnt; i++) {
-						unexpectedDenialString += unexpectedDenial.elementAt(i).toString();
+						unexpectedDenialString += unexpectedDenial.get(i).toString();
 					}
 
 					System.out.println("unexpected.grants : " + unexpectedGrantsString);

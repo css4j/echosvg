@@ -28,6 +28,7 @@ package io.sf.carte.echosvg.util;
  * @version $Id$
  */
 @Deprecated(forRemoval = true)
+@SuppressWarnings({ "deprecation", "removal" })
 public class EchoSVGSecurityManager extends SecurityManager {
 
 	/**
