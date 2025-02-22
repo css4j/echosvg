@@ -168,9 +168,9 @@ public class PNGTranscoder extends ImageTranscoder {
 	 * </tr>
 	 * <tr>
 	 * <th style="text-align: end; vertical-align: top">Description:</th>
-	 * <td style="vertical-align: top">Controls the gamma correction of the PNG image. A value of
-	 * zero for gamma disables the generation of a gamma chunk. No value causes an
-	 * sRGB chunk to be generated.</td>
+	 * <td style="vertical-align: top">Controls the gamma correction of the PNG
+	 * image. A value of zero for gamma disables the generation of a gamma chunk
+	 * (also no sRGB chunk). If it is not set, an sRGB chunk is generated.</td>
 	 * </tr>
 	 * </table>
 	 */

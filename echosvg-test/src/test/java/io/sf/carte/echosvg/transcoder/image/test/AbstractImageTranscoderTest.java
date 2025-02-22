@@ -20,8 +20,11 @@ package io.sf.carte.echosvg.transcoder.image.test;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
 import java.awt.image.RenderedImage;
+import java.awt.image.WritableRaster;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -303,7 +306,8 @@ public abstract class AbstractImageTranscoderTest {
 		}
 
 		private byte[] createDiffImage(BufferedImage actualImage) throws IOException {
-			BufferedImage referenceImage = getImage(new ByteArrayInputStream(refImgData));
+			BufferedImage referenceImage = getImage(new ByteArrayInputStream(refImgData),
+					actualImage.getColorModel().getColorSpace());
 			BufferedImage diffImage = ImageComparator.createDiffImage(referenceImage, actualImage);
 			ImageWriter writer = ImageWriterRegistry.getInstance().getWriterFor("image/png");
 			ByteArrayOutputStream diff = new ByteArrayOutputStream(2048);
@@ -327,9 +331,9 @@ public abstract class AbstractImageTranscoderTest {
 
 	}
 
-	private BufferedImage getImage(InputStream is) throws IOException {
+	private BufferedImage getImage(InputStream is, ColorSpace colorSpace) throws IOException {
 		ImageTagRegistry reg = ImageTagRegistry.getRegistry();
-		Filter filt = reg.readStream(is);
+		Filter filt = reg.readStream(is, colorSpace);
 		if (filt == null)
 			throw new IOException("Couldn't read Stream");
 
@@ -337,8 +341,18 @@ public abstract class AbstractImageTranscoderTest {
 		if (red == null)
 			throw new IOException("Couldn't render Stream");
 
-		BufferedImage img = new BufferedImage(red.getWidth(), red.getHeight(), BufferedImage.TYPE_INT_ARGB);
-		red.copyData(img.getRaster());
+		BufferedImage img;
+		if (red instanceof BufferedImage) {
+			img = (BufferedImage) red;
+		} else if (red.getColorModel().getColorSpace().isCS_sRGB()) {
+			img = new BufferedImage(red.getWidth(), red.getHeight(), BufferedImage.TYPE_INT_ARGB);
+			red.copyData(img.getRaster());
+		} else {
+			ColorModel cm = red.getColorModel();
+			WritableRaster wr = (WritableRaster) red.getData();
+			img = new BufferedImage(cm, wr, cm.isAlphaPremultiplied(), null);
+		}
+
 		return img;
 	}
 

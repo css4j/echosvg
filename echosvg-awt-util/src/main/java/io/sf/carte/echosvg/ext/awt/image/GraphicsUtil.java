@@ -49,6 +49,7 @@ import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
 
 import io.sf.carte.echosvg.ext.awt.RenderingHintsKeyExt;
+import io.sf.carte.echosvg.ext.awt.image.impl.Any2RGBRed;
 import io.sf.carte.echosvg.ext.awt.image.renderable.PaintRable;
 import io.sf.carte.echosvg.ext.awt.image.rendered.AffineRed;
 import io.sf.carte.echosvg.ext.awt.image.rendered.Any2LsRGBRed;
@@ -278,13 +279,6 @@ public class GraphicsUtil {
 				Rectangle tR = new Rectangle(0, 0, tw, th);
 				Rectangle iR = new Rectangle(0, 0, 0, 0);
 
-				if (false) {
-					System.err.println("SrcCM: " + srcCM);
-					System.err.println("CR: " + cr);
-					System.err.println("CRR: " + crR + " TG: [" + xt0 + ',' + yt0 + ',' + xt1 + ',' + yt1 + "] Off: "
-							+ cr.getTileGridXOffset() + ',' + cr.getTileGridYOffset());
-				}
-
 				int yloc = yt0 * th + cr.getTileGridYOffset();
 				int skip = (clipR.y - yloc) / th;
 				if (skip < 0)
@@ -299,11 +293,6 @@ public class GraphicsUtil {
 
 				int endX = clipR.x + clipR.width - 1;
 				int endY = clipR.y + clipR.height - 1;
-
-				if (false) {
-					System.out.println("clipR: " + clipR + " TG: [" + xt0 + ',' + yt0 + ',' + xt1 + ',' + yt1
-							+ "] Off: " + cr.getTileGridXOffset() + ',' + cr.getTileGridYOffset());
-				}
 
 				yloc = yt0 * th + cr.getTileGridYOffset();
 				int minX = xt0 * tw + cr.getTileGridXOffset();
@@ -328,11 +317,6 @@ public class GraphicsUtil {
 						// Make sure we only draw the region that was written.
 						BufferedImage subBI;
 						subBI = bi.getSubimage(0, 0, iR.width, iR.height);
-
-						if (false) {
-							System.out.println("Drawing: " + tR);
-							System.out.println("IR: " + iR);
-						}
 
 						// For some reason using the transform version
 						// causes a gStackUnderflow error but if I just
@@ -634,15 +618,44 @@ public class GraphicsUtil {
 	 * will convert <code>src</code>'s output to sRGB and returns that CacheableRed.
 	 *
 	 * @param src The image to convert to sRGB.
-	 * @return An equivilant image to <code>src</code> who's data is in sRGB.
+	 * @return An equivalent image to <code>src</code> who's data is in sRGB.
 	 */
 	public static CachableRed convertTosRGB(CachableRed src) {
-		ColorModel cm = src.getColorModel();
-		ColorSpace cs = cm.getColorSpace();
-		if (cs == ColorSpace.getInstance(ColorSpace.CS_sRGB))
+		if (src.getColorModel().getColorSpace().isCS_sRGB())
 			return src;
 
 		return new Any2sRGBRed(src);
+	}
+
+	/**
+	 * Return a CacheableRed that has it's data in the given RGB color space.
+	 * <p>
+	 * If <code>src</code> is already in {@code colorSpace} then this method does
+	 * nothing and returns <code>src</code>. Otherwise it creates a transform that
+	 * will convert <code>src</code>'s output to {@code colorSpace} and returns that
+	 * CacheableRed.
+	 * </p>
+	 * 
+	 * @param src        The image to convert to {@code colorSpace}.
+	 * @param colorSpace The desired RGB color space, {@code null} meaning sRGB.
+	 *                   Must be of type {@code TYPE_RGB}.
+	 * @return An equivalent image to <code>src</code> where the data is in
+	 *         {@code colorSpace}.
+	 */
+	public static CachableRed convertToRGB(CachableRed src, ColorSpace colorSpace) {
+		ColorSpace srcCS = src.getColorModel().getColorSpace();
+		if (srcCS == colorSpace) {
+			return src;
+		}
+
+		if (colorSpace == null || colorSpace.isCS_sRGB()) {
+			if (srcCS.isCS_sRGB()) {
+				return src;
+			}
+			return new Any2sRGBRed(src);
+		}
+
+		return new Any2RGBRed(src, colorSpace);
 	}
 
 	/**

@@ -185,7 +185,7 @@ public class PNGDecodeParam implements ImageDecodeParam {
 	}
 
 	/**
-	 * Turns gamma corection of the image data on or off.
+	 * Turns gamma correction of the image data on or off.
 	 */
 	public void setPerformGammaCorrection(boolean performGammaCorrection) {
 		this.performGammaCorrection = performGammaCorrection;

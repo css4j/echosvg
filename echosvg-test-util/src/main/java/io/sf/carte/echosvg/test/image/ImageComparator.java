@@ -383,7 +383,8 @@ public class ImageComparator {
 			return DIFFERENT_TYPES;
 		}
 
-		int colorSpace = ref.getColorModel().getColorSpace().getType();
+		ColorSpace refCS = ref.getColorModel().getColorSpace();
+		int colorSpace = refCS.getType();
 		// Compare color spaces
 		if (colorSpace != can.getColorModel().getColorSpace().getType()) {
 			return DIFFERENT_COLOR_SPACES;
@@ -413,7 +414,7 @@ public class ImageComparator {
 		}
 
 		// Prepare range variant
-		BufferedImage variant = variants.getVariantImage(0);
+		BufferedImage variant = variants.getVariantImage(0, refCS);
 
 		short result = NO_VARIANTS;
 
@@ -438,7 +439,7 @@ public class ImageComparator {
 			// Compare to the other variants
 			final int vCount = variants.getVariantCount();
 			for (int i = 1; i < vCount; i++) {
-				variant = variants.getVariantImage(i);
+				variant = variants.getVariantImage(i, refCS);
 				if (variant != null) {
 					if (w != variant.getWidth() || h != variant.getHeight()) {
 						result = VARIANT_ERROR;
@@ -620,10 +621,11 @@ public class ImageComparator {
 		 * {@link #getVariantCount()}, if no variant is available for that index.
 		 * </p>
 		 * 
-		 * @param index the index. If {@code 0}, must be the range variant.
+		 * @param index      the index. If {@code 0}, must be the range variant.
+		 * @param colorSpace the desired color space, if {@code null} means sRGB.
 		 * @return the variant image, or {@code null} if there is no such image.
 		 */
-		BufferedImage getVariantImage(int index);
+		BufferedImage getVariantImage(int index, ColorSpace colorSpace);
 
 	}
 

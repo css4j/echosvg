@@ -18,9 +18,12 @@
  */
 package io.sf.carte.echosvg.ext.awt.image.codec.png;
 
+import java.awt.color.ColorSpace;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
+import java.awt.image.DataBuffer;
+import java.awt.image.DirectColorModel;
 import java.awt.image.WritableRaster;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,10 +32,8 @@ import io.sf.carte.echosvg.ext.awt.image.GraphicsUtil;
 import io.sf.carte.echosvg.ext.awt.image.renderable.DeferRable;
 import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
 import io.sf.carte.echosvg.ext.awt.image.renderable.RedRable;
-import io.sf.carte.echosvg.ext.awt.image.rendered.Any2sRGBRed;
 import io.sf.carte.echosvg.ext.awt.image.rendered.CachableRed;
 import io.sf.carte.echosvg.ext.awt.image.rendered.FormatRed;
-import io.sf.carte.echosvg.ext.awt.image.spi.ImageTagRegistry;
 import io.sf.carte.echosvg.ext.awt.image.spi.MagicNumberRegistryEntry;
 import io.sf.carte.echosvg.util.ParsedURL;
 
@@ -52,27 +53,16 @@ public class PNGRegistryEntry extends MagicNumberRegistryEntry {
 	/**
 	 * Decode the Stream into a RenderableImage
 	 *
-	 * @param inIS        The input stream that contains the image.
-	 * @param origURL     The original URL, if any, for documentation purposes only.
-	 *                    This may be null.
-	 * @param needRawData If true the image returned should not have any default
-	 *                    color correction the file may specify applied.
+	 * @param inIS       The input stream that contains the image.
+	 * @param origURL    The original URL, if any, for documentation purposes only.
+	 *                   This may be null.
+	 * @param colorSpace The current working color space, or {@code null} if sRGB.
 	 */
 	@Override
-	public Filter handleStream(InputStream inIS, ParsedURL origURL, boolean needRawData) {
+	public Filter handleStream(InputStream inIS, ParsedURL origURL, ColorSpace colorSpace) {
 
 		final DeferRable dr = new DeferRable();
 		final InputStream is = inIS;
-		final boolean raw = needRawData;
-		final String errCode;
-		final Object[] errParam;
-		if (origURL != null) {
-			errCode = ERR_URL_FORMAT_UNREADABLE;
-			errParam = new Object[] { "PNG", origURL };
-		} else {
-			errCode = ERR_STREAM_FORMAT_UNREADABLE;
-			errParam = new Object[] { "PNG" };
-		}
 
 		Thread t = new Thread() {
 			@Override
@@ -82,17 +72,20 @@ public class PNGRegistryEntry extends MagicNumberRegistryEntry {
 					PNGDecodeParam param = new PNGDecodeParam();
 					param.setExpandPalette(true);
 
-					if (raw)
-						param.setPerformGammaCorrection(false);
-					else {
-						param.setPerformGammaCorrection(true);
-						param.setDisplayExponent(2.2f); // sRGB gamma
-					}
 					CachableRed cr = new PNGRed(is, param);
 					dr.setBounds(new Rectangle2D.Double(0, 0, cr.getWidth(), cr.getHeight()));
 
-					cr = new Any2sRGBRed(cr);
-					cr = new FormatRed(cr, GraphicsUtil.sRGB_Unpre);
+					// Convert to RGB
+					cr = GraphicsUtil.convertToRGB(cr, colorSpace);
+					ColorSpace cs = cr.getColorModel().getColorSpace();
+					ColorModel cm_Unpre;
+					if (cs.isCS_sRGB() || cs.getType() != ColorSpace.TYPE_RGB) {
+						cm_Unpre = GraphicsUtil.sRGB_Unpre;
+					} else {
+						cm_Unpre = new DirectColorModel(cs, 32,
+								0x00FF0000, 0x0000FF00, 0x000000FF, 0xFF000000, false, DataBuffer.TYPE_INT);
+					}
+					cr = new FormatRed(cr, cm_Unpre);
 					WritableRaster wr = (WritableRaster) cr.getData();
 					ColorModel cm = cr.getColorModel();
 					BufferedImage image;
@@ -100,19 +93,20 @@ public class PNGRegistryEntry extends MagicNumberRegistryEntry {
 					cr = GraphicsUtil.wrap(image);
 					filt = new RedRable(cr);
 				} catch (IOException ioe) {
-					filt = ImageTagRegistry.getBrokenLinkImage(PNGRegistryEntry.this, errCode, errParam);
+					filt = getFormatBrokenLinkImage(origURL);
 				} catch (ThreadDeath td) {
-					filt = ImageTagRegistry.getBrokenLinkImage(PNGRegistryEntry.this, errCode, errParam);
+					filt = getFormatBrokenLinkImage(origURL);
 					dr.setSource(filt);
 					throw td;
 				} catch (Throwable t) {
-					filt = ImageTagRegistry.getBrokenLinkImage(PNGRegistryEntry.this, errCode, errParam);
+					filt = getFormatMsgBrokenLinkImage(origURL, t);
 				}
 
 				dr.setSource(filt);
 			}
 		};
 		t.start();
+
 		return dr;
 	}
 }

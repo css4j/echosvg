@@ -18,52 +18,45 @@
  */
 package io.sf.carte.echosvg.ext.awt.image.spi;
 
+import java.awt.color.ColorSpace;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StreamCorruptedException;
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.ServiceLoader;
+import java.util.concurrent.locks.ReentrantLock;
 
 import io.sf.carte.echosvg.ext.awt.image.URLImageCache;
 import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
-import io.sf.carte.echosvg.ext.awt.image.renderable.ProfileRable;
 import io.sf.carte.echosvg.util.ParsedURL;
-import io.sf.graphics.java2d.color.ICCColorSpaceWithIntent;
 
 /**
  * This class handles the registered Image tag handlers. These are instances of
  * RegistryEntry in this package.
  *
- * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: Thomas DeWeese. For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class ImageTagRegistry implements ErrorConstants {
 
-	List<RegistryEntry> entries = new LinkedList<>();
-	List<String> extensions = null;
-	List<String> mimeTypes = null;
+	private List<RegistryEntry> entries = new LinkedList<>();
+	private List<String> extensions = null;
+	private List<String> mimeTypes = null;
 
-	URLImageCache rawCache;
-	URLImageCache imgCache;
+	// Registry lock (more efficient than synchronization)
+	private transient ReentrantLock regLock = new ReentrantLock();
 
-	public ImageTagRegistry() {
-		this(null, null);
-	}
+	private final URLImageCache imgCache;
 
-	public ImageTagRegistry(URLImageCache rawCache, URLImageCache imgCache) {
-		if (rawCache == null)
-			rawCache = new URLImageCache();
-		if (imgCache == null)
-			imgCache = new URLImageCache();
-
-		this.rawCache = rawCache;
-		this.imgCache = imgCache;
+	ImageTagRegistry() {
+		imgCache = new URLImageCache();
 	}
 
 	/**
@@ -71,7 +64,6 @@ public class ImageTagRegistry implements ErrorConstants {
 	 * from the original source if decoded again.
 	 */
 	public void flushCache() {
-		rawCache.flush();
 		imgCache.flush();
 	}
 
@@ -80,30 +72,16 @@ public class ImageTagRegistry implements ErrorConstants {
 	 * will be removed from the cache.
 	 */
 	public void flushImage(ParsedURL purl) {
-		rawCache.clear(purl);
 		imgCache.clear(purl);
 	}
 
-	public Filter checkCache(ParsedURL purl, ICCColorSpaceWithIntent colorSpace) {
-		// I just realized that this whole thing could
-		boolean needRawData = (colorSpace != null);
+	public Filter checkCache(ParsedURL purl) {
+		Filter ret = imgCache.request(purl);
 
-		Filter ret = null;
-		URLImageCache cache;
-		if (needRawData)
-			cache = rawCache;
-		else
-			cache = imgCache;
-
-		ret = cache.request(purl);
 		if (ret == null) {
-			cache.clear(purl);
-			return null;
+			imgCache.clear(purl);
 		}
 
-		// System.out.println("Image came from cache" + purl);
-		if (colorSpace != null)
-			ret = new ProfileRable(ret, colorSpace);
 		return ret;
 	}
 
@@ -111,53 +89,34 @@ public class ImageTagRegistry implements ErrorConstants {
 		return readURL(null, purl, null, true, true);
 	}
 
-	public Filter readURL(ParsedURL purl, ICCColorSpaceWithIntent colorSpace) {
-		return readURL(null, purl, colorSpace, true, true);
-	}
-
-	public Filter readURL(InputStream is, ParsedURL purl, ICCColorSpaceWithIntent colorSpace, boolean allowOpenStream,
-			boolean returnBrokenLink) {
+	public Filter readURL(InputStream is, ParsedURL purl, ColorSpace colorSpace,
+			boolean allowOpenStream, boolean returnBrokenLink) {
 		if ((is != null) && !is.markSupported())
 			// Doesn't support mark so wrap with
 			// BufferedInputStream that does.
 			is = new BufferedInputStream(is);
 
-		// I just realized that this whole thing could
-		boolean needRawData = (colorSpace != null);
-
 		Filter ret = null;
-		URLImageCache cache = null;
 
 		if (purl != null) {
-			if (needRawData)
-				cache = rawCache;
-			else
-				cache = imgCache;
 
-			ret = cache.request(purl);
+			ret = imgCache.request(purl);
 			if (ret != null) {
-				// System.out.println("Image came from cache" + purl);
-				if (colorSpace != null)
-					ret = new ProfileRable(ret, colorSpace);
 				return ret;
 			}
 		}
-		// System.out.println("Image didn't come from cache: " + purl);
 
 		boolean openFailed = false;
 		List<String> mimeTypes = getRegisteredMimeTypes();
 
-		Iterator<RegistryEntry> i;
-		i = entries.iterator();
-		while (i.hasNext()) {
-			RegistryEntry re = i.next();
+		for (RegistryEntry re : entries) {
 			if (re instanceof URLRegistryEntry) {
 				if ((purl == null) || !allowOpenStream)
 					continue;
 
 				URLRegistryEntry ure = (URLRegistryEntry) re;
 				if (ure.isCompatibleURL(purl)) {
-					ret = ure.handleURL(purl, needRawData);
+					ret = ure.handleURL(purl);
 
 					// Check if we got an image.
 					if (ret != null)
@@ -193,7 +152,7 @@ public class ImageTagRegistry implements ErrorConstants {
 					}
 
 					if (sre.isCompatibleStream(is)) {
-						ret = sre.handleStream(is, purl, needRawData);
+						ret = sre.handleStream(is, purl, colorSpace);
 						if (ret != null)
 							break;
 					}
@@ -205,8 +164,9 @@ public class ImageTagRegistry implements ErrorConstants {
 			}
 		}
 
-		if (cache != null)
-			cache.put(purl, ret);
+		if (purl != null) {
+			imgCache.put(purl, ret);
+		}
 
 		if (ret == null) {
 			if (!returnBrokenLink)
@@ -222,13 +182,10 @@ public class ImageTagRegistry implements ErrorConstants {
 			return getBrokenLinkImage(this, ERR_URL_UNINTERPRETABLE, null);
 		}
 
-		if (BrokenLinkProvider.hasBrokenLinkProperty(ret)) {
+		if (!returnBrokenLink && BrokenLinkProvider.hasBrokenLinkProperty(ret)) {
 			// Don't Return Broken link image unless requested
-			return (returnBrokenLink) ? ret : null;
+			ret = null;
 		}
-
-		if (colorSpace != null)
-			ret = new ProfileRable(ret, colorSpace);
 
 		return ret;
 	}
@@ -237,12 +194,10 @@ public class ImageTagRegistry implements ErrorConstants {
 		return readStream(is, null);
 	}
 
-	public Filter readStream(InputStream is, ICCColorSpaceWithIntent colorSpace) {
+	public Filter readStream(InputStream is, ColorSpace colorSpace) {
 		if (!is.markSupported())
 			// Doesn't support mark so wrap with BufferedInputStream that does.
 			is = new BufferedInputStream(is);
-
-		boolean needRawData = (colorSpace != null);
 
 		Filter ret = null;
 
@@ -254,7 +209,7 @@ public class ImageTagRegistry implements ErrorConstants {
 
 			try {
 				if (sre.isCompatibleStream(is)) {
-					ret = sre.handleStream(is, null, needRawData);
+					ret = sre.handleStream(is, null, colorSpace);
 
 					if (ret != null)
 						break;
@@ -265,89 +220,121 @@ public class ImageTagRegistry implements ErrorConstants {
 		}
 
 		if (ret == null)
-			return getBrokenLinkImage(this, ERR_STREAM_UNREADABLE, null);
-
-		if ((colorSpace != null) && (!BrokenLinkProvider.hasBrokenLinkProperty(ret)))
-			ret = new ProfileRable(ret, colorSpace);
+			ret = getBrokenLinkImage(this, ERR_STREAM_UNREADABLE, null);
 
 		return ret;
 	}
 
-	public synchronized void register(RegistryEntry newRE) {
+	/**
+	 * Register a new entry.
+	 * 
+	 * @param newRE the new entry.
+	 */
+	public void register(RegistryEntry newRE) {
 		float priority = newRE.getPriority();
 
-		ListIterator<RegistryEntry> li;
-		li = entries.listIterator();
-		while (li.hasNext()) {
-			RegistryEntry re = li.next();
-			if (re.getPriority() > priority) {
-				li.previous();
-				break; // Insertion point found.
+		regLock.lock();
+		try {
+			ListIterator<RegistryEntry> li = entries.listIterator();
+			while (li.hasNext()) {
+				RegistryEntry re = li.next();
+				if (re.getPriority() > priority) {
+					li.previous();
+					break; // Insertion point found.
+				}
 			}
+
+			li.add(newRE);
+
+			extensions = null;
+			mimeTypes = null;
+		} finally {
+			regLock.unlock();
 		}
-		li.add(newRE);
-		extensions = null;
-		mimeTypes = null;
 	}
 
 	/**
-	 * Returns a List that contains String of all the extensions that can be
-	 * handleded by the various registered image format handlers.
+	 * Returns a List that contains String of all the extensions that can be handled
+	 * by the various registered image format handlers.
 	 */
-	public synchronized List<String> getRegisteredExtensions() {
-		if (extensions != null)
-			return extensions;
+	public List<String> getRegisteredExtensions() {
+		final List<String> ext = extensions;
+		if (ext != null)
+			return ext;
 
-		extensions = new LinkedList<>();
-		for (RegistryEntry re : entries) {
-			extensions.addAll(re.getStandardExtensions());
+		regLock.lock();
+		try {
+			// Check again
+			if (extensions != null)
+				return extensions;
+			extensions = new ArrayList<>(entries.size() + 5);
+			for (RegistryEntry re : entries) {
+				extensions.addAll(re.getStandardExtensions());
+			}
+			extensions = Collections.unmodifiableList(extensions);
+		} finally {
+			regLock.unlock();
 		}
-		extensions = Collections.unmodifiableList(extensions);
+
 		return extensions;
 	}
 
 	/**
 	 * Returns a List that contains String of all the mime types that can be
-	 * handleded by the various registered image format handlers.
+	 * handled by the various registered image format handlers.
 	 */
-	public synchronized List<String> getRegisteredMimeTypes() {
-		if (mimeTypes != null)
-			return mimeTypes;
+	public List<String> getRegisteredMimeTypes() {
+		final List<String> mt = mimeTypes;
+		if (mt != null)
+			return mt;
 
-		mimeTypes = new LinkedList<>();
-		for (RegistryEntry re : entries) {
-			mimeTypes.addAll(re.getMimeTypes());
+		regLock.lock();
+		try {
+			// Check again
+			if (mimeTypes != null)
+				return mimeTypes;
+			mimeTypes = new ArrayList<>(entries.size() + 5);
+			for (RegistryEntry re : entries) {
+				mimeTypes.addAll(re.getMimeTypes());
+			}
+			mimeTypes = Collections.unmodifiableList(mimeTypes);
+		} finally {
+			regLock.unlock();
 		}
-		mimeTypes = Collections.unmodifiableList(mimeTypes);
+
 		return mimeTypes;
 	}
 
-	static ImageTagRegistry registry = null;
+	private static final ImageTagRegistry registry = createImageTagRegistry();
 
-	public static synchronized ImageTagRegistry getRegistry() {
-		if (registry != null)
-			return registry;
+	/**
+	 * Get the instance of {@code ImageTagRegistry}.
+	 * 
+	 * @return the instance.
+	 */
+	public static ImageTagRegistry getRegistry() {
+		return registry;
+	}
 
-		registry = new ImageTagRegistry();
+	private static ImageTagRegistry createImageTagRegistry() {
+		ImageTagRegistry registry = new ImageTagRegistry();
 
 		registry.register(new JDKRegistryEntry());
 
 		ServiceLoader<RegistryEntry> loader = ServiceLoader.load(RegistryEntry.class);
 
-		Iterator<RegistryEntry> iter = loader.iterator();
-		while (iter.hasNext()) {
-			RegistryEntry re = iter.next();
+		for (RegistryEntry re : loader) {
 			registry.register(re);
 		}
 
 		return registry;
 	}
 
-	static BrokenLinkProvider defaultProvider = new DefaultBrokenLinkProvider();
+	private static BrokenLinkProvider defaultProvider = new DefaultBrokenLinkProvider();
 
-	static BrokenLinkProvider brokenLinkProvider = null;
+	private static BrokenLinkProvider brokenLinkProvider = null;
 
-	public static synchronized Filter getBrokenLinkImage(Object base, String code, Object[] params) {
+	public static Filter getBrokenLinkImage(Object base, String code, Object[] params) {
 		Filter ret = null;
 		if (brokenLinkProvider != null)
 			ret = brokenLinkProvider.getBrokenLinkImage(base, code, params);
@@ -358,7 +345,8 @@ public class ImageTagRegistry implements ErrorConstants {
 		return ret;
 	}
 
-	public static synchronized void setBrokenLinkProvider(BrokenLinkProvider provider) {
+	public static void setBrokenLinkProvider(BrokenLinkProvider provider) {
 		brokenLinkProvider = provider;
 	}
+
 }

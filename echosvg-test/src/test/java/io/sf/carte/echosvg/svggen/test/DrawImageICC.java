@@ -23,7 +23,6 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Transparency;
 import java.awt.color.ICC_ColorSpace;
-import java.awt.color.ICC_Profile;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
@@ -31,8 +30,8 @@ import java.awt.image.ComponentColorModel;
 import java.awt.image.DataBuffer;
 import java.awt.image.RescaleOp;
 import java.awt.image.WritableRaster;
-import java.io.IOException;
-import java.io.InputStream;
+
+import io.sf.carte.echosvg.ext.awt.color.StandardColorSpaces;
 
 /**
  * This test validates drawImage conversions with profiled colors.
@@ -48,15 +47,7 @@ public class DrawImageICC implements Painter {
 
 	@Override
 	public void paint(Graphics2D g) {
-		// Load a profile
-		ICC_Profile prof;
-		try (InputStream iccStream = DrawImageICC.class.getResourceAsStream(
-				"/io/sf/carte/echosvg/css/color/profiles/Display P3.icc")) {
-			prof = ICC_Profile.getInstance(iccStream);
-		} catch (IOException e) {
-			throw new IllegalStateException(e);
-		}
-		ICC_ColorSpace cs = new ICC_ColorSpace(prof);
+		ICC_ColorSpace cs = StandardColorSpaces.getDisplayP3();
 
 		// Create the image
 		int[] bits = { 16, 16, 16, 16 };

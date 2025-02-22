@@ -16,50 +16,33 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.ext.awt.image.spi.test;
+package io.sf.carte.echosvg.bridge;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.color.ColorSpace;
 import java.awt.image.RenderedImage;
 
 import org.junit.jupiter.api.Test;
 
-import io.sf.carte.echosvg.bridge.SVGBrokenLinkProvider;
 import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
-import io.sf.carte.echosvg.ext.awt.image.spi.AbstractRegistryEntry;
 import io.sf.carte.echosvg.ext.awt.image.spi.ErrorConstants;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageTagRegistry;
+import io.sf.carte.echosvg.ext.awt.image.spi.JDKRegistryEntry;
 
-public class ImageTagRegistryTest {
-
-	@Test
-	public void testMimeTypes() {
-		ImageTagRegistry ir = new ImageTagRegistry();
-		// Add a new registry entry with a HIGHER priority first
-		ir.register(new AbstractRegistryEntry("Unit test", 100, "working", "application/working") {
-		});
-		// Ensure the first one is present:
-		assertTrue(ir.getRegisteredMimeTypes().contains("application/working"));
-		// Ensure the second is NOT YET present:
-		assertTrue(!ir.getRegisteredMimeTypes().contains("application/missing"));
-		// Add a new registry entry with a LOW priority later
-		ir.register(new AbstractRegistryEntry("Unit test", 1, "missing", "application/missing") {
-		});
-		// This one still works - this is expected:
-		assertTrue(ir.getRegisteredMimeTypes().contains("application/working"));
-		// The second was not added because of BATIK-1203.
-		assertTrue(ir.getRegisteredMimeTypes().contains("application/missing"));
-	}
+public class SVGBrokenLinkProviderTest {
 
 	@Test
-	public void testDefaultBrokenLinkProvider() {
-		ImageTagRegistry.setBrokenLinkProvider(null);
+	public void testSVGBrokenLinkProvider_ImageTagRegistry() {
+		ImageTagRegistry.setBrokenLinkProvider(new SVGBrokenLinkProvider());
 		ImageTagRegistry reg = ImageTagRegistry.getRegistry();
 
 		Filter filt = ImageTagRegistry.getBrokenLinkImage(reg, ErrorConstants.ERR_STREAM_UNREADABLE, null);
+		assertNotNull(filt);
+		assertEquals(100d, filt.getWidth(), 1e-7);
+		assertEquals(100d, filt.getHeight(), 1e-7);
+
 		RenderedImage red = filt.createDefaultRendering();
 		assertNotNull(red);
 
@@ -67,14 +50,18 @@ public class ImageTagRegistryTest {
 		assertEquals(100, red.getHeight());
 		assertEquals(0, red.getMinX());
 		assertEquals(0, red.getMinY());
+
+		assertEquals(ColorSpace.TYPE_RGB, red.getColorModel().getColorSpace().getType());
 	}
 
 	@Test
-	public void testSVGBrokenLinkProvider() {
+	public void testSVGBrokenLinkProvider_JDKRegistryEntry() {
 		ImageTagRegistry.setBrokenLinkProvider(new SVGBrokenLinkProvider());
-		ImageTagRegistry reg = ImageTagRegistry.getRegistry();
+		JDKRegistryEntry re = new JDKRegistryEntry();
 
-		Filter filt = ImageTagRegistry.getBrokenLinkImage(reg, ErrorConstants.ERR_STREAM_UNREADABLE, null);
+		Object[] errParam = { "JDK", "foo" };
+		Filter filt = ImageTagRegistry.getBrokenLinkImage(re, ErrorConstants.ERR_URL_FORMAT_UNREADABLE,
+				errParam);
 		assertNotNull(filt);
 		assertEquals(100d, filt.getWidth(), 1e-7);
 		assertEquals(100d, filt.getHeight(), 1e-7);

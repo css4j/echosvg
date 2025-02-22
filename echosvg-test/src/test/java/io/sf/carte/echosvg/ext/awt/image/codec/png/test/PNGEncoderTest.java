@@ -28,7 +28,6 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Transparency;
 import java.awt.color.ICC_ColorSpace;
-import java.awt.color.ICC_Profile;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
@@ -51,6 +50,7 @@ import java.util.Locale;
 
 import org.junit.jupiter.api.Test;
 
+import io.sf.carte.echosvg.ext.awt.color.StandardColorSpaces;
 import io.sf.carte.echosvg.ext.awt.image.codec.png.PNGDecodeParam;
 import io.sf.carte.echosvg.ext.awt.image.codec.png.PNGEncodeParam;
 import io.sf.carte.echosvg.ext.awt.image.codec.png.PNGImageDecoder;
@@ -108,12 +108,7 @@ public class PNGEncoderTest {
 
 	@Test
 	public void testICC() throws Exception {
-		ICC_Profile prof;
-		try (InputStream iccStream = PNGEncoderTest.class.getResourceAsStream(
-				"/io/sf/carte/echosvg/css/color/profiles/Display P3.icc")) {
-			prof = ICC_Profile.getInstance(iccStream);
-		}
-		ICC_ColorSpace cs = new ICC_ColorSpace(prof);
+		ICC_ColorSpace cs = StandardColorSpaces.getDisplayP3();
 
 		int[] bits = { 16, 16, 16, 16 };
 		ComponentColorModel cm = new ComponentColorModel(cs, bits, true, false,
@@ -126,7 +121,15 @@ public class PNGEncoderTest {
 		BufferedImage raw = new BufferedImage(cm, raster, false, null);
 		BufferedImage image = drawImage(raw);
 
-		testEncoding(image);
+		PNGEncodeParam params = PNGEncodeParam.getDefaultEncodeParam(image);
+
+		// Not really the P3 gamma but this is a test
+		params.setGamma(1f / 2.2f);
+
+		// P3 chromaticities
+		params.setChromaticity(0.31270f, 0.329f, 0.68f, 0.32f, 0.265f, 0.69f, 0.15f, 0.06f);
+
+		testEncoding(image, params);
 	}
 
 	BufferedImage drawImage(BufferedImage image) {
@@ -168,6 +171,14 @@ public class PNGEncoderTest {
 
 		PNGDecodeParam param = new PNGDecodeParam();
 
+		// Gamma handling is a bit odd, so we ignore it
+
+		float[] chromaticity = null;
+		if (params.isChromaticitySet()) {
+			chromaticity = params.getChromaticity();
+			param.setGenerateEncodeParam(true);
+		}
+
 		String[] text = null;
 		if (params.isTextSet()) {
 			text = params.getText();
@@ -206,6 +217,22 @@ public class PNGEncoderTest {
 		Graphics2D ig = decodedImage.createGraphics();
 		ig.drawRenderedImage(decodedRenderedImage, new AffineTransform());
 		ig.dispose();
+
+		// Check chromaticity
+		if (chromaticity != null) {
+			PNGEncodeParam encodeParams = param.getEncodeParam();
+			assertNotNull(encodeParams, "EncodeParam should be generated.");
+			assertTrue(encodeParams.isChromaticitySet());
+			float[] decChroma = encodeParams.getChromaticity();
+			assertEquals(chromaticity[0], decChroma[0], 3e-5f, "White X mismatch.");
+			assertEquals(chromaticity[1], decChroma[1], 3e-5f, "White Y mismatch.");
+			assertEquals(chromaticity[2], decChroma[2], 3e-5f, "Red X mismatch.");
+			assertEquals(chromaticity[3], decChroma[3], 3e-5f, "Red Y mismatch.");
+			assertEquals(chromaticity[4], decChroma[4], 3e-5f, "Green X mismatch.");
+			assertEquals(chromaticity[5], decChroma[5], 3e-5f, "Green Y mismatch.");
+			assertEquals(chromaticity[6], decChroma[6], 3e-5f, "Blue X mismatch.");
+			assertEquals(chromaticity[7], decChroma[7], 3e-5f, "Blue Y mismatch.");
+		}
 
 		// Check text
 		if (text != null) {

@@ -18,13 +18,13 @@
  */
 package io.sf.carte.echosvg.ext.awt.image.renderable;
 
+import java.awt.color.ICC_ColorSpace;
 import java.awt.image.RenderedImage;
 import java.awt.image.renderable.RenderContext;
 
 import io.sf.carte.echosvg.ext.awt.image.GraphicsUtil;
 import io.sf.carte.echosvg.ext.awt.image.rendered.CachableRed;
 import io.sf.carte.echosvg.ext.awt.image.rendered.ProfileRed;
-import io.sf.graphics.java2d.color.ICCColorSpaceWithIntent;
 
 /**
  * Implements the interface expected from a color matrix operation
@@ -33,16 +33,16 @@ import io.sf.graphics.java2d.color.ICCColorSpaceWithIntent;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
+@Deprecated(forRemoval = true)
 public class ProfileRable extends AbstractRable {
 
-	private ICCColorSpaceWithIntent colorSpace;
+	private ICC_ColorSpace colorSpace;
 
 	/**
 	 * Instances should be built through the static factory methods
 	 */
-	public ProfileRable(Filter src, ICCColorSpaceWithIntent colorSpace) {
+	public ProfileRable(Filter src) {
 		super(src);
-		this.colorSpace = colorSpace;
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class ProfileRable extends AbstractRable {
 	/**
 	 * Sets the ColorSpace of the Profile operation
 	 */
-	public void setColorSpace(ICCColorSpaceWithIntent colorSpace) {
+	public void setColorSpace(ICC_ColorSpace colorSpace) {
 		touch();
 		this.colorSpace = colorSpace;
 	}
@@ -70,7 +70,7 @@ public class ProfileRable extends AbstractRable {
 	/**
 	 * Returns the ColorSpace of the Profile operation
 	 */
-	public ICCColorSpaceWithIntent getColorSpace() {
+	public ICC_ColorSpace getColorSpace() {
 		return colorSpace;
 	}
 

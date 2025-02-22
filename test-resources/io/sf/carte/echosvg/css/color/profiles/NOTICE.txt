@@ -1,7 +1,2 @@
-The Display P3 profile was made by Apple and was obtained from color.org (ICC).
-
-The profile for the ITU-R Recommendation BT.2020 was also obtained from
-color.org (ICC).
-
 The WideGamutPhoto (ProPhoto-compatible) profile was made by Clinton Ingram. CC
 license, see file Compact-ICC-Profiles-license.

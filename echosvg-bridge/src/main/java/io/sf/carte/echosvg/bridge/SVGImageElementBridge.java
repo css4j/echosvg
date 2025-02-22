@@ -20,8 +20,6 @@ package io.sf.carte.echosvg.bridge;
 
 import java.awt.RenderingHints;
 import java.awt.Shape;
-import java.awt.color.ColorSpace;
-import java.awt.color.ICC_Profile;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.io.BufferedInputStream;
@@ -66,8 +64,6 @@ import io.sf.carte.echosvg.gvt.ShapeNode;
 import io.sf.carte.echosvg.util.HaltingThread;
 import io.sf.carte.echosvg.util.MimeTypeConstants;
 import io.sf.carte.echosvg.util.ParsedURL;
-import io.sf.graphics.java2d.color.ICCColorSpaceWithIntent;
-import io.sf.graphics.java2d.color.RenderingIntent;
 
 /**
  * Bridge class for the &lt;image&gt; element.
@@ -225,7 +221,6 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
 
 		DocumentLoader loader = ctx.getDocumentLoader();
 		ImageTagRegistry reg = ImageTagRegistry.getRegistry();
-		ICCColorSpaceWithIntent colorspace = extractColorSpace(e, ctx);
 		{
 			/**
 			 * Before we open the URL we see if we have the URL already cached and parsed
@@ -244,7 +239,7 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
 			}
 
 			/* Check the ImageTagRegistry Cache */
-			Filter img = reg.checkCache(purl, colorspace);
+			Filter img = reg.checkCache(purl);
 			if (img != null) {
 				return createRasterImageNode(ctx, e, img, purl);
 			}
@@ -271,7 +266,7 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
 			 * probably the fastest mechanism. We tell the registry what the source purl is
 			 * but we tell it not to open that url.
 			 */
-			Filter img = reg.readURL(reference, purl, colorspace, false, false);
+			Filter img = reg.readURL(reference, purl, ctx.getColorSpace(), false, false);
 			if (img != null) {
 				try {
 					reference.tie();
@@ -342,7 +337,7 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
 			// Finally try to load the image as a raster image (JPG or
 			// PNG) allowing the registry to open the url (so the
 			// JDK readers can be checked).
-			Filter img = reg.readURL(reference, purl, colorspace, true, true);
+			Filter img = reg.readURL(reference, purl, ctx.getColorSpace(), true, true);
 			if (img != null) {
 				// It's a bouncing baby Raster...
 				return createRasterImageNode(ctx, e, img, purl);
@@ -882,39 +877,6 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
 		} catch (LiveAttributeException ex) {
 			throw new BridgeException(ctx, ex);
 		}
-	}
-
-	/**
-	 * Analyzes the color-profile property and builds an ICCColorSpaceExt object
-	 * from it.
-	 *
-	 * @param element the element with the color-profile property
-	 * @param ctx     the bridge context
-	 */
-	protected static ICCColorSpaceWithIntent extractColorSpace(Element element, BridgeContext ctx) {
-
-		String colorProfileProperty = CSSUtilities.getComputedStyle(element, SVGCSSEngine.COLOR_PROFILE_INDEX)
-				.getStringValue();
-
-		// The only cases that need special handling are 'sRGB' and 'name'
-		ICCColorSpaceWithIntent colorSpace = null;
-		if (CSS_SRGB_VALUE.equalsIgnoreCase(colorProfileProperty)) {
-
-			colorSpace = new ICCColorSpaceWithIntent(ICC_Profile.getInstance(ColorSpace.CS_sRGB), RenderingIntent.AUTO,
-					"sRGB", null);
-
-		} else if (!CSS_AUTO_VALUE.equalsIgnoreCase(colorProfileProperty)
-				&& !"".equalsIgnoreCase(colorProfileProperty)) {
-
-			// The value is neither 'sRGB' nor 'auto': it is a profile name.
-			SVGColorProfileElementBridge profileBridge = (SVGColorProfileElementBridge) ctx.getBridge(SVG_NAMESPACE_URI,
-					SVG_COLOR_PROFILE_TAG);
-			if (profileBridge != null) {
-				colorSpace = profileBridge.createICCColorSpaceWithIntent(ctx, element, colorProfileProperty);
-
-			}
-		}
-		return colorSpace;
 	}
 
 	/**

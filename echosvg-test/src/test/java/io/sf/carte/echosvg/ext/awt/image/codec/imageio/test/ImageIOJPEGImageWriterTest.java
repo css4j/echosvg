@@ -22,7 +22,6 @@ package io.sf.carte.echosvg.ext.awt.image.codec.imageio.test;
 import java.awt.Point;
 import java.awt.Transparency;
 import java.awt.color.ICC_ColorSpace;
-import java.awt.color.ICC_Profile;
 import java.awt.image.BufferedImage;
 import java.awt.image.ComponentColorModel;
 import java.awt.image.ComponentSampleModel;
@@ -37,6 +36,7 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
+import io.sf.carte.echosvg.ext.awt.color.StandardColorSpaces;
 import io.sf.carte.echosvg.ext.awt.image.codec.imageio.ImageIOJPEGImageWriter;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriter;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterParams;
@@ -50,7 +50,7 @@ import io.sf.carte.echosvg.test.misc.TestLocations;
  * 
  * @version $Id$
  */
-public class ImageIOJPEGImageWriterTest extends AbstractImageWriterCheck {
+public class ImageIOJPEGImageWriterTest extends AbstractImageWriterCheck<Object> {
 
 	private static final int width = 200;
 
@@ -64,12 +64,7 @@ public class ImageIOJPEGImageWriterTest extends AbstractImageWriterCheck {
 
 	@Test
 	public void testICC() throws IOException {
-		ICC_Profile prof;
-		try (InputStream iccStream = ImageIOJPEGImageWriterTest.class.getResourceAsStream(
-				"/io/sf/carte/echosvg/css/color/profiles/Display P3.icc")) {
-			prof = ICC_Profile.getInstance(iccStream);
-		}
-		ICC_ColorSpace cs = new ICC_ColorSpace(prof);
+		ICC_ColorSpace cs = StandardColorSpaces.getDisplayP3();
 
 		int[] bits = { 8, 8, 8 };
 		int[] offsets = { 2, 1, 0 };

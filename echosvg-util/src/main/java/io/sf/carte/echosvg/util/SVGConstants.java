@@ -353,7 +353,6 @@ public interface SVGConstants extends CSSConstants, XMLConstants {
 	String SVG_ANIMATE_TRANSFORM_TAG = "animateTransform";
 	String SVG_CIRCLE_TAG = "circle";
 	String SVG_CLIP_PATH_TAG = "clipPath";
-	String SVG_COLOR_PROFILE_TAG = "color-profile";
 	String SVG_CURSOR_TAG = "cursor";
 	String SVG_DEFINITION_SRC_TAG = "definition-src";
 	String SVG_DEFS_TAG = "defs";
@@ -560,7 +559,6 @@ public interface SVGConstants extends CSSConstants, XMLConstants {
 	String SVG_RADIUS_ATTRIBUTE = "radius";
 	String SVG_REF_X_ATTRIBUTE = "refX";
 	String SVG_REF_Y_ATTRIBUTE = "refY";
-	String SVG_RENDERING_INTENT_ATTRIBUTE = "rendering-intent";
 	String SVG_REPEAT_COUNT_ATTRIBUTE = "repeatCount";
 	String SVG_REPEAT_DUR_ATTRIBUTE = "repeatDur";
 	String SVG_REQUIRED_FEATURES_ATTRIBUTE = "requiredFeatures";
@@ -658,7 +656,6 @@ public interface SVGConstants extends CSSConstants, XMLConstants {
 	String SVG_700_VALUE = "700";
 	String SVG_800_VALUE = "800";
 	String SVG_900_VALUE = "900";
-	String SVG_ABSOLUTE_COLORIMETRIC_VALUE = "absolute-colorimetric";
 	String SVG_ALIGN_VALUE = "align";
 	String SVG_ALL_VALUE = "all";
 	String SVG_ARITHMETIC_VALUE = "arithmetic";
@@ -736,16 +733,13 @@ public interface SVGConstants extends CSSConstants, XMLConstants {
 	String SVG_OVER_VALUE = "over";
 	String SVG_PACED_VALUE = "paced";
 	String SVG_PAD_VALUE = "pad";
-	String SVG_PERCEPTUAL_VALUE = "perceptual";
 	String SVG_POINTER_VALUE = "pointer";
 	String SVG_PRESERVE_VALUE = "preserve";
 	String SVG_REFLECT_VALUE = "reflect";
-	String SVG_RELATIVE_COLORIMETRIC_VALUE = "relative-colorimetric";
 	String SVG_REPEAT_VALUE = "repeat";
 	String SVG_ROUND_VALUE = "round";
 	String SVG_R_VALUE = "R";
 	String SVG_SATURATE_VALUE = "saturate";
-	String SVG_SATURATION_VALUE = "saturation";
 	String SVG_SCREEN_VALUE = "screen";
 	String SVG_SE_RESIZE_VALUE = "se-resize";
 	String SVG_SLICE_VALUE = "slice";

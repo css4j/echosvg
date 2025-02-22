@@ -777,11 +777,7 @@ public abstract class CSSUtilities implements CSSConstants, ErrorConstants, XMLC
 	 */
 	public static Color convertLightingColor(Element e, BridgeContext ctx) {
 		Value v = getComputedStyle(e, SVGCSSEngine.LIGHTING_COLOR_INDEX);
-		if (v.getCssValueType() != CssType.LIST) {
-			return PaintServer.convertColor(v.getColorValue(), 1, ctx);
-		} else {
-			return PaintServer.convertRGBICCColor(e, v.item(0), v.item(1), 1, ctx);
-		}
+		return PaintServer.convertColor(v.getColorValue(), 1, ctx);
 	}
 
 	/////////////////////////////////////////////////////////////////////////
@@ -799,11 +795,7 @@ public abstract class CSSUtilities implements CSSConstants, ErrorConstants, XMLC
 		Value v = getComputedStyle(e, SVGCSSEngine.FLOOD_COLOR_INDEX);
 		Value o = getComputedStyle(e, SVGCSSEngine.FLOOD_OPACITY_INDEX);
 		float f = PaintServer.convertOpacity(o);
-		if (v.getCssValueType() != CssType.LIST) {
-			return PaintServer.convertColor(v.getColorValue(), f, ctx);
-		} else {
-			return PaintServer.convertRGBICCColor(e, v.item(0), v.item(1), f, ctx);
-		}
+		return PaintServer.convertColor(v.getColorValue(), f, ctx);
 	}
 
 	/////////////////////////////////////////////////////////////////////////
@@ -822,11 +814,7 @@ public abstract class CSSUtilities implements CSSConstants, ErrorConstants, XMLC
 		Value v = getComputedStyle(e, SVGCSSEngine.STOP_COLOR_INDEX);
 		Value o = getComputedStyle(e, SVGCSSEngine.STOP_OPACITY_INDEX);
 		opacity *= PaintServer.convertOpacity(o);
-		if (v.getCssValueType() != CssType.LIST) {
-			return PaintServer.convertColor(v.getColorValue(), opacity, ctx);
-		} else {
-			return PaintServer.convertRGBICCColor(e, v.item(0), v.item(1), opacity, ctx);
-		}
+		return PaintServer.convertColor(v.getColorValue(), opacity, ctx);
 	}
 
 	/////////////////////////////////////////////////////////////////////////

@@ -16,6 +16,7 @@
  * limitations under the License.
  *
  */
+
 /**
  * Bridge.
  * 
@@ -34,8 +35,6 @@ module io.sf.carte.echosvg.bridge {
 	requires io.sf.carte.echosvg.i18n;
 	requires io.sf.carte.echosvg.parser;
 	requires io.sf.carte.echosvg.xml;
-
-	requires io.sf.graphics.legacy.colors;
 
 	provides io.sf.carte.echosvg.script.InterpreterFactory
 	with io.sf.carte.echosvg.bridge.RhinoInterpreterFactory;

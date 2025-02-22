@@ -53,9 +53,10 @@ import io.sf.carte.echosvg.test.misc.TestLocations;
  * The drawing is based on PNGEncoderTest by Vincent Hardy.
  * </p>
  * 
+ * @param D Decoder parameterization.
  * @version $Id$
  */
-public abstract class AbstractImageWriterCheck {
+public abstract class AbstractImageWriterCheck<D> {
 
 	protected BufferedImage drawImage(BufferedImage image) {
 		// Create a BufferedImage to be encoded
@@ -77,14 +78,19 @@ public abstract class AbstractImageWriterCheck {
 		return image;
 	}
 
-	protected void testEncoding(final BufferedImage image, String baseName)
+	protected void testEncoding(BufferedImage image, String baseName) throws IOException {
+		ImageWriterParams params = createImageWriterParams();
+		testEncoding(image, baseName, params);
+	}
+
+	protected void testEncoding(final BufferedImage image, String baseName, ImageWriterParams params)
 			throws IOException {
 		// Create an output stream where the image data will be stored.
 		ByteArrayOutputStream bos = new ByteArrayOutputStream(256);
 
 		// Now, try to encode image
 		ImageWriter writer = createImageWriter();
-		ImageWriterParams params = createImageWriterParams();
+
 		configureImageWriterParams(params);
 
 		writer.writeImage(image, bos, params);
@@ -95,8 +101,8 @@ public abstract class AbstractImageWriterCheck {
 			return; // pass
 		}
 
-		Object candDecodeparams = createDecodeParam();
-		Object refDecodeparams = createDecodeParam();
+		D candDecodeparams = createDecodeParam();
+		D refDecodeparams = createDecodeParam();
 
 		// Compare the images
 		BufferedImage decodedCand = decodeStream(new ByteArrayInputStream(cand), candDecodeparams);
@@ -126,7 +132,7 @@ public abstract class AbstractImageWriterCheck {
 	protected void configureImageWriterParams(ImageWriterParams params) {
 	}
 
-	protected void matchDecodeMetadata(Object refDecodeparams, Object candDecodeparams) {
+	protected void matchDecodeMetadata(D refDecodeparams, D candDecodeparams) {
 	}
 
 	protected InputStream openRefStream(String baseName) {
@@ -143,7 +149,16 @@ public abstract class AbstractImageWriterCheck {
 
 	protected abstract String getMIMEType();
 
-	protected BufferedImage decodeStream(InputStream is, Object decodeparam) throws IOException {
+	/**
+	 * Decode the given stream as an image, eventually obeying the supplied decoding
+	 * parameters.
+	 * 
+	 * @param is          the input stream with the image.
+	 * @param decodeparam the decoding parameters.
+	 * @return the decoded image.
+	 * @throws IOException if an error occurs during reading.
+	 */
+	protected BufferedImage decodeStream(InputStream is, D decodeparam) throws IOException {
 		return ImageIO.read(is);
 	}
 
@@ -210,7 +225,7 @@ public abstract class AbstractImageWriterCheck {
 		imageToFile(cmp, tmpUtil, baseName, "_cmp");
 	}
 
-	protected Object createDecodeParam() {
+	protected D createDecodeParam() {
 		return null;
 	}
 

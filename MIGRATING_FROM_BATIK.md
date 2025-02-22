@@ -94,3 +94,8 @@ Batik:
 16) Package `io.sf.carte.echosvg.ext.swing` was moved from `echosvg-awt-util` to
    a new `io.sf.carte.echosvg.ext.swing` module (`echosvg-ext-swing` Gradle
    name).
+
+17) Methods that took an `ICCColorSpaceWithIntent` (from xmlgraphics-commons),
+   like `ImageTagRegistry.readStream(stream, space)`, now take a `ColorSpace`.
+   The legacy ICC color stuff was removed, as it did not produce actual colors
+   outside of the sRGB gamut, is not supported by browsers and was just adding bloat.

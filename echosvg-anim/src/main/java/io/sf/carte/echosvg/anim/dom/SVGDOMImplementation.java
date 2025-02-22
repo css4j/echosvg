@@ -292,8 +292,6 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 
 		svgFactories.put(SVGConstants.SVG_CLIP_PATH_TAG, new ClipPathElementFactory());
 
-		svgFactories.put(SVGConstants.SVG_COLOR_PROFILE_TAG, new ColorProfileElementFactory());
-
 		svgFactories.put(SVGConstants.SVG_CURSOR_TAG, new CursorElementFactory());
 
 		svgFactories.put(SVGConstants.SVG_DEFINITION_SRC_TAG, new DefinitionSrcElementFactory());
@@ -613,24 +611,6 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		@Override
 		public Element create(String prefix, Document doc) {
 			return new SVGOMClipPathElement(prefix, (AbstractDocument) doc);
-		}
-
-	}
-
-	/**
-	 * To create a 'color-profile' element.
-	 */
-	protected static class ColorProfileElementFactory implements ElementFactory {
-
-		public ColorProfileElementFactory() {
-		}
-
-		/**
-		 * Creates an instance of the associated element type.
-		 */
-		@Override
-		public Element create(String prefix, Document doc) {
-			return new SVGOMColorProfileElement(prefix, (AbstractDocument) doc);
 		}
 
 	}

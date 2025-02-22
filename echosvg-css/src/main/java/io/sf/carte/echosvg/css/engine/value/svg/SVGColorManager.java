@@ -132,88 +132,7 @@ public class SVGColorManager extends ColorManager {
 			return v;
 		}
 
-		// If we have more content here, there is a color function after the sRGB color.
-		if (lu.getLexicalUnitType() != LexicalUnit.LexicalType.FUNCTION) {
-			throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
-		}
-
-		ListValue result = new ListValue(' ');
-		result.append(v);
-
-		Value colorValue = parseColorFunction(lu, v);
-		if (colorValue != null) {
-			result.append(colorValue);
-		} else {
-			return v; // use sRGB fallback if an unsupported color function is encountered
-		}
-		return result;
-	}
-
-	private Value parseColorFunction(LexicalUnit lu, Value v) {
-		String functionName = lu.getFunctionName();
-		if (functionName.equalsIgnoreCase(ICCColor.ICC_COLOR_FUNCTION)) {
-			return createICCColorValue(lu, v);
-		}
-		return parseColor12Function(lu, v);
-	}
-
-	private Value parseColor12Function(LexicalUnit lu, Value v) {
-		throw new DOMException(DOMException.NOT_SUPPORTED_ERR, "Deprecated color.");
-		/*
-		 * @formatter: off
-		String functionName = lu.getFunctionName();
-		if (functionName.equalsIgnoreCase(ICCNamedColor.ICC_NAMED_COLOR_FUNCTION)) {
-			return createICCNamedColorValue(lu, v);
-		} else if (functionName.equalsIgnoreCase(CIELabColor.CIE_LAB_COLOR_FUNCTION)) {
-			return createCIELabColorValue(lu, v);
-		} else if (functionName.equalsIgnoreCase(CIELCHColor.CIE_LCH_COLOR_FUNCTION)) {
-			return createCIELCHColorValue(lu, v);
-		} else if (functionName.equalsIgnoreCase(DeviceColor.DEVICE_CMYK_COLOR_FUNCTION)) {
-			return createDeviceColorValue(lu, v, 4);
-		} else if (functionName.equalsIgnoreCase(DeviceColor.DEVICE_RGB_COLOR_FUNCTION)) {
-			return createDeviceColorValue(lu, v, 3);
-		} else if (functionName.equalsIgnoreCase(DeviceColor.DEVICE_GRAY_COLOR_FUNCTION)) {
-			return createDeviceColorValue(lu, v, 1);
-		} else if (functionName.equalsIgnoreCase(DeviceColor.DEVICE_NCHANNEL_COLOR_FUNCTION)) {
-			return createDeviceColorValue(lu, v, 0);
-		}
-		return null;
-		* @formatter: on
-		*/
-	}
-
-	private Value createICCColorValue(LexicalUnit lu, Value v) {
-		lu = lu.getParameters();
-		expectIdent(lu);
-
-		ICCColor icc = new ICCColor(lu.getStringValue());
-
-		lu = lu.getNextLexicalUnit();
-		while (lu != null) {
-			expectComma(lu);
-			lu = lu.getNextLexicalUnit();
-			icc.append(getColorValue(lu));
-			lu = lu.getNextLexicalUnit();
-		}
-		return icc;
-	}
-
-	private void expectIdent(LexicalUnit lu) {
-		if (lu.getLexicalUnitType() != LexicalUnit.LexicalType.IDENT) {
-			throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
-		}
-	}
-
-	private void expectComma(LexicalUnit lu) {
-		if (lu.getLexicalUnitType() != LexicalUnit.LexicalType.OPERATOR_COMMA) {
-			throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
-		}
-	}
-
-	private void expectNonNull(LexicalUnit lu) {
-		if (lu == null) {
-			throw createInvalidLexicalUnitDOMException(LexicalUnit.LexicalType.UNKNOWN);
-		}
+		throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
 	}
 
 	/**
@@ -241,22 +160,6 @@ public class SVGColorManager extends ColorManager {
 			return value;
 		}
 		return super.computeValue(elt, pseudo, engine, idx, sm, value);
-	}
-
-	/**
-	 * Creates a float value usable as a component of an RGBColor.
-	 */
-	protected float getColorValue(LexicalUnit lu) {
-		expectNonNull(lu);
-		switch (lu.getLexicalUnitType()) {
-		case INTEGER:
-			return lu.getIntegerValue();
-		case REAL:
-			return lu.getFloatValue();
-		default:
-			break;
-		}
-		throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
 	}
 
 }

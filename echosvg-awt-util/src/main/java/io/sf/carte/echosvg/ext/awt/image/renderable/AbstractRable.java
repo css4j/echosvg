@@ -186,7 +186,7 @@ public abstract class AbstractRable implements Filter {
 	@Override
 	public Rectangle2D getBounds2D() {
 		Rectangle2D bounds = null;
-		if (this.srcs.size() != 0) {
+		if (!this.srcs.isEmpty()) {
 			Iterator<RenderableImage> i = srcs.iterator();
 			Filter src = (Filter) i.next();
 			bounds = (Rectangle2D) src.getBounds2D().clone();
