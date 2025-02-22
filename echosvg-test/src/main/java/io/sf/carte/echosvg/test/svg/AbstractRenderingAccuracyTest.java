@@ -20,6 +20,7 @@ package io.sf.carte.echosvg.test.svg;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.color.ColorSpace;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
@@ -568,7 +569,7 @@ public abstract class AbstractRenderingAccuracyTest {
 		if (variants != null) {
 			// Attempt to update the range variant, if available
 			variants.setTrace(false);
-			BufferedImage rangeDiff = variants.getVariantImage(0);
+			BufferedImage rangeDiff = variants.getVariantImage(0, ref.getColorModel().getColorSpace());
 			if (rangeDiff != null) {
 				exactDiff = ImageComparator.createMergedDiffImage(ref, gen, rangeDiff);
 				saveImage(exactDiff, new File(getSaveRangeVariation()));
@@ -601,7 +602,7 @@ public abstract class AbstractRenderingAccuracyTest {
 		}
 
 		@Override
-		public BufferedImage getVariantImage(int index) {
+		public BufferedImage getVariantImage(int index, ColorSpace colorSpace) {
 			URL variationURL;
 			try {
 				variationURL = variationURLs.get(index);
@@ -622,7 +623,7 @@ public abstract class AbstractRenderingAccuracyTest {
 			}
 
 			ImageTagRegistry reg = ImageTagRegistry.getRegistry();
-			Filter filt = reg.readStream(variationURLStream);
+			Filter filt = reg.readStream(variationURLStream, colorSpace);
 			if (filt == null) {
 				if (trace) {
 					System.err.println(Messages.formatMessage(COULD_NOT_OPEN_VARIATION_URL,
@@ -648,7 +649,8 @@ public abstract class AbstractRenderingAccuracyTest {
 				return null;
 			}
 
-			BufferedImage img = new BufferedImage(red.getWidth(), red.getHeight(), BufferedImage.TYPE_INT_ARGB);
+			BufferedImage img = new BufferedImage(red.getWidth(), red.getHeight(),
+					BufferedImage.TYPE_INT_ARGB);
 			red.copyData(img.getRaster());
 
 			try {

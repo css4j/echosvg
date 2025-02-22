@@ -80,10 +80,6 @@ public class PropertyManagerTest {
 		testPropertyManager("io.sf.carte.echosvg.css.engine.value.svg.ColorInterpolationFiltersManager", true,
 				"linearRGB", "auto | sRGB | linearRGB");
 
-		// css.engine.value.svg.color-profile
-		testPropertyManager("io.sf.carte.echosvg.css.engine.value.svg.ColorProfileManager", true, "auto",
-				"auto | sRGB");
-
 		// css.engine.value.svg.color-rendering
 		testPropertyManager("io.sf.carte.echosvg.css.engine.value.svg.ColorRenderingManager", true, "auto",
 				"auto | optimizeSpeed | optimizeQuality");
@@ -182,6 +178,10 @@ public class PropertyManagerTest {
 		// css.engine.value.svg.lighting-color
 		testPropertyManager("io.sf.carte.echosvg.css.engine.value.PropertyManagerTest$LightingColorManager", false,
 				"rgb(255, 255, 255)", "currentColor");
+
+		// css.engine.value.css.line-height
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css.LineHeightManager", true, "normal",
+				"normal | 1");
 
 		// IGNORE
 		// css.engine.value.svg.marker

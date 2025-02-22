@@ -16,31 +16,25 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.ext.awt.image.spi.test;
+package io.sf.carte.echosvg.ext.awt.image.spi;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.awt.color.ColorSpace;
 import java.awt.image.RenderedImage;
 
 import org.junit.jupiter.api.Test;
 
-import io.sf.carte.echosvg.bridge.SVGBrokenLinkProvider;
 import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
-import io.sf.carte.echosvg.ext.awt.image.spi.ErrorConstants;
-import io.sf.carte.echosvg.ext.awt.image.spi.ImageTagRegistry;
-import io.sf.carte.echosvg.ext.awt.image.spi.JDKRegistryEntry;
 
-public class JDKRegistryEntryTest {
+public class DefaultBrokenLinkProviderTest {
 
 	@Test
-	public void testDefaultBrokenLinkProvider() {
+	public void testWithImageTagRegistry() {
 		ImageTagRegistry.setBrokenLinkProvider(null);
-		JDKRegistryEntry re = new JDKRegistryEntry();
+		ImageTagRegistry reg = ImageTagRegistry.getRegistry();
 
-		Object[] errParam = { "JDK", "foo" };
-		Filter filt = ImageTagRegistry.getBrokenLinkImage(re, ErrorConstants.ERR_URL_FORMAT_UNREADABLE, errParam);
+		Filter filt = ImageTagRegistry.getBrokenLinkImage(reg, ErrorConstants.ERR_STREAM_UNREADABLE, null);
 		RenderedImage red = filt.createDefaultRendering();
 		assertNotNull(red);
 
@@ -51,16 +45,13 @@ public class JDKRegistryEntryTest {
 	}
 
 	@Test
-	public void testSVGBrokenLinkProvider() {
-		ImageTagRegistry.setBrokenLinkProvider(new SVGBrokenLinkProvider());
+	public void testWithJDKRegistryEntry() {
+		ImageTagRegistry.setBrokenLinkProvider(null);
 		JDKRegistryEntry re = new JDKRegistryEntry();
 
 		Object[] errParam = { "JDK", "foo" };
-		Filter filt = ImageTagRegistry.getBrokenLinkImage(re, ErrorConstants.ERR_URL_FORMAT_UNREADABLE, errParam);
-		assertNotNull(filt);
-		assertEquals(100d, filt.getWidth(), 1e-7);
-		assertEquals(100d, filt.getHeight(), 1e-7);
-
+		Filter filt = ImageTagRegistry.getBrokenLinkImage(re, ErrorConstants.ERR_URL_FORMAT_UNREADABLE,
+				errParam);
 		RenderedImage red = filt.createDefaultRendering();
 		assertNotNull(red);
 
@@ -68,8 +59,6 @@ public class JDKRegistryEntryTest {
 		assertEquals(100, red.getHeight());
 		assertEquals(0, red.getMinX());
 		assertEquals(0, red.getMinY());
-
-		assertEquals(ColorSpace.TYPE_RGB, red.getColorModel().getColorSpace().getType());
 	}
 
 }

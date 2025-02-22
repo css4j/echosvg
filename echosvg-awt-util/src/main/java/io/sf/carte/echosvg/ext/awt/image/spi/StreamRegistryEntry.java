@@ -18,6 +18,7 @@
  */
 package io.sf.carte.echosvg.ext.awt.image.spi;
 
+import java.awt.color.ColorSpace;
 import java.io.InputStream;
 import java.io.StreamCorruptedException;
 
@@ -65,11 +66,13 @@ public interface StreamRegistryEntry extends RegistryEntry {
 	 * This should only return a broken link image when the image is clearly of this
 	 * format, but is unreadable for some reason.
 	 *
-	 * @param is          The input stream that contains the image.
-	 * @param origURL     The original URL, if any, for documentation purposes only.
-	 *                    This may be null.
-	 * @param needRawData If true the image returned should not have any default
-	 *                    color correction the file may specify applied.
+	 * @param is         The input stream that contains the image.
+	 * @param origURL    The original URL, if any, for documentation purposes only.
+	 *                   This may be null.
+	 * @param colorSpace The current working color space, or {@code null} if sRGB.
+	 * @return the filter, or {@code null} if this registry entry cannot handle the
+	 *         stream.
 	 */
-	Filter handleStream(InputStream is, ParsedURL origURL, boolean needRawData);
+	Filter handleStream(InputStream is, ParsedURL origURL, ColorSpace colorSpace);
+
 }

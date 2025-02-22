@@ -35,8 +35,6 @@ import java.awt.image.Raster;
 import java.awt.image.RenderedImage;
 import java.awt.image.WritableRaster;
 
-import io.sf.graphics.java2d.color.ICCColorSpaceWithIntent;
-
 /**
  * This implementation of rendered image forces a color profile on its source
  *
@@ -49,13 +47,13 @@ public class ProfileRed extends AbstractRed {
 	private static final ColorModel sRGBCM = new DirectColorModel(sRGBCS, 32, 0x00ff0000, 0x0000ff00, 0x000000ff,
 			0xff000000, false, DataBuffer.TYPE_INT);
 
-	private ICCColorSpaceWithIntent colorSpace;
+	private ColorSpace colorSpace;
 
 	/**
 	 * @param src        Images on which the input ColorSpace should be forced
 	 * @param colorSpace colorSpace that should be forced on the source
 	 */
-	public ProfileRed(CachableRed src, ICCColorSpaceWithIntent colorSpace) {
+	public ProfileRed(CachableRed src, ColorSpace colorSpace) {
 		this.colorSpace = colorSpace;
 
 		init(src, src.getBounds(), sRGBCM, sRGBCM.createCompatibleSampleModel(src.getWidth(), src.getHeight()),

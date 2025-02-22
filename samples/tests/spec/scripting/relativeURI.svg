@@ -55,8 +55,6 @@ var t9 = document.getElementById('t9');
 var t10 = document.getElementById('t10');
 var t11 = document.getElementById('t11');
 var t12 = document.getElementById('t12');
-var t13 = document.getElementById('t13');
-var t14 = document.getElementById('t14');
 
 var docURL = document.getURL();
 
@@ -94,17 +92,11 @@ function init() {
   t5.firstChild.nodeValue = unifyURL(localStr);
   t6.firstChild.nodeValue = unifyURL(absStr);
 
-  cssStyle.setProperty("color-profile", "url(#prof)","");
-  localStr = cssStyle.getPropertyValue("color-profile");
-  absStr = computedStyle.getPropertyValue("color-profile");
-  t7.firstChild.nodeValue = unifyURL(localStr);
-  t8.firstChild.nodeValue = unifyURL(absStr);
-
   cssStyle.setProperty("filter", "url(#filt)","");
   localStr = cssStyle.getPropertyValue("filter");
   absStr = computedStyle.getPropertyValue("filter");
-  t9.firstChild.nodeValue  = unifyURL(localStr);
-  t10.firstChild.nodeValue = unifyURL(absStr);
+  t7.firstChild.nodeValue  = unifyURL(localStr);
+  t8.firstChild.nodeValue = unifyURL(absStr);
 
   elem = document.getElementById('yyy');
   var cssStyle = elem.getStyle();
@@ -113,14 +105,14 @@ function init() {
   cssStyle.setProperty("marker-start", "url(#mark)","");
   localStr = cssStyle.getPropertyValue("marker-start");
   absStr = computedStyle.getPropertyValue("marker-start");
-  t11.firstChild.nodeValue = unifyURL(localStr);
-  t12.firstChild.nodeValue = unifyURL(absStr);
+  t9.firstChild.nodeValue = unifyURL(localStr);
+  t10.firstChild.nodeValue = unifyURL(absStr);
 
   cssStyle.setProperty("mask", "url(#mask)","");
   localStr = cssStyle.getPropertyValue("mask");
   absStr = computedStyle.getPropertyValue("mask");
-  t13.firstChild.nodeValue = unifyURL(localStr);
-  t14.firstChild.nodeValue = unifyURL(absStr);
+  t11.firstChild.nodeValue = unifyURL(localStr);
+  t12.firstChild.nodeValue = unifyURL(absStr);
 }
 
 function regardStart() {
@@ -128,7 +120,7 @@ function regardStart() {
 }
 ]]></script>
 
-<!-- cursor, src, clip-path, color-profile, filter, marker, mask -->
+<!-- cursor, src, clip-path, filter, marker, mask -->
 
   <radialGradient id="grad">
     <stop offset="0" stop-color="gold" />
@@ -142,10 +134,6 @@ function regardStart() {
     <circle cx=".25"  cy=".5" r=".4"/>
     <circle cx=".75"  cy=".5" r=".4"/>
   </clipPath>
-
-  <color-profile id="prof" name="changeColorAuto" 
-    rendering-intent="auto"
-    xlink:href="../../resources/icc/changeColor.icm"/>
 
   <filter id="filt" primitiveUnits="objectBoundingBox"
     filterUnits="objectBoundingBox"
@@ -165,7 +153,7 @@ function regardStart() {
   </marker>
 
   <mask id="mask">
-    <g transform="translate(275, 400)">
+    <g transform="translate(275, 370)">
       <circle cx="-25" cy="-10" r="25" fill="#ff0000" />
       <circle cx="25" cy="-10" r="25" fill="#00ff00" />
       <circle cx="-25" cy="10" r="25" fill="#0000ff" />
@@ -182,9 +170,8 @@ function regardStart() {
       <rect x="20" y="135" width="310" height="30" fill="white"/>
       <rect x="20" y="165" width="310" height="30" fill="lightgrey"/>
       <rect x="20" y="195" width="310" height="30" fill="white"/>
-      <rect x="20" y="225" width="310" height="30" fill="lightgrey"/>
-      <line x1="225" y1="15" x2="225" y2="255"/>
-      <line x1="120" y1="15" x2="120" y2="255"/>
+      <line x1="225" y1="15" x2="225" y2="225"/>
+      <line x1="120" y1="15" x2="120" y2="225"/>
     </g>
     <g text-anchor="middle">
       <text x="175" y="35">Style</text>
@@ -202,27 +189,23 @@ function regardStart() {
       <text id="t5" x="175" y="125"> </text>
       <text id="t6" x="275" y="126"> </text>
 
-      <text x="75" y="155">color-profile</text>
+      <text x="75" y="155">filter</text>
       <text id="t7" x="175" y="155"> </text>
       <text id="t8" x="275" y="155"> </text>
 
-      <text x="75" y="185">filter</text>
+      <text x="75" y="185">marker</text>
       <text id="t9" x="175" y="185"> </text>
       <text id="t10" x="275" y="185"> </text>
 
-      <text x="75" y="215">marker</text>
+      <text x="75" y="215">mask</text>
       <text id="t11" x="175" y="215"> </text>
       <text id="t12" x="275" y="215"> </text>
-
-      <text x="75" y="245">mask</text>
-      <text id="t13" x="175" y="245"> </text>
-      <text id="t14" x="275" y="245"> </text>
     </g>
   </g>
-  <rect id="xxx" x="75" y="375" width="100" height="50"
+  <rect id="xxx" x="75" y="345" width="100" height="50"
     style="fill:blue"/>
 
-  <path id="yyy" d="M225 375 h 100 v 50 h -100 z"
+  <path id="yyy" d="M225 345 h 100 v 50 h -100 z"
     marker-end="url(#mark)"
     style="fill:crimson" stroke="black" stroke-width="1"/>
 

@@ -187,6 +187,84 @@ public class ImageIOPNGImageWriter extends ImageIOImageWriter {
 
 			boolean needsMerge = false;
 
+			if (pngParams.isSRGBIntentSet()) {
+				String rIntent;
+				switch (pngParams.getSRGBIntent()) {
+				case PNGImageWriterParams.INTENT_PERCEPTUAL:
+				default:
+					rIntent = "Perceptual";
+					break;
+				case PNGImageWriterParams.INTENT_RELATIVE:
+					rIntent = "Relative colorimetric";
+					break;
+				case PNGImageWriterParams.INTENT_SATURATION:
+					rIntent = "Saturation";
+					break;
+				case PNGImageWriterParams.INTENT_ABSOLUTE:
+					rIntent = "Absolute colorimetric";
+					break;
+				}
+
+				root = (IIOMetadataNode) meta.getAsTree(PNG_NATIVE_FORMAT);
+
+				IIOMetadataNode sRGB = getChildNode(root, "sRGB");
+				if (sRGB == null) {
+					sRGB = new IIOMetadataNode("sRGB");
+					root.appendChild(sRGB);
+				}
+
+				sRGB.setAttribute("renderingIntent", rIntent);
+
+				needsMerge = true;
+			} else {
+				if (pngParams.isChromaticitySet()) {
+
+					float[] chroma = pngParams.getChromaticity();
+
+					root = (IIOMetadataNode) meta.getAsTree(PNG_NATIVE_FORMAT);
+
+					IIOMetadataNode cHRM = getChildNode(root, "cHRM");
+					if (cHRM == null) {
+						cHRM = new IIOMetadataNode("cHRM");
+						root.appendChild(cHRM);
+					}
+
+					cHRM.setAttribute("whitePointX", Integer.toString(Math.round(chroma[0] * 100000f)));
+
+					cHRM.setAttribute("whitePointY", Integer.toString(Math.round(chroma[1] * 100000f)));
+
+					cHRM.setAttribute("redX", Integer.toString(Math.round(chroma[2] * 100000f)));
+
+					cHRM.setAttribute("redY", Integer.toString(Math.round(chroma[3] * 100000f)));
+
+					cHRM.setAttribute("greenX", Integer.toString(Math.round(chroma[4] * 100000f)));
+
+					cHRM.setAttribute("greenY", Integer.toString(Math.round(chroma[5] * 100000f)));
+
+					cHRM.setAttribute("blueX", Integer.toString(Math.round(chroma[6] * 100000f)));
+
+					cHRM.setAttribute("blueY", Integer.toString(Math.round(chroma[7] * 100000f)));
+
+					needsMerge = true;
+				}
+
+				if (pngParams.isGammaSet()) {
+					float g = pngParams.getGamma();
+
+					root = (IIOMetadataNode) meta.getAsTree(PNG_NATIVE_FORMAT);
+
+					IIOMetadataNode gAMA = getChildNode(root, "gAMA");
+					if (gAMA == null) {
+						gAMA = new IIOMetadataNode("gAMA");
+						root.appendChild(gAMA);
+					}
+
+					gAMA.setAttribute("value", Integer.toString(Math.round(g * 100000f)));
+
+					needsMerge = true;
+				}
+			}
+
 			if (pngParams.isTextSet()) {
 				String[] text = pngParams.getText();
 

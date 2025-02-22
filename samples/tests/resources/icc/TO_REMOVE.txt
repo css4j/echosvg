@@ -1,0 +1,1 @@
+The file changeColor.icm is not used by tests anymore and should be removed.

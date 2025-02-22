@@ -32,6 +32,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.sf.carte.echosvg.ext.awt.color.StandardColorSpaces;
 import io.sf.carte.echosvg.test.misc.TestFonts;
 
 /**
@@ -90,20 +91,13 @@ public class FontDecoration implements Painter {
 		g.drawString("Strike Through", 10, 40);
 
 		/*
-		 * Draw some figure with a non-sRGB color
+		 * Draw some figure with another non-sRGB color
 		 */
 		Color lColor;
-		// Load another color profile
-		try (InputStream is = getClass().getResourceAsStream(
-				"/io/sf/carte/echosvg/css/color/profiles/ITU-R_BT2020.icc")) {
-			ICC_Profile profile = ICC_Profile.getInstance(is);
-			ICC_ColorSpace cs = new ICC_ColorSpace(profile);
-			float[] comps = { .55f, .6f, .34f };
-			lColor = new Color(cs, comps, 1f);
-		} catch (IOException e) {
-			e.printStackTrace();
-			lColor = Color.magenta;
-		}
+		// Use the ITU Rec bt.2020 color space
+		ICC_ColorSpace cs = StandardColorSpaces.getRec2020();
+		float[] comps = { .55f, .6f, .34f };
+		lColor = new Color(cs, comps, 1f);
 
 		// Now draw with the new color
 		g.setPaint(lColor);
@@ -112,17 +106,10 @@ public class FontDecoration implements Painter {
 
 		// Prepare a new color
 		Color ulColor;
-		// Load a color profile
-		try (InputStream is = getClass().getResourceAsStream(
-				"/io/sf/carte/echosvg/css/color/profiles/Display P3.icc")) {
-			ICC_Profile profile = ICC_Profile.getInstance(is);
-			ICC_ColorSpace cs = new ICC_ColorSpace(profile);
-			float[] comps = { .36f, .35f, .33f };
-			ulColor = new Color(cs, comps, 1f);
-		} catch (IOException e) {
-			e.printStackTrace();
-			ulColor = Color.black;
-		}
+		// Get the P3 color space
+		ICC_ColorSpace csP3 = StandardColorSpaces.getDisplayP3();
+		comps = new float[] { .36f, .35f, .33f };
+		ulColor = new Color(csP3, comps, 1f);
 
 		// Now draw with the new color and the UNDERLINE font
 		g.setPaint(ulColor);

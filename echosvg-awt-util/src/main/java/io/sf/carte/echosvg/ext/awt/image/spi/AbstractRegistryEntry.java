@@ -22,17 +22,20 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
+import io.sf.carte.echosvg.util.ParsedURL;
+
 /**
- *
- * @author For later modifications, see Git history.
+ * Base class for {@link RegistryEntry} implementations.
+ * 
  * @version $Id$
  */
-public abstract class AbstractRegistryEntry implements RegistryEntry, ErrorConstants {
+public class AbstractRegistryEntry implements RegistryEntry, ErrorConstants {
 
-	String name;
-	float priority;
-	List<String> exts;
-	List<String> mimeTypes;
+	private String name;
+	private float priority;
+	private List<String> exts;
+	private List<String> mimeTypes;
 
 	public AbstractRegistryEntry(String name, float priority, String[] exts, String[] mimeTypes) {
 		this.name = name;
@@ -81,4 +84,35 @@ public abstract class AbstractRegistryEntry implements RegistryEntry, ErrorConst
 	public float getPriority() {
 		return priority;
 	}
+
+	protected Filter getFormatBrokenLinkImage(ParsedURL origURL) {
+		final String errCode;
+		final Object[] errParam;
+		if (origURL != null) {
+			errCode = ERR_URL_FORMAT_UNREADABLE;
+			errParam = new Object[] { getFormatName(), origURL };
+		} else {
+			errCode = ERR_STREAM_FORMAT_UNREADABLE;
+			errParam = new Object[] { getFormatName() };
+		}
+
+		return ImageTagRegistry.getBrokenLinkImage(this, errCode, errParam);
+	}
+
+	protected Filter getFormatMsgBrokenLinkImage(ParsedURL origURL, Throwable t) {
+		String message = t.getClass().getSimpleName();
+
+		final String errCode;
+		final Object[] errParam;
+		if (origURL != null) {
+			errCode = ERR_URL_FORMAT_UNREADABLE_MSG;
+			errParam = new Object[] { getFormatName(), origURL, message };
+		} else {
+			errCode = ERR_STREAM_FORMAT_UNREADABLE_MSG;
+			errParam = new Object[] { getFormatName(), message };
+		}
+
+		return ImageTagRegistry.getBrokenLinkImage(this, errCode, errParam);
+	}
+
 }

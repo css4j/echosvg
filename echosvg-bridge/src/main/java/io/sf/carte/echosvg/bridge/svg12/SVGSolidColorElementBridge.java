@@ -25,7 +25,6 @@ import java.util.Map;
 
 import org.w3c.dom.Element;
 
-import io.sf.carte.doc.style.css.CSSValue.CssType;
 import io.sf.carte.echosvg.anim.dom.SVGOMDocument;
 import io.sf.carte.echosvg.bridge.AnimatableGenericSVGBridge;
 import io.sf.carte.echosvg.bridge.BridgeContext;
@@ -145,16 +144,11 @@ public class SVGSolidColorElementBridge extends AnimatableGenericSVGBridge imple
 			StyleMap sm = ((CSSStylableElement) paintElement).getComputedStyleMap(null);
 			if (!sm.isNullCascaded(pidx)) {
 				// It was explicit...
-				if (colorDef.getCssValueType() != CssType.LIST) {
-					return PaintServer.convertColor(colorDef.getColorValue(), opacity, ctx);
-				} else {
-					return PaintServer.convertRGBICCColor(paintElement, colorDef.item(0), colorDef.item(1), opacity,
-							ctx);
-				}
+				return PaintServer.convertColor(colorDef.getColorValue(), opacity, ctx);
 			}
 
 			String uri = XLinkSupport.getXLinkHref(paintElement);
-			if (uri.length() == 0) {
+			if (uri.isEmpty()) {
 				// no xlink:href found, exit
 				return new Color(0, 0, 0, opacity);
 			}

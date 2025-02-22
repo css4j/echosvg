@@ -25,8 +25,6 @@ import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.color.ColorSpace;
 import java.awt.color.ICC_ColorSpace;
-import java.awt.color.ICC_Profile;
-import java.io.IOException;
 
 import org.w3c.css.om.typed.CSSStyleValueList;
 import org.w3c.css.om.unit.CSSUnit;
@@ -40,9 +38,6 @@ import io.sf.carte.echosvg.css.engine.value.ColorValue;
 import io.sf.carte.echosvg.css.engine.value.NumericValue;
 import io.sf.carte.echosvg.css.engine.value.RGBColorValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
-import io.sf.carte.echosvg.css.engine.value.svg.ICCColor;
-import io.sf.carte.echosvg.css.engine.value.svg12.DeviceColor;
-import io.sf.carte.echosvg.css.engine.value.svg12.ICCNamedColor;
 import io.sf.carte.echosvg.ext.awt.color.StandardColorSpaces;
 import io.sf.carte.echosvg.gvt.CompositeShapePainter;
 import io.sf.carte.echosvg.gvt.FillShapePainter;
@@ -54,13 +49,6 @@ import io.sf.carte.echosvg.gvt.ShapePainter;
 import io.sf.carte.echosvg.gvt.StrokeShapePainter;
 import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVGConstants;
-import io.sf.graphics.java2d.color.ColorSpaces;
-import io.sf.graphics.java2d.color.ColorWithAlternatives;
-import io.sf.graphics.java2d.color.DeviceCMYKColorSpace;
-import io.sf.graphics.java2d.color.ICCColorSpaceWithIntent;
-import io.sf.graphics.java2d.color.NamedColorSpace;
-import io.sf.graphics.java2d.color.profile.NamedColorProfile;
-import io.sf.graphics.java2d.color.profile.NamedColorProfileParser;
 
 /**
  * A collection of utility methods to deliver <code>java.awt.Paint</code>,
@@ -74,7 +62,6 @@ import io.sf.graphics.java2d.color.profile.NamedColorProfileParser;
  * </p>
  * @version $Id$
  */
-@SuppressWarnings("deprecation")
 public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorConstants {
 
 	/**
@@ -269,13 +256,6 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 		} else { // List
 			Value v = paintDef.item(0);
 			switch (v.getPrimitiveType()) {
-			case COLOR:
-				switch ((v.getColorValue()).getCSSColorSpace()) {
-				case ColorValue.RGB_FUNCTION:
-					return convertRGBICCColor(paintedElement, v, paintDef.item(1), opacity, ctx);
-				}
-				break;
-
 			case URI:
 				Paint result = silentConvertURIPaint(paintedElement, paintedNode, v, opacity, ctx);
 				if (result != null) {
@@ -288,15 +268,7 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 					return null; // none
 				case COLOR:
 					ColorValue color = v.getColorValue();
-					switch (color.getCSSColorSpace()) {
-					case ColorValue.RGB_FUNCTION:
-						if (paintDef.getLength() == 2) {
-							return convertColor((RGBColorValue) color, opacity);
-						} else {
-							return convertRGBICCColor(paintedElement, v, paintDef.item(2), opacity, ctx);
-						}
-					}
-					break;
+					return convertColor(color, opacity, ctx);
 				default:
 					break;
 				}
@@ -365,174 +337,6 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 			return null;
 		}
 		return ((PaintBridge) bridge).createPaint(ctx, paintElement, paintedElement, paintedNode, opacity);
-	}
-
-	/**
-	 * Returns a Color object that corresponds to the input Paint's ICC color value
-	 * or an RGB color if the related color profile could not be used or loaded for
-	 * any reason.
-	 *
-	 * @param paintedElement the element using the color
-	 * @param colorDef       the color definition
-	 * @param iccColor       the ICC color definition
-	 * @param opacity        the opacity
-	 * @param ctx            the bridge context to use
-	 */
-	public static Color convertRGBICCColor(Element paintedElement, Value colorDef, Value iccColor, float opacity,
-			BridgeContext ctx) {
-		Color color = null;
-		if (iccColor != null) {
-			if (iccColor instanceof ICCColor) {
-				color = convertICCColor(paintedElement, (ICCColor) iccColor, opacity, ctx);
-			} else if (iccColor instanceof ICCNamedColor) {
-				color = convertICCNamedColor(paintedElement, (ICCNamedColor) iccColor, opacity, ctx);
-			} else if (iccColor instanceof DeviceColor) {
-				color = convertDeviceColor(paintedElement, colorDef, (DeviceColor) iccColor, opacity, ctx);
-			}
-		}
-		if (color == null) {
-			color = convertColor(colorDef.getColorValue(), opacity, ctx);
-		}
-		return color;
-	}
-
-	/**
-	 * Returns a Color object that corresponds to the input Paint's ICC color value
-	 * or null if the related color profile could not be used or loaded for any
-	 * reason.
-	 *
-	 * @param e       the element using the color
-	 * @param c       the ICC color definition
-	 * @param opacity the opacity
-	 * @param ctx     the bridge context to use
-	 */
-	public static Color convertICCColor(Element e, ICCColor c, float opacity, BridgeContext ctx) {
-		// Get ICC Profile's name
-		String iccProfileName = c.getColorProfile();
-		if (iccProfileName == null) {
-			return null;
-		}
-		// Ask the bridge to map the ICC profile name to an ICC_Profile object
-		SVGColorProfileElementBridge profileBridge = (SVGColorProfileElementBridge) ctx.getBridge(
-				SVG_NAMESPACE_URI, SVG_COLOR_PROFILE_TAG);
-		if (profileBridge == null) {
-			return null; // no bridge for color profile
-		}
-
-		ICCColorSpaceWithIntent profileCS = profileBridge.createICCColorSpaceWithIntent(ctx, e,
-				iccProfileName);
-		if (profileCS == null) {
-			return null; // no profile
-		}
-
-		// Now, convert the colors to an array of floats
-		int n = c.getNumberOfColors();
-		float[] colorValue = new float[n];
-		if (n == 0) {
-			return null;
-		}
-		for (int i = 0; i < n; i++) {
-			colorValue[i] = c.getColor(i);
-		}
-
-		// Convert values to RGB
-		float[] rgb = profileCS.intendedToRGB(colorValue);
-		// TODO Preserve original ICC color
-		// value!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		return new Color(rgb[0], rgb[1], rgb[2], opacity);
-	}
-
-	/**
-	 * Returns a Color object that corresponds to the input Paint's ICC named color
-	 * value or null if the related color profile could not be used or loaded for
-	 * any reason.
-	 *
-	 * @param e       the element using the color
-	 * @param c       the ICC named color definition
-	 * @param opacity the opacity
-	 * @param ctx     the bridge context to use
-	 */
-	public static Color convertICCNamedColor(Element e, ICCNamedColor c, float opacity, BridgeContext ctx) {
-		// Get ICC Profile's name
-		String iccProfileName = c.getColorProfile();
-		if (iccProfileName == null) {
-			return null;
-		}
-		// Ask the bridge to map the ICC profile name to an ICC_Profile object
-		SVGColorProfileElementBridge profileBridge = (SVGColorProfileElementBridge) ctx.getBridge(
-				SVG_NAMESPACE_URI, SVG_COLOR_PROFILE_TAG);
-		if (profileBridge == null) {
-			return null; // no bridge for color profile
-		}
-
-		ICCColorSpaceWithIntent profileCS = profileBridge.createICCColorSpaceWithIntent(ctx, e, iccProfileName);
-		if (profileCS == null) {
-			return null; // no profile
-		}
-		ICC_Profile iccProfile = profileCS.getProfile();
-
-		String iccProfileSrc = null; // TODO Fill me!
-
-		if (NamedColorProfileParser.isNamedColorProfile(iccProfile)) {
-			NamedColorProfileParser parser = new NamedColorProfileParser();
-			NamedColorProfile ncp;
-			try {
-				ncp = parser.parseProfile(iccProfile, iccProfileName, iccProfileSrc);
-			} catch (IOException ioe) {
-				return null;
-			}
-			NamedColorSpace ncs = ncp.getNamedColor(c.getColorName());
-			if (ncs != null) {
-				Color specColor = new ColorWithAlternatives(ncs, new float[] { 1.0f }, opacity, null);
-				return specColor;
-			} else {
-				/*
-				 * log.warn("Color '" + colorName + "' does not exist in named color profile: "
-				 * + iccProfileSrc);
-				 */
-			}
-		} else {
-			// log.warn("ICC profile is no named color profile: " + iccProfileSrc);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns a Color object that corresponds to the input Paint's device-specific
-	 * color value.
-	 *
-	 * @param e       the element using the color
-	 * @param srgb    the sRGB fallback color
-	 * @param c       the device-specific color definition
-	 * @param opacity the opacity
-	 * @param ctx     the bridge context to use
-	 */
-	public static Color convertDeviceColor(Element e, Value srgb, DeviceColor c, float opacity,
-			BridgeContext ctx) {
-		ColorValue color = srgb.getColorValue();
-		if (c.isNChannel()) {
-			return convertColor(color, opacity, ctx); // NYI
-		} else {
-			if (c.getNumberOfColors() == 4) {
-				DeviceCMYKColorSpace cmykCs = ColorSpaces.getDeviceCMYKColorSpace();
-				float[] comps = new float[4];
-				for (int i = 0; i < 4; i++) {
-					comps[i] = c.getColor(i);
-				}
-				Color cmyk = new ColorWithAlternatives(cmykCs, comps, opacity, null);
-				RGBColorValue rgb = (RGBColorValue) color;
-				float r = resolveColorComponent(rgb.getR());
-				float g = resolveColorComponent(rgb.getG());
-				float b = resolveColorComponent(rgb.getB());
-				float a = resolveAlphaComponent(c.getAlpha());
-				Color specColor = new ColorWithAlternatives(r, g, b, a * opacity,
-						new Color[] { cmyk });
-				return specColor;
-			} else {
-				return convertColor(color, opacity, ctx); // NYI
-			}
-		}
 	}
 
 	/**

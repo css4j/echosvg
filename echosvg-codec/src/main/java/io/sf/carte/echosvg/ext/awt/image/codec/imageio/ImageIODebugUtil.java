@@ -34,6 +34,7 @@ import org.w3c.dom.Node;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
+@Deprecated(forRemoval = true)
 public class ImageIODebugUtil {
 
 	public static void dumpMetadata(IIOMetadata meta) {

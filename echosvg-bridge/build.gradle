@@ -6,7 +6,6 @@ dependencies {
 	api project(':echosvg-anim')
 	api project(':echosvg-gvt')
 	api project(':echosvg-script')
-	api "io.sf.graphics:legacy-colors:${legacyColorsVersion}"
 	if (!project.getPluginManager().hasPlugin('eclipse')) {
 		compileOnly "xml-apis:xml-apis:$xmlApisVersion" // Required by Java 8 compat
 	}

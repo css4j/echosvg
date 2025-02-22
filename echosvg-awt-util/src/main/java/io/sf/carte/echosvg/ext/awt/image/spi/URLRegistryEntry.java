@@ -63,8 +63,6 @@ public interface URLRegistryEntry extends RegistryEntry {
 	 * automatically return a broken link image for you.
 	 *
 	 * @param url         The url that reference the image.
-	 * @param needRawData If true the image returned should not have any default
-	 *                    color correction the file may specify applied.
 	 */
-	Filter handleURL(ParsedURL url, boolean needRawData);
+	Filter handleURL(ParsedURL url);
 }

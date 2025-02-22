@@ -94,10 +94,6 @@
       <stop offset="1" stop-color="crimson" />
    </linearGradient>
 
-   <color-profile name="changeColorAuto" 
-                  rendering-intent="auto"
-                  xlink:href="../../resources/icc/changeColor.icm"/>
-
    <g color="green" text-anchor="middle">
       <rect id="r1" x="30"  y="80" height="75" width="75" fill="#F00"/>
       <rect id="r2" x="135" y="80" height="75" width="75" fill="gold"/>
@@ -113,7 +109,7 @@
       <rect id="r5" x="30"  y="195" height="75" width="75" 
             fill="none" stroke="black"/>
       <rect id="r6" x="135" y="195" height="75" width="75" 
-            fill="gold icc-color(changeColorAuto, 0.702, 0.2745, 0.098)"/>
+            fill="color(display-p3 0.53 0.1 0.21)"/>
       <rect id="r7" x="240" y="195" height="75" width="75" 
             fill="url(#lg) none"/>
       <rect id="r8" x="345" y="195" height="75" width="75" 
@@ -128,7 +124,7 @@
       <rect id="r9" x="30"  y="320" height="75" width="75" 
             fill="url(#lg) currentColor"/>
       <rect id="r10" x="135" y="320" height="75" width="75" 
-       fill="url(#lg) gold icc-color(changeColorAuto, 0.702, 0.2745, 0.098)"/>
+       fill="url(#lg) color(display-p3 0.53 0.1 0.21)"/>
       <rect id="r11" x="240" y="320" height="75" width="75" 
             fill="url(#no_such_uri) gold"/>
       <rect id="r12" x="345" y="320" height="75" width="75" 

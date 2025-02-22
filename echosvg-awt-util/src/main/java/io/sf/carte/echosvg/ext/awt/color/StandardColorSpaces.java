@@ -116,15 +116,56 @@ public class StandardColorSpaces {
 	}
 
 	/**
-	 * Do an approximate merge of the two color spaces.
+	 * Do an approximate merge of the two RGB color spaces.
+	 * <p>
+	 * Both color spaces must be expressed in the RGB color model.
+	 * </p>
 	 * 
+	 * @param colorSpace1 the first RGB color space, or {@code null} (meaning sRGB).
+	 * @param colorSpace2 the second RGB color space, or {@code null} (meaning
+	 *                    sRGB).
+	 * @return the recommended merged color space. If {@code null}, means that sRGB
+	 *         is recommended.
+	 */
+	public static ColorSpace mergeColorSpace(ColorSpace colorSpace1, ColorSpace colorSpace2) {
+		// For a reasoning, you may want to look at
+		// https://upload.wikimedia.org/wikipedia/commons/b/b3/CIE1931xy_gamut_comparison_of_sRGB_P3_Rec2020.svg
+		ColorSpace csLsRGB;
+		if (colorSpace1 == colorSpace2 || colorSpace2 == null || colorSpace2.isCS_sRGB()
+				|| colorSpace2 == (csLsRGB = ColorSpace.getInstance(ColorSpace.CS_LINEAR_RGB))) {
+			return colorSpace1;
+		}
+
+		if (colorSpace1 == null || colorSpace1.isCS_sRGB() || colorSpace1 == csLsRGB) {
+			return colorSpace2;
+		}
+
+		// Prophoto contains nearly all of the other gamuts, first check for it.
+		ICC_ColorSpace pro = getProphotoRGB();
+		if (colorSpace1 == pro || colorSpace2 == pro) {
+			return pro;
+		}
+
+		// colorSpace1 is either rec2020, A98RGB or P3.
+		// colorSpace2 must be rec2020, A98RGB or P3.
+		// rec2020 is the best, smallest merge.
+		return getRec2020();
+	}
+
+	/**
+	 * Do an approximate merge of the two color spaces.
+	 * <p>
+	 * Both color spaces must be expressed in the RGB color model.
+	 * </p>
+	 * <p>
 	 * The merged color space must enclose the first space, and should be the
 	 * smallest merge that is able to represent the given color. That color is
 	 * intended to be represented by the second color space (although currently may
 	 * not be expressed in that space).
+	 * </p>
 	 * 
-	 * @param colorSpace1 the first color space, or {@code null}.
-	 * @param colorSpace2 the second color space. Cannot be equal to colorSpace1
+	 * @param colorSpace1 the first RGB color space, or {@code null}.
+	 * @param colorSpace2 the second RGB color space. Cannot be equal to colorSpace1
 	 *                    (check that before calling).
 	 * @param color       a color that needs to be represented by the merged space.
 	 * @return the recommended merged color space, or {@code null} if sRGB is
@@ -134,7 +175,8 @@ public class StandardColorSpaces {
 		// For a reasoning, you may want to look at
 		// https://upload.wikimedia.org/wikipedia/commons/b/b3/CIE1931xy_gamut_comparison_of_sRGB_P3_Rec2020.svg
 		if (colorSpace1 == null) {
-			if (isInGamut(color, ColorSpace.getInstance(ColorSpace.CS_sRGB))
+			// colorSpace2 cannot be null here, because colorSpace1 != colorSpace2
+			if (isInGamut(color, ColorSpace.getInstance(ColorSpace.CS_sRGB)) || colorSpace2.isCS_sRGB()
 					|| colorSpace2 == ColorSpace.getInstance(ColorSpace.CS_LINEAR_RGB)) {
 				return null;
 			}

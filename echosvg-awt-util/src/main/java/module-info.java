@@ -36,10 +36,6 @@ module io.sf.carte.echosvg.awt {
 	requires transitive io.sf.carte.echosvg.util;
 	requires io.sf.carte.echosvg.i18n;
 
-	// It is a transitive dependency due to
-	// ICCColorSpaceWithIntent being used in this module's API.
-	requires transitive io.sf.graphics.legacy.colors;
-
 	requires java.desktop;
 
 	uses io.sf.carte.echosvg.ext.awt.image.spi.ImageWriter;

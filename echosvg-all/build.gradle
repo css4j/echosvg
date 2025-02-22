@@ -104,11 +104,6 @@ tasks.register('cloneRepos') {
 			uri: 'https://github.com/css4j/cssom-apis.git',
 			refToCheckout: "v0.1")
 		gitCSSAPIs?.close()
-
-		def gitLegacyColors = grgit.clone(dir: "$buildDir/repos/legacy-colors",
-			uri: 'https://github.com/css4j/legacy-colors.git',
-			refToCheckout: "v${legacyColorsVersion}")
-		gitLegacyColors?.close()
 	}
 }
 
@@ -259,13 +254,6 @@ tasks.register('prepareModularSources') {
 			}
 		}
 
-		// Legacy colors (xmlgraphics-commons)
-		ant.copy(todir: "$buildDir/src/io.sf.graphics.legacy.colors") {
-			fileset(dir: "$buildDir/repos/legacy-colors/src/main/java") {
-				include(name: '**/*')
-			}
-		}
-
 		// Web APIs
 		ant.copy(todir: "$buildDir/src/org.w3c.dom.smil") {
 			fileset(dir: "$buildDir/repos/web-apis/smil-api/src/main/java") {
@@ -324,7 +312,6 @@ tasks.register('modularJavadoc', Javadoc) {
 		"$buildDir/src/io.sf.carte.echosvg.util",
 		"$buildDir/src/io.sf.carte.echosvg.util.gui",
 		"$buildDir/src/io.sf.carte.echosvg.xml",
-		"$buildDir/src/io.sf.graphics.legacy.colors",
 		"$buildDir/src/org.w3c.css.om",
 		"$buildDir/src/org.w3c.dom.view",
 		"$buildDir/src/org.w3c.dom.smil",

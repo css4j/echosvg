@@ -50,7 +50,6 @@ import io.sf.carte.echosvg.css.engine.value.svg.ClipRuleManager;
 import io.sf.carte.echosvg.css.engine.value.svg.ColorInterpolationFiltersManager;
 import io.sf.carte.echosvg.css.engine.value.svg.ColorInterpolationManager;
 import io.sf.carte.echosvg.css.engine.value.svg.ColorManager;
-import io.sf.carte.echosvg.css.engine.value.svg.ColorProfileManager;
 import io.sf.carte.echosvg.css.engine.value.svg.ColorRenderingManager;
 import io.sf.carte.echosvg.css.engine.value.svg.DominantBaselineManager;
 import io.sf.carte.echosvg.css.engine.value.svg.EnableBackgroundManager;
@@ -157,7 +156,7 @@ public class SVGCSSEngine extends CSSEngine {
 			new BaselineShiftManager(), new ClipManager(), new ClipPathManager(), new ClipRuleManager(),
 
 			new ColorManager(), new ColorInterpolationManager(), new ColorInterpolationFiltersManager(),
-			new ColorProfileManager(), new ColorRenderingManager(),
+			new ColorRenderingManager(),
 
 			new CursorManager(), new DirectionManager(), new DisplayManager(), new DominantBaselineManager(),
 			new EnableBackgroundManager(),
@@ -219,8 +218,7 @@ public class SVGCSSEngine extends CSSEngine {
 	public static final int COLOR_INDEX = CLIP_RULE_INDEX + 1;
 	public static final int COLOR_INTERPOLATION_INDEX = COLOR_INDEX + 1;
 	public static final int COLOR_INTERPOLATION_FILTERS_INDEX = COLOR_INTERPOLATION_INDEX + 1;
-	public static final int COLOR_PROFILE_INDEX = COLOR_INTERPOLATION_FILTERS_INDEX + 1;
-	public static final int COLOR_RENDERING_INDEX = COLOR_PROFILE_INDEX + 1;
+	public static final int COLOR_RENDERING_INDEX = COLOR_INTERPOLATION_FILTERS_INDEX + 1;
 
 	public static final int CURSOR_INDEX = COLOR_RENDERING_INDEX + 1;
 	public static final int DIRECTION_INDEX = CURSOR_INDEX + 1;

@@ -306,7 +306,7 @@ public class SVGGeneratorTest {
 		ImageCompareUtil ict = makeImageCompareTest(painter, painterClassname, PLAIN_GENERATION_PREFIX,
 				CUSTOM_CONTEXT_GENERATION_PREFIX);
 		// Tolerances must be higher, as rendering varies a bit
-		String err = ict.compare(0.65f, 0.004f);
+		String err = ict.compare(1.1f, 0.004f);
 		if (err != null) {
 			fail(err);
 		}

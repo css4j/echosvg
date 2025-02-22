@@ -51,7 +51,7 @@ public interface RegistryEntry {
 
 	/**
 	 * Returns a search priority for this entry. For most formats this is not
-	 * important, but in some cases it is important that some entries occure before
+	 * important, but in some cases it is important that some entries occur before
 	 * or after others.
 	 */
 	float getPriority();

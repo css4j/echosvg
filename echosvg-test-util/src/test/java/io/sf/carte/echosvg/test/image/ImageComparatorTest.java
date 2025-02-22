@@ -21,6 +21,7 @@ package io.sf.carte.echosvg.test.image;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.IOException;
@@ -187,7 +188,7 @@ public class ImageComparatorTest {
 		}
 
 		@Override
-		public BufferedImage getVariantImage(int index) {
+		public BufferedImage getVariantImage(int index, ColorSpace colorSpace) {
 			if (index < 0 || index > variants.length) {
 				return null;
 			}

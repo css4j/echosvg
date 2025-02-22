@@ -36,7 +36,7 @@ import io.sf.carte.echosvg.ext.awt.image.renderable.RedRable;
 import io.sf.carte.echosvg.util.ParsedURL;
 
 /**
- * This Image tag registy entry is setup to wrap the core JDK Image stream
+ * This Image tag registry entry is setup to wrap the core JDK Image stream
  * tools.
  *
  * @author For later modifications, see Git history.
@@ -81,11 +81,9 @@ public class JDKRegistryEntry extends AbstractRegistryEntry implements URLRegist
 	 * Decode the URL into a RenderableImage
 	 *
 	 * @param purl        URL of the image.
-	 * @param needRawData If true the image returned should not have any default
-	 *                    color correction the file may specify applied.
 	 */
 	@Override
-	public Filter handleURL(ParsedURL purl, boolean needRawData) {
+	public Filter handleURL(ParsedURL purl) {
 		final URL url;
 
 		if (purl != null) {

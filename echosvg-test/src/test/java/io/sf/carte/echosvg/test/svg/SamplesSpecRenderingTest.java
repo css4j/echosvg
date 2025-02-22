@@ -55,11 +55,6 @@ public class SamplesSpecRenderingTest extends AbstractSamplesRendering {
 	 * Color
 	 */
 	@Test
-	public void testColorProfile() throws TranscoderException, IOException {
-		test("samples/tests/spec/color/colorProfile.svg");
-	}
-
-	@Test
 	public void testColorProfiles() throws TranscoderException, IOException {
 		testNV("samples/tests/spec/color/colorProfiles.svg");
 	}
