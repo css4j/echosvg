@@ -38,6 +38,7 @@ import java.util.Set;
 
 import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.Attr;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
 import org.w3c.dom.Element;
@@ -55,13 +56,21 @@ import io.sf.carte.doc.dom.DOMNode;
 import io.sf.carte.doc.dom.XMLDocumentBuilder;
 import io.sf.carte.doc.style.css.BoxValues;
 import io.sf.carte.doc.style.css.CSSCanvas;
+import io.sf.carte.doc.style.css.CSSColor;
+import io.sf.carte.doc.style.css.CSSColorMixFunction;
+import io.sf.carte.doc.style.css.CSSColorValue;
 import io.sf.carte.doc.style.css.CSSComputedProperties;
 import io.sf.carte.doc.style.css.CSSDocument;
 import io.sf.carte.doc.style.css.CSSMediaException;
 import io.sf.carte.doc.style.css.CSSTypedValue;
 import io.sf.carte.doc.style.css.CSSValue;
 import io.sf.carte.doc.style.css.CSSValue.CssType;
+import io.sf.carte.doc.style.css.ColorSpace;
+import io.sf.carte.doc.style.css.DeclarationFormattingContext;
+import io.sf.carte.doc.style.css.RGBAColor;
 import io.sf.carte.doc.style.css.StyleDatabase;
+import io.sf.carte.doc.style.css.StyleFormattingContext;
+import io.sf.carte.doc.style.css.StyleFormattingFactory;
 import io.sf.carte.doc.style.css.awt.AWTHelper;
 import io.sf.carte.doc.style.css.nsac.ArgumentCondition;
 import io.sf.carte.doc.style.css.nsac.CombinatorCondition;
@@ -73,8 +82,9 @@ import io.sf.carte.doc.style.css.nsac.Selector;
 import io.sf.carte.doc.style.css.nsac.SelectorList;
 import io.sf.carte.doc.style.css.om.AbstractCSSCanvas;
 import io.sf.carte.doc.style.css.om.AbstractStyleDatabase;
+import io.sf.carte.doc.style.css.om.ColorDeclarationFormattingContext;
 import io.sf.carte.doc.style.css.om.ComputedCSSStyle;
-import io.sf.carte.doc.style.css.om.RGBStyleFormattingFactory;
+import io.sf.carte.doc.style.css.om.DefaultStyleFormattingContext;
 import io.sf.carte.doc.style.css.property.ColorIdentifiers;
 import io.sf.carte.doc.style.css.property.ValueFactory;
 import io.sf.carte.doc.xml.dtd.DefaultEntityResolver;
@@ -93,6 +103,7 @@ import io.sf.carte.echosvg.transcoder.image.PNGTranscoder;
 import io.sf.carte.echosvg.transcoder.impl.SizingHelper;
 import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.SVGConstants;
+import io.sf.carte.util.SimpleWriter;
 import io.sf.carte.util.agent.AgentUtil;
 
 /**
@@ -588,8 +599,128 @@ public class CSSTranscodingHelper {
 	private CSSDOMImplementation createCSSDOMImplementation() {
 		// Instantiate a DOM implementation that has modern CSS support
 		CSSDOMImplementation impl = new CSSDOMImplementation();
-		// Serialize colors to sRGB
-		impl.setStyleFormattingFactory(new RGBStyleFormattingFactory());
+		// Serialize colors to sRGB if in gamut, a98/display-p3 otherwise
+		impl.setStyleFormattingFactory(new StyleFormattingFactory() {
+
+			@Override
+			public StyleFormattingContext createStyleFormattingContext() {
+				return new DefaultStyleFormattingContext();
+			}
+
+			@Override
+			public DeclarationFormattingContext createComputedStyleFormattingContext() {
+				return new ColorDeclarationFormattingContext() {
+
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					protected void writeColor(SimpleWriter wri, String propertyName, CSSColorValue value)
+							throws IOException {
+						try {
+							serializeColor(wri, value);
+						} catch (DOMException e) {
+							super.writeColor(wri, propertyName, value);
+						}
+					}
+
+					@Override
+					protected void writeColorMix(SimpleWriter wri, String propertyName,
+						CSSColorMixFunction value)
+							throws IOException {
+						try {
+							serializeColor(wri, value);
+						} catch (DOMException e) {
+							super.writeColorMix(wri, propertyName, value);
+						}
+						super.writeColorMix(wri, propertyName, value);
+					}
+
+					private void serializeColor(SimpleWriter wri, CSSColorValue value)
+							throws DOMException, IOException {
+						CSSColor color = value.getColor();
+						if (color == null) {
+							// color-mix() failed
+							throw new DOMException(DOMException.INVALID_ACCESS_ERR,
+									"Color interpolation failed.");
+						}
+						if (color.isInGamut(ColorSpace.srgb)) {
+							RGBAColor rgb = value.toRGBColor();
+							wri.write(rgb.toString());
+						} else {
+							// Convert to a color space with a gamut not too big
+							//
+							// Let reasonably small color spaces (A98, p3) pass through
+							String space = color.getColorSpace();
+							if (!ColorSpace.a98_rgb.equals(space)) {
+								// Use p3 unless out of gamut for p3 but not for A98
+								if (!color.isInGamut(ColorSpace.display_p3) &&
+										color.isInGamut(ColorSpace.a98_rgb)) {
+									space = ColorSpace.a98_rgb;
+								} else {
+									space = ColorSpace.display_p3;
+								}
+							}
+							CSSColor colorp = color.toColorSpace(space);
+							wri.write(colorp.toString());
+						}
+					}
+
+					@Override
+					protected void writeMinifiedColor(SimpleWriter wri, String propertyName,
+						CSSColorValue value)
+							throws IOException {
+						try {
+							serializeColorMinified(wri, value);
+						} catch (DOMException e) {
+							super.writeMinifiedColor(wri, propertyName, value);
+						}
+					}
+
+					@Override
+					protected void writeMinifiedColorMix(SimpleWriter wri, String propertyName,
+							CSSColorMixFunction value) throws IOException {
+						try {
+							serializeColorMinified(wri, value);
+						} catch (DOMException e) {
+							super.writeMinifiedColorMix(wri, propertyName, value);
+						}
+					}
+
+					private void serializeColorMinified(SimpleWriter wri, CSSColorValue value)
+							throws DOMException, IOException {
+						CSSColor color = value.getColor();
+						if (color == null) {
+							// color-mix() failed
+							throw new DOMException(DOMException.INVALID_ACCESS_ERR,
+									"Color interpolation failed.");
+						}
+						if (color.isInGamut(ColorSpace.srgb)) {
+							RGBAColor rgb = value.toRGBColor();
+							wri.write(rgb.toMinifiedString());
+						} else {
+							// Convert to a color space with a gamut not too big
+							//
+							// Let reasonably small color spaces (A98, p3) pass through
+							String space = color.getColorSpace();
+							if (!ColorSpace.a98_rgb.equals(space)) {
+								// Use p3 unless out of gamut for p3 but not for A98
+								if (!color.isInGamut(ColorSpace.display_p3) &&
+										color.isInGamut(ColorSpace.a98_rgb)) {
+									space = ColorSpace.a98_rgb;
+								} else {
+									space = ColorSpace.display_p3;
+								}
+							}
+							CSSColor colorp = color.toColorSpace(space);
+							wri.write(colorp.toMinifiedString());
+						}
+					}
+
+				};
+			}
+
+		});
+
 		return impl;
 	}
 
