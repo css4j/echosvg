@@ -53,6 +53,12 @@ public interface TypedValue extends Value, io.sf.carte.doc.style.css.CSSTypedVal
 	}
 
 	@Override
+	default float getFloatValue() throws DOMException {
+		throw new DOMException(DOMException.INVALID_ACCESS_ERR,
+				"Not a float value, type is instead: " + getPrimitiveType());
+	}
+
+	@Override
 	default void setStringValue(Type stringType, String stringValue) throws DOMException {
 		throw new DOMException(DOMException.NOT_SUPPORTED_ERR, "Please use setValue()");
 	}

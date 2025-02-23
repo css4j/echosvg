@@ -139,7 +139,7 @@ public abstract class GlyphOrientationManager extends AbstractValueManager {
 			}
 			return f;
 
-		case FUNCTION:
+		case MATH_FUNCTION:
 			Value v;
 			try {
 				v = createMathFunction(lu, "<angle>");

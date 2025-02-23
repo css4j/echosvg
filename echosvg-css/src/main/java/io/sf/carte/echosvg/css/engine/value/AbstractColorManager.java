@@ -376,7 +376,7 @@ public abstract class AbstractColorManager extends IdentifierManager {
 			}
 			return evaluateComponentExpression((CalcValue) calc);
 
-		case FUNCTION:
+		case MATH_FUNCTION:
 			Value v;
 			try {
 				v = createMathFunction(lu, "<number|percentage>");
@@ -424,7 +424,7 @@ public abstract class AbstractColorManager extends IdentifierManager {
 			}
 			return evaluateComponentExpression((CalcValue) calc);
 
-		case FUNCTION:
+		case MATH_FUNCTION:
 			Value v;
 			try {
 				v = createMathFunction(lu, "<number|percentage>");

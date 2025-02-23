@@ -153,7 +153,7 @@ public class OpacityManager extends AbstractValueManager {
 			}
 			return ((CalcValue) calc).evaluate(null, null, engine, -1, null, CSSUnit.CSS_NUMBER);
 
-		case FUNCTION:
+		case MATH_FUNCTION:
 			Value v;
 			try {
 				v = createMathFunction(lu, "<number>");

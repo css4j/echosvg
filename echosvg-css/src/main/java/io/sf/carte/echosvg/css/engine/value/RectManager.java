@@ -129,7 +129,7 @@ public abstract class RectManager extends LengthManager {
 		case CALC:
 			return createCalc(lu);
 
-		case FUNCTION:
+		case MATH_FUNCTION:
 			Value v;
 			try {
 				v = createMathFunction(lu, "<length-percentage>");
