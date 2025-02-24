@@ -92,7 +92,7 @@ public abstract class AbstractColorInterpolationRable extends AbstractRable {
 	 *              srcs must be CachableRable otherwise an error will be thrown.
 	 * @param props use to initialize the properties on this renderable image.
 	 */
-	protected AbstractColorInterpolationRable(List<RenderableImage> srcs, Map<String, Object> props) {
+	protected AbstractColorInterpolationRable(List<? extends RenderableImage> srcs, Map<String, Object> props) {
 		super(srcs, props);
 	}
 

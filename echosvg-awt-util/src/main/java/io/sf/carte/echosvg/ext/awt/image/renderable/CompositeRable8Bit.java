@@ -91,7 +91,7 @@ public class CompositeRable8Bit extends AbstractColorInterpolationRable implemen
 	}
 
 	/**
-	 * Should perform the equivilent action as createRendering followed by drawing
+	 * Should perform the equivalent action as createRendering followed by drawing
 	 * the RenderedImage to Graphics2D, or return false.
 	 *
 	 * @param g2d The Graphics2D to draw to.
