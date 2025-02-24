@@ -75,7 +75,7 @@ Batik:
    instead, obtaining a `CSSStyleValue`. Note that modern SVGOM has neither of
    those methods.
 
-12) The line-height property now has a global default of 1.1, instead of the
+12) The `line-height` property now has a global default of 1.1, instead of the
    mixture of 1.1 and 1 that Batik uses.
 
 13) The `css.engine.value.css2` package was renamed to `css.engine.value.css`,
@@ -99,3 +99,10 @@ Batik:
    like `ImageTagRegistry.readStream(stream, space)`, now take a `ColorSpace`.
    The legacy ICC color stuff was removed, as it did not produce actual colors
    outside of the sRGB gamut, is not supported by browsers and was just adding bloat.
+
+18) Protected method `SVGAbstractTranscoder.createBridgeContext(String)` was
+   deprecated, due to the `version` attribute being dropped from SVG. If you
+   wanted to override it, please do that with `createBridgeContext()` and
+   `createSVG12BridgeContext()` instead. The former creates a `BridgeContext`
+   which is intended for the current SVG specification, not just 1.1 as in Batik,
+   while the latter produces one for the deprecated 1.2 version.

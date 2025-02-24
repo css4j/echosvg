@@ -112,10 +112,20 @@ public abstract class SVGAbstractTranscoder extends io.sf.carte.echosvg.transcod
 		return new SVGAbstractTranscoderUserAgent();
 	}
 
+	/**
+	 * Gets the bridge context.
+	 * 
+	 * @return the {@code BridgeContext}, or {@code null} if no context was set.
+	 */
 	protected BridgeContext getBridgeContext() {
 		return ctx;
 	}
 
+	/**
+	 * Set the bridge context.
+	 * 
+	 * @param ctx the {@code BridgeContext}.
+	 */
 	protected void setBridgeContext(BridgeContext ctx) {
 		this.ctx = ctx;
 	}
@@ -549,35 +559,46 @@ public abstract class SVGAbstractTranscoder extends io.sf.carte.echosvg.transcod
 	 * @return the newly instantiated BridgeContext
 	 */
 	protected BridgeContext createBridgeContext(SVGOMDocument doc) {
-		return createBridgeContext(doc.isSVG12() ? "1.2" : "1.x");
+		return doc.isSVG12() ? createSVG12BridgeContext() : createBridgeContext();
 	}
 
 	/**
-	 * Creates the default SVG 1.0/1.1 BridgeContext. Subclass this method to
-	 * provide customized bridges. This method is provided for historical reasons.
-	 * New applications should use {@link #createBridgeContext(String)} instead.
+	 * Creates the default SVG BridgeContext.
+	 * <p>
+	 * Subclass this method to provide customized bridges.
+	 * </p>
 	 * 
 	 * @return the newly instantiated BridgeContext
-	 * @see #createBridgeContext(String)
 	 */
 	protected BridgeContext createBridgeContext() {
-		return createBridgeContext("1.x");
+		return new BridgeContext(userAgent);
 	}
 
 	/**
-	 * Creates the BridgeContext. Subclass this method to provide customized
-	 * bridges. For example, Apache FOP uses this method to register special bridges
-	 * for optimized text painting.
+	 * Creates the BridgeContext according to the version attribute.
+	 * <p>
+	 * Please do not subclass this method to provide customized bridges. For
+	 * example, Apache FOP uses Batik's equivalent of this method to register
+	 * special bridges for optimized text painting.
+	 * </p>
 	 * 
 	 * @param svgVersion the SVG version in use (ex. "1.0", "1.x" or "1.2")
 	 * @return the newly instantiated BridgeContext
+	 * @deprecated SVG no longer has a version attribute.
+	 * @see #createBridgeContext()
+	 * @see #createSVG12BridgeContext()
 	 */
-	protected BridgeContext createBridgeContext(String svgVersion) {
+	@Deprecated
+	protected final BridgeContext createBridgeContext(String svgVersion) {
 		if ("1.2".equals(svgVersion)) {
-			return new SVG12BridgeContext(userAgent);
+			return createSVG12BridgeContext();
 		} else {
-			return new BridgeContext(userAgent);
+			return createBridgeContext();
 		}
+	}
+
+	protected BridgeContext createSVG12BridgeContext() {
+		return new SVG12BridgeContext(userAgent);
 	}
 
 	/**
