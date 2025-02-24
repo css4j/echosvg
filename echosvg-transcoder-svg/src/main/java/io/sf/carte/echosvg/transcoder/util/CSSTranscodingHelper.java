@@ -86,6 +86,7 @@ import io.sf.carte.doc.style.css.om.ColorDeclarationFormattingContext;
 import io.sf.carte.doc.style.css.om.ComputedCSSStyle;
 import io.sf.carte.doc.style.css.om.DefaultStyleFormattingContext;
 import io.sf.carte.doc.style.css.property.ColorIdentifiers;
+import io.sf.carte.doc.style.css.property.NumberValue;
 import io.sf.carte.doc.style.css.property.ValueFactory;
 import io.sf.carte.doc.xml.dtd.DefaultEntityResolver;
 import io.sf.carte.echosvg.anim.dom.SVG12DOMImplementation;
@@ -602,6 +603,11 @@ public class CSSTranscodingHelper {
 		// Serialize colors to sRGB if in gamut, a98/display-p3 otherwise
 		impl.setStyleFormattingFactory(new StyleFormattingFactory() {
 
+			/**
+			 * Maximum number of fraction digits when serializing a color component.
+			 */
+			private static final int COMP_MAX_FRACTION_DIGITS = 8;
+
 			@Override
 			public StyleFormattingContext createStyleFormattingContext() {
 				return new DefaultStyleFormattingContext();
@@ -645,6 +651,7 @@ public class CSSTranscodingHelper {
 						}
 						if (color.isInGamut(ColorSpace.srgb)) {
 							RGBAColor rgb = value.toRGBColor();
+							setComponentsMaximumFractionDigits(rgb, COMP_MAX_FRACTION_DIGITS);
 							wri.write(rgb.toString());
 						} else {
 							// Convert to a color space with a gamut not too big
@@ -661,8 +668,15 @@ public class CSSTranscodingHelper {
 								}
 							}
 							CSSColor colorp = color.toColorSpace(space);
+							setComponentsMaximumFractionDigits(colorp, COMP_MAX_FRACTION_DIGITS);
 							wri.write(colorp.toString());
 						}
+					}
+
+					private void setComponentsMaximumFractionDigits(CSSColor color, int maxFractionDigits) {
+						((NumberValue) color.item(1)).setMaximumFractionDigits(maxFractionDigits);
+						((NumberValue) color.item(2)).setMaximumFractionDigits(maxFractionDigits);
+						((NumberValue) color.item(3)).setMaximumFractionDigits(maxFractionDigits);
 					}
 
 					@Override
@@ -696,6 +710,7 @@ public class CSSTranscodingHelper {
 						}
 						if (color.isInGamut(ColorSpace.srgb)) {
 							RGBAColor rgb = value.toRGBColor();
+							setComponentsMaximumFractionDigits(rgb, COMP_MAX_FRACTION_DIGITS);
 							wri.write(rgb.toMinifiedString());
 						} else {
 							// Convert to a color space with a gamut not too big
@@ -712,6 +727,7 @@ public class CSSTranscodingHelper {
 								}
 							}
 							CSSColor colorp = color.toColorSpace(space);
+							setComponentsMaximumFractionDigits(colorp, COMP_MAX_FRACTION_DIGITS);
 							wri.write(colorp.toMinifiedString());
 						}
 					}

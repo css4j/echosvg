@@ -37,7 +37,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.svg.SVGSVGElement;
 
 import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
 import io.sf.carte.echosvg.anim.dom.SVG12DOMImplementation;
@@ -164,7 +163,9 @@ public abstract class SVGAbstractTranscoder extends io.sf.carte.echosvg.transcod
 	protected void transcode(Document document, String uri, TranscoderOutput output) throws TranscoderException {
 		SVGOMDocument svgDoc;
 		// document is assumed to be non-null here
-		if (!(document instanceof SVGOMDocument)) {
+		Element root = document.getDocumentElement();
+		if (!(document instanceof SVGOMDocument)
+				|| root.getNamespaceURI() != SVGConstants.SVG_NAMESPACE_URI) {
 			svgDoc = importAsSVGDocument(document, uri);
 		} else {
 			svgDoc = (SVGOMDocument) document;
@@ -179,7 +180,6 @@ public abstract class SVGAbstractTranscoder extends io.sf.carte.echosvg.transcod
 		if (hints.containsKey(KEY_HEIGHT))
 			height = (Float) hints.get(KEY_HEIGHT);
 
-		SVGSVGElement root = svgDoc.getRootElement();
 		ctx = createBridgeContext(svgDoc);
 
 		// build the GVT tree
@@ -289,7 +289,8 @@ public abstract class SVGAbstractTranscoder extends io.sf.carte.echosvg.transcod
 	 * 
 	 * @param document the document to import.
 	 * @param uri      the document URI.
-	 * @return the imported SVG document.
+	 * @return the imported SVG document, or {@code null} if no SVG tree could be
+	 *         found.
 	 * @throws TranscoderException if an error occurred while importing the SVG.
 	 */
 	private SVGOMDocument importAsSVGDocument(Document document, String uri)
@@ -297,7 +298,7 @@ public abstract class SVGAbstractTranscoder extends io.sf.carte.echosvg.transcod
 		// Obtain the document element and DocumentType
 		Element docElm = document.getDocumentElement();
 		// Check whether the document element is a SVG element anyway
-		if (docElm.getNamespaceURI() != SVGConstants.SVG_NAMESPACE_URI
+		if (!SVGConstants.SVG_NAMESPACE_URI.equals(docElm.getNamespaceURI())
 				&& !"svg".equalsIgnoreCase(docElm.getTagName())) {
 			// Not a SVG document, either locate KEY_SVG_SELECTOR
 			// or get the first SVG element

@@ -82,6 +82,21 @@ public class SamplesSpec2RenderingTest extends AbstractSamplesRendering {
 	}
 
 	@Test
+	public void testCSS3() throws TranscoderException, IOException {
+		testNV("samples/tests/spec2/styling/css3.html");
+	}
+
+	@Test
+	public void testCSS3Print() throws TranscoderException, IOException {
+		testNVErrIgnore("samples/tests/spec2/styling/css3.html", PRINT_MEDIA, 0);
+	}
+
+	@Test
+	public void testCSS3Dark() throws TranscoderException, IOException {
+		testDarkMode("samples/tests/spec2/styling/css3.html");
+	}
+
+	@Test
 	public void testMermaidColor4() throws TranscoderException, IOException {
 		testNV("samples/tests/spec2/styling/mermaid-color4.svg");
 	}

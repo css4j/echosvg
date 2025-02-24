@@ -280,18 +280,33 @@ public class PaintServerTest {
 	}
 
 	@Test
-	public void testConvertLab() {
+	public void testConvertLab_p3() {
 		Color color = convertPaint(CSSConstants.CSS_FILL_PROPERTY, "lab(20.6% 48.8 -13.8 / 0.2)", null);
 		assertNotNull(color);
 
 		float[] comp = new float[3];
 		color.getColorComponents(comp);
-		assertEquals(0.269976f, comp[0], 1e-5f); // Rec 2020
-		assertEquals(0.026763f, comp[1], 1e-5f); // Rec 2020
-		assertEquals(0.2079f, comp[2], 1e-4f); // Rec 2020
+		assertEquals(0.3713666f, comp[0], 1e-5f); // Display P3
+		assertEquals(0f, comp[1], 1e-5f); // Display P3
+		assertEquals(0.2716182f, comp[2], 1e-4f); // Display P3
 		assertEquals(51, color.getAlpha());
 
+		assertSame(StandardColorSpaces.getDisplayP3(), context.getColorSpace());
+	}
+
+	@Test
+	public void testConvertLab_rec2020() {
+		Color color = convertPaint(CSSConstants.CSS_FILL_PROPERTY, "lab(51.3% 104.5 -28 / 0.2)", null);
+		assertNotNull(color);
+
 		assertSame(StandardColorSpaces.getRec2020(), context.getColorSpace());
+
+		float[] comp = new float[3];
+		color.getColorComponents(comp);
+		assertEquals(0.7942925f, comp[0], 1e-5f); // ITU Rec. 2020
+		assertEquals(0.009957f, comp[1], 1e-5f); // ITU Rec. 2020
+		assertEquals(0.6187307f, comp[2], 1e-5f); // ITU Rec. 2020
+		assertEquals(51, color.getAlpha());
 	}
 
 	@Test
@@ -310,17 +325,32 @@ public class PaintServerTest {
 	}
 
 	@Test
-	public void testConvertLCh() {
+	public void testConvertLCh_p3() {
 		Color color = convertPaint(CSSConstants.CSS_FILL_PROPERTY, "lch(20.6% 50.71371 344.2098 / 0.2)", null);
 		assertNotNull(color);
 		float[] comp = new float[3];
 		color.getColorComponents(comp);
-		assertEquals(0.269976f, comp[0], 1e-5f); // Rec 2020
-		assertEquals(0.026763f, comp[1], 1e-5f); // Rec 2020
-		assertEquals(0.2079f, comp[2], 1e-4f); // Rec 2020
+		assertEquals(0.3713666f, comp[0], 1e-5f); // Display P3
+		assertEquals(0f, comp[1], 1e-5f); // Display P3
+		assertEquals(0.2716182f, comp[2], 1e-4f); // Display P3
 		assertEquals(51, color.getAlpha());
 
+		assertSame(StandardColorSpaces.getDisplayP3(), context.getColorSpace());
+	}
+
+	@Test
+	public void testConvertLCh_rec2020() {
+		Color color = convertPaint(CSSConstants.CSS_FILL_PROPERTY, "lch(51.3% 108.2 345 / 0.2)", null);
+		assertNotNull(color);
+
 		assertSame(StandardColorSpaces.getRec2020(), context.getColorSpace());
+
+		float[] comp = new float[3];
+		color.getColorComponents(comp);
+		assertEquals(0.794338f, comp[0], 1e-5f); // ITU Rec. 2020
+		assertEquals(0.0098127f, comp[1], 1e-5f); // ITU Rec. 2020
+		assertEquals(0.61876f, comp[2], 1e-4f); // ITU Rec. 2020
+		assertEquals(51, color.getAlpha());
 	}
 
 	@Test

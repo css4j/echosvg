@@ -137,6 +137,9 @@ public abstract class AbstractColorManager extends IdentifierManager {
 	 */
 	@Override
 	public Value createValue(LexicalUnit lunit, CSSEngine engine) throws DOMException {
+		// Maximum number of fraction digits when serializing a color component.
+		final int COMP_MAX_FRACTION_DIGITS = 7;
+
 		switch (lunit.getLexicalUnitType()) {
 		case LABCOLOR:
 		case LCHCOLOR:
@@ -151,20 +154,24 @@ public abstract class AbstractColorManager extends IdentifierManager {
 					throw createInvalidLexicalUnitDOMException(lunit.getLexicalUnitType());
 				}
 				CSSColor color = ((io.sf.carte.doc.style.css.CSSColorValue) css4jValue).getColor();
-				if (color.isInGamut(io.sf.carte.doc.style.css.ColorSpace.srgb_linear)) {
+				if (color.isInGamut(io.sf.carte.doc.style.css.ColorSpace.srgb)) {
 					color = color.toColorSpace(io.sf.carte.doc.style.css.ColorSpace.srgb);
-					setComponentsMaximumFractionDigits(color, 6);
+					setComponentsMaximumFractionDigits(color, COMP_MAX_FRACTION_DIGITS);
 					colorSerialization = color.toString();
 					// Now parse the result
 					lunit = reparseColor(colorSerialization);
 					return createRGBColor(lunit);
+				} else if (color.isInGamut(io.sf.carte.doc.style.css.ColorSpace.display_p3)) {
+					color = color.toColorSpace(io.sf.carte.doc.style.css.ColorSpace.display_p3);
+				} else if (color.isInGamut(io.sf.carte.doc.style.css.ColorSpace.a98_rgb)) {
+					color = color.toColorSpace(io.sf.carte.doc.style.css.ColorSpace.a98_rgb);
 				} else if (color.isInGamut(io.sf.carte.doc.style.css.ColorSpace.rec2020)) {
 					color = color.toColorSpace(io.sf.carte.doc.style.css.ColorSpace.rec2020);
 				} else {
 					// Prophoto is the largest supported RGB space
 					color = color.toColorSpace(io.sf.carte.doc.style.css.ColorSpace.prophoto_rgb);
 				}
-				setComponentsMaximumFractionDigits(color, 6);
+				setComponentsMaximumFractionDigits(color, COMP_MAX_FRACTION_DIGITS);
 				colorSerialization = color.toString();
 			} catch (DOMException e) {
 				throw createInvalidLexicalUnitDOMException(lunit.getLexicalUnitType());
@@ -184,7 +191,7 @@ public abstract class AbstractColorManager extends IdentifierManager {
 					throw createInvalidLexicalUnitDOMException(lunit.getLexicalUnitType());
 				}
 				CSSColor rgb = ((CSSTypedValue) css4jValue).toRGBColor();
-				setComponentsMaximumFractionDigits(rgb, 6);
+				setComponentsMaximumFractionDigits(rgb, COMP_MAX_FRACTION_DIGITS);
 				rgbSerialization = rgb.toString();
 			} catch (DOMException e) {
 				throw createInvalidLexicalUnitDOMException(lunit.getLexicalUnitType());
@@ -289,8 +296,8 @@ public abstract class AbstractColorManager extends IdentifierManager {
 	/**
 	 * Creates an RGB(A) color.
 	 */
-	protected Value createRGBColor(NumericValue r, NumericValue g, NumericValue b, boolean pcntSpecified,
-			NumericValue a, boolean alphaPcntSpecified) {
+	protected ColorValue createRGBColor(NumericValue r, NumericValue g, NumericValue b,
+			boolean pcntSpecified, NumericValue a, boolean alphaPcntSpecified) {
 		RGBColorValue c = a == null ? new RGBColorValue(r, g, b) : new RGBColorValue(r, g, b, a);
 		c.setSpecifiedAsPercentage(pcntSpecified);
 		c.setAlphaSpecifiedAsPercentage(alphaPcntSpecified);
