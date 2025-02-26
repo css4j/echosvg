@@ -120,7 +120,7 @@ public class XmlUtil {
 		}
 
 		ByteArrayInputStream dataIS = new ByteArrayInputStream(data);
-		Reader r = new InputStreamReader(dataIS);
+		Reader r = new InputStreamReader(dataIS, StandardCharsets.UTF_8);
 		BufferedReader dataReader = new BufferedReader(r);
 
 		String refStr = "";
