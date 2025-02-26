@@ -48,10 +48,10 @@ public class ExtendedGeneralPath implements ExtendedShape, Cloneable {
 	/** The enclosed general path. */
 	protected GeneralPath path;
 
-	int numVals = 0;
-	int numSeg = 0;
-	float[] values = null;
-	int[] types = null;
+	private int numVals = 0;
+	private int numSeg = 0;
+	private float[] values = null;
+	private int[] types = null;
 
 	float mx, my, cx, cy;
 
@@ -709,7 +709,7 @@ public class ExtendedGeneralPath implements ExtendedShape, Cloneable {
 	 * Delegates to the enclosed <code>GeneralPath</code>.
 	 */
 	@Override
-	public Object clone() {
+	public ExtendedGeneralPath clone() {
 		try {
 			ExtendedGeneralPath result = (ExtendedGeneralPath) super.clone();
 			result.path = (GeneralPath) path.clone();

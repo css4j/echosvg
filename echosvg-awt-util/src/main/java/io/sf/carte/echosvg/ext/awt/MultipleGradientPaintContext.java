@@ -95,13 +95,13 @@ abstract class MultipleGradientPaintContext implements PaintContext {
 	protected float a00, a01, a10, a11, a02, a12;
 
 	/**
-	 * This boolean specifies wether we are in simple lookup mode, where an input
+	 * This boolean specifies whether we are in simple lookup mode, where an input
 	 * value between 0 and 1 may be used to directly index into a single array of
 	 * gradient colors. If this boolean value is false, then we have to use a 2-step
 	 * process where we have to determine which gradient array we fall into, then
 	 * determine the index into that array.
 	 */
-	protected boolean isSimpleLookup = true;
+	private boolean isSimpleLookup = true;
 
 	/**
 	 * This boolean indicates if the gradient appears to have sudden discontinuities
@@ -130,7 +130,7 @@ abstract class MultipleGradientPaintContext implements PaintContext {
 	protected int[][] gradients;
 
 	/**
-	 * This holds the blend of all colors in the gradient. we use this at extreamly
+	 * This holds the blend of all colors in the gradient. we use this at extremely
 	 * low resolutions to ensure we get a decent blend of the colors.
 	 */
 	protected int gradientAverage;
@@ -146,7 +146,7 @@ abstract class MultipleGradientPaintContext implements PaintContext {
 	protected int gradientOverflow;
 
 	/** Length of the 2D slow lookup gradients array. */
-	protected int gradientsLength;
+	private int gradientsLength;
 
 	/** Normalized intervals array */
 	protected float[] normalizedIntervals;
@@ -695,6 +695,30 @@ abstract class MultipleGradientPaintContext implements PaintContext {
 
 		// re-compact the components
 		return ((a1 << 24) | (r1 << 16) | (g1 << 8) | b1);
+	}
+
+	/**
+	 * Length of the 2D slow lookup gradients array.
+	 * 
+	 * @return the length of the 2D slow lookup gradients array.
+	 */
+	protected int getGradientsLength() {
+		return gradientsLength;
+	}
+
+	/**
+	 * Tell whether we are in simple lookup mode, where an input value between 0 and
+	 * 1 may be used to directly index into a single array of gradient colors.
+	 * <p>
+	 * If this boolean value is false, then we have to use a 2-step process where we
+	 * have to determine which gradient array we fall into, then determine the index
+	 * into that array.
+	 * </p>
+	 *
+	 * @return {@code true} if this is a single-array gradient.
+	 */
+	protected boolean isSimpleLookup() {
+		return isSimpleLookup;
 	}
 
 	/**
@@ -1351,16 +1375,14 @@ abstract class MultipleGradientPaintContext implements PaintContext {
 	 * for use by any other instance, as long as they are sufficiently large.
 	 */
 	protected static final synchronized WritableRaster getCachedRaster(ColorModel cm, int w, int h) {
-		if (cm == cachedModel) {
-			if (cached != null) {
-				WritableRaster ras = cached.get();
-				if (ras != null && ras.getWidth() >= w && ras.getHeight() >= h) {
-					cached = null;
-					return ras;
-				}
+		if (cm == cachedModel && cached != null) {
+			WritableRaster ras = cached.get();
+			if (ras != null && ras.getWidth() >= w && ras.getHeight() >= h) {
+				cached = null;
+				return ras;
 			}
 		}
-		// Don't create rediculously small rasters...
+		// Don't create ridiculously small rasters...
 		if (w < 32)
 			w = 32;
 		if (h < 32)
@@ -1380,10 +1402,7 @@ abstract class MultipleGradientPaintContext implements PaintContext {
 				int ch = cras.getHeight();
 				int iw = ras.getWidth();
 				int ih = ras.getHeight();
-				if (cw >= iw && ch >= ih) {
-					return;
-				}
-				if (cw * ch >= iw * ih) {
+				if ((cw >= iw && ch >= ih) || (cw * ch >= iw * ih)) {
 					return;
 				}
 			}

@@ -163,7 +163,7 @@ final class LinearGradientPaintContext extends MultipleGradientPaintContext {
 				else {
 					// Could be a binary search...
 					int gradIdx = 0;
-					while (gradIdx < gradientsLength - 1) {
+					while (gradIdx < getGradientsLength() - 1) {
 						if (g < fractions[gradIdx + 1])
 							break;
 						gradIdx++;
@@ -218,7 +218,7 @@ final class LinearGradientPaintContext extends MultipleGradientPaintContext {
 				if (dgdX > 0) {
 					// Could be a binary search...
 					int gradIdx = 0;
-					while (gradIdx < gradientsLength - 1) {
+					while (gradIdx < getGradientsLength() - 1) {
 						if (g < fractions[gradIdx + 1])
 							break;
 						gradIdx++;
@@ -250,7 +250,7 @@ final class LinearGradientPaintContext extends MultipleGradientPaintContext {
 					}
 				} else {
 					// Could be a binary search...
-					int gradIdx = gradientsLength - 1;
+					int gradIdx = getGradientsLength() - 1;
 					while (gradIdx > 0) {
 						if (g > fractions[gradIdx])
 							break;
@@ -501,7 +501,7 @@ final class LinearGradientPaintContext extends MultipleGradientPaintContext {
 				}
 				off += adjust; // change in off from row to row
 			}
-		} else if (!isSimpleLookup) {
+		} else if (!isSimpleLookup()) {
 			if (cycleMethod == MultipleGradientPaint.NO_CYCLE) {
 				fillHardNoCycle(pixels, off, adjust, x, y, w, h);
 			} else {

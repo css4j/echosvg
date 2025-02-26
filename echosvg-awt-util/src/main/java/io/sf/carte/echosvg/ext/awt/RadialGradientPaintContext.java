@@ -197,7 +197,7 @@ final class RadialGradientPaintContext extends MultipleGradientPaintContext {
 			}
 		}
 
-		if ((fillMethod == DEFAULT_IMPL) && (isSimpleFocus && isNonCyclic && isSimpleLookup)) {
+		if ((fillMethod == DEFAULT_IMPL) && (isSimpleFocus && isNonCyclic && isSimpleLookup())) {
 			this.calculateFixedPointSqrtLookupTable();
 			fillMethod = FIXED_POINT_IMPL;
 		}
