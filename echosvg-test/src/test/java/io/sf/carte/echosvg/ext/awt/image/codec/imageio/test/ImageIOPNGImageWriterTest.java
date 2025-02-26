@@ -19,10 +19,6 @@
 
 package io.sf.carte.echosvg.ext.awt.image.codec.imageio.test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
-
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Transparency;
@@ -39,6 +35,7 @@ import java.awt.image.WritableRaster;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.Objects;
 
 import org.junit.jupiter.api.Test;
 
@@ -141,85 +138,148 @@ public class ImageIOPNGImageWriterTest extends AbstractImageWriterCheck<PNGDecod
 	}
 
 	@Override
-	protected void matchDecodeMetadata(PNGDecodeParam refParam, PNGDecodeParam candParam) {
+	protected String matchDecodeMetadata(PNGDecodeParam refParam, PNGDecodeParam candParam) {
 		PNGEncodeParam refEnc = refParam.getEncodeParam();
 		PNGEncodeParam candEnc = candParam.getEncodeParam();
 
+		String msg;
+
 		if (refEnc.getICCProfileName() != null) {
 			if (candEnc.getICCProfileName() == null) {
-				fail("Candidate is missing ICC profile data.");
+				return "Candidate is missing ICC profile data.";
 			}
-			assertEquals(refEnc.getICCProfileName(), candEnc.getICCProfileName(), "ICC profile name mismatch.");
+			msg = notEqualsMsg(refEnc.getICCProfileName(), candEnc.getICCProfileName(),
+					"ICC profile name mismatch.");
+			if (msg != null) {
+				return msg;
+			}
 		} else if (candEnc.getICCProfileName() != null) {
-			fail("Candidate has unexpected ICC profile data.");
+			return "Candidate has unexpected ICC profile data.";
 		}
 
 		if (refEnc.isSRGBIntentSet()) {
 			if (!candEnc.isSRGBIntentSet()) {
-				fail("Candidate is missing sRGB chunk.");
+				return "Candidate is missing sRGB chunk.";
 			}
-			assertEquals(refEnc.getSRGBIntent(), candEnc.getSRGBIntent(), "sRGB mismatch.");
+			msg = notEqualsMsg(refEnc.getSRGBIntent(), candEnc.getSRGBIntent(), "sRGB mismatch.");
+			if (msg != null) {
+				return msg;
+			}
 		} else if (candEnc.isSRGBIntentSet()) {
-			fail("Candidate has unexpected sRGB data.");
+			return "Candidate has unexpected sRGB data.";
 		} else {
 			// sRGB intent is not set
 
 			if (refEnc.isGammaSet()) {
 				if (!candEnc.isGammaSet()) {
-					fail("Candidate is missing gAMA chunk.");
+					return "Candidate is missing gAMA chunk.";
 				}
-				assertEquals(refEnc.getGamma(), candEnc.getGamma(), 3e-5f, "gAMA mismatch.");
+				msg = notEqualsMsg(refEnc.getGamma(), candEnc.getGamma(), 3e-5f, "gAMA mismatch.");
+				if (msg != null) {
+					return msg;
+				}
 			} else if (candEnc.isGammaSet()) {
-				fail("Candidate has unexpected gAMA data.");
+				return "Candidate has unexpected gAMA data.";
 			}
 
 			if (refEnc.isChromaticitySet()) {
 				if (!candEnc.isChromaticitySet()) {
-					fail("Candidate is missing cHRM chunk.");
+					return "Candidate is missing cHRM chunk.";
 				}
 				float[] refC = refEnc.getChromaticity();
 				float[] candC = candEnc.getChromaticity();
-				assertEquals(refC[0], candC[0], 3e-5f, "White X mismatch.");
-				assertEquals(refC[1], candC[1], 3e-5f, "White Y mismatch.");
-				assertEquals(refC[2], candC[2], 3e-5f, "Red X mismatch.");
-				assertEquals(refC[3], candC[3], 3e-5f, "Red Y mismatch.");
-				assertEquals(refC[4], candC[4], 3e-5f, "Green X mismatch.");
-				assertEquals(refC[5], candC[5], 3e-5f, "Green Y mismatch.");
-				assertEquals(refC[6], candC[6], 3e-5f, "Blue X mismatch.");
-				assertEquals(refC[7], candC[7], 3e-5f, "Blue Y mismatch.");
+				msg = notEqualsMsg(refC[0], candC[0], 3e-5f, "White X mismatch.");
+				if (msg != null) {
+					return msg;
+				}
+				msg = notEqualsMsg(refC[1], candC[1], 3e-5f, "White Y mismatch.");
+				if (msg != null) {
+					return msg;
+				}
+				msg = notEqualsMsg(refC[2], candC[2], 3e-5f, "Red X mismatch.");
+				if (msg != null) {
+					return msg;
+				}
+				msg = notEqualsMsg(refC[3], candC[3], 3e-5f, "Red Y mismatch.");
+				if (msg != null) {
+					return msg;
+				}
+				msg = notEqualsMsg(refC[4], candC[4], 3e-5f, "Green X mismatch.");
+				if (msg != null) {
+					return msg;
+				}
+				msg = notEqualsMsg(refC[5], candC[5], 3e-5f, "Green Y mismatch.");
+				if (msg != null) {
+					return msg;
+				}
+				msg = notEqualsMsg(refC[6], candC[6], 3e-5f, "Blue X mismatch.");
+				if (msg != null) {
+					return msg;
+				}
+				msg = notEqualsMsg(refC[7], candC[7], 3e-5f, "Blue Y mismatch.");
+				if (msg != null) {
+					return msg;
+				}
 			} else if (candEnc.isChromaticitySet()) {
-				fail("Candidate has unexpected cHRM data.");
+				return "Candidate has unexpected cHRM data.";
 			}
 		}
 
 		if (refEnc.isTextSet()) {
 			if (!candEnc.isTextSet()) {
-				fail("Candidate is missing tEXt chunk.");
+				return "Candidate is missing tEXt chunk.";
 			}
-			assertTrue(Arrays.equals(refEnc.getText(), candEnc.getText()), "tEXt data mismatch.");
+			if (!Arrays.equals(refEnc.getText(), candEnc.getText())) {
+				return "tEXt data mismatch.";
+			}
 		} else if (candEnc.isTextSet()) {
-			fail("Candidate has unexpected tEXt data.");
+			return "Candidate has unexpected tEXt data.";
 		}
 
 		if (refEnc.isInternationalTextSet()) {
 			if (!candEnc.isInternationalTextSet()) {
-				fail("Candidate is missing iTXt chunk.");
+				return "Candidate is missing iTXt chunk.";
 			}
-			assertTrue(Arrays.equals(refEnc.getInternationalText(), candEnc.getInternationalText()),
-					"iTXt data mismatch.");
+			if (!Arrays.equals(refEnc.getInternationalText(), candEnc.getInternationalText())) {
+				return "iTXt data mismatch.";
+			}
 		} else if (candEnc.isInternationalTextSet()) {
-			fail("Candidate has unexpected iTXt data.");
+			return "Candidate has unexpected iTXt data.";
 		}
 
 		if (refEnc.isCompressedTextSet()) {
 			if (!candEnc.isCompressedTextSet()) {
-				fail("Candidate is missing zTXt chunk.");
+				return "Candidate is missing zTXt chunk.";
 			}
-			assertTrue(Arrays.equals(refEnc.getCompressedText(), candEnc.getCompressedText()),
-					"zTXt data mismatch.");
+			if (!Arrays.equals(refEnc.getCompressedText(), candEnc.getCompressedText())) {
+				return "zTXt data mismatch.";
+			}
 		} else if (candEnc.isCompressedTextSet()) {
-			fail("Candidate has unexpected zTXt data.");
+			return "Candidate has unexpected zTXt data.";
 		}
+
+		return null;
+	}
+
+	private static String notEqualsMsg(Object obj1, Object obj2, String prefix) {
+		if (!Objects.equals(obj1, obj2)) {
+			return prefix + ": expected '" + obj1.toString() + "' got '" + obj2.toString() + '\'';
+		}
+		return null;
+	}
+
+	private static String notEqualsMsg(int f1, int f2, String prefix) {
+		if (f1 != f2) {
+			return prefix + ": expected '" + f1 + "' got '" + f2 + '\'';
+		}
+		return null;
+	}
+
+	private static String notEqualsMsg(float f1, float f2, float tol, String prefix) {
+		if (Math.abs(f1 - f2) > tol) {
+			return prefix + ": expected '" + f1 + "' got '" + f2 + '\'';
+		}
+		return null;
 	}
 
 	@Override

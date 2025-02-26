@@ -54,11 +54,8 @@
             /><glyph unicode="z" horiz-adv-x="49.560547" d="M15.3281 7.375 L46.2344 7.375 L46.2344 0 L4.2969 0 L4.2969 6.6406 L33.4531 45.3594 L4.7344 45.3594 L4.7344 52.8281 L44.7812 52.8281 L44.7812 46.4375 L15.3281 7.375 Z"
             /><glyph unicode="l" horiz-adv-x="24.267578" d="M16.6562 0 L7.625 0 L7.625 75 L16.6562 75 L16.6562 0 Z"
           /></font
-          ><image width="20" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAUklEQVR4Xu3MoQ3A
-QBADweu/6U+wnZEOBD4YYmk9Z+ZszFaGUqFkKBVKhlKhZCgVSoZSoWQoFUqGUqFk
-KBVKhlKh1fDpfV25h5ah3EPLUH4/fABYArljpjSXEQAAAABJRU5ErkJggg==" xlink:type="simple" xlink:actuate="onLoad" height="20" id="testimage1" preserveAspectRatio="xMidYMid meet" xlink:show="embed"
-          /><image width="10" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAIElEQVR4XmP4z8Dw
-Hx0zYMPoigajQiwC/4GqMfBQUAgAcDKuUvm9WxYAAAAASUVORK5CYII=" xlink:type="simple" xlink:actuate="onLoad" height="10" id="testimage2" preserveAspectRatio="xMidYMid meet" xlink:show="embed"
+          ><image width="20" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAFJJREFUeF7tzKENwEAQA8Hrv+lPsJ2RDgQ+GGJpPWfmbMxWhlKhZCgVSoZSoWQoFUqGUqFkKBVKhlKhZCgVSoZSodXw6X1duYeWodxDy1B+P3wAWAK5Y6Y0lxEAAAAASUVORK5CYII=" xlink:type="simple" xlink:actuate="onLoad" height="20" id="testimage1" preserveAspectRatio="xMidYMid meet" xlink:show="embed"
+          /><image width="10" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAAXNSR0IArs4c6QAAACBJREFUeF5j+M/A8B8dM2DD6IoGo0IsAv+BqjHwUFAIAHAyrlL5vVsWAAAAAElFTkSuQmCC" xlink:type="simple" xlink:actuate="onLoad" height="10" id="testimage2" preserveAspectRatio="xMidYMid meet" xlink:show="embed"
         /></defs
         ><g class="testC1" transform="translate(0,20)"
         ><rect x="0" width="80" height="80" y="0" class="testC2"

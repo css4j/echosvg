@@ -23,7 +23,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import io.sf.carte.echosvg.ext.awt.color.StandardColorSpaces;
 import io.sf.carte.echosvg.ext.awt.image.rendered.IndexImage;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriter;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterRegistry;
@@ -31,6 +30,7 @@ import io.sf.carte.echosvg.ext.awt.image.spi.PNGImageWriterParams;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderOutput;
 import io.sf.carte.echosvg.transcoder.TranscodingHints;
+import io.sf.carte.echosvg.transcoder.impl.ColorHelper;
 
 /**
  * This class is a helper to <code>PNGTranscoder</code> that writes PNG images
@@ -65,21 +65,30 @@ public class PNGTranscoderImageIOWriteAdapter implements PNGTranscoder.WriteAdap
 		ImageWriter writer = ImageWriterRegistry.getInstance().getWriterFor("image/png");
 		PNGImageWriterParams params = new PNGImageWriterParams();
 
-		// If they specify GAMMA key with a value of '0' then omit
-		// gamma chunk. If they do not provide a GAMMA then just
-		// generate an sRGB chunk. Otherwise suppress the sRGB chunk
-		// and just generate gamma and chroma chunks.
+		/*
+		 * KEY_GAMMA is generally not needed because the encoders just look at the image
+		 * and generate color-related chunks automatically. If KEY_GAMMA is specified
+		 * with a value larger than '0', a gamma chunk (with a default chromaticity) is
+		 * written. In that case, even if the space is sRGB no sRGB chunk is
+		 * automatically generated.
+		 */
 		if (hints.containsKey(PNGTranscoder.KEY_GAMMA)) {
 			float gamma = (Float) hints.get(PNGTranscoder.KEY_GAMMA);
 			if (gamma > 0f) {
 				params.setGamma(gamma);
+				/* @formatter:off
+				 * 
+				 * Given that we set the gamma, let's do an attempt with the
+				 * chromaticities (which have a lower chunk precedence than
+				 * the sRGB and iCCP chunks).
+				 * 
+				 * cICP > iCCP > sRGB > cHRM/gAMA
+				 * 
+				 * @formatter:on
+				 */
+				ColorSpace cs = img.getColorModel().getColorSpace();
+				params.setChromaticity(ColorHelper.defaultChromaticity(cs));
 			}
-			ColorSpace cs = img.getColorModel().getColorSpace();
-			setDefaultChromaticity(params, cs);
-		} else {
-			// We generally want an sRGB chunk and our encoding intent
-			// is perceptual
-			params.setSRGBIntent(PNGImageWriterParams.INTENT_PERCEPTUAL);
 		}
 
 		Integer level = (Integer) hints.get(PNGTranscoder.KEY_COMPRESSION_LEVEL);
@@ -114,36 +123,6 @@ public class PNGTranscoderImageIOWriteAdapter implements PNGTranscoder.WriteAdap
 			ostream.flush();
 		} catch (IOException ex) {
 			throw new TranscoderException(ex);
-		}
-	}
-
-	private void setDefaultChromaticity(PNGImageWriterParams params, ColorSpace cs) {
-		/* @formatter:off
-		 * 
-		 * For sRGB, set the sRGB chunk. For the other spaces
-		 * the iCCP chunk should suffice, but in case that the
-		 * decoder doesn't support that we set the gamma and the
-		 * chromaticities (which have a lower chunk precedence).
-		 * 
-		 * cICP > iCCP > sRGB > cHRM/gAMA
-		 * 
-		 * @formatter:on
-		 */
-		if (cs == StandardColorSpaces.getA98RGB()) {
-			float[] chroma = { 0.31270f, 0.329f, 0.64f, 0.33f, 0.21f, 0.71f, 0.15f, 0.06f };
-			params.setChromaticity(chroma);
-		} else if (cs == StandardColorSpaces.getDisplayP3()) {
-			float[] chroma = { 0.31270f, 0.329f, 0.68f, 0.32f, 0.265f, 0.69f, 0.15f, 0.06f };
-			params.setChromaticity(chroma);
-		} else if (cs == StandardColorSpaces.getRec2020()) {
-			float[] chroma = { 0.31270f, 0.329f, 0.708f, 0.292f, 0.170f, 0.797f, 0.131f, 0.046f };
-			params.setChromaticity(chroma);
-		} else if (cs == StandardColorSpaces.getProphotoRGB()) {
-			float[] chroma = { 0.34570f, 0.3585f, 0.734699f, 0.265301f, 0.159597f, 0.840403f, 0.036598f,
-					0.000105f };
-			params.setChromaticity(chroma);
-		} else {
-			params.setChromaticity(PNGTranscoder.DEFAULT_CHROMA);
 		}
 	}
 

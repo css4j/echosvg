@@ -42,10 +42,10 @@ import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
 
 import io.sf.carte.echosvg.ext.awt.image.codec.impl.CodecUtil;
-import io.sf.carte.echosvg.ext.awt.image.codec.impl.ColorUtil;
 import io.sf.carte.echosvg.ext.awt.image.codec.util.ImageEncodeParam;
 import io.sf.carte.echosvg.ext.awt.image.codec.util.ImageEncoderImpl;
 import io.sf.carte.echosvg.ext.awt.image.codec.util.PropertyUtil;
+import io.sf.carte.echosvg.ext.awt.image.spi.PNGImageWriterParams;
 
 class CRC {
 
@@ -584,8 +584,6 @@ public class PNGImageEncoder extends ImageEncoderImpl {
 		cs.close();
 	}
 
-	private static final float[] srgbChroma = { 0.31270F, 0.329F, 0.64F, 0.33F, 0.3F, 0.6F, 0.15F, 0.06F };
-
 	private void writeCHRM() throws IOException {
 		if (param.isChromaticitySet() || param.isSRGBIntentSet()) {
 			ChunkStream cs = new ChunkStream("cHRM");
@@ -594,7 +592,7 @@ public class PNGImageEncoder extends ImageEncoderImpl {
 			if (!param.isSRGBIntentSet()) {
 				chroma = param.getChromaticity();
 			} else {
-				chroma = srgbChroma; // SRGB chromaticities
+				chroma = CodecUtil.SRGB_CHROMA; // SRGB chromaticities
 			}
 
 			for (int i = 0; i < 8; i++) {
@@ -1174,11 +1172,31 @@ public class PNGImageEncoder extends ImageEncoderImpl {
 	}
 
 	private void setICCProfileInfo(ColorModel colorModel) {
-		ColorSpace cs = colorModel.getColorSpace();
-		if (!ColorUtil.isBuiltInColorSpace(cs) && cs instanceof ICC_ColorSpace) {
-			ICC_Profile profile = ((ICC_ColorSpace) cs).getProfile();
+		iccProfileName = null;
+		iccProfileData = null;
+
+		ColorSpace colorSpace = colorModel.getColorSpace();
+		/*
+		 * If the color space is built-in, set the correct gamma and chromaticities.
+		 * Otherwise, embed the profile.
+		 */
+		if (colorSpace.isCS_sRGB()) {
+			// Gamma means we don't want automatic sRGB intent
+			if (!param.isSRGBIntentSet() && !param.isGammaSet()) {
+				param.setSRGBIntent(PNGImageWriterParams.INTENT_PERCEPTUAL);
+			}
+		} else if (colorSpace == ColorSpace.getInstance(ColorSpace.CS_LINEAR_RGB)) {
+			// Do not embed profile but set chromaticities
+			if (!param.isGammaSet()) {
+				param.setGamma(1f);
+			}
+			if (!param.isChromaticitySet()) {
+				param.setChromaticity(CodecUtil.SRGB_CHROMA);
+			}
+		} else if (colorSpace instanceof ICC_ColorSpace) {
+			ICC_Profile profile = ((ICC_ColorSpace) colorSpace).getProfile();
 			// Obtain the name
-			String name = profileName(profile);
+			String name = CodecUtil.getProfileName(profile);
 			if (name == null) {
 				name = param.getICCProfileName();
 				if (name == null) {
@@ -1190,50 +1208,7 @@ public class PNGImageEncoder extends ImageEncoderImpl {
 			}
 			iccProfileName = name;
 			iccProfileData = profile.getData().clone();
-		} else {
-			iccProfileName = null;
-			iccProfileData = null;
 		}
-	}
-
-	private String profileName(ICC_Profile profile) {
-		byte[] bdesc = profile.getData(ICC_Profile.icSigProfileDescriptionTag);
-		/*
-		 * The profile description tag is of type multiLocalizedUnicodeType which starts
-		 * with a 'mluc' (see paragraph 10.15 of ICC specification
-		 * https://www.color.org/specification/ICC.1-2022-05.pdf).
-		 */
-		final byte[] mluc = { 'm', 'l', 'u', 'c' };
-		if (bdesc != null && CodecUtil.arrayStartsWith(mluc, bdesc, 0)) {
-			int numrec = uInt32Number(bdesc, 8);
-			if (numrec > 0) {
-				int len = uInt32Number(bdesc, 20);
-				int offset = uInt32Number(bdesc, 24);
-				int maxlen = bdesc.length - offset;
-				if (maxlen > 0) {
-					if (maxlen > 79) {
-						maxlen = 79;
-					}
-					len = Math.min(len, maxlen);
-					return new String(bdesc, offset, len, StandardCharsets.UTF_16BE).trim();
-				}
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * Convert four bytes into a big-endian unsigned 32-bit integer.
-	 * 
-	 * @param bytes the array of bytes.
-	 * @param offset the offset at which to start the conversion.
-	 * @return the 32-bit integer.
-	 */
-	static int uInt32Number(byte[] bytes, int offset) {
-		// Computation is carried out as a long integer, to avoid potential overflows
-		long value = (bytes[offset + 3] & 0xFF) | ((bytes[offset + 2] & 0xFF) << 8)
-				| ((bytes[offset + 1] & 0xFF) << 16) | ((long) (bytes[offset] & 0xFF) << 24);
-		return (int) value;
 	}
 
 }

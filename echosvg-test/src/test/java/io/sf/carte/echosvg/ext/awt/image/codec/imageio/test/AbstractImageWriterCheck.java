@@ -48,7 +48,10 @@ import io.sf.carte.echosvg.test.misc.TestLocations;
 
 /**
  * This test validates the operation of ImageIOImageWriter implementations.
- *
+ * <p>
+ * Beware that the candidate images are created in the
+ * {@code echosvg-test/build/reports/tests/test/images} directory.
+ * </p>
  * <p>
  * The drawing is based on PNGEncoderTest by Vincent Hardy.
  * </p>
@@ -113,14 +116,19 @@ public abstract class AbstractImageWriterCheck<D> {
 
 		short result = ImageComparator.compareImages(decodedRef, decodedCand, 8, 0, 0);
 
+		String errmsg;
 		if (result == ImageComparator.MATCH) {
-			matchDecodeMetadata(refDecodeparams, candDecodeparams);
-			return; // pass
+			errmsg = matchDecodeMetadata(refDecodeparams, candDecodeparams);
+			if (errmsg == null) {
+				return; // pass
+			}
+		} else {
+			errmsg = "Encoded file does not match reference " + resourcePath(baseName);
 		}
 
 		createFiles(cand, image, baseName);
 
-		fail("Encoded file does not match reference " + resourcePath(baseName));
+		fail(errmsg);
 	}
 
 	protected ImageWriterParams createImageWriterParams() {
@@ -132,7 +140,8 @@ public abstract class AbstractImageWriterCheck<D> {
 	protected void configureImageWriterParams(ImageWriterParams params) {
 	}
 
-	protected void matchDecodeMetadata(D refDecodeparams, D candDecodeparams) {
+	protected String matchDecodeMetadata(D refDecodeparams, D candDecodeparams) {
+		return null;
 	}
 
 	protected InputStream openRefStream(String baseName) {
@@ -207,7 +216,10 @@ public abstract class AbstractImageWriterCheck<D> {
 		ImageFileBuilder tmpUtil = new TempImageFiles(
 				TestUtil.getProjectBuildURL(getClass(), TestLocations.TEST_DIRNAME));
 	
-		bytesToFile(cand, tmpUtil, baseName, "_candidate");
+		File file = bytesToFile(cand, tmpUtil, baseName, "_candidate");
+
+		System.err.println("Candidate file is available at " + file.getAbsolutePath());
+
 		// Now produce an image with the two images side by side
 		// as well as a diff image.
 	

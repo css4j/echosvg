@@ -132,7 +132,8 @@ public class ImageIOImageWriter implements ImageWriter, IIOWriteWarningListener 
 	 * to this writer.
 	 * 
 	 * @param meta       the metadata
-	 * @param params     the parameters for this writer instance
+	 * @param params     the parameters for this writer instance, or {@code null} if
+	 *                   none.
 	 * @param colorSpace the color space
 	 */
 	protected void updateColorMetadata(IIOMetadata meta, ImageWriterParams params, ColorSpace colorSpace) {

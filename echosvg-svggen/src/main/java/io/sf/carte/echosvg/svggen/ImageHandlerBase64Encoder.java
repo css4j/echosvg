@@ -33,8 +33,8 @@ import java.io.OutputStream;
 import org.w3c.dom.Element;
 
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriter;
-import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterParams;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterRegistry;
+import io.sf.carte.echosvg.ext.awt.image.spi.PNGImageWriterParams;
 import io.sf.carte.echosvg.util.Base64EncoderStream;
 
 /**
@@ -150,11 +150,12 @@ public class ImageHandlerBase64Encoder extends DefaultImageHandler {
 		encodeImage(buf, os, null);
 	}
 
-	public void encodeImage(RenderedImage buf, OutputStream os, Integer compressionLevel) throws SVGGraphics2DIOException {
+	public void encodeImage(RenderedImage buf, OutputStream os, Integer compressionLevel)
+			throws SVGGraphics2DIOException {
 		try {
-			ImageWriterParams params = null;
+			PNGImageWriterParams params = null;
 			if (compressionLevel != null) {
-				params = new ImageWriterParams();
+				params = new PNGImageWriterParams();
 				params.setCompressionLevel(compressionLevel.intValue());
 			}
 			ImageWriter writer = ImageWriterRegistry.getInstance().getWriterFor("image/png");

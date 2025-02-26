@@ -23,7 +23,6 @@ import java.awt.color.ICC_ColorSpace;
 import java.awt.color.ICC_Profile;
 import java.awt.image.RenderedImage;
 import java.io.ByteArrayOutputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.zip.Deflater;
 
 import javax.imageio.ImageWriteParam;
@@ -33,7 +32,6 @@ import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.metadata.IIOMetadataNode;
 
 import io.sf.carte.echosvg.ext.awt.image.codec.impl.CodecUtil;
-import io.sf.carte.echosvg.ext.awt.image.codec.impl.ColorUtil;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterParams;
 import io.sf.carte.echosvg.ext.awt.image.spi.PNGImageWriterParams;
 
@@ -56,18 +54,46 @@ public class ImageIOPNGImageWriter extends ImageIOImageWriter {
 
 	@Override
 	protected void updateColorMetadata(IIOMetadata meta, ImageWriterParams params, ColorSpace colorSpace) {
-		if (!ColorUtil.isBuiltInColorSpace(colorSpace) && colorSpace instanceof ICC_ColorSpace
-				&& meta.isStandardMetadataFormatSupported()) {
-			IIOMetadataNode root = (IIOMetadataNode) meta.getAsTree(PNG_NATIVE_FORMAT);
+		if (!meta.isStandardMetadataFormatSupported()) {
+			return;
+		}
+
+		PNGImageWriterParams pngParams = (PNGImageWriterParams) params;
+		/*
+		 * If the color space is built-in, set the correct gamma and chromaticities.
+		 * Otherwise, embed the profile.
+		 */
+		IIOMetadataNode root = null;
+		if (colorSpace.isCS_sRGB()) {
+			// Gamma means we don't want automatic sRGB intent
+			if (pngParams == null || (!pngParams.isSRGBIntentSet() && !pngParams.isGammaSet())) {
+				root = setSRGBNode(meta, PNGImageWriterParams.INTENT_PERCEPTUAL);
+			}
+		} else if (colorSpace == ColorSpace.getInstance(ColorSpace.CS_LINEAR_RGB)) {
+			// Do not embed profile but set chromaticities
+			if (pngParams == null || !pngParams.isGammaSet()) {
+				root = setGAMANode(meta, 1f);
+			}
+			if (pngParams == null || !pngParams.isChromaticitySet()) {
+				root = setChromaticityNode(meta, CodecUtil.SRGB_CHROMA);
+			}
+		} else if (colorSpace instanceof ICC_ColorSpace) {
+			ICC_Profile profile = ((ICC_ColorSpace) colorSpace).getProfile();
+			byte[] comprProfData = compressProfile(profile.getData(), params);
+			String profName = profileName(profile);
+
+			root = (IIOMetadataNode) meta.getAsTree(PNG_NATIVE_FORMAT);
 			IIOMetadataNode iCCP = getChildNode(root, "iCCP");
 			if (iCCP == null) {
 				iCCP = new IIOMetadataNode("iCCP");
 				root.appendChild(iCCP);
 			}
-			ICC_Profile profile = ((ICC_ColorSpace) colorSpace).getProfile();
-			iCCP.setAttribute("profileName", profileName(profile));
+			iCCP.setAttribute("profileName", profName);
 			iCCP.setAttribute("compressionMethod", "deflate");
-			iCCP.setUserObject(compressProfile(profile.getData(), params));
+			iCCP.setUserObject(comprProfData);
+		}
+
+		if (root != null) {
 			try {
 				meta.mergeTree(PNG_NATIVE_FORMAT, root);
 			} catch (IIOInvalidTreeException e) {
@@ -77,40 +103,14 @@ public class ImageIOPNGImageWriter extends ImageIOImageWriter {
 	}
 
 	private static String profileName(ICC_Profile profile) {
-		byte[] bdesc = profile.getData(ICC_Profile.icSigProfileDescriptionTag);
-		/*
-		 * The profile description tag is of type multiLocalizedUnicodeType which starts
-		 * with a 'mluc' (see paragraph 10.15 of ICC specification
-		 * https://www.color.org/specification/ICC.1-2022-05.pdf).
-		 */
-		final byte[] mluc = { 'm', 'l', 'u', 'c' };
-		if (bdesc != null && CodecUtil.arrayStartsWith(mluc, bdesc, 0)) {
-			int numrec = uInt32Number(bdesc, 8);
-			if (numrec > 0) {
-				int len = uInt32Number(bdesc, 20);
-				int offset = uInt32Number(bdesc, 24);
-				int maxlen = bdesc.length - offset;
-				if (maxlen > 0) {
-					len = Math.min(len, maxlen);
-					return new String(bdesc, offset, len, StandardCharsets.UTF_16BE).trim();
-				}
+		String name = CodecUtil.getProfileName(profile);
+		if (name == null) {
+			name = profile.getClass().getSimpleName();
+			if (name.length() > 79) {
+				name = name.substring(0, 79);
 			}
 		}
-		return profile.getClass().getSimpleName();
-	}
-
-	/**
-	 * Convert four bytes into a big-endian unsigned 32-bit integer.
-	 * 
-	 * @param bytes the array of bytes.
-	 * @param offset the offset at which to start the conversion.
-	 * @return the 32-bit integer.
-	 */
-	private static int uInt32Number(byte[] bytes, int offset) {
-		// Computation is carried out as a long integer, to avoid potential overflows
-		long value = (bytes[offset + 3] & 0xFF) | ((bytes[offset + 2] & 0xFF) << 8)
-				| ((bytes[offset + 1] & 0xFF) << 16) | ((long) (bytes[offset] & 0xFF) << 24);
-		return (int) value;
+		return name;
 	}
 
 	private static byte[] compressProfile(byte[] data, ImageWriterParams params) {
@@ -188,32 +188,7 @@ public class ImageIOPNGImageWriter extends ImageIOImageWriter {
 			boolean needsMerge = false;
 
 			if (pngParams.isSRGBIntentSet()) {
-				String rIntent;
-				switch (pngParams.getSRGBIntent()) {
-				case PNGImageWriterParams.INTENT_PERCEPTUAL:
-				default:
-					rIntent = "Perceptual";
-					break;
-				case PNGImageWriterParams.INTENT_RELATIVE:
-					rIntent = "Relative colorimetric";
-					break;
-				case PNGImageWriterParams.INTENT_SATURATION:
-					rIntent = "Saturation";
-					break;
-				case PNGImageWriterParams.INTENT_ABSOLUTE:
-					rIntent = "Absolute colorimetric";
-					break;
-				}
-
-				root = (IIOMetadataNode) meta.getAsTree(PNG_NATIVE_FORMAT);
-
-				IIOMetadataNode sRGB = getChildNode(root, "sRGB");
-				if (sRGB == null) {
-					sRGB = new IIOMetadataNode("sRGB");
-					root.appendChild(sRGB);
-				}
-
-				sRGB.setAttribute("renderingIntent", rIntent);
+				root = setSRGBNode(meta, pngParams.getSRGBIntent());
 
 				needsMerge = true;
 			} else {
@@ -221,29 +196,7 @@ public class ImageIOPNGImageWriter extends ImageIOImageWriter {
 
 					float[] chroma = pngParams.getChromaticity();
 
-					root = (IIOMetadataNode) meta.getAsTree(PNG_NATIVE_FORMAT);
-
-					IIOMetadataNode cHRM = getChildNode(root, "cHRM");
-					if (cHRM == null) {
-						cHRM = new IIOMetadataNode("cHRM");
-						root.appendChild(cHRM);
-					}
-
-					cHRM.setAttribute("whitePointX", Integer.toString(Math.round(chroma[0] * 100000f)));
-
-					cHRM.setAttribute("whitePointY", Integer.toString(Math.round(chroma[1] * 100000f)));
-
-					cHRM.setAttribute("redX", Integer.toString(Math.round(chroma[2] * 100000f)));
-
-					cHRM.setAttribute("redY", Integer.toString(Math.round(chroma[3] * 100000f)));
-
-					cHRM.setAttribute("greenX", Integer.toString(Math.round(chroma[4] * 100000f)));
-
-					cHRM.setAttribute("greenY", Integer.toString(Math.round(chroma[5] * 100000f)));
-
-					cHRM.setAttribute("blueX", Integer.toString(Math.round(chroma[6] * 100000f)));
-
-					cHRM.setAttribute("blueY", Integer.toString(Math.round(chroma[7] * 100000f)));
+					root = setChromaticityNode(meta, chroma);
 
 					needsMerge = true;
 				}
@@ -251,15 +204,7 @@ public class ImageIOPNGImageWriter extends ImageIOImageWriter {
 				if (pngParams.isGammaSet()) {
 					float g = pngParams.getGamma();
 
-					root = (IIOMetadataNode) meta.getAsTree(PNG_NATIVE_FORMAT);
-
-					IIOMetadataNode gAMA = getChildNode(root, "gAMA");
-					if (gAMA == null) {
-						gAMA = new IIOMetadataNode("gAMA");
-						root.appendChild(gAMA);
-					}
-
-					gAMA.setAttribute("value", Integer.toString(Math.round(g * 100000f)));
+					root = setGAMANode(meta, g);
 
 					needsMerge = true;
 				}
@@ -359,6 +304,79 @@ public class ImageIOPNGImageWriter extends ImageIOImageWriter {
 		}
 
 		return meta;
+	}
+
+	private static IIOMetadataNode setSRGBNode(IIOMetadata meta, int srgbIntent) {
+		String rIntent;
+		switch (srgbIntent) {
+		case PNGImageWriterParams.INTENT_PERCEPTUAL:
+		default:
+			rIntent = "Perceptual";
+			break;
+		case PNGImageWriterParams.INTENT_RELATIVE:
+			rIntent = "Relative colorimetric";
+			break;
+		case PNGImageWriterParams.INTENT_SATURATION:
+			rIntent = "Saturation";
+			break;
+		case PNGImageWriterParams.INTENT_ABSOLUTE:
+			rIntent = "Absolute colorimetric";
+			break;
+		}
+
+		IIOMetadataNode root = (IIOMetadataNode) meta.getAsTree(PNG_NATIVE_FORMAT);
+
+		IIOMetadataNode sRGB = getChildNode(root, "sRGB");
+		if (sRGB == null) {
+			sRGB = new IIOMetadataNode("sRGB");
+			root.appendChild(sRGB);
+		}
+
+		sRGB.setAttribute("renderingIntent", rIntent);
+
+		return root;
+	}
+
+	private static IIOMetadataNode setGAMANode(IIOMetadata meta, float g) {
+		IIOMetadataNode root = (IIOMetadataNode) meta.getAsTree(PNG_NATIVE_FORMAT);
+
+		IIOMetadataNode gAMA = getChildNode(root, "gAMA");
+		if (gAMA == null) {
+			gAMA = new IIOMetadataNode("gAMA");
+			root.appendChild(gAMA);
+		}
+
+		gAMA.setAttribute("value", Integer.toString(Math.round(g * 100000f)));
+
+		return root;
+	}
+
+	private static IIOMetadataNode setChromaticityNode(IIOMetadata meta, float[] chroma) {
+		IIOMetadataNode root = (IIOMetadataNode) meta.getAsTree(PNG_NATIVE_FORMAT);
+
+		IIOMetadataNode cHRM = getChildNode(root, "cHRM");
+		if (cHRM == null) {
+			cHRM = new IIOMetadataNode("cHRM");
+			root.appendChild(cHRM);
+		}
+
+		cHRM.setAttribute("whitePointX", Integer.toString(Math.round(chroma[0] * 100000f)));
+
+		cHRM.setAttribute("whitePointY", Integer.toString(Math.round(chroma[1] * 100000f)));
+
+		cHRM.setAttribute("redX", Integer.toString(Math.round(chroma[2] * 100000f)));
+
+		cHRM.setAttribute("redY", Integer.toString(Math.round(chroma[3] * 100000f)));
+
+		cHRM.setAttribute("greenX", Integer.toString(Math.round(chroma[4] * 100000f)));
+
+		cHRM.setAttribute("greenY", Integer.toString(Math.round(chroma[5] * 100000f)));
+
+		cHRM.setAttribute("blueX", Integer.toString(Math.round(chroma[6] * 100000f)));
+
+		cHRM.setAttribute("blueY", Integer.toString(Math.round(chroma[7] * 100000f)));
+
+		return root;
 	}
 
 }

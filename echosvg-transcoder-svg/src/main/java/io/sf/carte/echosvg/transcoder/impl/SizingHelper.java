@@ -38,7 +38,7 @@ import io.sf.carte.echosvg.util.CSSConstants;
 public class SizingHelper {
 
 	// Prevent instantiation
-	SizingHelper() {
+	private SizingHelper() {
 		super();
 	}
 

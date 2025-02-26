@@ -6,18 +6,13 @@
   /><g
   ><defs id="defs1"
     ><pattern width="20" x="0" id="pattern1" height="20" y="0" patternUnits="userSpaceOnUse"
-      ><image preserveAspectRatio="none" x="0" width="20" y="0" height="20" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAALElEQVR4Xu3LwQkA
-AAzCQPdf2g4gxH8x5HuyBJcSDGMJ/mPOpksJhrEED/ABeJgq5L/H5l4AAAAASUVO
-RK5CYII="
+      ><image preserveAspectRatio="none" x="0" width="20" y="0" height="20" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAAAXNSR0IArs4c6QAAACxJREFUeF7ty8EJAAAMwkD3X9oOIMR/MeR7sgSXEgxjCf5jzqZLCYaxBA/wAXiYKuS/x+ZeAAAAAElFTkSuQmCC"
       /></pattern
       ><pattern width="20" x="10" id="pattern2" height="20" y="10" patternUnits="userSpaceOnUse"
-      ><image preserveAspectRatio="none" x="0" width="20" y="0" height="20" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAALElEQVR4Xu3LwQkA
-AAzCQPdf2g4gxH8x5HuyBJcSDGMJ/mPOpksJhrEED/ABeJgq5L/H5l4AAAAASUVO
-RK5CYII="
+      ><image preserveAspectRatio="none" x="0" width="20" y="0" height="20" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAAAXNSR0IArs4c6QAAACxJREFUeF7ty8EJAAAMwkD3X9oOIMR/MeR7sgSXEgxjCf5jzqZLCYaxBA/wAXiYKuS/x+ZeAAAAAElFTkSuQmCC"
       /></pattern
       ><pattern width="10" x="0" id="pattern3" height="10" y="0" patternUnits="userSpaceOnUse"
-      ><image preserveAspectRatio="none" x="0" width="10" y="0" height="10" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAIElEQVR4XmP4z8Dw
-Hx0zYMPoigajQiwC/4GqMfBQUAgAcDKuUvm9WxYAAAAASUVORK5CYII="
+      ><image preserveAspectRatio="none" x="0" width="10" y="0" height="10" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAAXNSR0IArs4c6QAAACBJREFUeF5j+M/A8B8dM2DD6IoGo0IsAv+BqjHwUFAIAHAyrlL5vVsWAAAAAElFTkSuQmCC"
       /></pattern
     ></defs
     ><g fill="url(#pattern1)" text-rendering="optimizeLegibility" transform="translate(0,20)" stroke="url(#pattern1)"

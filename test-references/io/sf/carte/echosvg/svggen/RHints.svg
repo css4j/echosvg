@@ -21,10 +21,8 @@
     ><g text-rendering="geometricPrecision" transform="translate(0,200)" image-rendering="optimizeSpeed"
     ><text x="10" xml:space="preserve" y="30" stroke="none"
       >Interpolation Nearest Neighbor / Bicubic</text
-      ><image preserveAspectRatio="none" x="10" width="40" y="50" height="40" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAAEklEQVR4XmP4/5/h
-PwMDCANZAC3gBftc29A0AAAAAElFTkSuQmCC"
-      /><image x="60" y="50" width="40" image-rendering="optimizeQuality" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAAEklEQVR4XmP4/5/h
-PwMDCANZAC3gBftc29A0AAAAAElFTkSuQmCC" height="40" preserveAspectRatio="none"
+      ><image preserveAspectRatio="none" x="10" width="40" y="50" height="40" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAAAXNSR0IArs4c6QAAABJJREFUeF5j+P+f4T8DAwgDWQAt4AX7XNvQNAAAAABJRU5ErkJggg=="
+      /><image x="60" y="50" width="40" image-rendering="optimizeQuality" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAAAXNSR0IArs4c6QAAABJJREFUeF5j+P+f4T8DAwgDWQAt4AX7XNvQNAAAAABJRU5ErkJggg==" height="40" preserveAspectRatio="none"
     /></g
   ></g
 ></svg

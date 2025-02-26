@@ -160,7 +160,7 @@ public class PNGTranscoder extends ImageTranscoder {
 	 * </tr>
 	 * <tr>
 	 * <th style="text-align: end; vertical-align: top">Default:</th>
-	 * <td style="vertical-align: top">PNGEncodeParam.INTENT_PERCEPTUAL</td>
+	 * <td style="vertical-align: top">null</td>
 	 * </tr>
 	 * <tr>
 	 * <th style="text-align: end; vertical-align: top">Required:</th>
@@ -168,9 +168,15 @@ public class PNGTranscoder extends ImageTranscoder {
 	 * </tr>
 	 * <tr>
 	 * <th style="text-align: end; vertical-align: top">Description:</th>
-	 * <td style="vertical-align: top">Controls the gamma correction of the PNG
-	 * image. A value of zero for gamma disables the generation of a gamma chunk
-	 * (also no sRGB chunk). If it is not set, an sRGB chunk is generated.</td>
+	 * <td style="vertical-align: top">Specifies a gamma correction for the PNG
+	 * image. A negative or zero value for gamma does nothing, a positive one sets
+	 * the gamma correction (as well as the chromaticities, if the color space was
+	 * obtained via {@link io.sf.carte.echosvg.ext.awt.color.StandardColorSpaces
+	 * StandardColorSpaces}) and no sRGB chunk is generated. If it is not set
+	 * (recommended), the encoder looks at the image and automatically generates any
+	 * required color-related chunks. This hint is kept for Apache Batik
+	 * compatibility, given that EchoSVG automates the handling of color
+	 * spaces.</td>
 	 * </tr>
 	 * </table>
 	 */
