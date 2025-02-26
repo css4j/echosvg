@@ -54,6 +54,7 @@ public class AnimatableCalcValue extends AnimatableNumericValue {
 	/**
 	 * Returns the magnitude of this length value.
 	 */
+	@Override
 	public float getLengthValue() {
 		Evaluator eval = new Evaluator(lengthType) {
 

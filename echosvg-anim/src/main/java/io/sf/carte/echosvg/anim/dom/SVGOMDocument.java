@@ -177,7 +177,7 @@ public class SVGOMDocument extends AbstractStylableDocument
 
 		for (Node n = getDocumentElement().getFirstChild(); n != null; n = n.getNextSibling()) {
 			String ns = n.getNamespaceURI();
-			if (ns != null && SVG_NAMESPACE_URI.equals(ns) && SVG_TITLE_TAG.equals(n.getLocalName())) {
+			if (SVG_NAMESPACE_URI.equals(ns) && SVG_TITLE_TAG.equals(n.getLocalName())) {
 				preserve = XML_PRESERVE_VALUE.equals(((SVGLangSpace) n).getXMLspace());
 				for (n = n.getFirstChild(); n != null; n = n.getNextSibling()) {
 					if (n.getNodeType() == Node.TEXT_NODE) {

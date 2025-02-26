@@ -68,11 +68,6 @@ class TranscoderSecurityTest {
 			if (exClass != null) {
 				fail("Expected an exception of type: " + exClass.getName());
 			}
-		} catch (MalformedURLException e) {
-			assertEquals(exClass, e.getClass());
-			if (message != null) {
-				assertEquals(message, e.getMessage());
-			}
 		} catch (TranscoderException e) {
 			Throwable t;
 			if (!exClass.equals(e.getClass())) {
@@ -87,7 +82,7 @@ class TranscoderSecurityTest {
 			if (message != null) {
 				assertEquals(message, t.getMessage());
 			}
-		} catch (RuntimeException e) {
+		} catch (MalformedURLException | RuntimeException e) {
 			assertEquals(exClass, e.getClass());
 			if (message != null) {
 				assertEquals(message, e.getMessage());

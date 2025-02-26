@@ -19,6 +19,7 @@
 package io.sf.carte.echosvg.dom.util;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * A simple hashtable, not synchronized, with fixed load factor, that maps
@@ -222,9 +223,7 @@ public class IntTable implements Serializable {
 	 * Clears the table.
 	 */
 	public void clear() {
-		for (int i = 0; i < table.length; i++) {
-			table[i] = null;
-		}
+		Arrays.fill(table, null);
 		count = 0;
 	}
 

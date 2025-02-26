@@ -18,7 +18,6 @@
  */
 package io.sf.carte.echosvg.parser;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 
 import org.w3c.css.om.unit.CSSUnit;
@@ -156,9 +155,7 @@ public class LengthArrayProducer extends DefaultLengthListHandler {
 	public void endLengthList() throws ParseException {
 		float[] allValues = new float[count];
 		int pos = 0;
-		Iterator<float[]> it = vs.iterator();
-		while (it.hasNext()) {
-			float[] a = it.next();
+		for (float[] a : vs) {
 			System.arraycopy(a, 0, allValues, pos, a.length);
 			pos += a.length;
 		}
@@ -168,9 +165,7 @@ public class LengthArrayProducer extends DefaultLengthListHandler {
 
 		short[] allUnits = new short[count];
 		pos = 0;
-		Iterator<short[]> uit = us.iterator();
-		while (uit.hasNext()) {
-			short[] a = uit.next();
+		for (short[] a : us) {
 			System.arraycopy(a, 0, allUnits, pos, a.length);
 			pos += a.length;
 		}

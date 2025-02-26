@@ -26,7 +26,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.w3c.dom.Document;
@@ -233,8 +232,6 @@ public class WMFTranscoder extends ToSVGAbstractTranscoder {
 				URL url = new URL(uri);
 				in = url.openStream();
 				return new DataInputStream(new BufferedInputStream(in));
-			} catch (MalformedURLException e) {
-				handler.fatalError(new TranscoderException(e));
 			} catch (IOException e) {
 				handler.fatalError(new TranscoderException(e));
 			}
@@ -271,8 +268,6 @@ public class WMFTranscoder extends ToSVGAbstractTranscoder {
 					TranscoderInput input = new TranscoderInput(inputFile.toURI().toURL().toString());
 					TranscoderOutput output = new TranscoderOutput(new FileOutputStream(outputFile));
 					transcoder.transcode(input, output);
-				} catch (MalformedURLException e) {
-					throw new TranscoderException(e);
 				} catch (IOException e) {
 					throw new TranscoderException(e);
 				}

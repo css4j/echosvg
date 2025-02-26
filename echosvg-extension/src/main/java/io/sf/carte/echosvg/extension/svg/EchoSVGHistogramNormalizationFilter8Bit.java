@@ -22,6 +22,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.RenderedImage;
 import java.awt.image.SampleModel;
 import java.awt.image.renderable.RenderContext;
+import java.util.Arrays;
 
 import io.sf.carte.echosvg.ext.awt.image.LinearTransfer;
 import io.sf.carte.echosvg.ext.awt.image.TransferFunction;
@@ -145,8 +146,7 @@ public class EchoSVGHistogramNormalizationFilter8Bit extends AbstractColorInterp
 		// System.out.println("Slope, Intercept: " + slope + ", " + intercept);
 		TransferFunction[] tfs = new TransferFunction[bands];
 		TransferFunction tf = new LinearTransfer(slope, intercept);
-		for (int i = 0; i < tfs.length; i++)
-			tfs[i] = tf;
+		Arrays.fill(tfs, tf);
 
 		return new ComponentTransferRed(convertSourceCS(srcRI), tfs, null);
 	}

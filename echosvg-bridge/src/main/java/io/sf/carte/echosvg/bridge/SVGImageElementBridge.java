@@ -301,9 +301,6 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
 			reference.release();
 			imgDocument = (SVGDocument) doc;
 			return createSVGImageNode(ctx, e, imgDocument);
-		} catch (BridgeException ex) {
-			reference.release();
-			throw ex;
 		} catch (SecurityException secEx) {
 			reference.release();
 			throw new BridgeException(ctx, e, secEx, ERR_URI_UNSECURE, new Object[] { purl });
@@ -312,9 +309,9 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
 			if (HaltingThread.hasBeenHalted())
 				throw new InterruptedBridgeException();
 
-		} catch (InterruptedBridgeException ibe) {
+		} catch (BridgeException | InterruptedBridgeException be) {
 			reference.release();
-			throw ibe;
+			throw be;
 		} catch (Exception ex) {
 			/* Do nothing drop out... */
 			// ex.printStackTrace();

@@ -334,6 +334,7 @@ public class AbstractBypassRenderingCheck {
 		 * 
 		 * @param darkMode if {@code true}, dark mode will be enabled.
 		 */
+		@Override
 		public void setDarkMode(boolean darkMode) {
 			this.darkMode = darkMode;
 		}

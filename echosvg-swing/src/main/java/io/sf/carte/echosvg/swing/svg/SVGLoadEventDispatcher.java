@@ -104,9 +104,7 @@ public class SVGLoadEventDispatcher extends HaltingThread {
 			}
 
 			fireEvent(completedDispatcher, ev);
-		} catch (InterruptedException e) {
-			fireEvent(cancelledDispatcher, ev);
-		} catch (InterruptedBridgeException e) {
+		} catch (InterruptedException | InterruptedBridgeException e) {
 			fireEvent(cancelledDispatcher, ev);
 		} catch (Exception e) {
 			exception = e;

@@ -81,6 +81,7 @@ public class StrokeShapePainter extends PaintShapePainter {
 	 *
 	 * @param newPaint the paint object used to draw the shape
 	 */
+	@Override
 	public void setPaint(Paint newPaint) {
 		this.paint = newPaint;
 	}
@@ -88,6 +89,7 @@ public class StrokeShapePainter extends PaintShapePainter {
 	/**
 	 * Gets the paint used to draw the outline of the shape.
 	 */
+	@Override
 	public Paint getPaint() {
 		return super.getPaint();
 	}

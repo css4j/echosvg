@@ -69,8 +69,7 @@ public class ImportInfo {
 		importFile = defaultFile;
 		try {
 			importFile = System.getProperty("io.sf.carte.echosvg.script.imports", defaultFile);
-		} catch (SecurityException se) {
-		} catch (NumberFormatException nfe) {
+		} catch (SecurityException | NumberFormatException nfe) {
 		}
 	}
 

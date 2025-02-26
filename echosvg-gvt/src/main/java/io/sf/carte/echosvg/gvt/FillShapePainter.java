@@ -53,6 +53,7 @@ public class FillShapePainter extends PaintShapePainter {
 	 *
 	 * @param newPaint the paint object used to fill the shape.
 	 */
+	@Override
 	public void setPaint(Paint newPaint) {
 		super.setPaint(newPaint);
 	}
@@ -60,6 +61,7 @@ public class FillShapePainter extends PaintShapePainter {
 	/**
 	 * Gets the paint used to fill the shape.
 	 */
+	@Override
 	public Paint getPaint() {
 		return super.getPaint();
 	}

@@ -23,7 +23,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.lang.reflect.Method;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -243,8 +242,6 @@ public abstract class ToSVGAbstractTranscoder extends AbstractTranscoder impleme
 					os = urlCnx.getOutputStream();
 					svgGenerator.stream(svgRoot, new OutputStreamWriter(os), false, escaped);
 					return;
-				} catch (MalformedURLException e) {
-					handler.fatalError(new TranscoderException(e));
 				} catch (IOException e) {
 					handler.fatalError(new TranscoderException(e));
 				}

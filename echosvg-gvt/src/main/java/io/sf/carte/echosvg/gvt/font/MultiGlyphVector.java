@@ -27,7 +27,6 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.text.AttributedCharacterIterator;
-import java.util.Iterator;
 import java.util.List;
 
 import io.sf.carte.echosvg.gvt.text.AttributedCharacterSpanIterator;
@@ -51,12 +50,10 @@ public class MultiGlyphVector implements GVTGlyphVector {
 		this.nGlyphs = new int[nSlots];
 		this.off = new int[nSlots];
 
-		Iterator<GVTGlyphVector> iter = gvs.iterator();
 		int i = 0;
-		while (iter.hasNext()) {
+		for (GVTGlyphVector gv : gvs) {
 			off[i] = nGlyph;
 
-			GVTGlyphVector gv = iter.next();
 			this.gvs[i] = gv;
 			nGlyphs[i] = gv.getNumGlyphs();
 			nGlyph += nGlyphs[i];

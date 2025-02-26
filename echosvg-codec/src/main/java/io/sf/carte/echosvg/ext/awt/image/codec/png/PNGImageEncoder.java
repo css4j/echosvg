@@ -159,8 +159,8 @@ class ChunkStream extends OutputStream implements DataOutput {
 	 */
 	void writeLatin1(String s) throws IOException {
 		final byte[] b = s.getBytes(StandardCharsets.ISO_8859_1);
-		for (int i = 0; i < b.length; i++) {
-			dos.writeByte(b[i]);
+		for (byte element : b) {
+			dos.writeByte(element);
 		}
 	}
 

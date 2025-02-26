@@ -27,7 +27,6 @@ import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.Collection;
-import java.util.Iterator;
 
 import io.sf.carte.echosvg.ext.awt.geom.RectListManager;
 import io.sf.carte.echosvg.ext.awt.image.GraphicsUtil;
@@ -341,10 +340,8 @@ public class MacRenderer implements ImageRenderer {
 
 					damagedAreas.mergeRects(COPY_OVERHEAD, COPY_LINE_OVERHEAD);
 
-					Iterator<Rectangle> iter = damagedAreas.iterator();
 					g2d.setComposite(AlphaComposite.Src);
-					while (iter.hasNext()) {
-						Rectangle r = iter.next();
+					for (Rectangle r : damagedAreas) {
 						if (!dr.intersects(r))
 							continue;
 						r = dr.intersection(r);
