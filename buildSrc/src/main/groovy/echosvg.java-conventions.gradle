@@ -17,16 +17,13 @@ repositories {
 			releasesOnly()
 		}
 		content {
-			includeGroup 'io.sf.carte'
-			includeGroup 'io.sf.graphics'
-			includeGroup 'io.sf.w3'
-			includeGroup 'io.sf.jclf'
+			includeGroupByRegex 'io\\.sf\\..*'
 		}
 	}
 }
 
 group = 'io.sf.carte'
-version = '2.0'
+version = '2.1-SNAPSHOT'
 
 java {
 	withSourcesJar()

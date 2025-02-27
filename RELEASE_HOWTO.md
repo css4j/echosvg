@@ -52,7 +52,7 @@ directory and create a Zip archive of them. For example if you are releasing
 ```shell
 ./gradlew copyJars
 mv jar echosvg-2.1.1-bin
-7z a -mx7 echosvg-2.1.1-binaries.zip echosvg-2.1.1-bin
+7z a -mx9 echosvg-2.1.1-binaries.zip echosvg-2.1.1-bin
 ```
 
 6) Use `changes.sh <new-version>` to create a `CHANGES.txt` file for the new
@@ -140,15 +140,24 @@ the modular javadoc archives (`echosvg-2.1.1-modular-javadocs.7z` and
 to be found at the `echosvg-all/build/libs/echosvg-all-2.1.1-alldeps.jar`. Then execute:
 
 ```shell
+./gradlew echosvg-codec-jar-with-deps
 ./gradlew echosvg-svggen-jar-with-deps
-```
-and add the archive at `echosvg-svggen/build/libs/echosvg-svggen-2.1.1-with-deps.jar`.
-Finally run:
-
-```shell
 ./gradlew echosvg-transcoder-jar-with-deps
+./gradlew echosvg-transcoder-svg-jar-with-deps
+./gradlew echosvg-transcoder-tosvg-jar-with-deps
+./gradlew echosvg-transcoder-svg2svg-jar-with-deps
 ```
-to add the archive `echosvg-transcoder/build/libs/echosvg-transcoder-2.1.1-with-deps.jar`.
+
+and add to the release the archives at
+
+```
+echosvg-codec/build/libs/echosvg-codec-2.1.1-with-deps.jar
+echosvg-svggen/build/libs/echosvg-svggen-2.1.1-with-deps.jar
+echosvg-transcoder/build/libs/echosvg-transcoder-2.1.1-with-deps.jar
+echosvg-transcoder-svg/build/libs/echosvg-transcoder-svg-2.1.1-with-deps.jar
+echosvg-transcoder-tosvg/build/libs/echosvg-transcoder-tosvg-2.1.1-with-deps.jar
+echosvg-transcoder-svg2svg/build/libs/echosvg-transcoder-svg2svg-2.1.1-with-deps.jar
+```
 
 13) Verify that the new [Github packages](https://github.com/orgs/css4j/packages?repo_name=echosvg)
 were created successfully by the [Gradle Package](https://github.com/css4j/echosvg/actions/workflows/gradle-publish.yml)
