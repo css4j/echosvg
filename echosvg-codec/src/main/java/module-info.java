@@ -18,6 +18,10 @@
  */
 /**
  * AWT image codecs.
+ * <p>
+ * Provides a set of packages to encode/decode images in various raster image
+ * file formats.
+ * </p>
  * 
  * @provides io.sf.carte.echosvg.ext.awt.image.spi.ImageWriter
  * @provides io.sf.carte.echosvg.ext.awt.image.spi.RegistryEntry
