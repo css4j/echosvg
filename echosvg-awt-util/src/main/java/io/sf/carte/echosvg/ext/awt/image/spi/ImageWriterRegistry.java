@@ -24,27 +24,27 @@ import java.util.Map;
 import java.util.ServiceLoader;
 
 /**
- *
- * @author For later modifications, see Git history.
+ * {@link ImageWriter} registry.
+ * 
  * @version $Id$
  */
 public final class ImageWriterRegistry {
 
-	private static ImageWriterRegistry instance;
+	private static final ImageWriterRegistry instance = new ImageWriterRegistry();
 
-	private final Map<String, ImageWriter> imageWriterMap = new HashMap<>();
+	private final Map<String, ImageWriter> imageWriterMap = new HashMap<>(10);
 
 	private ImageWriterRegistry() {
 		setup();
 	}
 
+	/**
+	 * Get the instance of the registry.
+	 * 
+	 * @return the registry instance.
+	 */
 	public static ImageWriterRegistry getInstance() {
-		synchronized (ImageWriterRegistry.class) {
-			if (instance == null) {
-				instance = new ImageWriterRegistry();
-			}
-			return instance;
-		}
+		return instance;
 	}
 
 	private void setup() {
@@ -57,6 +57,11 @@ public final class ImageWriterRegistry {
 		}
 	}
 
+	/**
+	 * Register a new writer.
+	 * 
+	 * @param writer the writer.
+	 */
 	public void register(ImageWriter writer) {
 		imageWriterMap.put(writer.getMIMEType(), writer);
 	}
