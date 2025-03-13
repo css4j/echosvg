@@ -44,6 +44,7 @@ import java.util.zip.ZipEntry;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
+@Deprecated(forRemoval = true)
 public class ClassFileUtilities {
 
 	// Constant pool info tags
@@ -69,7 +70,7 @@ public class ClassFileUtilities {
 	 * Program that computes the dependencies between the EchoSVG jars.
 	 * <p>
 	 * Run this from the main EchoSVG distribution directory, after building the
-	 * jars. For every jar file in the batik-xxx/ build directory, it will determine
+	 * jars. For every jar file in the echosvg-xxx/ build directory, it will determine
 	 * which other jar files it directly depends on. The output is lines of the
 	 * form:
 	 * </p>

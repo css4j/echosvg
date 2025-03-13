@@ -36,6 +36,7 @@ import io.sf.carte.echosvg.util.ClassFileUtilities.Jar;
  *
  * @version $Id$
  */
+@Deprecated(forRemoval = true)
 public class ClassFileUtilitiesTest {
 
 	@Test
