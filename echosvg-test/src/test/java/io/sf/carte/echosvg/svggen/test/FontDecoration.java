@@ -55,6 +55,9 @@ public class FontDecoration implements Painter {
 
 		// Set default font
 		g.setFont(new Font(TestFonts.FONT_FAMILY_SANS1, Font.BOLD, 12));
+		g.setPaint(new Color(0x450d1a));
+
+		g.drawString("Unicode symbols \u03a3 \u221a \u221e \u222b \u03c0", 11, 150);
 
 		// Create a font with the desired attributes, including STRIKETHROUGH
 		Map<TextAttribute, Object> attributes = new HashMap<>();
@@ -88,35 +91,33 @@ public class FontDecoration implements Painter {
 		g.setFont(fontST);
 		g.setPaint(stColor);
 		// Draw a string
-		g.drawString("Strike Through", 10, 40);
+		g.drawString("Strike Through", 15, 40);
 
 		/*
 		 * Draw some figure with another non-sRGB color
 		 */
-		Color lColor;
 		// Use the ITU Rec bt.2020 color space
 		ICC_ColorSpace cs = StandardColorSpaces.getRec2020();
 		float[] comps = { .55f, .6f, .34f };
-		lColor = new Color(cs, comps, 1f);
+		Color lColor = new Color(cs, comps, 1f);
 
 		// Now draw with the new color
 		g.setPaint(lColor);
-		g.draw(new Line2D.Float(60, 46, 60, 80));
-		g.fill(new Ellipse2D.Float(56, 53, 8, 20));
+		g.draw(new Line2D.Float(80, 53, 80, 87));
+		g.fill(new Ellipse2D.Float(76, 60, 8, 20));
 
 		// Prepare a new color
-		Color ulColor;
 		// Get the P3 color space
 		ICC_ColorSpace csP3 = StandardColorSpaces.getDisplayP3();
 		comps = new float[] { .36f, .35f, .33f };
-		ulColor = new Color(csP3, comps, 1f);
+		Color ulColor = new Color(csP3, comps, 1f);
 
 		// Now draw with the new color and the UNDERLINE font
 		g.setPaint(ulColor);
 		g.setFont(fontUL);
 		g.translate(0, 30);
 		// Draw a new string
-		g.drawString("Underline", 10, 70);
+		g.drawString("Underline", 32, 84);
 	}
 
 }

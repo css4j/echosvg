@@ -4,9 +4,7 @@
 handle images in the Scalable Vector Graphics (SVG) format for various purposes,
 such as viewing, generation or manipulation.
 
- Thanks to its usage of the CSS4J style parser, supports level 4 CSS selectors
-and color values (including colors with alpha channel) as well as the Level 5
-`color-mix()` function.
+ EchoSVG supports most of modern CSS, and is partly compatible with SVG2.
 
 This document mostly contains information of interest to developers, like how to
 build from source or run tests. If you want general information (like how to use
