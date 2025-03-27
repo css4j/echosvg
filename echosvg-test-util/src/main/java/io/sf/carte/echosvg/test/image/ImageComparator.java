@@ -607,7 +607,7 @@ public class ImageComparator {
 		 * </p>
 		 * <p>
 		 * A count larger than {@code 0} does not guarantee that a variant will be
-		 * available when retrieved via {@link #getVariantImage(int)}.
+		 * available when retrieved via {@link #getVariantImage(int, ColorSpace)}.
 		 * </p>
 		 * 
 		 * @return the total count of image variants.
@@ -622,7 +622,7 @@ public class ImageComparator {
 		 * </p>
 		 * 
 		 * @param index      the index. If {@code 0}, must be the range variant.
-		 * @param colorSpace the desired color space, if {@code null} means sRGB.
+		 * @param colorSpace the desired color space, {@code null} means sRGB.
 		 * @return the variant image, or {@code null} if there is no such image.
 		 */
 		BufferedImage getVariantImage(int index, ColorSpace colorSpace);

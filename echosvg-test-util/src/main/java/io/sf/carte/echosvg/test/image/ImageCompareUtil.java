@@ -157,7 +157,7 @@ public class ImageCompareUtil {
 	 * 
 	 * @param allowedPercentBelowThreshold the allowed percentage of different
 	 *                                     pixels below the threshold.
-	 * @param allowedPercentBelowThreshold the allowed percentage of different
+	 * @param allowedPercentOverThreshold the allowed percentage of different
 	 *                                     pixels over the threshold.
 	 * @return a string describing the differences between the images, null if no
 	 *         differences.
