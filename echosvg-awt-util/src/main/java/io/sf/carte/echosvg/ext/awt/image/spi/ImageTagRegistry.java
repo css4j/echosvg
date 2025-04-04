@@ -258,7 +258,7 @@ public class ImageTagRegistry implements ErrorConstants {
 	 * by the various registered image format handlers.
 	 */
 	public List<String> getRegisteredExtensions() {
-		final List<String> ext = extensions;
+		List<String> ext = extensions;
 		if (ext != null)
 			return ext;
 
@@ -267,11 +267,11 @@ public class ImageTagRegistry implements ErrorConstants {
 			// Check again
 			if (extensions != null)
 				return extensions;
-			extensions = new ArrayList<>(entries.size() + 5);
+			ext = new ArrayList<>(entries.size() + 5);
 			for (RegistryEntry re : entries) {
-				extensions.addAll(re.getStandardExtensions());
+				ext.addAll(re.getStandardExtensions());
 			}
-			extensions = Collections.unmodifiableList(extensions);
+			extensions = Collections.unmodifiableList(ext);
 		} finally {
 			regLock.unlock();
 		}
@@ -284,7 +284,7 @@ public class ImageTagRegistry implements ErrorConstants {
 	 * handled by the various registered image format handlers.
 	 */
 	public List<String> getRegisteredMimeTypes() {
-		final List<String> mt = mimeTypes;
+		List<String> mt = mimeTypes;
 		if (mt != null)
 			return mt;
 
@@ -293,11 +293,11 @@ public class ImageTagRegistry implements ErrorConstants {
 			// Check again
 			if (mimeTypes != null)
 				return mimeTypes;
-			mimeTypes = new ArrayList<>(entries.size() + 5);
+			mt = new ArrayList<>(entries.size() + 5);
 			for (RegistryEntry re : entries) {
-				mimeTypes.addAll(re.getMimeTypes());
+				mt.addAll(re.getMimeTypes());
 			}
-			mimeTypes = Collections.unmodifiableList(mimeTypes);
+			mimeTypes = Collections.unmodifiableList(mt);
 		} finally {
 			regLock.unlock();
 		}
