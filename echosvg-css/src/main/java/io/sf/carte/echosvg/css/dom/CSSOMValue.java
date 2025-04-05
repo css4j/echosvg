@@ -61,6 +61,7 @@ public class CSSOMValue implements Value {
 	/**
 	 * Sets the modification handler of this value.
 	 */
+	@Override
 	public void setModificationHandler(ValueModificationHandler h) {
 		handler = h;
 	}

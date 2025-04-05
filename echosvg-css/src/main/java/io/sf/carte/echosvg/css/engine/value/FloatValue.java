@@ -255,11 +255,11 @@ public class FloatValue extends NumericValue implements CSSNumberValue, CSSUnitV
 			return true;
 		if (!super.equals(obj))
 			return false;
-		if (!(obj instanceof Value))
+		if (!(obj instanceof FloatValue))
 			return false;
-		Value other = (Value) obj;
-		return other.getUnitType() == unitType
-				&& Float.floatToIntBits(floatValue) == Float.floatToIntBits(other.getFloatValue());
+		FloatValue other = (FloatValue) obj;
+		return other.unitType == unitType
+				&& Float.floatToIntBits(floatValue) == Float.floatToIntBits(other.floatValue);
 	}
 
 	@Override
