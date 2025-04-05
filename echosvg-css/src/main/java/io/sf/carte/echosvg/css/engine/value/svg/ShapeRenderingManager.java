@@ -38,7 +38,7 @@ public class ShapeRenderingManager extends IdentifierManager {
 	/**
 	 * The identifier values.
 	 */
-	protected static final StringMap values = new StringMap();
+	protected static final StringMap<Value> values = new StringMap<>(5);
 	static {
 		values.put(CSSConstants.CSS_AUTO_VALUE, ValueConstants.AUTO_VALUE);
 		values.put(CSSConstants.CSS_CRISPEDGES_VALUE, ValueConstants.CRISPEDGES_VALUE);
@@ -101,7 +101,7 @@ public class ShapeRenderingManager extends IdentifierManager {
 	 * Implements {@link IdentifierManager#getIdentifiers()}.
 	 */
 	@Override
-	public StringMap getIdentifiers() {
+	public StringMap<Value> getIdentifiers() {
 		return values;
 	}
 

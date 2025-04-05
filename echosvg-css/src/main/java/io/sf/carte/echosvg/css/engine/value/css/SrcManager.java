@@ -57,7 +57,7 @@ public class SrcManager extends IdentifierManager {
 	/**
 	 * The identifier values.
 	 */
-	protected static final StringMap values = new StringMap();
+	protected static final StringMap<Value> values = new StringMap<>(3);
 	static {
 		values.put(CSSConstants.CSS_NONE_VALUE, ValueConstants.NONE_VALUE);
 	}
@@ -196,7 +196,7 @@ public class SrcManager extends IdentifierManager {
 					} else {
 						String id = sb.toString();
 						String s = id.toLowerCase(Locale.ROOT).intern();
-						Value v = (Value) values.get(s);
+						Value v = values.get(s);
 						result.append(v != null ? v : new StringValue(id));
 					}
 				}
@@ -246,7 +246,7 @@ public class SrcManager extends IdentifierManager {
 	 * Implements {@link IdentifierManager#getIdentifiers()}.
 	 */
 	@Override
-	public StringMap getIdentifiers() {
+	public StringMap<Value> getIdentifiers() {
 		return values;
 	}
 

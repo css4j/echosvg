@@ -48,7 +48,7 @@ public class FontWeightManager extends IdentifierManager {
 	/**
 	 * The identifier values.
 	 */
-	protected static final StringMap values = new StringMap();
+	protected static final StringMap<Value> values = new StringMap<>(7);
 	static {
 		values.put(CSSConstants.CSS_ALL_VALUE, ValueConstants.ALL_VALUE);
 		values.put(CSSConstants.CSS_BOLD_VALUE, ValueConstants.BOLD_VALUE);
@@ -210,7 +210,7 @@ public class FontWeightManager extends IdentifierManager {
 	 * Implements {@link IdentifierManager#getIdentifiers()}.
 	 */
 	@Override
-	public StringMap getIdentifiers() {
+	public StringMap<Value> getIdentifiers() {
 		return values;
 	}
 

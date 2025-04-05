@@ -41,7 +41,7 @@ public class TextAlignManager extends IdentifierManager {
 	/**
 	 * The identifier values.
 	 */
-	protected static final StringMap values = new StringMap();
+	protected static final StringMap<Value> values = new StringMap<>(6);
 
 	static {
 		values.put(CSSConstants.CSS_START_VALUE, SVG12ValueConstants.START_VALUE);
@@ -106,7 +106,7 @@ public class TextAlignManager extends IdentifierManager {
 	 * Implements {@link IdentifierManager#getIdentifiers()}.
 	 */
 	@Override
-	public StringMap getIdentifiers() {
+	public StringMap<Value> getIdentifiers() {
 		return values;
 	}
 

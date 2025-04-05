@@ -38,7 +38,7 @@ public class WritingModeManager extends IdentifierManager {
 	/**
 	 * The identifier values.
 	 */
-	protected static final StringMap values = new StringMap();
+	protected static final StringMap<Value> values = new StringMap<>(8);
 	static {
 		values.put(CSSConstants.CSS_LR_VALUE, SVGValueConstants.LR_VALUE);
 		values.put(CSSConstants.CSS_LR_TB_VALUE, SVGValueConstants.LR_TB_VALUE);
@@ -103,7 +103,7 @@ public class WritingModeManager extends IdentifierManager {
 	 * Implements {@link IdentifierManager#getIdentifiers()}.
 	 */
 	@Override
-	public StringMap getIdentifiers() {
+	public StringMap<Value> getIdentifiers() {
 		return values;
 	}
 

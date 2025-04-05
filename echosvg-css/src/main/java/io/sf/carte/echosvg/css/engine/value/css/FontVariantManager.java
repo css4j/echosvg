@@ -38,7 +38,7 @@ public class FontVariantManager extends IdentifierManager {
 	/**
 	 * The identifier values.
 	 */
-	protected static final StringMap values = new StringMap();
+	protected static final StringMap<Value> values = new StringMap<>(4);
 	static {
 		values.put(CSSConstants.CSS_NORMAL_VALUE, ValueConstants.NORMAL_VALUE);
 		values.put(CSSConstants.CSS_SMALL_CAPS_VALUE, ValueConstants.SMALL_CAPS_VALUE);
@@ -99,7 +99,7 @@ public class FontVariantManager extends IdentifierManager {
 	 * Implements {@link IdentifierManager#getIdentifiers()}.
 	 */
 	@Override
-	public StringMap getIdentifiers() {
+	public StringMap<Value> getIdentifiers() {
 		return values;
 	}
 

@@ -38,7 +38,7 @@ public class AlignmentBaselineManager extends IdentifierManager {
 	/**
 	 * The identifier values.
 	 */
-	protected static final StringMap values = new StringMap();
+	protected static final StringMap<Value> values = new StringMap<>(12);
 	static {
 		values.put(CSSConstants.CSS_AFTER_EDGE_VALUE, SVGValueConstants.AFTER_EDGE_VALUE);
 		values.put(CSSConstants.CSS_ALPHABETIC_VALUE, SVGValueConstants.ALPHABETIC_VALUE);
@@ -108,7 +108,7 @@ public class AlignmentBaselineManager extends IdentifierManager {
 	 * Implements {@link IdentifierManager#getIdentifiers()}.
 	 */
 	@Override
-	public StringMap getIdentifiers() {
+	public StringMap<Value> getIdentifiers() {
 		return values;
 	}
 

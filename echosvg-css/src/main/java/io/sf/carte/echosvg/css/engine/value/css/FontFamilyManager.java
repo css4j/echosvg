@@ -68,7 +68,7 @@ public class FontFamilyManager extends AbstractValueManager {
 	/**
 	 * The identifier values.
 	 */
-	protected static final StringMap values = new StringMap();
+	protected static final StringMap<Value> values = new StringMap<>(6);
 	static {
 		values.put(CSSConstants.CSS_CURSIVE_VALUE, ValueConstants.CURSIVE_VALUE);
 		values.put(CSSConstants.CSS_FANTASY_VALUE, ValueConstants.FANTASY_VALUE);
@@ -185,7 +185,7 @@ public class FontFamilyManager extends AbstractValueManager {
 				} else {
 					String id = sb.toString();
 					String s = id.toLowerCase(Locale.ROOT).intern();
-					Value v = (Value) values.get(s);
+					Value v = values.get(s);
 					result.append((v != null) ? v : new StringValue(id));
 				}
 				break;

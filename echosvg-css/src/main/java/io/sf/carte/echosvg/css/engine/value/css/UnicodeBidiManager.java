@@ -38,7 +38,7 @@ public class UnicodeBidiManager extends IdentifierManager {
 	/**
 	 * The identifier values.
 	 */
-	protected static final StringMap values = new StringMap();
+	protected static final StringMap<Value> values = new StringMap<>(4);
 	static {
 		values.put(CSSConstants.CSS_BIDI_OVERRIDE_VALUE, ValueConstants.BIDI_OVERRIDE_VALUE);
 		values.put(CSSConstants.CSS_EMBED_VALUE, ValueConstants.EMBED_VALUE);
@@ -100,7 +100,7 @@ public class UnicodeBidiManager extends IdentifierManager {
 	 * Implements {@link IdentifierManager#getIdentifiers()}.
 	 */
 	@Override
-	public StringMap getIdentifiers() {
+	public StringMap<Value> getIdentifiers() {
 		return values;
 	}
 

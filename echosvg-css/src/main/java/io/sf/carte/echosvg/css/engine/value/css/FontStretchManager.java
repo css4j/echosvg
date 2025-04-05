@@ -42,7 +42,7 @@ public class FontStretchManager extends IdentifierManager {
 	/**
 	 * The identifier values.
 	 */
-	protected static final StringMap values = new StringMap();
+	protected static final StringMap<Value> values = new StringMap<>(14);
 	static {
 		values.put(CSSConstants.CSS_ALL_VALUE, ValueConstants.ALL_VALUE);
 		values.put(CSSConstants.CSS_CONDENSED_VALUE, ValueConstants.CONDENSED_VALUE);
@@ -194,7 +194,7 @@ public class FontStretchManager extends IdentifierManager {
 	 * Implements {@link IdentifierManager#getIdentifiers()}.
 	 */
 	@Override
-	public StringMap getIdentifiers() {
+	public StringMap<Value> getIdentifiers() {
 		return values;
 	}
 

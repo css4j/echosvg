@@ -207,10 +207,10 @@ public class FontShorthandManager extends AbstractValueFactory implements Shorth
 		IdentifierManager fwVM = (IdentifierManager) vMgrs[fw];
 		FontSizeManager fszVM = (FontSizeManager) vMgrs[fsz];
 
-		StringMap fstSM = fstVM.getIdentifiers();
-		StringMap fvSM = fvVM.getIdentifiers();
-		StringMap fwSM = fwVM.getIdentifiers();
-		StringMap fszSM = fszVM.getIdentifiers();
+		StringMap<Value> fstSM = fstVM.getIdentifiers();
+		StringMap<Value> fvSM = fvVM.getIdentifiers();
+		StringMap<Value> fwSM = fwVM.getIdentifiers();
+		StringMap<Value> fszSM = fszVM.getIdentifiers();
 
 		// Check for font-style, font-variant, & font-weight
 		// These are all optional.

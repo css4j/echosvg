@@ -58,7 +58,7 @@ public abstract class AbstractColorManager extends IdentifierManager {
 	/**
 	 * The identifier values.
 	 */
-	protected static final StringMap values = new StringMap(50);
+	protected static final StringMap<Value> values = new StringMap<>(50);
 	static {
 		values.put(CSSConstants.CSS_AQUA_VALUE, ValueConstants.AQUA_VALUE);
 		values.put(CSSConstants.CSS_BLACK_VALUE, ValueConstants.BLACK_VALUE);
@@ -111,7 +111,7 @@ public abstract class AbstractColorManager extends IdentifierManager {
 	/**
 	 * The computed identifier values.
 	 */
-	protected static final StringMap computedValues = new StringMap(18);
+	protected static final StringMap<Value> computedValues = new StringMap<>(18);
 	static {
 		computedValues.put(CSSConstants.CSS_BLACK_VALUE, ValueConstants.BLACK_RGB_VALUE);
 		computedValues.put(CSSConstants.CSS_SILVER_VALUE, ValueConstants.SILVER_RGB_VALUE);
@@ -234,7 +234,8 @@ public abstract class AbstractColorManager extends IdentifierManager {
 		if (value.getPrimitiveType() == CSSValue.Type.IDENT) {
 			String ident = ((AbstractStringValue) value).getValue();
 			// Search for a direct computed value.
-			Value v = (Value) computedValues.get(ident);
+			// 'ident' must come from a constant, so no need to call intern()
+			Value v = computedValues.get(ident);
 			if (v != null) {
 				return v;
 			}
@@ -468,7 +469,7 @@ public abstract class AbstractColorManager extends IdentifierManager {
 	 * Implements {@link IdentifierManager#getIdentifiers()}.
 	 */
 	@Override
-	public StringMap getIdentifiers() {
+	public StringMap<Value> getIdentifiers() {
 		return values;
 	}
 

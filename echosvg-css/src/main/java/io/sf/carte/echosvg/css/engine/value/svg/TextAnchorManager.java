@@ -37,7 +37,7 @@ public class TextAnchorManager extends IdentifierManager {
 	/**
 	 * The identifier values.
 	 */
-	protected static final StringMap values = new StringMap();
+	protected static final StringMap<Value> values = new StringMap<>(4);
 	static {
 		values.put(CSSConstants.CSS_START_VALUE, SVGValueConstants.START_VALUE);
 		values.put(CSSConstants.CSS_MIDDLE_VALUE, SVGValueConstants.MIDDLE_VALUE);
@@ -99,7 +99,7 @@ public class TextAnchorManager extends IdentifierManager {
 	 * Implements {@link IdentifierManager#getIdentifiers()}.
 	 */
 	@Override
-	public StringMap getIdentifiers() {
+	public StringMap<Value> getIdentifiers() {
 		return values;
 	}
 

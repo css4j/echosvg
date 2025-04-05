@@ -38,7 +38,7 @@ public class DominantBaselineManager extends IdentifierManager {
 	/**
 	 * The identifier values.
 	 */
-	protected static final StringMap values = new StringMap();
+	protected static final StringMap<Value> values = new StringMap<>(16);
 	static {
 		values.put(CSSConstants.CSS_AUTO_VALUE, ValueConstants.AUTO_VALUE);
 		values.put(CSSConstants.CSS_ALPHABETIC_VALUE, SVGValueConstants.ALPHABETIC_VALUE);
@@ -111,7 +111,7 @@ public class DominantBaselineManager extends IdentifierManager {
 	 * Implements {@link IdentifierManager#getIdentifiers()}.
 	 */
 	@Override
-	public StringMap getIdentifiers() {
+	public StringMap<Value> getIdentifiers() {
 		return values;
 	}
 

@@ -37,7 +37,7 @@ public class FillRuleManager extends IdentifierManager {
 	/**
 	 * The identifier values.
 	 */
-	protected static final StringMap values = new StringMap();
+	protected static final StringMap<Value> values = new StringMap<>(4);
 	static {
 		values.put(CSSConstants.CSS_EVENODD_VALUE, SVGValueConstants.EVENODD_VALUE);
 		values.put(CSSConstants.CSS_NONZERO_VALUE, SVGValueConstants.NONZERO_VALUE);
@@ -98,7 +98,7 @@ public class FillRuleManager extends IdentifierManager {
 	 * Implements {@link IdentifierManager#getIdentifiers()}.
 	 */
 	@Override
-	public StringMap getIdentifiers() {
+	public StringMap<Value> getIdentifiers() {
 		return values;
 	}
 

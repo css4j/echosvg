@@ -50,7 +50,7 @@ public class TextDecorationManager extends AbstractValueManager {
 	/**
 	 * The identifier values.
 	 */
-	protected static final StringMap values = new StringMap();
+	protected static final StringMap<Value> values = new StringMap<>(6);
 	static {
 		values.put(CSSConstants.CSS_BLINK_VALUE, ValueConstants.BLINK_VALUE);
 		values.put(CSSConstants.CSS_LINE_THROUGH_VALUE, ValueConstants.LINE_THROUGH_VALUE);
@@ -122,11 +122,11 @@ public class TextDecorationManager extends AbstractValueManager {
 				switch (lu.getLexicalUnitType()) {
 				case IDENT:
 					String s = lu.getStringValue().toLowerCase(Locale.ROOT).intern();
-					Object obj = values.get(s);
+					Value obj = values.get(s);
 					if (obj == null) {
 						throw createInvalidIdentifierDOMException(lu.getStringValue());
 					}
-					lv.append((Value) obj);
+					lv.append(obj);
 					lu = lu.getNextLexicalUnit();
 					break;
 				case VAR:

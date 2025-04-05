@@ -38,7 +38,7 @@ public class DirectionManager extends IdentifierManager {
 	/**
 	 * The identifier values.
 	 */
-	protected static final StringMap values = new StringMap();
+	protected static final StringMap<Value> values = new StringMap<>(4);
 	static {
 		values.put(CSSConstants.CSS_LTR_VALUE, ValueConstants.LTR_VALUE);
 		values.put(CSSConstants.CSS_RTL_VALUE, ValueConstants.RTL_VALUE);
@@ -99,7 +99,7 @@ public class DirectionManager extends IdentifierManager {
 	 * Implements {@link IdentifierManager#getIdentifiers()}.
 	 */
 	@Override
-	public StringMap getIdentifiers() {
+	public StringMap<Value> getIdentifiers() {
 		return values;
 	}
 

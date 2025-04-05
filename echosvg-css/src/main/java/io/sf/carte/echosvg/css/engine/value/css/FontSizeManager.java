@@ -56,7 +56,7 @@ public class FontSizeManager extends LengthManager {
 	/**
 	 * The identifier values.
 	 */
-	protected static final StringMap values = new StringMap();
+	protected static final StringMap<Value> values = new StringMap<>();
 	static {
 		values.put(CSSConstants.CSS_ALL_VALUE, ValueConstants.ALL_VALUE);
 		values.put(CSSConstants.CSS_LARGE_VALUE, ValueConstants.LARGE_VALUE);
@@ -73,7 +73,7 @@ public class FontSizeManager extends LengthManager {
 	/**
 	 * Implements {@link IdentifierManager#getIdentifiers()}.
 	 */
-	public StringMap getIdentifiers() {
+	public StringMap<Value> getIdentifiers() {
 		return values;
 	}
 
@@ -146,11 +146,11 @@ public class FontSizeManager extends LengthManager {
 
 	protected Value createIdentValue(String value, CSSEngine engine) throws DOMException {
 		String s = value.toLowerCase(Locale.ROOT).intern();
-		Object v = values.get(s);
+		Value v = values.get(s);
 		if (v == null) {
 			throw createInvalidIdentifierDOMException(value);
 		}
-		return (Value) v;
+		return v;
 	}
 
 	/**

@@ -50,7 +50,7 @@ public class BaselineShiftManager extends LengthManager {
 	/**
 	 * The identifier values.
 	 */
-	protected static final StringMap values = new StringMap();
+	protected static final StringMap<Value> values = new StringMap<>(4);
 	static {
 		values.put(CSSConstants.CSS_BASELINE_VALUE, SVGValueConstants.BASELINE_VALUE);
 		values.put(CSSConstants.CSS_SUB_VALUE, SVGValueConstants.SUB_VALUE);
@@ -125,11 +125,11 @@ public class BaselineShiftManager extends LengthManager {
 	}
 
 	protected Value createIdentValue(String value, CSSEngine engine) throws DOMException {
-		Object v = values.get(value.toLowerCase(Locale.ROOT).intern());
+		Value v = values.get(value.toLowerCase(Locale.ROOT).intern());
 		if (v == null) {
 			throw createInvalidIdentifierDOMException(value);
 		}
-		return (Value) v;
+		return v;
 	}
 
 	/**

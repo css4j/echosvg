@@ -38,7 +38,7 @@ public class PointerEventsManager extends IdentifierManager {
 	/**
 	 * The identifier values.
 	 */
-	protected static final StringMap values = new StringMap();
+	protected static final StringMap<Value> values = new StringMap<>(12);
 	static {
 		values.put(CSSConstants.CSS_ALL_VALUE, ValueConstants.ALL_VALUE);
 		values.put(CSSConstants.CSS_FILL_VALUE, SVGValueConstants.FILL_VALUE);
@@ -108,7 +108,7 @@ public class PointerEventsManager extends IdentifierManager {
 	 * Implements {@link IdentifierManager#getIdentifiers()}.
 	 */
 	@Override
-	public StringMap getIdentifiers() {
+	public StringMap<Value> getIdentifiers() {
 		return values;
 	}
 

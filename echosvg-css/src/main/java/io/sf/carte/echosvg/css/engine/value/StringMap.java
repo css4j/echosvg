@@ -26,7 +26,7 @@ package io.sf.carte.echosvg.css.engine.value;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class StringMap {
+public class StringMap<E> {
 
 	/**
 	 * The initial capacity
@@ -44,7 +44,7 @@ public class StringMap {
 	protected int count;
 
 	/**
-	 * Creates a new table.
+	 * Creates a new table with an initial capacity of 11.
 	 */
 	public StringMap() {
 		table = new Entry[INITIAL_CAPACITY];
@@ -64,7 +64,7 @@ public class StringMap {
 	 * 
 	 * @param t The table to copy.
 	 */
-	public StringMap(StringMap t) {
+	public StringMap(StringMap<? extends E> t) {
 		count = t.count;
 		table = new Entry[t.table.length];
 		for (int i = 0; i < table.length; i++) {
@@ -86,15 +86,17 @@ public class StringMap {
 	/**
 	 * Gets the value corresponding to the given string.
 	 * 
+	 * @param key the key string (must be interned).
 	 * @return the value or null
 	 */
-	public Object get(String key) {
+	@SuppressWarnings("unchecked")
+	public E get(String key) {
 		int hash = key.hashCode() & 0x7FFFFFFF;
 		int index = hash % table.length;
 
 		for (Entry e = table[index]; e != null; e = e.next) {
 			if ((e.hash == hash) && e.key == key) {
-				return e.value;
+				return (E) e.value;
 			}
 		}
 		return null;
@@ -103,9 +105,13 @@ public class StringMap {
 	/**
 	 * Sets a new value for the given variable
 	 * 
+	 * @param key   the key string (must be either interned, or use the same key
+	 *              object to retrieve).
+	 * @param value the associated value.
 	 * @return the old value or null
 	 */
-	public Object put(String key, Object value) {
+	@SuppressWarnings("unchecked")
+	public E put(String key, E value) {
 		int hash = key.hashCode() & 0x7FFFFFFF;
 		int index = hash % table.length;
 
@@ -113,7 +119,7 @@ public class StringMap {
 			if ((e.hash == hash) && e.key == key) {
 				Object old = e.value;
 				e.value = value;
-				return old;
+				return (E) old;
 			}
 		}
 

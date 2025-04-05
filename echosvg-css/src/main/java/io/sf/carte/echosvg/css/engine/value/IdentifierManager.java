@@ -45,11 +45,11 @@ public abstract class IdentifierManager extends AbstractValueManager {
 		switch (lu.getLexicalUnitType()) {
 		case IDENT:
 			String s = lu.getStringValue().toLowerCase(Locale.ROOT).intern();
-			Object v = getIdentifiers().get(s);
+			Value v = getIdentifiers().get(s);
 			if (v == null) {
 				throw createInvalidIdentifierDOMException(lu.getStringValue());
 			}
-			return (Value) v;
+			return v;
 
 		case INHERIT:
 			return ValueConstants.INHERIT_VALUE;
@@ -73,17 +73,17 @@ public abstract class IdentifierManager extends AbstractValueManager {
 	}
 
 	protected Value createIdentValue(String value, CSSEngine engine) throws DOMException {
-		Object v = getIdentifiers().get(value.toLowerCase(Locale.ROOT).intern());
+		Value v = getIdentifiers().get(value.toLowerCase(Locale.ROOT).intern());
 		if (v == null) {
 			throw createInvalidIdentifierDOMException(value);
 		}
-		return (Value) v;
+		return v;
 	}
 
 	/**
 	 * Returns the map that contains the name/value mappings for each possible
 	 * identifiers.
 	 */
-	public abstract StringMap getIdentifiers();
+	public abstract StringMap<Value> getIdentifiers();
 
 }

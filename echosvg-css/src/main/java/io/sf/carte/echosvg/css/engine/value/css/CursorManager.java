@@ -54,7 +54,7 @@ public class CursorManager extends AbstractValueManager {
 	/**
 	 * The identifier values.
 	 */
-	protected static final StringMap values = new StringMap();
+	protected static final StringMap<Value> values = new StringMap<>(18);
 	static {
 		values.put(CSSConstants.CSS_AUTO_VALUE, ValueConstants.AUTO_VALUE);
 		values.put(CSSConstants.CSS_CROSSHAIR_VALUE, ValueConstants.CROSSHAIR_VALUE);
@@ -159,11 +159,11 @@ public class CursorManager extends AbstractValueManager {
 
 		case IDENT:
 			String s = lu.getStringValue().toLowerCase(Locale.ROOT).intern();
-			Object v = values.get(s);
+			Value v = values.get(s);
 			if (v == null) {
 				throw createInvalidIdentifierDOMException(lu.getStringValue());
 			}
-			result.append((Value) v);
+			result.append(v);
 			lu = lu.getNextLexicalUnit();
 			break;
 
