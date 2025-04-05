@@ -52,6 +52,10 @@ text.itemdesc {
   fill: attr(data-color type(<color>), var(--textColor));
 }
 
+#customProp {
+  font-family: attr(data-font-family raw-string, 'Raleway');
+}
+
 /*]]>*/
   </style>
 
@@ -67,7 +71,7 @@ text.itemdesc {
   <text x="80" y="50" class="itemdesc" text-anchor="middle" data-color="#30433f" data-font-size="10pt">Media Queries</text>
   <text x="320" y="50" class="itemdesc" text-anchor="middle" data-color="#29405a" data-font-size="11pt">Conditional rules</text>
   <text x="91" y="400" class="itemdesc" text-anchor="middle" data-color="#1a2843" data-font-size="14pt">Color Level 4 / calc()</text>
-  <text x="300" y="400" class="itemdesc" text-anchor="middle" data-color="#270b00" data-font-size="16pt">Custom Properties</text>
+  <text x="300" y="400" id="customProp" class="itemdesc" text-anchor="middle" data-color="#270b00" data-font-size="16pt" data-font-family="Dosis">Custom Properties</text>
   <text x="190" y="470" class="itemdesc" text-anchor="middle">and the advanced attr() value</text>
   </g>
 

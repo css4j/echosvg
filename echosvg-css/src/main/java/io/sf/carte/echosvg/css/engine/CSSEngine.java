@@ -1372,7 +1372,8 @@ public abstract class CSSEngine {
 				switch (lu.getLexicalUnitType()) {
 				case IDENT:
 					String attrtype = lu.getStringValue().toLowerCase(Locale.ROOT);
-					if (!"string".equals(attrtype)) {
+					// TODO: remove "string" once Chrome 136 ships
+					if (!"raw-string".equals(attrtype) && !"string".equals(attrtype)) {
 						unitConv = UnitStringToId.unitFromString(attrtype);
 						if (unitConv == CSSUnit.CSS_OTHER) {
 							valueSyntaxError(
