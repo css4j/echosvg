@@ -20,7 +20,6 @@ package io.sf.carte.echosvg.css.engine.value.svg;
 
 import org.w3c.dom.DOMException;
 
-import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.AbstractValueManager;
@@ -126,20 +125,6 @@ public class FilterManager extends AbstractValueManager {
 			break;
 		}
 		throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
-	}
-
-	@Override
-	public Value createStringValue(Type type, String value, CSSEngine engine) throws DOMException {
-		if (type == Type.IDENT) {
-			if (value.equalsIgnoreCase(CSSConstants.CSS_NONE_VALUE)) {
-				return ValueConstants.NONE_VALUE;
-			}
-			throw createInvalidIdentifierDOMException(value);
-		}
-		if (type == Type.URI) {
-			return new URIValue(value, resolveURI(engine.getCSSBaseURI(), value));
-		}
-		throw createInvalidStringTypeDOMException(type);
 	}
 
 }

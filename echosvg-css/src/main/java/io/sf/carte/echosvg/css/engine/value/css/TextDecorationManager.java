@@ -22,7 +22,6 @@ import java.util.Locale;
 
 import org.w3c.dom.DOMException;
 
-import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.AbstractValueManager;
@@ -159,17 +158,6 @@ public class TextDecorationManager extends AbstractValueManager {
 			break;
 		}
 		throw createInvalidLexicalUnitDOMException(lunit.getLexicalUnitType());
-	}
-
-	@Override
-	public Value createStringValue(Type type, String value, CSSEngine engine) throws DOMException {
-		if (type != Type.IDENT) {
-			throw createInvalidStringTypeDOMException(type);
-		}
-		if (!value.equalsIgnoreCase(CSSConstants.CSS_NONE_VALUE)) {
-			throw createInvalidIdentifierDOMException(value);
-		}
-		return ValueConstants.NONE_VALUE;
 	}
 
 }

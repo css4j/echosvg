@@ -22,7 +22,6 @@ import java.util.Locale;
 
 import org.w3c.dom.DOMException;
 
-import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 
@@ -73,11 +72,7 @@ public abstract class IdentifierManager extends AbstractValueManager {
 		}
 	}
 
-	@Override
-	public Value createStringValue(Type type, String value, CSSEngine engine) throws DOMException {
-		if (type != Type.IDENT) {
-			throw createInvalidStringTypeDOMException(type);
-		}
+	protected Value createIdentValue(String value, CSSEngine engine) throws DOMException {
 		Object v = getIdentifiers().get(value.toLowerCase(Locale.ROOT).intern());
 		if (v == null) {
 			throw createInvalidIdentifierDOMException(value);

@@ -23,7 +23,6 @@ import java.util.Locale;
 import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
 
-import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
@@ -113,11 +112,7 @@ public class BaselineShiftManager extends LengthManager {
 	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
 		switch (lu.getLexicalUnitType()) {
 		case IDENT:
-			Object v = values.get(lu.getStringValue().toLowerCase(Locale.ROOT).intern());
-			if (v == null) {
-				throw createInvalidIdentifierDOMException(lu.getStringValue());
-			}
-			return (Value) v;
+			return createIdentValue(lu.getStringValue(), engine);
 
 		case INHERIT:
 			return ValueConstants.INHERIT_VALUE;
@@ -129,11 +124,7 @@ public class BaselineShiftManager extends LengthManager {
 		return super.createValue(lu, engine);
 	}
 
-	@Override
-	public Value createStringValue(Type type, String value, CSSEngine engine) throws DOMException {
-		if (type != Type.IDENT) {
-			throw createInvalidStringTypeDOMException(type);
-		}
+	protected Value createIdentValue(String value, CSSEngine engine) throws DOMException {
 		Object v = values.get(value.toLowerCase(Locale.ROOT).intern());
 		if (v == null) {
 			throw createInvalidIdentifierDOMException(value);

@@ -132,12 +132,7 @@ public class FontSizeManager extends LengthManager {
 	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
 		switch (lu.getLexicalUnitType()) {
 		case IDENT:
-			String s = lu.getStringValue().toLowerCase(Locale.ROOT).intern();
-			Object v = values.get(s);
-			if (v == null) {
-				throw createInvalidIdentifierDOMException(s);
-			}
-			return (Value) v;
+			return createIdentValue(lu.getStringValue(), engine);
 
 		case INHERIT:
 			return ValueConstants.INHERIT_VALUE;
@@ -149,12 +144,9 @@ public class FontSizeManager extends LengthManager {
 		return super.createValue(lu, engine);
 	}
 
-	@Override
-	public Value createStringValue(Type type, String value, CSSEngine engine) throws DOMException {
-		if (type != Type.IDENT) {
-			throw createInvalidStringTypeDOMException(type);
-		}
-		Object v = values.get(value.toLowerCase(Locale.ROOT).intern());
+	protected Value createIdentValue(String value, CSSEngine engine) throws DOMException {
+		String s = value.toLowerCase(Locale.ROOT).intern();
+		Object v = values.get(s);
 		if (v == null) {
 			throw createInvalidIdentifierDOMException(value);
 		}

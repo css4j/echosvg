@@ -203,7 +203,7 @@ public abstract class AbstractColorManager extends IdentifierManager {
 			return createRGBColor(lunit);
 		case IDENT:
 			// Clone so colors can be modified
-			return super.createValue(lunit, engine).clone();
+			return createIdentValue(lunit.getStringValue(), engine).clone();
 		default:
 			return super.createValue(lunit, engine);
 		}

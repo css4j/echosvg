@@ -20,7 +20,6 @@ package io.sf.carte.echosvg.css.engine.value.svg;
 
 import org.w3c.dom.DOMException;
 
-import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.Value;
@@ -68,17 +67,6 @@ public class GlyphOrientationVerticalManager extends GlyphOrientationManager {
 			throw createInvalidIdentifierDOMException(lu.getStringValue());
 		}
 		return super.createValue(lu, engine);
-	}
-
-	@Override
-	public Value createStringValue(Type type, String value, CSSEngine engine) throws DOMException {
-		if (type != Type.IDENT) {
-			throw createInvalidStringTypeDOMException(type);
-		}
-		if (value.equalsIgnoreCase(CSSConstants.CSS_AUTO_VALUE)) {
-			return ValueConstants.AUTO_VALUE;
-		}
-		throw createInvalidIdentifierDOMException(value);
 	}
 
 }

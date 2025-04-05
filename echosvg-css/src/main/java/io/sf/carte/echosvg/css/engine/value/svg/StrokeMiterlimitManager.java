@@ -152,17 +152,6 @@ public class StrokeMiterlimitManager extends AbstractValueManager {
 		throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
 	}
 
-	/**
-	 * Implements {@link ValueManager#createFloatValue(short,float)}.
-	 */
-	@Override
-	public Value createFloatValue(short unitType, float floatValue) throws DOMException {
-		if (unitType == CSSUnit.CSS_NUMBER) {
-			return new FloatValue(unitType, floatValue);
-		}
-		throw createInvalidFloatTypeDOMException(unitType);
-	}
-
 	@Override
 	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx, StyleMap sm,
 			Value value) {

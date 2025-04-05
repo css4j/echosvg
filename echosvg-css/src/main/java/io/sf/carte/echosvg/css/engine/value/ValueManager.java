@@ -21,7 +21,6 @@ package io.sf.carte.echosvg.css.engine.value;
 
 import org.w3c.dom.DOMException;
 
-import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
@@ -77,25 +76,6 @@ public interface ValueManager {
 	 * @param engine The calling CSSEngine.
 	 */
 	Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException;
-
-	/**
-	 * Creates and returns a new float value.
-	 * 
-	 * @param unitType   A unit code as defined above. The unit code can only be a
-	 *                   float unit type
-	 * @param floatValue The new float value.
-	 */
-	Value createFloatValue(short unitType, float floatValue) throws DOMException;
-
-	/**
-	 * Creates and returns a new string value.
-	 * 
-	 * @param type   A value type as defined in Value.Type. The string code
-	 *               can only be a string-like unit type.
-	 * @param value  The new string value.
-	 * @param engine The CSS engine.
-	 */
-	Value createStringValue(Type type, String value, CSSEngine engine) throws DOMException;
 
 	/**
 	 * Computes the given value.

@@ -46,19 +46,6 @@ import io.sf.carte.echosvg.css.engine.StyleMap;
  */
 public abstract class AbstractValueManager extends AbstractValueFactory implements ValueManager {
 
-	/**
-	 * Implements {@link ValueManager#createFloatValue(short,float)}.
-	 */
-	@Override
-	public Value createFloatValue(short unitType, float floatValue) throws DOMException {
-		throw createDOMException();
-	}
-
-	@Override
-	public Value createStringValue(Type type, String value, CSSEngine engine) throws DOMException {
-		throw createDOMException();
-	}
-
 	protected Value createLexicalValue(LexicalUnit lu) throws CSSProxyValueException {
 		if (lu.getPreviousLexicalUnit() != null || lu.isParameter()) {
 			throw new CSSProxyValueException();

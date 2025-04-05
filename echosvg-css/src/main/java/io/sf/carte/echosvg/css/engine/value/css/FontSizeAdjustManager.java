@@ -157,28 +157,6 @@ public class FontSizeAdjustManager extends AbstractValueManager {
 	}
 
 	@Override
-	public Value createStringValue(Type type, String value, CSSEngine engine) throws DOMException {
-		if (type != Type.IDENT) {
-			throw createInvalidStringTypeDOMException(type);
-		}
-		if (value.equalsIgnoreCase(CSSConstants.CSS_NONE_VALUE)) {
-			return ValueConstants.NONE_VALUE;
-		}
-		throw createInvalidIdentifierDOMException(value);
-	}
-
-	/**
-	 * Implements {@link ValueManager#createFloatValue(short,float)}.
-	 */
-	@Override
-	public Value createFloatValue(short type, float floatValue) throws DOMException {
-		if (type == CSSUnit.CSS_NUMBER) {
-			return new FloatValue(type, floatValue);
-		}
-		throw createInvalidFloatTypeDOMException(type);
-	}
-
-	@Override
 	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx, StyleMap sm,
 			Value value) {
 		return value;

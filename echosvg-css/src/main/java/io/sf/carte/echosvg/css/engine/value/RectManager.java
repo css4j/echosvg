@@ -51,11 +51,6 @@ public abstract class RectManager extends LengthManager {
 	@Override
 	public Value createValue(final LexicalUnit lunit, CSSEngine engine) throws DOMException {
 		switch (lunit.getLexicalUnitType()) {
-		case FUNCTION:
-			// This case could be removed
-			if (!lunit.getFunctionName().equalsIgnoreCase("rect")) {
-				break;
-			}
 		case RECT_FUNCTION:
 			LexicalUnit lu = lunit.getParameters();
 			try {

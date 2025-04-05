@@ -18,7 +18,6 @@
  */
 package io.sf.carte.echosvg.css.engine.value.css;
 
-import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
 
 import io.sf.carte.doc.style.css.CSSValue.Type;
@@ -136,39 +135,6 @@ public class FontWeightManager extends IdentifierManager {
 			throw createInvalidFloatValueDOMException(i);
 		}
 		return super.createValue(lu, engine);
-	}
-
-	/**
-	 * Implements {@link ValueManager#createFloatValue(short,float)}.
-	 */
-	@Override
-	public Value createFloatValue(short type, float floatValue) throws DOMException {
-		if (type == CSSUnit.CSS_NUMBER) {
-			int i = (int) floatValue;
-			if (floatValue == i) {
-				switch (i) {
-				case 100:
-					return ValueConstants.NUMBER_100;
-				case 200:
-					return ValueConstants.NUMBER_200;
-				case 300:
-					return ValueConstants.NUMBER_300;
-				case 400:
-					return ValueConstants.NUMBER_400;
-				case 500:
-					return ValueConstants.NUMBER_500;
-				case 600:
-					return ValueConstants.NUMBER_600;
-				case 700:
-					return ValueConstants.NUMBER_700;
-				case 800:
-					return ValueConstants.NUMBER_800;
-				case 900:
-					return ValueConstants.NUMBER_900;
-				}
-			}
-		}
-		throw createInvalidFloatValueDOMException(floatValue);
 	}
 
 	/**

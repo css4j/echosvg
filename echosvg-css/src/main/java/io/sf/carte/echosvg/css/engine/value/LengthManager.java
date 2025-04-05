@@ -122,17 +122,6 @@ public abstract class LengthManager extends AbstractValueManager {
 	}
 
 	/**
-	 * Implements {@link ValueManager#createFloatValue(short,float)}.
-	 */
-	@Override
-	public Value createFloatValue(short type, float floatValue) throws DOMException {
-		if (type == CSSUnit.CSS_NUMBER || type == CSSUnit.CSS_PERCENTAGE || CSSUnit.isLengthUnitType(type)) {
-			return new FloatValue(type, floatValue);
-		}
-		throw createInvalidFloatTypeDOMException(type);
-	}
-
-	/**
 	 * Implements
 	 * {@link ValueManager#computeValue(CSSStylableElement,String,CSSEngine,int,StyleMap,Value)}.
 	 */

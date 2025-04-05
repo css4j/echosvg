@@ -170,17 +170,6 @@ public class OpacityManager extends AbstractValueManager {
 		throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
 	}
 
-	/**
-	 * Implements {@link ValueManager#createFloatValue(short,float)}.
-	 */
-	@Override
-	public Value createFloatValue(short type, float floatValue) throws DOMException {
-		if (type == CSSUnit.CSS_NUMBER) {
-			return new FloatValue(type, floatValue);
-		}
-		throw createInvalidFloatTypeDOMException(type);
-	}
-
 	@Override
 	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx, StyleMap sm,
 			Value value) {
