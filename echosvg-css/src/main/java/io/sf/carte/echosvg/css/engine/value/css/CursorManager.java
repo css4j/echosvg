@@ -20,6 +20,7 @@ package io.sf.carte.echosvg.css.engine.value.css;
 
 import java.util.Locale;
 
+import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
 
 import io.sf.carte.doc.style.css.CSSValue.Type;
@@ -29,6 +30,7 @@ import io.sf.carte.echosvg.css.engine.CSSEngineUserAgent;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
 import io.sf.carte.echosvg.css.engine.value.AbstractValueManager;
+import io.sf.carte.echosvg.css.engine.value.FloatValue;
 import io.sf.carte.echosvg.css.engine.value.ListValue;
 import io.sf.carte.echosvg.css.engine.value.RevertValue;
 import io.sf.carte.echosvg.css.engine.value.StringMap;
@@ -127,45 +129,26 @@ public class CursorManager extends AbstractValueManager {
 	 */
 	@Override
 	public Value createValue(final LexicalUnit lunit, CSSEngine engine) throws DOMException {
-		ListValue result = new ListValue();
-		LexicalUnit lu = lunit;
 		switch (lunit.getLexicalUnitType()) {
-		case URI:
-			do {
-				result.append(
-						new URIValue(lu.getStringValue(), resolveURI(engine.getCSSBaseURI(), lu.getStringValue())));
-				lu = lu.getNextLexicalUnit();
-				if (lu == null) {
-					throw createMalformedLexicalUnitDOMException();
-				}
-				if (lu.getLexicalUnitType() != LexicalUnit.LexicalType.OPERATOR_COMMA) {
-					if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.VAR) {
-						return createLexicalValue(lunit);
-					}
-					throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
-				}
-				lu = lu.getNextLexicalUnit();
-				if (lu == null) {
-					throw createMalformedLexicalUnitDOMException();
-				}
-			} while (lu.getLexicalUnitType() == LexicalUnit.LexicalType.URI);
-			if (lu.getLexicalUnitType() != LexicalUnit.LexicalType.IDENT) {
-				if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.VAR) {
-					return createLexicalValue(lunit);
-				}
-				throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
-			}
-			// Fall through...
+		case URI: {
+			ListValue result = new ListValue();
+			return addToURLList(lunit, engine, result);
+		}
 
 		case IDENT:
-			String s = lu.getStringValue().toLowerCase(Locale.ROOT).intern();
-			Value v = values.get(s);
+			Value v = createIdentValue(lunit);
 			if (v == null) {
-				throw createInvalidIdentifierDOMException(lu.getStringValue());
+				throw createInvalidIdentifierDOMException(lunit.getStringValue());
 			}
+			ListValue result = new ListValue();
 			result.append(v);
-			lu = lu.getNextLexicalUnit();
-			break;
+
+			LexicalUnit lu = lunit.getNextLexicalUnit();
+			if (lu != null) {
+				throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
+			}
+
+			return result;
 
 		case INHERIT:
 			return ValueConstants.INHERIT_VALUE;
@@ -180,15 +163,82 @@ public class CursorManager extends AbstractValueManager {
 			return getDefaultValue();
 
 		case VAR:
+		case ATTR:
 			return createLexicalValue(lunit);
 
 		default:
-			break;
+			throw createInvalidLexicalUnitDOMException(lunit.getLexicalUnitType());
 		}
-		if (lu != null) {
-			throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
-		}
+	}
+
+	private Value addToURLList(LexicalUnit lunit, CSSEngine engine, ListValue result) {
+		LexicalUnit lu = lunit;
+		LexicalUnit.LexicalType type;
+		do {
+			type = lu.getLexicalUnitType();
+			if (type == LexicalUnit.LexicalType.URI) {
+				Value v = createURIValue(lu, engine);
+				if (v == null) {
+					throw createMalformedLexicalUnitDOMException();
+				}
+				if (v.getPrimitiveType() == Type.LEXICAL) {
+					return createLexicalValue(lunit);
+				}
+				result.append(v);
+			} else if (type == LexicalUnit.LexicalType.IDENT) {
+				Value v = createIdentValue(lu);
+				if (v != null) {
+					result.add(v);
+				} else {
+					engine.getCSSEngineUserAgent().displayMessage("Unknown identifier: " + lu.getStringValue());
+				}
+				lu = lu.getNextLexicalUnit();
+				if (lu != null) {
+					throw createMalformedLexicalUnitDOMException();
+				}
+				break;
+			} else if (type == LexicalUnit.LexicalType.INTEGER) {
+				result.add(new FloatValue(CSSUnit.CSS_NUMBER, lu.getIntegerValue()));
+			} else if (type == LexicalUnit.LexicalType.REAL) {
+				result.add(new FloatValue(CSSUnit.CSS_NUMBER, lu.getFloatValue()));
+			} else if (type == LexicalUnit.LexicalType.DIMENSION) {
+				short unit = lu.getCssUnit();
+				if (CSSUnit.isLengthUnitType(unit) || unit == CSSUnit.CSS_OTHER) {
+					result.add(new FloatValue(unit, lu.getFloatValue()));
+				} else {
+					throw createMalformedLexicalUnitDOMException();
+				}
+			} else if (type == LexicalUnit.LexicalType.VAR || type == LexicalUnit.LexicalType.ATTR) {
+				return createLexicalValue(lunit);
+			} else {
+				throw createInvalidLexicalUnitDOMException(type);
+			}
+
+			lu = lu.getNextLexicalUnit();
+			if (lu == null) {
+				throw createMalformedLexicalUnitDOMException();
+			}
+
+			type = lu.getLexicalUnitType();
+			if (type != LexicalUnit.LexicalType.OPERATOR_COMMA) {
+				if (type == LexicalUnit.LexicalType.VAR || type == LexicalUnit.LexicalType.ATTR) {
+					return createLexicalValue(lunit);
+				}
+				throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
+			}
+
+			lu = lu.getNextLexicalUnit();
+			if (lu == null) {
+				throw createMalformedLexicalUnitDOMException();
+			}
+		} while (true);
+
 		return result;
+	}
+
+	private Value createIdentValue(LexicalUnit lunit) {
+		String s = lunit.getStringValue().toLowerCase(Locale.ROOT).intern();
+		return values.get(s);
 	}
 
 	@Override

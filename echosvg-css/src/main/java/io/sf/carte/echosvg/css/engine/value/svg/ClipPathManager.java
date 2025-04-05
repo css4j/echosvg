@@ -24,7 +24,6 @@ import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.AbstractValueManager;
 import io.sf.carte.echosvg.css.engine.value.RevertValue;
-import io.sf.carte.echosvg.css.engine.value.URIValue;
 import io.sf.carte.echosvg.css.engine.value.UnsetValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.ValueConstants;
@@ -98,7 +97,7 @@ public class ClipPathManager extends AbstractValueManager {
 	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
 		switch (lu.getLexicalUnitType()) {
 		case URI:
-			return new URIValue(lu.getStringValue(), resolveURI(engine.getCSSBaseURI(), lu.getStringValue()));
+			return createURIValue(lu, engine);
 
 		case IDENT:
 			if (lu.getStringValue().equalsIgnoreCase(CSSConstants.CSS_NONE_VALUE)) {
@@ -119,11 +118,14 @@ public class ClipPathManager extends AbstractValueManager {
 			return getDefaultValue();
 
 		case VAR:
+		case ATTR:
+			// ATTR could bring an identifier, so it is allowed
 			return createLexicalValue(lu);
 
 		default:
 			break;
 		}
+
 		throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
 	}
 

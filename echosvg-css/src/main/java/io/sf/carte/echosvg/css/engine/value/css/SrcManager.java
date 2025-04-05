@@ -25,6 +25,7 @@ import org.w3c.dom.DOMException;
 import io.sf.carte.doc.style.css.CSSValue;
 import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
+import io.sf.carte.doc.style.css.nsac.LexicalUnit.LexicalType;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSEngineUserAgent;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
@@ -136,6 +137,7 @@ public class SrcManager extends IdentifierManager {
 			return getDefaultValue();
 
 		case VAR:
+		case ATTR:
 			return createLexicalValue(lunit);
 
 		default:
@@ -144,6 +146,7 @@ public class SrcManager extends IdentifierManager {
 		case IDENT:
 		case STRING:
 		case URI:
+		case SRC:
 		}
 
 		ListValue result = new ListValue();
@@ -156,9 +159,9 @@ public class SrcManager extends IdentifierManager {
 				break;
 
 			case URI:
-				String uri = resolveURI(engine.getCSSBaseURI(), lu.getStringValue());
-
-				result.append(new URIValue(lu.getStringValue(), uri));
+				String sv = lu.getStringValue();
+				String uri = resolveURI(engine.getCSSBaseURI(), sv);
+				result.append(new URIValue(sv, uri));
 				lu = lu.getNextLexicalUnit();
 				if (lu != null) {
 					switch (lu.getLexicalUnitType()) {
@@ -173,6 +176,7 @@ public class SrcManager extends IdentifierManager {
 						lu = lu.getNextLexicalUnit();
 						break;
 					case VAR:
+						// Skip ATTR just in case
 						return createLexicalValue(lunit);
 					default:
 						break;
@@ -180,20 +184,47 @@ public class SrcManager extends IdentifierManager {
 				}
 				break;
 
+			case SRC:
+				LexicalUnit param = lu.getParameters();
+				paramLoop: while (param != null) {
+					switch (param.getLexicalUnitType()) {
+					case STRING:
+						String s = param.getStringValue();
+						uri = resolveURI(engine.getCSSBaseURI(), s);
+						result.append(new URIValue(s, uri));
+						break paramLoop;
+					case VAR:
+						// Skip ATTR just in case
+						return createLexicalValue(lunit);
+					case FUNCTION:
+					case IDENT:
+						// url-modifiers
+						break;
+					default:
+						throw createInvalidLexicalUnitDOMException(param.getLexicalUnitType());
+					}
+					param = param.getNextLexicalUnit();
+				}
+				lu = lu.getNextLexicalUnit();
+				break;
+
 			case IDENT:
 				StringBuilder sb = new StringBuilder(lu.getStringValue());
 				lu = lu.getNextLexicalUnit();
 				if (lu != null) {
-					if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.IDENT) {
+					switch (lu.getLexicalUnitType()) {
+					case IDENT:
 						do {
 							sb.append(' ');
 							sb.append(lu.getStringValue());
 							lu = lu.getNextLexicalUnit();
-						} while (lu != null && lu.getLexicalUnitType() == LexicalUnit.LexicalType.IDENT);
+						} while (lu != null && lu.getLexicalUnitType() == LexicalType.IDENT);
 						result.append(new StringValue(sb.toString()));
-					} else if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.VAR) {
+						break;
+					case VAR:
+					case ATTR:
 						return createLexicalValue(lunit);
-					} else {
+					default:
 						String id = sb.toString();
 						String s = id.toLowerCase(Locale.ROOT).intern();
 						Value v = values.get(s);
@@ -203,22 +234,28 @@ public class SrcManager extends IdentifierManager {
 				break;
 
 			case VAR:
+			case ATTR:
 				return createLexicalValue(lunit);
 
 			default:
 				break;
 
 			}
+
 			if (lu == null) {
 				return result;
 			}
-			if (lu.getLexicalUnitType() != LexicalUnit.LexicalType.OPERATOR_COMMA) {
-				if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.VAR) {
+
+			LexicalType type = lu.getLexicalUnitType();
+			if (type != LexicalType.OPERATOR_COMMA) {
+				if (type == LexicalType.VAR || type == LexicalType.ATTR) {
 					return createLexicalValue(lunit);
 				}
 				throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
 			}
+
 			lu = lu.getNextLexicalUnit();
+
 			if (lu == null) {
 				throw createMalformedLexicalUnitDOMException();
 			}

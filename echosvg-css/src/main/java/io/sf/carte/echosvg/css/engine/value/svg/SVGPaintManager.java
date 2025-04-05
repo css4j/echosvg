@@ -26,7 +26,6 @@ import io.sf.carte.echosvg.css.engine.CSSEngineUserAgent;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
 import io.sf.carte.echosvg.css.engine.value.ListValue;
-import io.sf.carte.echosvg.css.engine.value.URIValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
@@ -98,6 +97,8 @@ public class SVGPaintManager extends SVGColorManager {
 	 */
 	@Override
 	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
+		Value uriVal = null;
+
 		switch (lu.getLexicalUnitType()) {
 		case IDENT:
 			if (lu.getStringValue().equalsIgnoreCase(CSSConstants.CSS_NONE_VALUE)) {
@@ -106,17 +107,27 @@ public class SVGPaintManager extends SVGColorManager {
 			// Fall through
 		default:
 			return super.createValue(lu, engine);
+
 		case URI:
+			uriVal = createURIValue(lu, engine);
+			break;
+
+		case VAR:
+		case ATTR:
+			return createLexicalValue(lu);
 		}
-		String value = lu.getStringValue();
-		String uri = resolveURI(engine.getCSSBaseURI(), value);
+
+		if (uriVal == null) {
+			throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
+		}
+
 		lu = lu.getNextLexicalUnit();
 		if (lu == null) {
-			return new URIValue(value, uri);
+			return uriVal;
 		}
 
 		ListValue result = new ListValue(' ');
-		result.append(new URIValue(value, uri));
+		result.append(uriVal);
 
 		if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.IDENT) {
 			if (lu.getStringValue().equalsIgnoreCase(CSSConstants.CSS_NONE_VALUE)) {
@@ -124,6 +135,7 @@ public class SVGPaintManager extends SVGColorManager {
 				return result;
 			}
 		}
+
 		Value v = super.createValue(lu, engine);
 		if (v instanceof ListValue) {
 			for (int i = 0; i < v.getLength(); i++) {
@@ -132,6 +144,7 @@ public class SVGPaintManager extends SVGColorManager {
 		} else {
 			result.append(v);
 		}
+
 		return result;
 	}
 

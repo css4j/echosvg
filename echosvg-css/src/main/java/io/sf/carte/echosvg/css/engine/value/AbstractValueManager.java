@@ -185,6 +185,11 @@ public abstract class AbstractValueManager extends AbstractValueFactory implemen
 		return cv.getFloatValue();
 	}
 
+	protected Value createURIValue(LexicalUnit lu, CSSEngine engine) {
+		String sv = lu.getStringValue();
+		return new URIValue(sv, resolveURI(engine.getCSSBaseURI(), sv));
+	}
+
 	/**
 	 * Creates an INVALID_ACCESS_ERR exception.
 	 * @param cv the value.
