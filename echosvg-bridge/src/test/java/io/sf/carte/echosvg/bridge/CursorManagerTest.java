@@ -99,6 +99,18 @@ public class CursorManagerTest {
 	}
 
 	@Test
+	public void testCursorURI_URI() {
+		Element circle = createDocument(context,
+				"url('../samples/tests/resources/images/hotSpotCenter.webp') 3 4,url('../samples/tests/resources/images/hotSpotCenter.png') 3 4,wait");
+		Cursor c = context.getCursorManager().convertCursor(circle);
+
+		assertNotNull(c);
+		assertEquals(Cursor.CUSTOM_CURSOR, c.getType());
+		assertEquals(0, errorCount);
+		assertEquals(1, messageCount);
+	}
+
+	@Test
 	public void testCursorURI_Other_units() {
 		Element circle = createDocument(context,
 				"url('../samples/tests/resources/images/hotSpotCenter.png') 3pt 1mm,wait");
