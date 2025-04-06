@@ -404,8 +404,13 @@ public class AbstractSamplesRendering {
 	 * @throws IOException         if an I/O error occurs.
 	 */
 	void testDynamicUpdate(String file) throws TranscoderException, IOException {
+		testDynamicUpdate(file, true);
+	}
+
+	void testDynamicUpdate(String file, boolean validating) throws TranscoderException, IOException {
 		JSVGRenderingAccuracyTest runner = new JSVGRenderingAccuracyTest();
 		runner.setFile(file);
+		runner.setValidating(validating);
 		runner.runTest(getBelowThresholdAllowed(), getOverThresholdAllowed());
 	}
 

@@ -23,8 +23,11 @@ import java.util.Locale;
 import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
 
+import io.sf.carte.doc.style.css.CSSValueSyntax;
 import io.sf.carte.doc.style.css.CSSValue.Type;
+import io.sf.carte.doc.style.css.CSSValueSyntax.Match;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
+import io.sf.carte.doc.style.css.parser.SyntaxParser;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSEngineUserAgent;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
@@ -174,9 +177,10 @@ public class CursorManager extends AbstractValueManager {
 	private Value addToURLList(LexicalUnit lunit, CSSEngine engine, ListValue result) {
 		LexicalUnit lu = lunit;
 		LexicalUnit.LexicalType type;
-		do {
+		topLoop: do {
 			type = lu.getLexicalUnitType();
-			if (type == LexicalUnit.LexicalType.URI) {
+			switch (type) {
+			case URI: {
 				Value v = createURIValue(lu, engine);
 				if (v == null) {
 					throw createMalformedLexicalUnitDOMException();
@@ -185,10 +189,12 @@ public class CursorManager extends AbstractValueManager {
 					return createLexicalValue(lunit);
 				}
 				result.append(v);
-			} else if (type == LexicalUnit.LexicalType.IDENT) {
-				Value v = createIdentValue(lu);
-				if (v != null) {
-					result.add(v);
+				break;
+			}
+			case IDENT:
+				Value ident = createIdentValue(lu);
+				if (ident != null) {
+					result.add(ident);
 				} else {
 					engine.getCSSEngineUserAgent().displayMessage("Unknown identifier: " + lu.getStringValue());
 				}
@@ -196,35 +202,61 @@ public class CursorManager extends AbstractValueManager {
 				if (lu != null) {
 					throw createMalformedLexicalUnitDOMException();
 				}
-				break;
-			} else if (type == LexicalUnit.LexicalType.INTEGER) {
+				break topLoop;
+
+			case INTEGER:
 				result.add(new FloatValue(CSSUnit.CSS_NUMBER, lu.getIntegerValue()));
-			} else if (type == LexicalUnit.LexicalType.REAL) {
+				break;
+
+			case REAL:
 				result.add(new FloatValue(CSSUnit.CSS_NUMBER, lu.getFloatValue()));
-			} else if (type == LexicalUnit.LexicalType.DIMENSION) {
+				break;
+
+			case DIMENSION:
 				short unit = lu.getCssUnit();
 				if (CSSUnit.isLengthUnitType(unit) || unit == CSSUnit.CSS_OTHER) {
 					result.add(new FloatValue(unit, lu.getFloatValue()));
 				} else {
 					throw createMalformedLexicalUnitDOMException();
 				}
-			} else if (type == LexicalUnit.LexicalType.VAR || type == LexicalUnit.LexicalType.ATTR) {
-				return createLexicalValue(lunit);
-			} else {
-				throw createInvalidLexicalUnitDOMException(type);
-			}
+				break;
 
-			lu = lu.getNextLexicalUnit();
-			if (lu == null) {
-				throw createMalformedLexicalUnitDOMException();
-			}
+			case CALC:
+				Value calc = createCalc(lu);
 
-			type = lu.getLexicalUnitType();
-			if (type != LexicalUnit.LexicalType.OPERATOR_COMMA) {
-				if (type == LexicalUnit.LexicalType.VAR || type == LexicalUnit.LexicalType.ATTR) {
-					return createLexicalValue(lunit);
+				CSSValueSyntax syn = new SyntaxParser().parseSyntax("<number> | <length>");
+				if (calc.matches(syn) == Match.FALSE) {
+					throw createDOMException(calc);
 				}
-				throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
+
+				result.append(calc);
+				break;
+
+			case MATH_FUNCTION: {
+				Value v;
+				try {
+					v = createMathFunction(lu, "<number> | <length>");
+				} catch (Exception e) {
+					DOMException ife = createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
+					ife.initCause(e);
+					throw ife;
+				}
+				result.append(v);
+				break;
+			}
+			case VAR:
+			case ATTR:
+				return createLexicalValue(lunit);
+
+			case OPERATOR_COMMA:
+				lu = lu.getNextLexicalUnit();
+				if (lu == null) {
+					throw createMalformedLexicalUnitDOMException();
+				}
+				continue;
+
+			default:
+				throw createInvalidLexicalUnitDOMException(type);
 			}
 
 			lu = lu.getNextLexicalUnit();

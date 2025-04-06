@@ -33,16 +33,23 @@ import java.awt.image.RenderedImage;
 import java.awt.image.SampleModel;
 import java.awt.image.WritableRaster;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
+import org.w3c.css.om.unit.CSSUnit;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.svg.SVGDocument;
 import org.w3c.dom.svg.SVGPreserveAspectRatio;
 
+import io.sf.carte.doc.style.css.CSSTypedValue;
 import io.sf.carte.doc.style.css.CSSValue.CssType;
 import io.sf.carte.doc.style.css.CSSValue.Type;
+import io.sf.carte.doc.style.css.property.Evaluator;
+import io.sf.carte.doc.style.css.property.NumberValue;
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
+import io.sf.carte.echosvg.css.engine.value.NumericDelegateValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.dom.AbstractNode;
 import io.sf.carte.echosvg.dom.util.XLinkSupport;
@@ -53,6 +60,7 @@ import io.sf.carte.echosvg.ext.awt.image.renderable.PadRable8Bit;
 import io.sf.carte.echosvg.ext.awt.image.spi.BrokenLinkProvider;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageTagRegistry;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
+import io.sf.carte.echosvg.parser.UnitProcessor.Context;
 import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.Platform;
 import io.sf.carte.echosvg.util.SVGConstants;
@@ -262,43 +270,79 @@ public class CursorManager implements SVGConstants, ErrorConstants {
 	}
 
 	/**
-	 * Returns a cursor for the given value list. Note that the code assumes that
-	 * the input value has at least two entries. So the caller should check that
-	 * before calling the method. For example, CSSUtilities.convertCursor performs
-	 * that check.
+	 * Returns a cursor for the given value list.
+	 * <p>
+	 * Note that the code assumes that the input value has at least two entries. So
+	 * the caller should check that before calling the method. For example,
+	 * convertCursor() performs that check.
+	 * </p>
 	 */
 	public Cursor convertSVGCursor(Element e, Value l) {
-		int nValues = l.getLength();
 		Element cursorElement = null;
-		for (int i = 0; i < nValues - 1; i++) {
-			Value cursorValue = l.item(i);
-			if (cursorValue.getPrimitiveType() == Type.URI) {
-				String uri = cursorValue.getURIValue();
+		Iterator<? extends Value> it = l.iterator();
+		Value cursorValue = it.next();
+		while (cursorValue.getPrimitiveType() == Type.URI) {
+			String uri = cursorValue.getURIValue();
+			float x = 0, y = 0;
 
-				// If the uri does not resolve to a cursor element,
-				// then, this is not a type of cursor uri we can handle:
-				// go to the next or default to logical cursor
-				try {
-					cursorElement = ctx.getReferencedElement(e, uri);
-				} catch (BridgeException be) {
-					// Be only silent if this is a case where the target
-					// could not be found. Do not catch other errors (e.g,
-					// malformed URIs)
-					if (!ERR_URI_BAD_TARGET.equals(be.getCode())) {
-						throw be;
+			// If the uri does not resolve to a cursor element,
+			// then, this is not a type of cursor uri we can handle:
+			// go to the next or default to logical cursor
+			try {
+				cursorElement = ctx.getReferencedElement(e, uri);
+			} catch (BridgeException be) {
+				// We attempted to use a deprecated feature,
+				// do not bother reporting the error.
+			}
+
+			if (cursorElement != null) {
+				// We go an element, check it is of type cursor
+				String cursorNS = cursorElement.getNamespaceURI();
+				if (SVGConstants.SVG_NAMESPACE_URI.equals(cursorNS)
+						&& SVGConstants.SVG_CURSOR_TAG.equals(cursorElement.getLocalName())) {
+					Cursor c = convertSVGCursorElement(cursorElement);
+					if (c != null) {
+						return c;
 					}
 				}
-
-				if (cursorElement != null) {
-					// We go an element, check it is of type cursor
-					String cursorNS = cursorElement.getNamespaceURI();
-					if (SVGConstants.SVG_NAMESPACE_URI.equals(cursorNS)
-							&& SVGConstants.SVG_CURSOR_TAG.equals(cursorElement.getLocalName())) {
-						Cursor c = convertSVGCursorElement(cursorElement);
-						if (c != null) {
-							return c;
+			} else {
+				// CSS interpretation of the property
+				/*
+				 * [ [<url> [<x> <y>]?,]* [ auto | default | none | context-menu | help |
+				 * pointer | progress | wait | cell | crosshair | text | vertical-text | alias |
+				 * copy | move | no-drop | not-allowed | grab | grabbing | e-resize | n-resize |
+				 * ne-resize | nw-resize | s-resize | se-resize | sw-resize | w-resize |
+				 * ew-resize | ns-resize | nesw-resize | nwse-resize | col-resize | row-resize |
+				 * all-scroll | zoom-in | zoom-out ] ]
+				 */
+				cursorValue = it.next();
+				if (cursorValue.getPrimitiveType() != Type.IDENT && cursorValue.getPrimitiveType() != Type.URI) {
+					UnitProcessor.Context uctx = UnitProcessor.createContext(ctx, e);
+					try {
+						x = convertToCoordinate(cursorValue, e, UnitProcessor.HORIZONTAL_LENGTH, uctx);
+					} catch (IllegalArgumentException ex) {
+						break;
+					}
+					if (it.hasNext()) {
+						cursorValue = it.next();
+						if (cursorValue.getPrimitiveType() != Type.IDENT
+								&& cursorValue.getPrimitiveType() != Type.URI) {
+							try {
+								y = convertToCoordinate(cursorValue, e, UnitProcessor.VERTICAL_LENGTH, uctx);
+							} catch (IllegalArgumentException ex) {
+								break;
+							}
+							if (it.hasNext()) {
+								cursorValue = it.next();
+							} else {
+								return CursorManager.DEFAULT_CURSOR;
+							}
 						}
 					}
+				}
+				Cursor c = createCSSCursor(e, uri, x, y);
+				if (c != null) {
+					return c;
 				}
 			}
 		}
@@ -307,13 +351,170 @@ public class CursorManager implements SVGConstants, ErrorConstants {
 		// produced a valid cursor, i.e., either a format we support
 		// or a valid referenced image (no broken image).
 		// Fallback on the built in cursor property.
-		Value cursorValue = l.item(nValues - 1);
+		int nValues = l.getLength();
+		cursorValue = l.item(nValues - 1);
 		String cursorStr = SVGConstants.SVG_AUTO_VALUE;
 		if (cursorValue.getPrimitiveType() == Type.IDENT) {
 			cursorStr = cursorValue.getIdentifierValue();
 		}
 
 		return convertBuiltInCursor(e, cursorStr);
+	}
+
+	private float convertToCoordinate(Value v, Element elt, short axis, Context uctx)
+			throws IllegalArgumentException {
+		switch (v.getPrimitiveType()) {
+		case NUMERIC:
+			return UnitProcessor.cssToUserSpace(v.getFloatValue(), v.getUnitType(), axis, uctx);
+		case EXPRESSION:
+		case MATH_FUNCTION:
+			NumericDelegateValue<?> num = (NumericDelegateValue<?>) v;
+			LengthNumberEvaluator eval = new LengthNumberEvaluator(axis, uctx);
+			try {
+				Value calc = num.floatValue(eval);
+				float f = calc.getFloatValue();
+				short unit = calc.getUnitType();
+				if (unit != CSSUnit.CSS_NUMBER && unit != CSSUnit.CSS_PX) {
+					f = UnitProcessor.cssToUserSpace(f, unit, axis, uctx);
+				}
+				return f;
+			} catch (Exception e) {
+				ctx.getUserAgent().displayError(e);
+				throw new IllegalArgumentException(e);
+			}
+		default:
+			break;
+		}
+		ctx.getUserAgent().displayMessage("Invalid coordinate: " + v.getCssText());
+		throw new IllegalArgumentException();
+	}
+
+	private class LengthNumberEvaluator extends Evaluator {
+
+		private short percentageInterpretation;
+
+		private Context uctx;
+
+		/**
+		 * Instantiate a length evaluator.
+		 * 
+		 * @param pcInterp the percentage interpretation.
+		 */
+		public LengthNumberEvaluator(short pcInterp, Context uctx) {
+			super(CSSUnit.CSS_PX);
+			this.percentageInterpretation = pcInterp;
+			this.uctx = uctx;
+		}
+
+		@Override
+		protected CSSTypedValue absoluteTypedValue(CSSTypedValue typed) {
+			short unitType = typed.getUnitType();
+			if (CSSUnit.isRelativeLengthUnitType(unitType)) {
+				float f = UnitProcessor.cssToUserSpace(typed.getFloatValue(unitType), unitType,
+						percentageInterpretation, uctx);
+				return NumberValue.createCSSNumberValue(CSSUnit.CSS_PX, f);
+			} else {
+				return typed;
+			}
+		}
+
+		@Override
+		protected float percentage(CSSTypedValue typed, short resultType) throws DOMException {
+			float f = UnitProcessor.cssToUserSpace(typed.getFloatValue(CSSUnit.CSS_PERCENTAGE), CSSUnit.CSS_PERCENTAGE,
+					percentageInterpretation, uctx);
+			return NumberValue.floatValueConversion(f, CSSUnit.CSS_PX, resultType);
+		}
+
+	}
+
+	private Cursor createCSSCursor(Element e, String uriStr, float x, float y) {
+		String baseURI = e.getBaseURI();
+		ParsedURL purl;
+		if (baseURI == null) {
+			purl = new ParsedURL(uriStr);
+		} else {
+			purl = new ParsedURL(baseURI, uriStr);
+		}
+
+		CursorDescriptor desc = new CursorDescriptor(purl, x, y);
+
+		//
+		// Check if there is a cursor in the cache for this url
+		//
+		Cursor cachedCursor = cursorCache.getCursor(desc);
+
+		if (cachedCursor != null) {
+			return cachedCursor;
+		}
+
+		//
+		// Load image into Filter f and transform hotSpot to
+		// cursor space.
+		//
+		Point2D.Float hotSpot = new Point2D.Float(x, y);
+		Filter f = cursorURLToFilter(purl, hotSpot);
+		if (f == null) {
+			return null;
+		}
+
+		Cursor c = getCursor(hotSpot, f, purl, x, y);
+
+		cursorCache.putCursor(desc, c);
+
+		return c;
+	}
+
+	private Filter cursorURLToFilter(ParsedURL purl, Point2D.Float hotSpot) {
+		// Try to load the image.
+		ImageTagRegistry reg = ImageTagRegistry.getRegistry();
+		Filter filter = reg.readURL(purl);
+		if (filter == null) {
+			return null;
+		}
+
+		// Check if we got a broken image
+		if (BrokenLinkProvider.hasBrokenLinkProperty(filter)) {
+			ctx.getUserAgent().displayMessage("File not found: " + purl.toString());
+			return null;
+		}
+
+		AffineRable8Bit f = null;
+
+		Rectangle preferredSize = filter.getBounds2D().getBounds();
+		Dimension cursorSize = Toolkit.getDefaultToolkit().getBestCursorSize(preferredSize.width,
+				preferredSize.height);
+
+		if (preferredSize != null && preferredSize.width > 0 && preferredSize.height > 0) {
+			AffineTransform at = new AffineTransform();
+			if (preferredSize.width > cursorSize.width || preferredSize.height > cursorSize.height) {
+				at = ViewBox.getPreserveAspectRatioTransform(
+						new float[] { 0, 0, preferredSize.width, preferredSize.height },
+						SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMINYMIN, true, cursorSize.width,
+						cursorSize.height);
+				if (at == null) {
+					return null;
+				}
+			}
+			f = new AffineRable8Bit(filter, at);
+		} else {
+			// Invalid Size
+			return null;
+		}
+
+		//
+		// Transform the hot spot from image space to cursor space
+		//
+		AffineTransform at = f.getAffine();
+		at.transform(hotSpot, hotSpot);
+
+		//
+		// Clip to the cursor boundaries
+		//
+		Rectangle cursorViewport = new Rectangle(0, 0, cursorSize.width, cursorSize.height);
+
+		PadRable8Bit cursorImage = new PadRable8Bit(f, cursorViewport, PadMode.ZERO_PAD);
+
+		return cursorImage;
 	}
 
 	/**
@@ -374,6 +575,14 @@ public class CursorManager implements SVGConstants, ErrorConstants {
 			return null;
 		}
 
+		Cursor c = getCursor(hotSpot, f, purl, x, y);
+
+		cursorCache.putCursor(desc, c);
+
+		return c;
+	}
+
+	private Cursor getCursor(Point2D.Float hotSpot, Filter f, ParsedURL purl, float x, float y) {
 		// The returned Filter is guaranteed to create a
 		// default rendering of the desired size
 		Rectangle cursorSize = f.getBounds2D().getBounds();
@@ -399,7 +608,6 @@ public class CursorManager implements SVGConstants, ErrorConstants {
 		Cursor c = Toolkit.getDefaultToolkit().createCustomCursor(img,
 				new Point(Math.round(hotSpot.x), Math.round(hotSpot.y)), purl.toString());
 
-		cursorCache.putCursor(desc, c);
 		return c;
 	}
 

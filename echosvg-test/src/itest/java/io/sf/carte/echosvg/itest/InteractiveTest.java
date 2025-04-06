@@ -43,6 +43,11 @@ public class InteractiveTest {
 	}
 
 	@Test
+	public void testCursorCSS() throws TranscoderException, IOException {
+		testDynamicUpdate("samples/tests/spec/interactivity/cursorCSS.svg", false);
+	}
+
+	@Test
 	public void testFocus() throws TranscoderException, IOException {
 		testDynamicUpdate("samples/tests/spec/interactivity/focus.svg", true);
 	}

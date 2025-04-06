@@ -143,8 +143,10 @@ public abstract class UnitProcessor {
 	 * @param d    HORIZONTAL_LENGTH, VERTICAL_LENGTH, or OTHER_LENGTH
 	 * @param ctx  the context used to resolve relative value
 	 * @return the value in user space units.
+	 * @throws IllegalArgumentException if the type is unknown.
 	 */
-	public static float cssToUserSpace(float v, short type, short d, Context ctx) {
+	public static float cssToUserSpace(float v, short type, short d, Context ctx)
+			throws IllegalArgumentException {
 		switch (type) {
 		case CSSUnit.CSS_NUMBER:
 		case CSSUnit.CSS_PX:
