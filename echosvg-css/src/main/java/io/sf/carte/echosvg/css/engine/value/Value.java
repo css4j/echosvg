@@ -18,6 +18,8 @@
  */
 package io.sf.carte.echosvg.css.engine.value;
 
+import java.util.Iterator;
+
 import org.w3c.css.om.typed.CSSCounterValue;
 import org.w3c.css.om.typed.CSSStyleValue;
 import org.w3c.css.om.unit.CSSUnit;
@@ -107,6 +109,16 @@ public interface Value extends CSSVal, CSSStyleValue, java.io.Serializable {
 	@Override
 	default Value item(int index) {
 		return index == 0 ? this : null;
+	}
+
+	/**
+	 * If this value is a list, return an iterator.
+	 * 
+	 * @return the iterator.
+	 * @throws UnsupportedOperationException if this value is not a list.
+	 */
+	default Iterator<? extends Value> iterator() throws UnsupportedOperationException {
+		throw new UnsupportedOperationException();
 	}
 
 	/**

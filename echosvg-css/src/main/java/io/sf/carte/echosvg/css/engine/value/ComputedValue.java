@@ -18,6 +18,8 @@
  */
 package io.sf.carte.echosvg.css.engine.value;
 
+import java.util.Iterator;
+
 import org.w3c.css.om.typed.CSSCounterValue;
 import org.w3c.dom.DOMException;
 
@@ -122,6 +124,11 @@ public class ComputedValue implements Value {
 		return computedValue.getIdentifierValue();
 	}
 
+	@Override
+	public boolean isIdentifier(String internedIdent) {
+		return computedValue.isIdentifier(internedIdent);
+	}
+
 	/**
 	 * Implements {@link Value#getStringValue()}.
 	 */
@@ -151,6 +158,11 @@ public class ComputedValue implements Value {
 	}
 
 	@Override
+	public Iterator<? extends Value> iterator() throws UnsupportedOperationException {
+		return computedValue.iterator();
+	}
+
+	@Override
 	public CSSCounterValue getCounterValue() throws DOMException {
 		return computedValue.getCounterValue();
 	}
@@ -163,6 +175,11 @@ public class ComputedValue implements Value {
 	@Override
 	public ColorValue getColorValue() throws DOMException {
 		return computedValue.getColorValue();
+	}
+
+	@Override
+	public String toString() {
+		return computedValue.toString();
 	}
 
 	@Override

@@ -18,6 +18,8 @@
  */
 package io.sf.carte.echosvg.css.dom;
 
+import java.util.Iterator;
+
 import org.w3c.css.om.typed.CSSCounterValue;
 import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
@@ -372,6 +374,11 @@ public class CSSOMValue implements Value {
 	}
 
 	@Override
+	public boolean isIdentifier(String internedIdent) {
+		return valueProvider.getValue().isIdentifier(internedIdent);
+	}
+
+	@Override
 	public short getUnitType() {
 		return valueProvider.getValue().getUnitType();
 	}
@@ -426,14 +433,14 @@ public class CSSOMValue implements Value {
 		return result;
 	}
 
-	// Counter /////////////////////////////////////////////////////////////
-
-	/**
-	 * <b>DOM</b>: Implements {@link org.w3c.dom.css.Counter#getIdentifier()}.
-	 */
 	@Override
-	public String getIdentifier() {
-		return valueProvider.getValue().getIdentifierValue();
+	public Iterator<? extends Value> iterator() throws UnsupportedOperationException {
+		return valueProvider.getValue().iterator();
+	}
+
+	@Override
+	public String toString() {
+		return valueProvider.getValue().toString();
 	}
 
 	@Override
