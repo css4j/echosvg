@@ -455,13 +455,13 @@ public abstract class AbstractColorManager extends IdentifierManager {
 
 	private FloatValue evaluateComponentExpression(CalcValue calc) {
 		PercentageEvaluator eval = new PercentageEvaluator();
-		CSSTypedValue result = eval.evaluateExpression(calc.getNumericDelegate());
+		CSSTypedValue result = calc.evaluate(eval);
 		return new FloatValue(CSSUnit.CSS_NUMBER, result.getFloatValue(CSSUnit.CSS_NUMBER));
 	}
 
 	private FloatValue evaluateComponentFunction(MathFunctionValue calc) {
 		PercentageEvaluator eval = new PercentageEvaluator();
-		CSSTypedValue result = eval.evaluateFunction(calc.getNumericDelegate());
+		CSSTypedValue result = calc.evaluate(eval);
 		return new FloatValue(CSSUnit.CSS_NUMBER, result.getFloatValue(CSSUnit.CSS_NUMBER));
 	}
 

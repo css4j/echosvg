@@ -129,6 +129,11 @@ public abstract class NumericDelegateValue<D extends CSSMathValue> extends Numer
 		return relative;
 	}
 
+	public Value floatValue(Evaluator eval) {
+		CSSTypedValue typed = evaluate(eval);
+		return new FloatValue(typed.getUnitType(), typed.getFloatValue());
+	}
+
 	@Override
 	public CSSUnitValue to(String unit) {
 		throw new DOMException(DOMException.NOT_SUPPORTED_ERR, "Not supported.");
