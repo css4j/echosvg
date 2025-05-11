@@ -22,46 +22,22 @@ package io.sf.carte.echosvg.css.engine.value;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.io.IOException;
-import java.io.StringReader;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.DOMException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 import io.sf.carte.doc.style.css.CSSValue.CssType;
 import io.sf.carte.doc.style.css.CSSValue.Type;
-import io.sf.carte.doc.style.css.nsac.CSSParseException;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
-import io.sf.carte.doc.style.css.nsac.Parser;
-import io.sf.carte.doc.style.css.parser.CSSParser;
-import io.sf.carte.echosvg.css.Viewport;
-import io.sf.carte.echosvg.css.engine.CSSContext;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
-import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
 import io.sf.carte.echosvg.css.engine.value.css.CursorManager;
-import io.sf.carte.echosvg.util.ParsedURL;
 
 /**
  * Test the cursor manager.
  */
-public class CursorManagerTest {
-
-	private static Parser cssParser;
+public class CursorManagerTest extends AbstractManagerTestSetup {
 
 	private ValueManager manager;
-
-	@BeforeAll
-	public static void setupBeforeAll() {
-		cssParser = new CSSParser();
-	}
 
 	@BeforeEach
 	public void setupBeforeEach() {
@@ -285,128 +261,6 @@ public class CursorManagerTest {
 		LexicalUnit lu = parsePropertyValue("url('/img/cursor.ico') 2 calc(3deg),move");
 		CSSEngine engine = createCSSEngine();
 		assertThrows(DOMException.class, () -> manager.createValue(lu, engine));
-	}
-
-	private static LexicalUnit parsePropertyValue(String value) throws CSSParseException {
-		try {
-			return cssParser.parsePropertyValue(new StringReader(value));
-		} catch (IOException e) {
-			return null;
-		}
-	}
-
-	private static CSSEngine createCSSEngine() {
-		ParsedURL purl = new ParsedURL("https://www.example.com/");
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder builder;
-		try {
-			builder = factory.newDocumentBuilder();
-		} catch (ParserConfigurationException e) {
-			throw new IllegalStateException(e);
-		}
-		Document doc = builder.newDocument();
-		doc.setDocumentURI(purl.toString());
-		CSSContext ctx = new TestCSSContext(doc, purl);
-		CSSEngine engine = ctx.getCSSEngineForElement(null);
-		return engine;
-	}
-
-	static class TestCSSContext implements CSSContext {
-
-		private CSSEngine engine;
-
-		public TestCSSContext(Document doc, ParsedURL purl) {
-			this.engine = new SVGCSSEngine(doc, purl, cssParser, this) {
-
-				@Override
-				public ParsedURL getCSSBaseURI() {
-					return purl;
-				}
-
-			};
-		}
-
-		@Override
-		public Value getSystemColor(String ident) {
-			return null;
-		}
-
-		@Override
-		public Value getDefaultFontFamily() {
-			return null;
-		}
-
-		@Override
-		public float getLighterFontWeight(float f) {
-			return 0;
-		}
-
-		@Override
-		public float getBolderFontWeight(float f) {
-			return f * 1.2f;
-		}
-
-		@Override
-		public float getResolution() {
-			return 96f;
-		}
-
-		@Override
-		public float getMediumFontSize() {
-			return 12f;
-		}
-
-		@Override
-		public float getBlockWidth(Element elt) {
-			return 100;
-		}
-
-		@Override
-		public float getBlockHeight(Element elt) {
-			return 50;
-		}
-
-		@Override
-		public Viewport getViewport(Element e) {
-			return new Viewport() {
-
-				@Override
-				public float getWidth() {
-					return 400f;
-				}
-
-				@Override
-				public float getHeight() {
-					return 300f;
-				}
-
-			};
-		}
-
-		@Override
-		public void checkLoadExternalResource(ParsedURL resourceURL, ParsedURL docURL) throws SecurityException {
-		}
-
-		@Override
-		public String getPrefersColorScheme() {
-			return "light";
-		}
-
-		@Override
-		public boolean isDynamic() {
-			return false;
-		}
-
-		@Override
-		public boolean isInteractive() {
-			return false;
-		}
-
-		@Override
-		public CSSEngine getCSSEngineForElement(Element e) {
-			return engine;
-		}
-
 	}
 
 }
