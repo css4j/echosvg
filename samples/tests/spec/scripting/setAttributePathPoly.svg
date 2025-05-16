@@ -56,7 +56,7 @@ path {
   fill: #5cb4e8;
 }
 polygon {
-  stroke: #123f49;;
+  stroke: #123f49;
   stroke-width: 5px;
   fill: #3a76b6;
 }
