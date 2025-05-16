@@ -2069,26 +2069,42 @@ public abstract class CSSEngine {
 			parseStyleSheet(ss, new InputSource(new StringReader(rules)), uri);
 		} catch (SecurityException e) {
 			throw e;
+		} catch (CSSParseException e) {
+			StringBuilder buf;
+			String m = e.getMessage();
+			if (m != null) {
+				buf = new StringBuilder(m.length() + 16);
+				buf.append(m);
+				buf.append(": ");
+			} else {
+				buf = new StringBuilder(40);
+			}
+			buf.append("([line,column] is relative to style sheet origin, not the document) [");
+			buf.append(e.getLineNumber()).append(',').append(e.getColumnNumber()).append(']');
+			reportError(rules, uri, e, buf.toString());
 		} catch (Exception e) {
 			// e.printStackTrace();
 			String m = e.getMessage();
 			if (m == null) {
 				m = "";
 			}
-			final String strUri;
-			if (uri != null) {
-				strUri = uri.toString();
-			} else {
-				strUri = "";
-			}
-			String s = Messages.formatMessage("stylesheet.syntax.error",
-					new Object[] { strUri, rules, m });
-			DOMException de = new DOMException(DOMException.SYNTAX_ERR, s);
-			de.initCause(e);
-			if (userAgent == null)
-				throw de;
-			userAgent.displayError(de);
+			reportError(rules, uri, e, m);
 		}
+	}
+
+	private void reportError(String rules, ParsedURL uri, Exception cause, String message) {
+		final String strUri;
+		if (uri != null) {
+			strUri = uri.toString();
+		} else {
+			strUri = "";
+		}
+		String s = Messages.formatMessage("stylesheet.syntax.error", new Object[] { strUri, rules, message });
+		DOMException de = new DOMException(DOMException.SYNTAX_ERR, s);
+		de.initCause(cause);
+		if (userAgent == null)
+			throw de;
+		userAgent.displayError(de);
 	}
 
 	/**
