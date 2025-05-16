@@ -2531,8 +2531,9 @@ public abstract class CSSEngine {
 		}
 
 		@Override
-		public void importStyle(String uri, MediaQueryList media, String defaultNamespaceURI) {
-			if (ignoredForRule > 0) {
+		public void importStyle(String uri, String layerName, BooleanCondition supportsCondition,
+				MediaQueryList media, String defaultNamespaceURI) {
+			if (ignoredForRule > 0 || layerName != null || !supports(supportsCondition)) {
 				return;
 			}
 
@@ -2733,20 +2734,6 @@ public abstract class CSSEngine {
 		}
 
 		@Override
-		public void startViewport() {
-			if (ignoredForRule == 0) {
-				ignoredForRule = CSSRule.VIEWPORT_RULE;
-			}
-		}
-
-		@Override
-		public void endViewport() {
-			if (ignoredForRule == CSSRule.VIEWPORT_RULE) {
-				ignoredForRule = 0;
-			}
-		}
-
-		@Override
 		public void startSelector(SelectorList selectors) {
 			if (ignoredForRule > 0) {
 				return;
@@ -2881,7 +2868,8 @@ public abstract class CSSEngine {
 		}
 
 		@Override
-		public void importStyle(String uri, MediaQueryList media, String defaultNamespaceURI) {
+		public void importStyle(String uri, String layerName, BooleanCondition supportsCondition,
+				MediaQueryList media, String defaultNamespaceURI) {
 			throwUnsupportedEx();
 		}
 
@@ -2992,16 +2980,6 @@ public abstract class CSSEngine {
 
 		@Override
 		public void endSupports(BooleanCondition condition) {
-			throwUnsupportedEx();
-		}
-
-		@Override
-		public void startViewport() {
-			throwUnsupportedEx();
-		}
-
-		@Override
-		public void endViewport() {
 			throwUnsupportedEx();
 		}
 
