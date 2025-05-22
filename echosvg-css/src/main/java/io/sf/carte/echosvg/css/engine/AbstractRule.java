@@ -19,32 +19,25 @@
 package io.sf.carte.echosvg.css.engine;
 
 /**
- * This interface represents a CSS rule.
- *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * Abstract rule.
+ * 
  * @version $Id$
  */
-public interface Rule {
+abstract class AbstractRule implements Rule {
 
-	/**
-	 * Returns a constant identifying the rule type.
-	 */
-	short getType();
+	private RuleGroup parent;
 
-	/**
-	 * Returns the parent group.
-	 * 
-	 * @return the parent group, or {@code null} if the parent group of this rule
-	 *         does not matter when processing it.
-	 */
-	default RuleGroup getParent() {
-		return null;
+	protected AbstractRule() {
+		super();
 	}
 
-	/**
-	 * Returns a printable representation of this rule.
-	 */
-	String toString(CSSEngine eng);
+	@Override
+	public RuleGroup getParent() {
+		return parent;
+	}
+
+	protected void setParent(RuleGroup parent) {
+		this.parent = parent;
+	}
 
 }

@@ -1,0 +1,221 @@
+<?xml version="1.0" standalone="no"?>
+<!--
+
+   See the NOTICE file distributed with this work for additional
+   information regarding copyright ownership.
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+-->
+<!-- ====================================================================== -->
+<!-- CSS nesting.                                                           -->
+<!--                                                                        -->
+<!-- @author github.com/carlosame                                           -->
+<!-- @version $Id$    -->
+<!-- ====================================================================== -->
+
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="500" viewBox="0 0 400 500">
+
+  <style type="text/css">
+/*<![CDATA[*/
+
+@property --pty-not-set {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #cf8650;
+}
+
+g {
+    --fillColorBlue: #0000fd; /* blue */
+    --fillColorRed: #ff0000; /* red */
+    --fillColorGreen: #00ff00; /* green */
+    --fillColorYellow: #ffff00; /* yellow */
+    --strokeColorBlue: #000044; /* dark blue */
+    --strokeColorRed: #440000; /* dark red */
+    --strokeColorYellow: #868400; /* dark yellow */
+    --strokeColorGreen: #027a00; /* dark green */
+    --fillColorBlueAlpha: #0000ff4c; /* blue with transparency */
+    --fillColorRedAlpha: #ff00004c; /* red with transparency */
+    --fillColorGreenAlpha: #00ff004c; /* green with transparency */
+    --fillColorYellowAlpha: #ffff004c; /* yellow with transparency */
+    --textColor: #175a9e;
+    --onePixel: 1px;
+    --circle-stroke-width: calc(3*2px);
+    --ellipse-stroke-width: calc(2*var(--onePixel));
+    --textFontSize: calc(2 * 5pt);
+
+    --linear-gb: 0.001399396 0.06030292;
+    --s-gb: 29.80392% 47.8431373%;
+    --s-rg: 13.33333% 24.70588%;
+
+    font: bold var(--textFontSize) "Open Sans", sans-serif;
+
+    circle {
+      stroke-width: 5px;
+
+      @media screen and (100px <= width <= 4000px) {
+        stroke-width: var(--circle-stroke-width);
+      }
+
+      &:first-of-type {
+        fill:var(--fillColorBlue);
+        stroke:var(--strokeColorBlue);
+      }
+
+      &:nth-of-type(2) {
+        fill:var(--fillColorRed);
+        stroke:var(--strokeColorRed);
+      }
+
+      &:nth-of-type(3) {
+        fill:var(--fillColorYellow);
+        stroke:var(--strokeColorYellow);
+      }
+
+      &:last-of-type {
+        fill:var(--fillColorGreen);
+        stroke:var(--strokeColorGreen);
+      }
+    }
+
+    ellipse {
+      stroke-width: 3px;
+
+      @media screen and (100px <= width <= 4000px) {
+        stroke-width: var(--ellipse-stroke-width);
+      }
+
+      &:first-of-type {
+        fill:var(--fillColorBlueAlpha);
+        stroke:var(--fillColorBlue);
+      }
+
+      &:nth-of-type(2) {
+        fill:var(--fillColorRedAlpha);
+        stroke:var(--fillColorRed);
+      }
+
+      &:nth-of-type(3) {
+        fill:var(--fillColorYellowAlpha);
+        stroke:var(--fillColorYellow);
+      }
+
+      &:last-of-type {
+        fill:var(--fillColorGreenAlpha);
+        stroke:var(--fillColorGreen);
+      }
+    }
+
+    @supports (color: lch(67% 45 240)) {
+        --fillColorBlue: oklch(44.93% 0.311 264.1); /* blue */
+        --fillColorRed: lch(48% 77 33); /* red */
+        --fillColorGreen: lch(88% 109 134); /* green */
+        --fillColorYellow: lch(96% 92 99.6); /* yellow */
+        --strokeColorBlue: oklch(55.859% 0.117 234.07); /* dark blue */
+        --strokeColorRed: oklab(37.5781% 0.137022 0.067737); /* dark red */
+        --fillColorBlueAlpha: lch(67% 45 240/0.3); /* blue with transparency */
+        --fillColorRedAlpha: lch(48% 77 33/.22); /* red with transparency */
+        --fillColorGreenAlpha: lch(88% 109 134/0.3); /* green */
+        --fillColorYellowAlpha: lch(96% 92 99.6/.3); /* yellow */
+        --textColor: lch(37.1% 43.5 269);
+        --circle-stroke-width: calc(1px + 5px);
+        --ellipse-stroke-width: calc(1px + var(--onePixel));
+    }
+
+    text {
+        &.itemdesc {
+            @supports (not selector(div col.foo||td)) {
+                fill: var(--textColor);
+            }
+
+            @media print {
+                font-family: "Ubuntu Mono";
+                font-size: calc(var(--textFontSize) + 2pt);
+            }
+        }
+
+        &:last-child {
+            fill:var(--pty-not-set);
+        }
+    }
+
+
+    @media screen and (prefers-color-scheme: light) {
+      #txtcl4 {
+        fill: color(srgb-linear 0.130013 var(--linear-gb));
+      }
+
+      #txtcp {
+        fill: rgb(24.705882% var(--s-gb));
+      }
+
+      #txtcr {
+        fill: rgb(var(--s-rg) 36.07843%);
+      }
+    }
+
+    @media (prefers-color-scheme: dark) {
+        --fillColorBlue: #3b3be7;
+        --fillColorRed: #c82f2f;
+        --fillColorGreen: #1e7a1e;
+        --fillColorYellow: #b6b601;
+        --strokeColorBlue: #1919b1;
+        --strokeColorRed: #3d1a1a;
+        --strokeColorYellow: #4a490f;
+        --strokeColorGreen: #0c280b;
+        --fillColorBlueAlpha: #1616f97a;
+        --fillColorRedAlpha: #bc333366;
+        --fillColorGreenAlpha: #04f3044c;
+        --fillColorYellowAlpha: #caca055c;
+        --textColor: #9ec5eb;
+    }
+
+    /* The next rule is ignored */
+    @supports ((fill: 24dpi) and (fill: yellow)) {
+        --fillColorBlue: #f50600;
+        --fillColorRed: #0300fa;
+        --fillColorGreen: #fdef20;
+        --fillColorYellow: #05fc01;
+        --strokeColorBlue: navy;
+        --strokeColorRed: #440000;
+        --strokeColorYellow: #968400;
+        --strokeColorGreen: #048a00;
+        --fillColorBlueAlpha: #0610ef5c;
+        --fillColorRedAlpha: #f307023c;
+        --fillColorGreenAlpha: #10fa024c;
+        --fillColorYellowAlpha: #f0fe083c;
+        --circle-stroke-width: 15px;
+        --ellipse-stroke-width: 16px;
+    }
+}
+
+/*]]>*/
+  </style>
+
+  <g>
+  <circle cx="250" cy="300" r="20" />
+  <circle cx="150" cy="150" r="20" />
+  <circle cx="280" cy="150" r="20" />
+  <circle cx="120" cy="300" r="20" />
+  <ellipse cx="250" cy="300" rx="100" ry="130" transform="rotate(-20 250 300)"/>
+  <ellipse cx="150" cy="150" rx="100" ry="130" transform="rotate(-20 150 150)"/>
+  <ellipse cx="280" cy="150" rx="100" ry="130" transform="rotate(30 280 150)"/>
+  <ellipse cx="120" cy="300" rx="100" ry="130" transform="rotate(30 120 300)"/>
+  <text x="80" y="50" class="itemdesc" text-anchor="middle">Media queries</text>
+  <text x="300" y="50" class="itemdesc" text-anchor="middle" id="txtcr">Nested rules</text>
+  <text x="91" y="400" class="itemdesc" text-anchor="middle" id="txtcl4">Color level 4 / calc()</text>
+  <text x="280" y="400" class="itemdesc" text-anchor="middle" id="txtcp">Custom properties (*)</text>
+  <text x="190" y="455" class="itemdesc" text-anchor="middle">* and registered custom properties</text>
+  </g>
+
+</svg>

@@ -18,6 +18,8 @@
  */
 package io.sf.carte.echosvg.css.engine;
 
+import org.w3c.css.om.CSSRule;
+
 import io.sf.carte.echosvg.util.ParsedURL;
 
 /**
@@ -27,12 +29,12 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class ImportRule extends MediaRule {
+public class ImportRule extends MediaGroup implements Rule {
 
 	/**
 	 * The type constant.
 	 */
-	public static final short TYPE = 2;
+	public static final short TYPE = CSSRule.IMPORT_RULE;
 
 	/**
 	 * The URI of the imported stylesheet.

@@ -18,21 +18,25 @@
  */
 package io.sf.carte.echosvg.css.engine;
 
+import org.w3c.css.om.CSSRule;
+
 import io.sf.carte.doc.style.css.nsac.SelectorList;
 
 /**
  * This class represents a style rule.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
-public class StyleRule implements Rule {
+public class StyleRule extends RuleGroup implements DeclarationsRule, GroupingRule {
 
 	/**
 	 * The type constant.
 	 */
-	public static final short TYPE = 0;
+	public static final short TYPE = CSSRule.STYLE_RULE;
 
 	/**
 	 * The selector list.
@@ -40,9 +44,19 @@ public class StyleRule implements Rule {
 	protected SelectorList selectorList;
 
 	/**
+	 * The absolute selector list.
+	 */
+	SelectorList absSelectorList;
+
+	/**
 	 * The style declaration.
 	 */
 	protected StyleDeclaration styleDeclaration;
+
+	@Override
+	protected Rule[] createRuleList() {
+		return new Rule[1];
+	}
 
 	/**
 	 * Returns a constant identifying the rule type.
@@ -55,7 +69,7 @@ public class StyleRule implements Rule {
 	/**
 	 * Sets the selector list.
 	 */
-	public void setSelectorList(SelectorList sl) {
+	void setSelectorList(SelectorList sl) {
 		selectorList = sl;
 	}
 
@@ -64,6 +78,17 @@ public class StyleRule implements Rule {
 	 */
 	public SelectorList getSelectorList() {
 		return selectorList;
+	}
+
+	/**
+	 * Returns the absolute selector list.
+	 */
+	SelectorList getAbsoluteSelectorList() {
+		return absSelectorList;
+	}
+
+	void setAbsoluteSelectorList(SelectorList absoluteSelector) {
+		this.absSelectorList = absoluteSelector;
 	}
 
 	/**

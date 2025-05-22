@@ -24,6 +24,7 @@ import org.w3c.dom.DOMException;
 import io.sf.carte.doc.style.css.BooleanCondition;
 import io.sf.carte.doc.style.css.nsac.CSSBudgetException;
 import io.sf.carte.doc.style.css.nsac.CSSException;
+import io.sf.carte.doc.style.css.nsac.Parser;
 import io.sf.carte.doc.style.css.om.CSSOMParser;
 import io.sf.carte.doc.style.css.parser.CSSParser;
 
@@ -32,7 +33,7 @@ import io.sf.carte.doc.style.css.parser.CSSParser;
  *
  * @version $Id$
  */
-public class SupportsRule extends StyleSheet implements Rule {
+public class SupportsRule extends RuleGroup implements GroupingRule {
 
 	/**
 	 * The type constant.
@@ -78,6 +79,7 @@ public class SupportsRule extends StyleSheet implements Rule {
 	 */
 	private void parseConditionText(String conditionText) throws DOMException {
 		CSSParser parser = new CSSOMParser();
+		parser.setFlag(Parser.Flag.VALUE_COMMENTS_IGNORE);
 		try {
 			condition = parser.parseSupportsCondition(conditionText, null);
 		} catch (CSSBudgetException e) {

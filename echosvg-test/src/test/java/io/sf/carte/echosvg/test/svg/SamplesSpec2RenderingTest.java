@@ -101,4 +101,19 @@ public class SamplesSpec2RenderingTest extends AbstractSamplesRendering {
 		testNV("samples/tests/spec2/styling/mermaid-color4.svg");
 	}
 
+	@Test
+	public void testNesting() throws TranscoderException, IOException {
+		testNV("samples/tests/spec2/styling/nesting.svg");
+	}
+
+	@Test
+	public void testNestingDark() throws TranscoderException, IOException {
+		testDarkMode("samples/tests/spec2/styling/nesting.svg");
+	}
+
+	@Test
+	public void testNestingPrint() throws TranscoderException, IOException {
+		testNVErrIgnore("samples/tests/spec2/styling/nesting.svg", PRINT_MEDIA, 0);
+	}
+
 }

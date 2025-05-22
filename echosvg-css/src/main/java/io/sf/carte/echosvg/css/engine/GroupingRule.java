@@ -18,33 +18,42 @@
  */
 package io.sf.carte.echosvg.css.engine;
 
-/**
- * This interface represents a CSS rule.
- *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
- * @version $Id$
- */
-public interface Rule {
+import org.w3c.dom.DOMException;
+
+interface GroupingRule extends Rule {
 
 	/**
-	 * Returns a constant identifying the rule type.
+	 * Sets the parent group.
 	 */
-	short getType();
+	void setParent(RuleGroup ss);
 
 	/**
-	 * Returns the parent group.
+	 * Returns the number of rules.
+	 */
+	int getSize();
+
+	/**
+	 * Returns the rule at the given index.
+	 */
+	Rule getRule(int i);
+
+	/**
+	 * Removes a CSS rule from the CSS rule list at <code>index</code>.
 	 * 
-	 * @return the parent group, or {@code null} if the parent group of this rule
-	 *         does not matter when processing it.
+	 * @param index the rule list index at which the rule must be removed.
+	 * @throws DOMException INDEX_SIZE_ERR if <code>index</code> is greater than or
+	 *                      equal to {@link #getSize()}.
 	 */
-	default RuleGroup getParent() {
-		return null;
-	}
+	void deleteRule(int index) throws DOMException;
 
 	/**
-	 * Returns a printable representation of this rule.
+	 * Clears the content.
 	 */
-	String toString(CSSEngine eng);
+	void clear();
+
+	/**
+	 * Appends a rule to the stylesheet.
+	 */
+	void append(Rule r);
 
 }

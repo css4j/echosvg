@@ -33,6 +33,7 @@ import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.CSSValueSyntax.Match;
 import io.sf.carte.doc.style.css.nsac.CSSParseException;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
+import io.sf.carte.doc.style.css.nsac.Parser;
 import io.sf.carte.doc.style.css.parser.CSSParser;
 import io.sf.carte.doc.style.css.parser.SyntaxParser;
 import io.sf.carte.doc.style.css.property.StyleValue;
@@ -113,6 +114,7 @@ public class FontShorthandManager extends AbstractValueFactory implements Shorth
 
 	static {
 		CSSParser parser = new CSSParser();
+		parser.setFlag(Parser.Flag.VALUE_COMMENTS_IGNORE);
 		try {
 			NORMAL_LU = parser.parsePropertyValue(new StringReader(CSSConstants.CSS_NORMAL_VALUE));
 			BOLD_LU = parser.parsePropertyValue(new StringReader(CSSConstants.CSS_BOLD_VALUE));

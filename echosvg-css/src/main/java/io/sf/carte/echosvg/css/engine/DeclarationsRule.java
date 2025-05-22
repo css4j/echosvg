@@ -18,33 +18,16 @@
  */
 package io.sf.carte.echosvg.css.engine;
 
-/**
- * This interface represents a CSS rule.
- *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
- * @version $Id$
- */
-public interface Rule {
+interface DeclarationsRule extends Rule {
 
 	/**
-	 * Returns a constant identifying the rule type.
+	 * Sets the style map.
 	 */
-	short getType();
+	void setStyleDeclaration(StyleDeclaration sd);
 
 	/**
-	 * Returns the parent group.
-	 * 
-	 * @return the parent group, or {@code null} if the parent group of this rule
-	 *         does not matter when processing it.
+	 * Returns the style declaration.
 	 */
-	default RuleGroup getParent() {
-		return null;
-	}
-
-	/**
-	 * Returns a printable representation of this rule.
-	 */
-	String toString(CSSEngine eng);
+	StyleDeclaration getStyleDeclaration();
 
 }

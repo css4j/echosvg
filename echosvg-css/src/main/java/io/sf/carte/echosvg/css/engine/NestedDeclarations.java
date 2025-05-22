@@ -18,36 +18,24 @@
  */
 package io.sf.carte.echosvg.css.engine;
 
-import org.w3c.css.om.CSSRule;
-
-import io.sf.carte.echosvg.util.ParsedURL;
+import io.sf.carte.doc.style.css.CSSRule;
 
 /**
- * This class represents a @font-face CSS rule.
- *
- * This mostly exists to give us a place to store the URI to be used for 'src'
- * URI resolution.
- *
- * <p>
- * Original author: <a href="mailto:deweese@apache.org">l449433</a>.
- * For later modifications, see Git history.
- * </p>
+ * Nested declarations.
+ * 
  * @version $Id$
  */
-public class FontFaceRule implements Rule {
+public class NestedDeclarations extends AbstractRule implements DeclarationsRule {
 
 	/**
 	 * The type constant.
 	 */
-	public static final short TYPE = CSSRule.FONT_FACE_RULE;
+	public static final short TYPE = CSSRule.NESTED_DECLARATIONS;
 
-	StyleMap sm;
-	ParsedURL purl;
-
-	public FontFaceRule(StyleMap sm, ParsedURL purl) {
-		this.sm = sm;
-		this.purl = purl;
-	}
+	/**
+	 * The style declaration.
+	 */
+	StyleDeclaration styleDeclaration;
 
 	/**
 	 * Returns a constant identifying the rule type.
@@ -58,17 +46,19 @@ public class FontFaceRule implements Rule {
 	}
 
 	/**
-	 * Returns the URI of the @font-face rule.
+	 * Sets the style map.
 	 */
-	public ParsedURL getURL() {
-		return purl;
+	@Override
+	public void setStyleDeclaration(StyleDeclaration sd) {
+		styleDeclaration = sd;
 	}
 
 	/**
-	 * Returns the StyleMap from the @font-face rule.
+	 * Returns the style declaration.
 	 */
-	public StyleMap getStyleMap() {
-		return sm;
+	@Override
+	public StyleDeclaration getStyleDeclaration() {
+		return styleDeclaration;
 	}
 
 	/**
@@ -76,11 +66,10 @@ public class FontFaceRule implements Rule {
 	 */
 	@Override
 	public String toString(CSSEngine eng) {
-		StringBuilder sb = new StringBuilder();
-		sb.append("@font-face { ");
-		sb.append(sm.toString(eng));
-		sb.append(" }\n");
-		return sb.toString();
+		if (styleDeclaration != null) {
+			return styleDeclaration.toString(eng);
+		}
+		return "";
 	}
 
 }

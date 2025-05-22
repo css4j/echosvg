@@ -33,6 +33,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import org.w3c.css.om.CSSRule;
 import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
@@ -48,7 +49,6 @@ import org.w3c.dom.events.MutationEvent;
 import io.sf.carte.doc.style.css.BooleanCondition;
 import io.sf.carte.doc.style.css.CSSCanvas;
 import io.sf.carte.doc.style.css.CSSDocument;
-import io.sf.carte.doc.style.css.CSSRule;
 import io.sf.carte.doc.style.css.CSSTypedValue;
 import io.sf.carte.doc.style.css.CSSValue;
 import io.sf.carte.doc.style.css.CSSValue.Type;
@@ -1050,7 +1050,9 @@ public abstract class CSSEngine {
 	}
 
 	private Parser createCSSParser() {
-		return new CSSOMParser();
+		CSSOMParser parser = new CSSOMParser();
+		parser.setFlag(Parser.Flag.VALUE_COMMENTS_IGNORE);
+		return parser;
 	}
 
 	/**
@@ -1770,7 +1772,7 @@ public abstract class CSSEngine {
 	/**
 	 * Finds the selector attributes in the given stylesheet.
 	 */
-	private void findSelectorAttributes(AttributeVisitor visitor, StyleSheet ss) {
+	private void findSelectorAttributes(AttributeVisitor visitor, RuleGroup ss) {
 		int len = ss.getSize();
 		for (int i = 0; i < len; i++) {
 			Rule r = ss.getRule(i);
@@ -1784,7 +1786,7 @@ public abstract class CSSEngine {
 			case MediaRule.TYPE:
 			case ImportRule.TYPE:
 				MediaRule mr = (MediaRule) r;
-				if (mediaMatch(mr.getMediaList())) {
+				if (mediaMatch(mr.getMedia())) {
 					findSelectorAttributes(visitor, mr);
 				}
 				break;
@@ -2005,7 +2007,7 @@ public abstract class CSSEngine {
 	 * @param ss  The stylesheet to fill.
 	 * @param uri The base URI.
 	 */
-	public void parseStyleSheet(StyleSheet ss, ParsedURL uri) throws DOMException {
+	public void parseStyleSheet(MediaGroup ss, ParsedURL uri) throws DOMException {
 		if (uri == null) {
 			String s = Messages.formatMessage("syntax.error.at", new Object[] { "Null Document reference", "" });
 			DOMException de = new DOMException(DOMException.SYNTAX_ERR, s);
@@ -2069,7 +2071,7 @@ public abstract class CSSEngine {
 	 * @param rules The style-sheet rules to parse.
 	 * @param uri   The base URI.
 	 */
-	public void parseStyleSheet(StyleSheet ss, String rules, ParsedURL uri) throws DOMException {
+	public void parseStyleSheet(MediaGroup ss, String rules, ParsedURL uri) throws DOMException {
 		try {
 			parseStyleSheet(ss, new InputSource(new StringReader(rules)), uri);
 		} catch (SecurityException e) {
@@ -2118,10 +2120,10 @@ public abstract class CSSEngine {
 	 * @param ss  The stylesheet to fill.
 	 * @param uri The base URI.
 	 */
-	protected void parseStyleSheet(StyleSheet ss, InputSource is, ParsedURL uri) throws IOException {
+	protected void parseStyleSheet(MediaGroup ss, InputSource is, ParsedURL uri) throws IOException {
 		try {
 			cssBaseURI = uri;
-			styleSheetDocumentHandler.styleSheet = ss;
+			styleSheetDocumentHandler.ruleGroup = ss;
 			parser.setDocumentHandler(styleSheetDocumentHandler);
 			parser.parseStyleSheet(is);
 
@@ -2177,35 +2179,56 @@ public abstract class CSSEngine {
 	 * Adds the rules matching the element/pseudo-element of given style sheet to
 	 * the list.
 	 */
-	protected void addMatchingRules(List<Rule> rules, StyleSheet ss, SelectorMatcher matcher) {
+	protected void addMatchingRules(List<Rule> rules, RuleGroup ss, SelectorMatcher matcher) {
+		addMatchingRules(rules, ss, matcher, false);
+	}
+
+	/**
+	 * Adds the rules matching the element/pseudo-element of given style sheet to
+	 * the list.
+	 */
+	private void addMatchingRules(List<Rule> rules, RuleGroup ss, SelectorMatcher matcher,
+			boolean parentMatch) {
 		int len = ss.getSize();
 		for (int i = 0; i < len; i++) {
 			Rule r = ss.getRule(i);
 			switch (r.getType()) {
 			case StyleRule.TYPE:
 				StyleRule style = (StyleRule) r;
-				SelectorList sl = style.getSelectorList();
+				SelectorList sl = style.getAbsoluteSelectorList();
+				boolean pMatches = false;
 				int slen = sl.getLength();
 				for (int j = 0; j < slen; j++) {
 					Selector s = sl.item(j);
 					if (matcher.matches(s)) {
 						rules.add(style);
+						pMatches = true;
+						break;
 					}
+				}
+				if (style.getSize() > 0) {
+					addMatchingRules(rules, style, matcher, pMatches);
 				}
 				break;
 
 			case MediaRule.TYPE:
 			case ImportRule.TYPE:
 				MediaRule mr = (MediaRule) r;
-				if (mediaMatch(mr.getMediaList())) {
-					addMatchingRules(rules, mr, matcher);
+				if (mediaMatch(mr.getMedia())) {
+					addMatchingRules(rules, mr, matcher, parentMatch);
 				}
 				break;
 
 			case SupportsRule.TYPE:
 				SupportsRule sr = (SupportsRule) r;
 				if (sr.supports) {
-					addMatchingRules(rules, sr, matcher);
+					addMatchingRules(rules, sr, matcher, parentMatch);
+				}
+				break;
+
+			case NestedDeclarations.TYPE:
+				if (parentMatch) {
+					rules.add(r);
 				}
 				break;
 			}
@@ -2329,7 +2352,7 @@ public abstract class CSSEngine {
 
 		if (origin == StyleMap.AUTHOR_ORIGIN) {
 			for (Rule rule : rules) {
-				StyleRule sr = (StyleRule) rule;
+				DeclarationsRule sr = (DeclarationsRule) rule;
 				StyleDeclaration sd = sr.getStyleDeclaration();
 				int len = sd.size();
 				for (int i = 0; i < len; i++) {
@@ -2346,7 +2369,7 @@ public abstract class CSSEngine {
 			}
 		} else {
 			for (Rule rule : rules) {
-				StyleRule sr = (StyleRule) rule;
+				DeclarationsRule sr = (DeclarationsRule) rule;
 				StyleDeclaration sd = sr.getStyleDeclaration();
 				int len = sd.size();
 				for (int i = 0; i < len; i++) {
@@ -2367,8 +2390,22 @@ public abstract class CSSEngine {
 		int len = rules.size();
 		Specificity[] specificities = new Specificity[len];
 		for (int i = 0; i < len; i++) {
-			StyleRule r = (StyleRule) rules.get(i);
-			SelectorList sl = r.getSelectorList();
+			StyleRule sr;
+			Rule r = rules.get(i);
+			if (r.getType() == StyleRule.TYPE) {
+				sr = (StyleRule) r;
+			} else {
+				// Nested declarations
+				RuleGroup p = r.getParent();
+				for (;;) {
+					if (p.getType() == StyleRule.TYPE) {
+						sr = (StyleRule) p;
+						break;
+					}
+					p = p.getParent();
+				}
+			}
+			SelectorList sl = sr.getAbsoluteSelectorList();
 			Specificity mostSpecific = null;
 			int slen = sl.getLength();
 			for (int k = 0; k < slen; k++) {
@@ -2497,8 +2534,10 @@ public abstract class CSSEngine {
 	 */
 	protected class StyleSheetDocumentHandler extends DocumentAdapter implements ShorthandManager.PropertyHandler {
 
-		public StyleSheet styleSheet;
-		protected StyleRule styleRule;
+		public RuleGroup ruleGroup; // The rule group (style sheet or grouping rule)
+
+		private SelectorList absoluteSelector = null;
+
 		protected StyleDeclaration styleDeclaration;
 
 		private PropertyDefinitionImpl currentPropertyDefinition = null;
@@ -2543,8 +2582,8 @@ public abstract class CSSEngine {
 			}
 
 			ImportRule ir = new ImportRule();
-			ir.setMediaList(media);
-			ir.setParent(styleSheet);
+			ir.setMedia(media);
+			ir.setParent(ruleGroup);
 			ParsedURL base = getCSSBaseURI();
 			ParsedURL url;
 			if (base == null) {
@@ -2553,7 +2592,7 @@ public abstract class CSSEngine {
 				url = new ParsedURL(base, uri);
 			}
 			ir.setURI(url);
-			styleSheet.append(ir);
+			ruleGroup.append(ir);
 		}
 
 		@Override
@@ -2563,10 +2602,12 @@ public abstract class CSSEngine {
 			}
 
 			MediaRule mr = new MediaRule();
-			mr.setMediaList(media);
-			mr.setParent(styleSheet);
-			styleSheet.append(mr);
-			styleSheet = mr;
+			mr.setMedia(media);
+			mr.setParent(ruleGroup);
+			ruleGroup.append(mr);
+			ruleGroup = mr;
+
+			styleDeclaration = null;
 		}
 
 		@Override
@@ -2575,7 +2616,9 @@ public abstract class CSSEngine {
 				return;
 			}
 
-			styleSheet = styleSheet.getParent();
+			ruleGroup = ruleGroup.getParent();
+
+			styleDeclaration = null;
 		}
 
 		@Override
@@ -2724,9 +2767,11 @@ public abstract class CSSEngine {
 
 			setSupports(sr);
 
-			sr.setParent(styleSheet);
-			styleSheet.append(sr);
-			styleSheet = sr;
+			sr.setParent(ruleGroup);
+			ruleGroup.append(sr);
+			ruleGroup = sr;
+
+			styleDeclaration = null;
 		}
 
 		@Override
@@ -2735,7 +2780,9 @@ public abstract class CSSEngine {
 				return;
 			}
 
-			styleSheet = styleSheet.getParent();
+			ruleGroup = ruleGroup.getParent();
+
+			styleDeclaration = null;
 		}
 
 		@Override
@@ -2744,17 +2791,47 @@ public abstract class CSSEngine {
 				return;
 			}
 
-			styleRule = new StyleRule();
+			StyleRule styleRule = new StyleRule();
 			styleRule.setSelectorList(selectors);
+
+			if (absoluteSelector != null) {
+				absoluteSelector = selectors.replaceNested(absoluteSelector);
+			} else {
+				absoluteSelector = selectors;
+			}
+			styleRule.setAbsoluteSelectorList(absoluteSelector);
+
 			styleDeclaration = new StyleDeclaration();
 			styleRule.setStyleDeclaration(styleDeclaration);
-			styleSheet.append(styleRule);
+
+			styleRule.setParent(ruleGroup);
+			ruleGroup.append(styleRule);
+			ruleGroup = styleRule;
 		}
 
 		@Override
 		public void endSelector(SelectorList selectors) {
-			styleRule = null;
+			resetAbsoluteSelector();
+			ruleGroup = ruleGroup.getParent();
 			styleDeclaration = null;
+		}
+
+		private void resetAbsoluteSelector() {
+			if (ruleGroup.getType() != StyleSheet.TYPE) {
+				RuleGroup parent = ruleGroup.getParent();
+				// parent cannot be null now
+				RuleGroup nextParent;
+				do {
+					nextParent = parent.getParent();
+					if (parent.getType() == CSSRule.STYLE_RULE) {
+						absoluteSelector = ((StyleRule) parent).getAbsoluteSelectorList();
+						return;
+					}
+					parent = nextParent;
+				} while (parent != null);
+			}
+			// No style ancestors
+			absoluteSelector = null;
 		}
 
 		@Override
@@ -2762,6 +2839,8 @@ public abstract class CSSEngine {
 			if (ignoredForRule > 0) {
 				return;
 			}
+
+			checkNestedDeclarations();
 
 			int i = getPropertyIndex(name);
 			if (i == -1) {
@@ -2800,7 +2879,20 @@ public abstract class CSSEngine {
 				return;
 			}
 
+			checkNestedDeclarations();
+
 			styleDeclaration.setCustomProperty(name, value, important);
+		}
+
+		private void checkNestedDeclarations() {
+			if (styleDeclaration == null) {
+				// Got at least one nested rule
+				NestedDeclarations nested = new NestedDeclarations();
+				styleDeclaration = new StyleDeclaration();
+				nested.setStyleDeclaration(styleDeclaration);
+				nested.setParent(ruleGroup);
+				ruleGroup.append(nested);
+			}
 		}
 
 		private void propertyRuleDescriptor(String name, LexicalUnit value, boolean important) {

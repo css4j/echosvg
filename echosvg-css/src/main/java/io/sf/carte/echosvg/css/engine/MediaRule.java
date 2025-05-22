@@ -18,26 +18,23 @@
  */
 package io.sf.carte.echosvg.css.engine;
 
-import io.sf.carte.doc.style.css.MediaQueryList;
+import org.w3c.css.om.CSSRule;
 
 /**
  * This class represents a @media CSS rule.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ *<p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
-public class MediaRule extends StyleSheet implements Rule {
+public class MediaRule extends MediaGroup implements GroupingRule {
 
 	/**
 	 * The type constant.
 	 */
-	public static final short TYPE = 1;
-
-	/**
-	 * The media list.
-	 */
-	protected MediaQueryList mediaList;
+	public static final short TYPE = CSSRule.MEDIA_RULE;
 
 	/**
 	 * Returns a constant identifying the rule type.
@@ -45,20 +42,6 @@ public class MediaRule extends StyleSheet implements Rule {
 	@Override
 	public short getType() {
 		return TYPE;
-	}
-
-	/**
-	 * Sets the media list.
-	 */
-	public void setMediaList(MediaQueryList ml) {
-		mediaList = ml;
-	}
-
-	/**
-	 * Returns the media list.
-	 */
-	public MediaQueryList getMediaList() {
-		return mediaList;
 	}
 
 	/**

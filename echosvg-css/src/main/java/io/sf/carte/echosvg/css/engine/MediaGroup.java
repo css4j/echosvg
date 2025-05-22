@@ -18,33 +18,31 @@
  */
 package io.sf.carte.echosvg.css.engine;
 
-/**
- * This interface represents a CSS rule.
- *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
- * @version $Id$
- */
-public interface Rule {
+import io.sf.carte.doc.style.css.MediaQueryList;
+
+public abstract class MediaGroup extends RuleGroup {
 
 	/**
-	 * Returns a constant identifying the rule type.
+	 * The media list.
 	 */
-	short getType();
+	protected MediaQueryList mediaList;
 
-	/**
-	 * Returns the parent group.
-	 * 
-	 * @return the parent group, or {@code null} if the parent group of this rule
-	 *         does not matter when processing it.
-	 */
-	default RuleGroup getParent() {
-		return null;
+	protected MediaGroup() {
+		super();
 	}
 
 	/**
-	 * Returns a printable representation of this rule.
+	 * Sets the media list.
 	 */
-	String toString(CSSEngine eng);
+	public void setMedia(MediaQueryList ml) {
+		mediaList = ml;
+	}
+
+	/**
+	 * Returns the media list.
+	 */
+	public MediaQueryList getMedia() {
+		return mediaList;
+	}
 
 }

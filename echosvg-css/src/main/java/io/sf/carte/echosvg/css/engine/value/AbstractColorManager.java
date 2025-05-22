@@ -31,6 +31,7 @@ import io.sf.carte.doc.style.css.CSSValue.CssType;
 import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.nsac.CSSParseException;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
+import io.sf.carte.doc.style.css.nsac.Parser;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit.LexicalType;
 import io.sf.carte.doc.style.css.parser.CSSParser;
 import io.sf.carte.doc.style.css.property.NumberValue;
@@ -217,6 +218,7 @@ public abstract class AbstractColorManager extends IdentifierManager {
 
 	private LexicalUnit reparseColor(String colorSerialization) throws DOMException {
 		CSSParser parser = new CSSParser();
+		parser.setFlag(Parser.Flag.VALUE_COMMENTS_IGNORE);
 		try {
 			return parser.parsePropertyValue(new StringReader(colorSerialization));
 		} catch (CSSParseException | IOException e) {

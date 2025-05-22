@@ -18,33 +18,16 @@
  */
 package io.sf.carte.echosvg.css.engine;
 
-import org.w3c.dom.DOMException;
-
-import io.sf.carte.doc.style.css.MediaQueryList;
-
 /**
  * This class represents a list of rules.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
-public class StyleSheet {
-
-	/**
-	 * The rules.
-	 */
-	protected Rule[] rules = new Rule[16];
-
-	/**
-	 * The number of rules.
-	 */
-	protected int size;
-
-	/**
-	 * The parent sheet, if any.
-	 */
-	protected StyleSheet parent;
+public class StyleSheet extends MediaGroup {
 
 	/**
 	 * Whether or not this stylesheet is alternate.
@@ -52,41 +35,15 @@ public class StyleSheet {
 	protected boolean alternate;
 
 	/**
-	 * The media to use to cascade properties.
-	 */
-	protected MediaQueryList media;
-
-	/**
 	 * The style sheet title.
 	 */
 	protected String title;
 
-	/**
-	 * Sets the media to use to compute the styles.
-	 */
-	public void setMedia(MediaQueryList m) {
-		media = m;
-	}
+	static final short TYPE = -1;
 
-	/**
-	 * Returns the media to use to compute the styles.
-	 */
-	public MediaQueryList getMedia() {
-		return media;
-	}
-
-	/**
-	 * Returns the parent sheet.
-	 */
-	public StyleSheet getParent() {
-		return parent;
-	}
-
-	/**
-	 * Sets the parent sheet.
-	 */
-	public void setParent(StyleSheet ss) {
-		parent = ss;
+	@Override
+	short getType() {
+		return TYPE;
 	}
 
 	/**
@@ -115,69 +72,6 @@ public class StyleSheet {
 	 */
 	public String getTitle() {
 		return title;
-	}
-
-	/**
-	 * Returns the number of rules.
-	 */
-	public int getSize() {
-		return size;
-	}
-
-	/**
-	 * Returns the rule at the given index.
-	 */
-	public Rule getRule(int i) {
-		return rules[i];
-	}
-
-	/**
-	 * Removes a CSS rule from the CSS rule list at <code>index</code>.
-	 * 
-	 * @param index the rule list index at which the rule must be removed.
-	 * @throws DOMException INDEX_SIZE_ERR if <code>index</code> is greater than or
-	 *                      equal to {@link #getSize()}.
-	 */
-	public void deleteRule(int index) throws DOMException {
-		if (index < 0 || index >= size) {
-			throw new DOMException(DOMException.INDEX_SIZE_ERR, "Invalid index: " + index + '.');
-		}
-		for (int i = index; i < size - 1; i++) {
-			rules[i] = rules[i + 1];
-		}
-		size--;
-		rules[size] = null;
-	}
-
-	/**
-	 * Clears the content.
-	 */
-	public void clear() {
-		size = 0;
-		rules = new Rule[10];
-	}
-
-	/**
-	 * Appends a rule to the stylesheet.
-	 */
-	public void append(Rule r) {
-		if (size == rules.length) {
-			Rule[] t = new Rule[size * 2];
-			System.arraycopy(rules, 0, t, 0, size);
-			rules = t;
-		}
-		rules[size++] = r;
-	}
-
-	/**
-	 * Returns a printable representation of this style-sheet.
-	 */
-	public String toString(CSSEngine eng) {
-		StringBuilder sb = new StringBuilder(size * 8);
-		for (int i = 0; i < size; i++) {
-			sb.append(rules[i].toString(eng));
-		}
-		return sb.toString();
 	}
 
 }
