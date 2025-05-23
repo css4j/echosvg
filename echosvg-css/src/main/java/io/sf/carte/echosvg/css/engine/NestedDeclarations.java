@@ -18,7 +18,7 @@
  */
 package io.sf.carte.echosvg.css.engine;
 
-import io.sf.carte.doc.style.css.CSSRule;
+import org.w3c.css.om.CSSRule;
 
 /**
  * Nested declarations.

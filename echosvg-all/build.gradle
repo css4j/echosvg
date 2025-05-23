@@ -102,7 +102,7 @@ tasks.register('cloneRepos') {
 
 		def gitCSSAPIs = grgit.clone(dir: "$buildDir/repos/cssom-apis",
 			uri: 'https://github.com/css4j/cssom-apis.git',
-			refToCheckout: "v0.1")
+			refToCheckout: "v${cssomVersion}")
 		gitCSSAPIs?.close()
 	}
 }
