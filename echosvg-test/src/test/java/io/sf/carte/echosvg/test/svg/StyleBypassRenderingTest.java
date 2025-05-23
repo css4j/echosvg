@@ -1332,6 +1332,7 @@ public class StyleBypassRenderingTest extends AbstractBypassRenderingCheck {
 	/*
 	 * SVG 2, CSS3
 	 */
+
 	@Test
 	public void testCSS3_All() throws TranscoderException, IOException {
 		testAllInputSources("samples/tests/spec2/styling/css3.html", null, false, null, null,
@@ -1357,6 +1358,21 @@ public class StyleBypassRenderingTest extends AbstractBypassRenderingCheck {
 	public void testCSS3_Selector() throws TranscoderException, IOException {
 		test("samples/tests/spec2/styling/css3.html", SVGRenderingAccuracyTest.DEFAULT_MEDIUM,
 				false, null, "#theSVG", true, 0);
+	}
+
+	@Test
+	public void testNesting() throws TranscoderException, IOException {
+		test("samples/tests/spec2/styling/nesting.svg");
+	}
+
+	@Test
+	public void testNestingDark() throws TranscoderException, IOException {
+		testDark("samples/tests/spec2/styling/nesting.svg", 0);
+	}
+
+	@Test
+	public void testNestingPrint() throws TranscoderException, IOException {
+		testPrint("samples/tests/spec2/styling/nesting.svg", 0);
 	}
 
 }

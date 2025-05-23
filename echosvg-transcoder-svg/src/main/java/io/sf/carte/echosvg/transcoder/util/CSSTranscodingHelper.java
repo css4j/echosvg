@@ -1013,12 +1013,10 @@ public class CSSTranscodingHelper {
 	private static Element importElement(DOMElement elm, Document svgDoc) {
 		Element svgElm;
 		String name = elm.getLocalName();
-		if (noStyle.contains(name)) {
-			// This element is imported but excluded from style
-			// computations or replacement
-			svgElm = (Element) svgDoc.importNode(elm, false);
-		} else {
-			svgElm = (Element) svgDoc.importNode(elm, false);
+		svgElm = (Element) svgDoc.importNode(elm, false);
+		// If it's a no-style element, it is imported but excluded from style
+		// computations or replacement
+		if (!noStyle.contains(name)) {
 			fillStyleAttribute(elm, svgElm);
 		}
 		return svgElm;

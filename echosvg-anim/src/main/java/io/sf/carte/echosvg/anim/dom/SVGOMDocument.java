@@ -373,15 +373,17 @@ public class SVGOMDocument extends AbstractStylableDocument
 		String namespaceURI = importMe.getNamespaceURI();
 		if (SVGConstants.SVG_NAMESPACE_URI.equals(namespaceURI)) {
 			String qualifiedName = importMe.getNodeName();
-			String name = DOMUtilities.getLocalName(qualifiedName);
-			ElementFactory ef = impl.factories.get(name);
+			// Obtain name from qualified name, to avoid null localName issues
+			String localName = DOMUtilities.getLocalName(qualifiedName);
+			ElementFactory ef = impl.factories.get(localName);
 			if (ef != null) {
-				Element e = ef.create(name, this);
+				String prefix = importMe.getPrefix();
+				Element e = ef.create(prefix, this);
 				ef.importAttributes(e, importMe, trimId);
 				return e;
 			}
 			// Typically a div inside SVG
-			if ("div".equals(name)) {
+			if ("div".equals(localName)) {
 				namespaceURI = "http://www.w3.org/1999/xhtml";
 			}
 		}
