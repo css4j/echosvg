@@ -599,7 +599,6 @@ public abstract class CSSEngine {
 				ArgumentCondition argCond = (ArgumentCondition) condition;
 				SelectorList selist = argCond.getSelectors();
 				return selist == null || supports(selist);
-			case NESTING:
 			case PSEUDO_CLASS:
 			case PSEUDO_ELEMENT:
 				break;
