@@ -454,8 +454,27 @@ public class PaintServerTest {
 		assertNull(context.getColorSpace());
 	}
 
+	@Test
+	public void testConvertCurrentColor() {
+		Color color = convertPaint(CSSConstants.CSS_FILL_PROPERTY, "hwb(210 1.7% 43.7%)",
+				"color:hwb(210 1.7% 43.7%);fill:currentColor", null);
+		assertNotNull(color);
+		float[] comp = new float[3];
+		color.getColorComponents(comp);
+		assertEquals(0.017f, comp[0], 1e-3f); // R
+		assertEquals(0.29f, comp[1], 1e-3f); // G
+		assertEquals(0.563f, comp[2], 1e-3f); // B
+		assertEquals(255, color.getAlpha());
+
+		assertNull(context.getColorSpace());
+	}
+
 	private Color convertPaint(String ptyName, String paintDef, String cssSpace) {
-		SVGDocument doc = createDocumentWithPaint(ptyName + ':' + paintDef);
+		return convertPaint(ptyName, paintDef, ptyName + ':' + paintDef, cssSpace);
+	}
+
+	private Color convertPaint(String ptyName, String paintDef, String styleDecl, String cssSpace) {
+		SVGDocument doc = createDocumentWithPaint(styleDecl);
 		GraphicsNode gn = createGraphicsNode(context, doc);
 		CSSStylableElement rect = (CSSStylableElement) doc.getElementById("rect1");
 		assertNotNull(rect);
