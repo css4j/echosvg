@@ -20,6 +20,7 @@ package io.sf.carte.echosvg.css.engine.value.svg;
 
 import org.w3c.css.om.unit.CSSUnit;
 
+import io.sf.carte.echosvg.css.engine.value.ColorValue;
 import io.sf.carte.echosvg.css.engine.value.FloatValue;
 import io.sf.carte.echosvg.css.engine.value.IdentValue;
 import io.sf.carte.echosvg.css.engine.value.NumericValue;
@@ -1597,656 +1598,656 @@ public interface SVGValueConstants extends ValueConstants {
 	/**
 	 * The 'aliceblue' RGB color.
 	 */
-	Value ALICEBLUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_240, NUMBER_248, NUMBER_255);
+	ColorValue ALICEBLUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_240, NUMBER_248, NUMBER_255);
 
 	/**
 	 * The 'antiquewhite' RGB color.
 	 */
-	Value ANTIQUEWHITE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_250, NUMBER_235, NUMBER_215);
+	ColorValue ANTIQUEWHITE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_250, NUMBER_235, NUMBER_215);
 
 	/**
 	 * The 'aquamarine' RGB color.
 	 */
-	Value AQUAMARINE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_127, NUMBER_255, NUMBER_212);
+	ColorValue AQUAMARINE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_127, NUMBER_255, NUMBER_212);
 
 	/**
 	 * The 'azure' RGB color.
 	 */
-	Value AZURE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_240, NUMBER_255, NUMBER_255);
+	ColorValue AZURE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_240, NUMBER_255, NUMBER_255);
 
 	/**
 	 * The 'beige' RGB color.
 	 */
-	Value BEIGE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_245, NUMBER_245, NUMBER_220);
+	ColorValue BEIGE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_245, NUMBER_245, NUMBER_220);
 
 	/**
 	 * The 'bisque' RGB color.
 	 */
-	Value BISQUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_228, NUMBER_196);
+	ColorValue BISQUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_228, NUMBER_196);
 
 	/**
 	 * The 'blanchedalmond' RGB color.
 	 */
-	Value BLANCHEDALMOND_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_235, NUMBER_205);
+	ColorValue BLANCHEDALMOND_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_235, NUMBER_205);
 
 	/**
 	 * The 'blueviolet' RGB color.
 	 */
-	Value BLUEVIOLET_RGB_VALUE = RGBColorValue.createConstant(NUMBER_138, NUMBER_43, NUMBER_226);
+	ColorValue BLUEVIOLET_RGB_VALUE = RGBColorValue.createConstant(NUMBER_138, NUMBER_43, NUMBER_226);
 
 	/**
 	 * The 'brown' RGB color.
 	 */
-	Value BROWN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_165, NUMBER_42, NUMBER_42);
+	ColorValue BROWN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_165, NUMBER_42, NUMBER_42);
 
 	/**
 	 * The 'burlywood' RGB color.
 	 */
-	Value BURLYWOOD_RGB_VALUE = RGBColorValue.createConstant(NUMBER_222, NUMBER_184, NUMBER_135);
+	ColorValue BURLYWOOD_RGB_VALUE = RGBColorValue.createConstant(NUMBER_222, NUMBER_184, NUMBER_135);
 
 	/**
 	 * The 'cadetblue' RGB color.
 	 */
-	Value CADETBLUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_95, NUMBER_158, NUMBER_160);
+	ColorValue CADETBLUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_95, NUMBER_158, NUMBER_160);
 
 	/**
 	 * The 'chartreuse' RGB color.
 	 */
-	Value CHARTREUSE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_127, NUMBER_255, NUMBER_0);
+	ColorValue CHARTREUSE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_127, NUMBER_255, NUMBER_0);
 
 	/**
 	 * The 'chocolate' RGB color.
 	 */
-	Value CHOCOLATE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_210, NUMBER_105, NUMBER_30);
+	ColorValue CHOCOLATE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_210, NUMBER_105, NUMBER_30);
 
 	/**
 	 * The 'coral' RGB color.
 	 */
-	Value CORAL_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_127, NUMBER_80);
+	ColorValue CORAL_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_127, NUMBER_80);
 
 	/**
 	 * The 'cornflowerblue' RGB color.
 	 */
-	Value CORNFLOWERBLUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_100, NUMBER_149, NUMBER_237);
+	ColorValue CORNFLOWERBLUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_100, NUMBER_149, NUMBER_237);
 
 	/**
 	 * The 'cornsilk' RGB color.
 	 */
-	Value CORNSILK_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_248, NUMBER_220);
+	ColorValue CORNSILK_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_248, NUMBER_220);
 
 	/**
 	 * The 'crimson' RGB color.
 	 */
-	Value CRIMSON_RGB_VALUE = RGBColorValue.createConstant(NUMBER_220, NUMBER_20, NUMBER_60);
+	ColorValue CRIMSON_RGB_VALUE = RGBColorValue.createConstant(NUMBER_220, NUMBER_20, NUMBER_60);
 
 	/**
 	 * The 'cyan' RGB color.
 	 */
-	Value CYAN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_0, NUMBER_255, NUMBER_255);
+	ColorValue CYAN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_0, NUMBER_255, NUMBER_255);
 
 	/**
 	 * The 'darkblue' RGB color.
 	 */
-	Value DARKBLUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_0, NUMBER_0, NUMBER_139);
+	ColorValue DARKBLUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_0, NUMBER_0, NUMBER_139);
 
 	/**
 	 * The 'darkcyan' RGB color.
 	 */
-	Value DARKCYAN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_0, NUMBER_139, NUMBER_139);
+	ColorValue DARKCYAN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_0, NUMBER_139, NUMBER_139);
 
 	/**
 	 * The 'darkgoldenrod' RGB color.
 	 */
-	Value DARKGOLDENROD_RGB_VALUE = RGBColorValue.createConstant(NUMBER_184, NUMBER_134, NUMBER_11);
+	ColorValue DARKGOLDENROD_RGB_VALUE = RGBColorValue.createConstant(NUMBER_184, NUMBER_134, NUMBER_11);
 
 	/**
 	 * The 'darkgray' RGB color.
 	 */
-	Value DARKGRAY_RGB_VALUE = RGBColorValue.createConstant(NUMBER_169, NUMBER_169, NUMBER_169);
+	ColorValue DARKGRAY_RGB_VALUE = RGBColorValue.createConstant(NUMBER_169, NUMBER_169, NUMBER_169);
 
 	/**
 	 * The 'darkgreen' RGB color.
 	 */
-	Value DARKGREEN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_0, NUMBER_100, NUMBER_0);
+	ColorValue DARKGREEN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_0, NUMBER_100, NUMBER_0);
 
 	/**
 	 * The 'darkgrey' RGB color.
 	 */
-	Value DARKGREY_RGB_VALUE = RGBColorValue.createConstant(NUMBER_169, NUMBER_169, NUMBER_169);
+	ColorValue DARKGREY_RGB_VALUE = RGBColorValue.createConstant(NUMBER_169, NUMBER_169, NUMBER_169);
 
 	/**
 	 * The 'darkkhaki' RGB color.
 	 */
-	Value DARKKHAKI_RGB_VALUE = RGBColorValue.createConstant(NUMBER_189, NUMBER_183, NUMBER_107);
+	ColorValue DARKKHAKI_RGB_VALUE = RGBColorValue.createConstant(NUMBER_189, NUMBER_183, NUMBER_107);
 
 	/**
 	 * The 'darkmagenta' RGB color.
 	 */
-	Value DARKMAGENTA_RGB_VALUE = RGBColorValue.createConstant(NUMBER_139, NUMBER_0, NUMBER_139);
+	ColorValue DARKMAGENTA_RGB_VALUE = RGBColorValue.createConstant(NUMBER_139, NUMBER_0, NUMBER_139);
 
 	/**
 	 * The 'darkolivegreen' RGB color.
 	 */
-	Value DARKOLIVEGREEN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_85, NUMBER_107, NUMBER_47);
+	ColorValue DARKOLIVEGREEN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_85, NUMBER_107, NUMBER_47);
 
 	/**
 	 * The 'darkorange' RGB color.
 	 */
-	Value DARKORANGE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_140, NUMBER_0);
+	ColorValue DARKORANGE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_140, NUMBER_0);
 
 	/**
 	 * The 'darkorchid' RGB color.
 	 */
-	Value DARKORCHID_RGB_VALUE = RGBColorValue.createConstant(NUMBER_153, NUMBER_50, NUMBER_204);
+	ColorValue DARKORCHID_RGB_VALUE = RGBColorValue.createConstant(NUMBER_153, NUMBER_50, NUMBER_204);
 
 	/**
 	 * The 'darkred' RGB color.
 	 */
-	Value DARKRED_RGB_VALUE = RGBColorValue.createConstant(NUMBER_139, NUMBER_0, NUMBER_0);
+	ColorValue DARKRED_RGB_VALUE = RGBColorValue.createConstant(NUMBER_139, NUMBER_0, NUMBER_0);
 
 	/**
 	 * The 'darksalmon' RGB color.
 	 */
-	Value DARKSALMON_RGB_VALUE = RGBColorValue.createConstant(NUMBER_233, NUMBER_150, NUMBER_122);
+	ColorValue DARKSALMON_RGB_VALUE = RGBColorValue.createConstant(NUMBER_233, NUMBER_150, NUMBER_122);
 
 	/**
 	 * The 'darkseagreen' RGB color.
 	 */
-	Value DARKSEAGREEN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_143, NUMBER_188, NUMBER_143);
+	ColorValue DARKSEAGREEN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_143, NUMBER_188, NUMBER_143);
 
 	/**
 	 * The 'darkslateblue' RGB color.
 	 */
-	Value DARKSLATEBLUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_72, NUMBER_61, NUMBER_139);
+	ColorValue DARKSLATEBLUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_72, NUMBER_61, NUMBER_139);
 
 	/**
 	 * The 'darkslategray' RGB color.
 	 */
-	Value DARKSLATEGRAY_RGB_VALUE = RGBColorValue.createConstant(NUMBER_47, NUMBER_79, NUMBER_79);
+	ColorValue DARKSLATEGRAY_RGB_VALUE = RGBColorValue.createConstant(NUMBER_47, NUMBER_79, NUMBER_79);
 
 	/**
 	 * The 'darkslategrey' RGB color.
 	 */
-	Value DARKSLATEGREY_RGB_VALUE = RGBColorValue.createConstant(NUMBER_47, NUMBER_79, NUMBER_79);
+	ColorValue DARKSLATEGREY_RGB_VALUE = RGBColorValue.createConstant(NUMBER_47, NUMBER_79, NUMBER_79);
 
 	/**
 	 * The 'darkturquoise' RGB color.
 	 */
-	Value DARKTURQUOISE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_0, NUMBER_206, NUMBER_209);
+	ColorValue DARKTURQUOISE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_0, NUMBER_206, NUMBER_209);
 
 	/**
 	 * The 'darkviolet' RGB color.
 	 */
-	Value DARKVIOLET_RGB_VALUE = RGBColorValue.createConstant(NUMBER_148, NUMBER_0, NUMBER_211);
+	ColorValue DARKVIOLET_RGB_VALUE = RGBColorValue.createConstant(NUMBER_148, NUMBER_0, NUMBER_211);
 
 	/**
 	 * The 'deeppink' RGB color.
 	 */
-	Value DEEPPINK_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_20, NUMBER_147);
+	ColorValue DEEPPINK_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_20, NUMBER_147);
 
 	/**
 	 * The 'deepskyblue' RGB color.
 	 */
-	Value DEEPSKYBLUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_0, NUMBER_191, NUMBER_255);
+	ColorValue DEEPSKYBLUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_0, NUMBER_191, NUMBER_255);
 
 	/**
 	 * The 'dimgray' RGB color.
 	 */
-	Value DIMGRAY_RGB_VALUE = RGBColorValue.createConstant(NUMBER_105, NUMBER_105, NUMBER_105);
+	ColorValue DIMGRAY_RGB_VALUE = RGBColorValue.createConstant(NUMBER_105, NUMBER_105, NUMBER_105);
 
 	/**
 	 * The 'dimgrey' RGB color.
 	 */
-	Value DIMGREY_RGB_VALUE = RGBColorValue.createConstant(NUMBER_105, NUMBER_105, NUMBER_105);
+	ColorValue DIMGREY_RGB_VALUE = RGBColorValue.createConstant(NUMBER_105, NUMBER_105, NUMBER_105);
 
 	/**
 	 * The 'dodgerblue' RGB color.
 	 */
-	Value DODGERBLUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_30, NUMBER_144, NUMBER_255);
+	ColorValue DODGERBLUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_30, NUMBER_144, NUMBER_255);
 
 	/**
 	 * The 'firebrick' RGB color.
 	 */
-	Value FIREBRICK_RGB_VALUE = RGBColorValue.createConstant(NUMBER_178, NUMBER_34, NUMBER_34);
+	ColorValue FIREBRICK_RGB_VALUE = RGBColorValue.createConstant(NUMBER_178, NUMBER_34, NUMBER_34);
 
 	/**
 	 * The 'floralwhite' RGB color.
 	 */
-	Value FLORALWHITE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_250, NUMBER_240);
+	ColorValue FLORALWHITE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_250, NUMBER_240);
 
 	/**
 	 * The 'forestgreen' RGB color.
 	 */
-	Value FORESTGREEN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_34, NUMBER_139, NUMBER_34);
+	ColorValue FORESTGREEN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_34, NUMBER_139, NUMBER_34);
 
 	/**
 	 * The 'gainsboro' RGB color.
 	 */
-	Value GAINSBORO_RGB_VALUE = RGBColorValue.createConstant(NUMBER_220, NUMBER_200, NUMBER_200);
+	ColorValue GAINSBORO_RGB_VALUE = RGBColorValue.createConstant(NUMBER_220, NUMBER_200, NUMBER_200);
 
 	/**
 	 * The 'ghostwhite' RGB color.
 	 */
-	Value GHOSTWHITE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_248, NUMBER_248, NUMBER_255);
+	ColorValue GHOSTWHITE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_248, NUMBER_248, NUMBER_255);
 
 	/**
 	 * The 'gold' RGB color.
 	 */
-	Value GOLD_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_215, NUMBER_0);
+	ColorValue GOLD_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_215, NUMBER_0);
 
 	/**
 	 * The 'goldenrod' RGB color.
 	 */
-	Value GOLDENROD_RGB_VALUE = RGBColorValue.createConstant(NUMBER_218, NUMBER_165, NUMBER_32);
+	ColorValue GOLDENROD_RGB_VALUE = RGBColorValue.createConstant(NUMBER_218, NUMBER_165, NUMBER_32);
 
 	/**
 	 * The 'grey' RGB color.
 	 */
-	Value GREY_RGB_VALUE = RGBColorValue.createConstant(NUMBER_128, NUMBER_128, NUMBER_128);
+	ColorValue GREY_RGB_VALUE = RGBColorValue.createConstant(NUMBER_128, NUMBER_128, NUMBER_128);
 
 	/**
 	 * The 'greenyellow' RGB color.
 	 */
-	Value GREENYELLOW_RGB_VALUE = RGBColorValue.createConstant(NUMBER_173, NUMBER_255, NUMBER_47);
+	ColorValue GREENYELLOW_RGB_VALUE = RGBColorValue.createConstant(NUMBER_173, NUMBER_255, NUMBER_47);
 
 	/**
 	 * The 'honeydew' RGB color.
 	 */
-	Value HONEYDEW_RGB_VALUE = RGBColorValue.createConstant(NUMBER_240, NUMBER_255, NUMBER_240);
+	ColorValue HONEYDEW_RGB_VALUE = RGBColorValue.createConstant(NUMBER_240, NUMBER_255, NUMBER_240);
 
 	/**
 	 * The 'hotpink' RGB color.
 	 */
-	Value HOTPINK_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_105, NUMBER_180);
+	ColorValue HOTPINK_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_105, NUMBER_180);
 
 	/**
 	 * The 'indianred' RGB color.
 	 */
-	Value INDIANRED_RGB_VALUE = RGBColorValue.createConstant(NUMBER_205, NUMBER_92, NUMBER_92);
+	ColorValue INDIANRED_RGB_VALUE = RGBColorValue.createConstant(NUMBER_205, NUMBER_92, NUMBER_92);
 
 	/**
 	 * The 'indigo' RGB color.
 	 */
-	Value INDIGO_RGB_VALUE = RGBColorValue.createConstant(NUMBER_75, NUMBER_0, NUMBER_130);
+	ColorValue INDIGO_RGB_VALUE = RGBColorValue.createConstant(NUMBER_75, NUMBER_0, NUMBER_130);
 
 	/**
 	 * The 'ivory' RGB color.
 	 */
-	Value IVORY_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_255, NUMBER_240);
+	ColorValue IVORY_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_255, NUMBER_240);
 
 	/**
 	 * The 'khaki' RGB color.
 	 */
-	Value KHAKI_RGB_VALUE = RGBColorValue.createConstant(NUMBER_240, NUMBER_230, NUMBER_140);
+	ColorValue KHAKI_RGB_VALUE = RGBColorValue.createConstant(NUMBER_240, NUMBER_230, NUMBER_140);
 
 	/**
 	 * The 'lavender' RGB color.
 	 */
-	Value LAVENDER_RGB_VALUE = RGBColorValue.createConstant(NUMBER_230, NUMBER_230, NUMBER_250);
+	ColorValue LAVENDER_RGB_VALUE = RGBColorValue.createConstant(NUMBER_230, NUMBER_230, NUMBER_250);
 
 	/**
 	 * The 'lavenderblush' RGB color.
 	 */
-	Value LAVENDERBLUSH_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_240, NUMBER_255);
+	ColorValue LAVENDERBLUSH_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_240, NUMBER_255);
 
 	/**
 	 * The 'lawngreen' RGB color.
 	 */
-	Value LAWNGREEN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_124, NUMBER_252, NUMBER_0);
+	ColorValue LAWNGREEN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_124, NUMBER_252, NUMBER_0);
 
 	/**
 	 * The 'lemonchiffon' RGB color.
 	 */
-	Value LEMONCHIFFON_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_250, NUMBER_205);
+	ColorValue LEMONCHIFFON_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_250, NUMBER_205);
 
 	/**
 	 * The 'lightblue' RGB color.
 	 */
-	Value LIGHTBLUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_173, NUMBER_216, NUMBER_230);
+	ColorValue LIGHTBLUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_173, NUMBER_216, NUMBER_230);
 
 	/**
 	 * The 'lightcoral' RGB color.
 	 */
-	Value LIGHTCORAL_RGB_VALUE = RGBColorValue.createConstant(NUMBER_240, NUMBER_128, NUMBER_128);
+	ColorValue LIGHTCORAL_RGB_VALUE = RGBColorValue.createConstant(NUMBER_240, NUMBER_128, NUMBER_128);
 
 	/**
 	 * The 'lightcyan' RGB color.
 	 */
-	Value LIGHTCYAN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_224, NUMBER_255, NUMBER_255);
+	ColorValue LIGHTCYAN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_224, NUMBER_255, NUMBER_255);
 
 	/**
 	 * The 'lightgoldenrodyellow' RGB color.
 	 */
-	Value LIGHTGOLDENRODYELLOW_RGB_VALUE = RGBColorValue.createConstant(NUMBER_250, NUMBER_250, NUMBER_210);
+	ColorValue LIGHTGOLDENRODYELLOW_RGB_VALUE = RGBColorValue.createConstant(NUMBER_250, NUMBER_250, NUMBER_210);
 
 	/**
 	 * The 'lightgray' RGB color.
 	 */
-	Value LIGHTGRAY_RGB_VALUE = RGBColorValue.createConstant(NUMBER_211, NUMBER_211, NUMBER_211);
+	ColorValue LIGHTGRAY_RGB_VALUE = RGBColorValue.createConstant(NUMBER_211, NUMBER_211, NUMBER_211);
 
 	/**
 	 * The 'lightgreen' RGB color.
 	 */
-	Value LIGHTGREEN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_144, NUMBER_238, NUMBER_144);
+	ColorValue LIGHTGREEN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_144, NUMBER_238, NUMBER_144);
 
 	/**
 	 * The 'lightgrey' RGB color.
 	 */
-	Value LIGHTGREY_RGB_VALUE = RGBColorValue.createConstant(NUMBER_211, NUMBER_211, NUMBER_211);
+	ColorValue LIGHTGREY_RGB_VALUE = RGBColorValue.createConstant(NUMBER_211, NUMBER_211, NUMBER_211);
 
 	/**
 	 * The 'lightpink' RGB color.
 	 */
-	Value LIGHTPINK_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_182, NUMBER_193);
+	ColorValue LIGHTPINK_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_182, NUMBER_193);
 
 	/**
 	 * The 'lightsalmon' RGB color.
 	 */
-	Value LIGHTSALMON_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_160, NUMBER_122);
+	ColorValue LIGHTSALMON_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_160, NUMBER_122);
 
 	/**
 	 * The 'lightseagreen' RGB color.
 	 */
-	Value LIGHTSEAGREEN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_32, NUMBER_178, NUMBER_170);
+	ColorValue LIGHTSEAGREEN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_32, NUMBER_178, NUMBER_170);
 
 	/**
 	 * The 'lightskyblue' RGB color.
 	 */
-	Value LIGHTSKYBLUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_135, NUMBER_206, NUMBER_250);
+	ColorValue LIGHTSKYBLUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_135, NUMBER_206, NUMBER_250);
 
 	/**
 	 * The 'lightslategray' RGB color.
 	 */
-	Value LIGHTSLATEGRAY_RGB_VALUE = RGBColorValue.createConstant(NUMBER_119, NUMBER_136, NUMBER_153);
+	ColorValue LIGHTSLATEGRAY_RGB_VALUE = RGBColorValue.createConstant(NUMBER_119, NUMBER_136, NUMBER_153);
 
 	/**
 	 * The 'lightslategrey' RGB color.
 	 */
-	Value LIGHTSLATEGREY_RGB_VALUE = RGBColorValue.createConstant(NUMBER_119, NUMBER_136, NUMBER_153);
+	ColorValue LIGHTSLATEGREY_RGB_VALUE = RGBColorValue.createConstant(NUMBER_119, NUMBER_136, NUMBER_153);
 
 	/**
 	 * The 'lightsteelblue' RGB color.
 	 */
-	Value LIGHTSTEELBLUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_176, NUMBER_196, NUMBER_222);
+	ColorValue LIGHTSTEELBLUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_176, NUMBER_196, NUMBER_222);
 
 	/**
 	 * The 'lightyellow' RGB color.
 	 */
-	Value LIGHTYELLOW_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_255, NUMBER_224);
+	ColorValue LIGHTYELLOW_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_255, NUMBER_224);
 
 	/**
 	 * The 'limegreen' RGB color.
 	 */
-	Value LIMEGREEN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_50, NUMBER_205, NUMBER_50);
+	ColorValue LIMEGREEN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_50, NUMBER_205, NUMBER_50);
 
 	/**
 	 * The 'linen' RGB color.
 	 */
-	Value LINEN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_250, NUMBER_240, NUMBER_230);
+	ColorValue LINEN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_250, NUMBER_240, NUMBER_230);
 
 	/**
 	 * The 'magenta' RGB color.
 	 */
-	Value MAGENTA_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_0, NUMBER_255);
+	ColorValue MAGENTA_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_0, NUMBER_255);
 
 	/**
 	 * The 'mediumaquamarine' RGB color.
 	 */
-	Value MEDIUMAQUAMARINE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_102, NUMBER_205, NUMBER_170);
+	ColorValue MEDIUMAQUAMARINE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_102, NUMBER_205, NUMBER_170);
 
 	/**
 	 * The 'mediumblue' RGB color.
 	 */
-	Value MEDIUMBLUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_0, NUMBER_0, NUMBER_205);
+	ColorValue MEDIUMBLUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_0, NUMBER_0, NUMBER_205);
 
 	/**
 	 * The 'mediumorchid' RGB color.
 	 */
-	Value MEDIUMORCHID_RGB_VALUE = RGBColorValue.createConstant(NUMBER_186, NUMBER_85, NUMBER_211);
+	ColorValue MEDIUMORCHID_RGB_VALUE = RGBColorValue.createConstant(NUMBER_186, NUMBER_85, NUMBER_211);
 
 	/**
 	 * The 'mediumpurple' RGB color.
 	 */
-	Value MEDIUMPURPLE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_147, NUMBER_112, NUMBER_219);
+	ColorValue MEDIUMPURPLE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_147, NUMBER_112, NUMBER_219);
 
 	/**
 	 * The 'mediumseagreen' RGB color.
 	 */
-	Value MEDIUMSEAGREEN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_60, NUMBER_179, NUMBER_113);
+	ColorValue MEDIUMSEAGREEN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_60, NUMBER_179, NUMBER_113);
 
 	/**
 	 * The 'mediumslateblue' RGB color.
 	 */
-	Value MEDIUMSLATEBLUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_123, NUMBER_104, NUMBER_238);
+	ColorValue MEDIUMSLATEBLUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_123, NUMBER_104, NUMBER_238);
 
 	/**
 	 * The 'mediumspringgreen' RGB color.
 	 */
-	Value MEDIUMSPRINGGREEN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_0, NUMBER_250, NUMBER_154);
+	ColorValue MEDIUMSPRINGGREEN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_0, NUMBER_250, NUMBER_154);
 
 	/**
 	 * The 'mediumturquoise' RGB color.
 	 */
-	Value MEDIUMTURQUOISE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_72, NUMBER_209, NUMBER_204);
+	ColorValue MEDIUMTURQUOISE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_72, NUMBER_209, NUMBER_204);
 
 	/**
 	 * The 'mediumvioletred' RGB color.
 	 */
-	Value MEDIUMVIOLETRED_RGB_VALUE = RGBColorValue.createConstant(NUMBER_199, NUMBER_21, NUMBER_133);
+	ColorValue MEDIUMVIOLETRED_RGB_VALUE = RGBColorValue.createConstant(NUMBER_199, NUMBER_21, NUMBER_133);
 
 	/**
 	 * The 'midnightblue' RGB color.
 	 */
-	Value MIDNIGHTBLUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_25, NUMBER_25, NUMBER_112);
+	ColorValue MIDNIGHTBLUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_25, NUMBER_25, NUMBER_112);
 
 	/**
 	 * The 'mintcream' RGB color.
 	 */
-	Value MINTCREAM_RGB_VALUE = RGBColorValue.createConstant(NUMBER_245, NUMBER_255, NUMBER_250);
+	ColorValue MINTCREAM_RGB_VALUE = RGBColorValue.createConstant(NUMBER_245, NUMBER_255, NUMBER_250);
 
 	/**
 	 * The 'mistyrose' RGB color.
 	 */
-	Value MISTYROSE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_228, NUMBER_225);
+	ColorValue MISTYROSE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_228, NUMBER_225);
 
 	/**
 	 * The 'moccasin' RGB color.
 	 */
-	Value MOCCASIN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_228, NUMBER_181);
+	ColorValue MOCCASIN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_228, NUMBER_181);
 
 	/**
 	 * The 'navajowhite' RGB color.
 	 */
-	Value NAVAJOWHITE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_222, NUMBER_173);
+	ColorValue NAVAJOWHITE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_222, NUMBER_173);
 
 	/**
 	 * The 'oldlace' RGB color.
 	 */
-	Value OLDLACE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_253, NUMBER_245, NUMBER_230);
+	ColorValue OLDLACE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_253, NUMBER_245, NUMBER_230);
 
 	/**
 	 * The 'olivedrab' RGB color.
 	 */
-	Value OLIVEDRAB_RGB_VALUE = RGBColorValue.createConstant(NUMBER_107, NUMBER_142, NUMBER_35);
+	ColorValue OLIVEDRAB_RGB_VALUE = RGBColorValue.createConstant(NUMBER_107, NUMBER_142, NUMBER_35);
 
 	/**
 	 * The 'orange' RGB color.
 	 */
-	Value ORANGE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_165, NUMBER_0);
+	ColorValue ORANGE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_165, NUMBER_0);
 
 	/**
 	 * The 'orangered' RGB color.
 	 */
-	Value ORANGERED_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_69, NUMBER_0);
+	ColorValue ORANGERED_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_69, NUMBER_0);
 
 	/**
 	 * The 'orchid' RGB color.
 	 */
-	Value ORCHID_RGB_VALUE = RGBColorValue.createConstant(NUMBER_218, NUMBER_112, NUMBER_214);
+	ColorValue ORCHID_RGB_VALUE = RGBColorValue.createConstant(NUMBER_218, NUMBER_112, NUMBER_214);
 
 	/**
 	 * The 'palegoldenrod' RGB color.
 	 */
-	Value PALEGOLDENROD_RGB_VALUE = RGBColorValue.createConstant(NUMBER_238, NUMBER_232, NUMBER_170);
+	ColorValue PALEGOLDENROD_RGB_VALUE = RGBColorValue.createConstant(NUMBER_238, NUMBER_232, NUMBER_170);
 
 	/**
 	 * The 'palegreen' RGB color.
 	 */
-	Value PALEGREEN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_152, NUMBER_251, NUMBER_152);
+	ColorValue PALEGREEN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_152, NUMBER_251, NUMBER_152);
 
 	/**
 	 * The 'paleturquoise' RGB color.
 	 */
-	Value PALETURQUOISE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_175, NUMBER_238, NUMBER_238);
+	ColorValue PALETURQUOISE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_175, NUMBER_238, NUMBER_238);
 
 	/**
 	 * The 'palevioletred' RGB color.
 	 */
-	Value PALEVIOLETRED_RGB_VALUE = RGBColorValue.createConstant(NUMBER_219, NUMBER_112, NUMBER_147);
+	ColorValue PALEVIOLETRED_RGB_VALUE = RGBColorValue.createConstant(NUMBER_219, NUMBER_112, NUMBER_147);
 
 	/**
 	 * The 'papayawhip' RGB color.
 	 */
-	Value PAPAYAWHIP_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_239, NUMBER_213);
+	ColorValue PAPAYAWHIP_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_239, NUMBER_213);
 
 	/**
 	 * The 'peachpuff' RGB color.
 	 */
-	Value PEACHPUFF_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_218, NUMBER_185);
+	ColorValue PEACHPUFF_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_218, NUMBER_185);
 
 	/**
 	 * The 'peru' RGB color.
 	 */
-	Value PERU_RGB_VALUE = RGBColorValue.createConstant(NUMBER_205, NUMBER_133, NUMBER_63);
+	ColorValue PERU_RGB_VALUE = RGBColorValue.createConstant(NUMBER_205, NUMBER_133, NUMBER_63);
 
 	/**
 	 * The 'pink' RGB color.
 	 */
-	Value PINK_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_192, NUMBER_203);
+	ColorValue PINK_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_192, NUMBER_203);
 
 	/**
 	 * The 'plum' RGB color.
 	 */
-	Value PLUM_RGB_VALUE = RGBColorValue.createConstant(NUMBER_221, NUMBER_160, NUMBER_221);
+	ColorValue PLUM_RGB_VALUE = RGBColorValue.createConstant(NUMBER_221, NUMBER_160, NUMBER_221);
 
 	/**
 	 * The 'powderblue' RGB color.
 	 */
-	Value POWDERBLUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_176, NUMBER_224, NUMBER_230);
+	ColorValue POWDERBLUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_176, NUMBER_224, NUMBER_230);
 
 	/**
 	 * The 'rosybrown' RGB color.
 	 */
-	Value ROSYBROWN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_188, NUMBER_143, NUMBER_143);
+	ColorValue ROSYBROWN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_188, NUMBER_143, NUMBER_143);
 
 	/**
 	 * The 'royalblue' RGB color.
 	 */
-	Value ROYALBLUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_65, NUMBER_105, NUMBER_225);
+	ColorValue ROYALBLUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_65, NUMBER_105, NUMBER_225);
 
 	/**
 	 * The 'saddlebrown' RGB color.
 	 */
-	Value SADDLEBROWN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_139, NUMBER_69, NUMBER_19);
+	ColorValue SADDLEBROWN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_139, NUMBER_69, NUMBER_19);
 
 	/**
 	 * The 'salmon' RGB color.
 	 */
-	Value SALMON_RGB_VALUE = RGBColorValue.createConstant(NUMBER_250, NUMBER_69, NUMBER_114);
+	ColorValue SALMON_RGB_VALUE = RGBColorValue.createConstant(NUMBER_250, NUMBER_69, NUMBER_114);
 
 	/**
 	 * The 'sandybrown' RGB color.
 	 */
-	Value SANDYBROWN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_244, NUMBER_164, NUMBER_96);
+	ColorValue SANDYBROWN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_244, NUMBER_164, NUMBER_96);
 
 	/**
 	 * The 'seagreen' RGB color.
 	 */
-	Value SEAGREEN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_46, NUMBER_139, NUMBER_87);
+	ColorValue SEAGREEN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_46, NUMBER_139, NUMBER_87);
 
 	/**
 	 * The 'seashell' RGB color.
 	 */
-	Value SEASHELL_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_245, NUMBER_238);
+	ColorValue SEASHELL_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_245, NUMBER_238);
 
 	/**
 	 * The 'sienna' RGB color.
 	 */
-	Value SIENNA_RGB_VALUE = RGBColorValue.createConstant(NUMBER_160, NUMBER_82, NUMBER_45);
+	ColorValue SIENNA_RGB_VALUE = RGBColorValue.createConstant(NUMBER_160, NUMBER_82, NUMBER_45);
 
 	/**
 	 * The 'skyblue' RGB color.
 	 */
-	Value SKYBLUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_135, NUMBER_206, NUMBER_235);
+	ColorValue SKYBLUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_135, NUMBER_206, NUMBER_235);
 
 	/**
 	 * The 'slateblue' RGB color.
 	 */
-	Value SLATEBLUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_106, NUMBER_90, NUMBER_205);
+	ColorValue SLATEBLUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_106, NUMBER_90, NUMBER_205);
 
 	/**
 	 * The 'slategray' RGB color.
 	 */
-	Value SLATEGRAY_RGB_VALUE = RGBColorValue.createConstant(NUMBER_112, NUMBER_128, NUMBER_144);
+	ColorValue SLATEGRAY_RGB_VALUE = RGBColorValue.createConstant(NUMBER_112, NUMBER_128, NUMBER_144);
 
 	/**
 	 * The 'slategrey' RGB color.
 	 */
-	Value SLATEGREY_RGB_VALUE = RGBColorValue.createConstant(NUMBER_112, NUMBER_128, NUMBER_144);
+	ColorValue SLATEGREY_RGB_VALUE = RGBColorValue.createConstant(NUMBER_112, NUMBER_128, NUMBER_144);
 
 	/**
 	 * The 'snow' RGB color.
 	 */
-	Value SNOW_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_250, NUMBER_250);
+	ColorValue SNOW_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_250, NUMBER_250);
 
 	/**
 	 * The 'springgreen' RGB color.
 	 */
-	Value SPRINGGREEN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_0, NUMBER_255, NUMBER_127);
+	ColorValue SPRINGGREEN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_0, NUMBER_255, NUMBER_127);
 
 	/**
 	 * The 'steelblue' RGB color.
 	 */
-	Value STEELBLUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_70, NUMBER_130, NUMBER_180);
+	ColorValue STEELBLUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_70, NUMBER_130, NUMBER_180);
 
 	/**
 	 * The 'tan' RGB color.
 	 */
-	Value TAN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_210, NUMBER_180, NUMBER_140);
+	ColorValue TAN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_210, NUMBER_180, NUMBER_140);
 
 	/**
 	 * The 'thistle' RGB color.
 	 */
-	Value THISTLE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_216, NUMBER_91, NUMBER_216);
+	ColorValue THISTLE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_216, NUMBER_91, NUMBER_216);
 
 	/**
 	 * The 'tomato' RGB color.
 	 */
-	Value TOMATO_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_99, NUMBER_71);
+	ColorValue TOMATO_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_99, NUMBER_71);
 
 	/**
 	 * The 'turquoise' RGB color.
 	 */
-	Value TURQUOISE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_64, NUMBER_224, NUMBER_208);
+	ColorValue TURQUOISE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_64, NUMBER_224, NUMBER_208);
 
 	/**
 	 * The 'violet' RGB color.
 	 */
-	Value VIOLET_RGB_VALUE = RGBColorValue.createConstant(NUMBER_238, NUMBER_130, NUMBER_238);
+	ColorValue VIOLET_RGB_VALUE = RGBColorValue.createConstant(NUMBER_238, NUMBER_130, NUMBER_238);
 
 	/**
 	 * The 'wheat' RGB color.
 	 */
-	Value WHEAT_RGB_VALUE = RGBColorValue.createConstant(NUMBER_245, NUMBER_222, NUMBER_179);
+	ColorValue WHEAT_RGB_VALUE = RGBColorValue.createConstant(NUMBER_245, NUMBER_222, NUMBER_179);
 
 	/**
 	 * The 'whitesmoke' RGB color.
 	 */
-	Value WHITESMOKE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_245, NUMBER_245, NUMBER_245);
+	ColorValue WHITESMOKE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_245, NUMBER_245, NUMBER_245);
 
 	/**
 	 * The 'yellowgreen' RGB color.
 	 */
-	Value YELLOWGREEN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_154, NUMBER_205, NUMBER_50);
+	ColorValue YELLOWGREEN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_154, NUMBER_205, NUMBER_50);
 
 }

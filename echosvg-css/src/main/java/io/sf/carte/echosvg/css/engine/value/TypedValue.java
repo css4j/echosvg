@@ -64,6 +64,12 @@ public interface TypedValue extends Value, io.sf.carte.doc.style.css.CSSTypedVal
 	}
 
 	@Override
+	default String getStringValue() throws DOMException {
+		throw new DOMException(DOMException.INVALID_ACCESS_ERR,
+				"Not a string/ident/URI value, type is instead: " + getPrimitiveType());
+	}
+
+	@Override
 	default RGBAColor toRGBColor() throws DOMException {
 		throw new DOMException(DOMException.NOT_SUPPORTED_ERR, "Please use getColorValue()");
 	}

@@ -260,7 +260,7 @@ public class CSSOMStyleDeclaration implements CSSStyleDeclaration {
 				}
 
 				@Override
-				protected void setPropertyText(String text) throws DOMException {
+				public void setPropertyText(String text) throws DOMException {
 					if (values == null || StyleDeclarationValue.this.handler == null) {
 						throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
 					}

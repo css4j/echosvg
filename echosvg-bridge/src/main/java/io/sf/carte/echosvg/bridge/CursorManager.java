@@ -43,6 +43,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.svg.SVGDocument;
 import org.w3c.dom.svg.SVGPreserveAspectRatio;
 
+import io.sf.carte.doc.DOMInvalidAccessException;
+import io.sf.carte.doc.style.css.CSSNumberValue;
 import io.sf.carte.doc.style.css.CSSTypedValue;
 import io.sf.carte.doc.style.css.CSSValue.CssType;
 import io.sf.carte.doc.style.css.CSSValue.Type;
@@ -407,19 +409,21 @@ public class CursorManager implements SVGConstants, ErrorConstants {
 		}
 
 		@Override
-		protected CSSTypedValue absoluteTypedValue(CSSTypedValue typed) {
-			short unitType = typed.getUnitType();
-			if (CSSUnit.isRelativeLengthUnitType(unitType)) {
-				float f = UnitProcessor.cssToUserSpace(typed.getFloatValue(unitType), unitType,
-						percentageInterpretation, uctx);
-				return NumberValue.createCSSNumberValue(CSSUnit.CSS_PX, f);
-			} else {
-				return typed;
+		protected CSSNumberValue absoluteTypedValue(CSSTypedValue typed) {
+			if (typed.getPrimitiveType() == Type.NUMERIC) {
+				short unitType = typed.getUnitType();
+				if (CSSUnit.isRelativeLengthUnitType(unitType)) {
+					float f = UnitProcessor.cssToUserSpace(typed.getFloatValue(), unitType,
+							percentageInterpretation, uctx);
+					return NumberValue.createCSSNumberValue(CSSUnit.CSS_PX, f);
+				}
+				return (CSSNumberValue) typed;
 			}
+			throw new DOMInvalidAccessException("Unexpected value: " + typed.getCssText());
 		}
 
 		@Override
-		protected float percentage(CSSTypedValue typed, short resultType) throws DOMException {
+		protected float percentage(CSSNumberValue typed, short resultType) throws DOMException {
 			float f = UnitProcessor.cssToUserSpace(typed.getFloatValue(CSSUnit.CSS_PERCENTAGE), CSSUnit.CSS_PERCENTAGE,
 					percentageInterpretation, uctx);
 			return NumberValue.floatValueConversion(f, CSSUnit.CSS_PX, resultType);

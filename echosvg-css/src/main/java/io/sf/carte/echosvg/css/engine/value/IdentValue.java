@@ -20,6 +20,7 @@ package io.sf.carte.echosvg.css.engine.value;
 
 import org.w3c.api.DOMTypeException;
 import org.w3c.css.om.typed.CSSKeywordValue;
+import org.w3c.dom.DOMException;
 
 import io.sf.carte.doc.style.css.parser.ParseHelper;
 
@@ -96,6 +97,12 @@ public class IdentValue extends AbstractStringValue implements CSSKeywordValue {
 	@Override
 	public boolean isIdentifier(String internedIdent) {
 		return value == internedIdent;
+	}
+
+	@Override
+	public ColorValue getColorValue() throws DOMException {
+		ColorValue cssval = AbstractColorManager.computedValues.get(value);
+		return cssval != null ? cssval.clone() : super.getColorValue();
 	}
 
 	@Override

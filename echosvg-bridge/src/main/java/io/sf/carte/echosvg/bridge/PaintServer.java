@@ -366,11 +366,42 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 	 * @param opacity The opacity value (0 &lt;= o &lt;= 1).
 	 */
 	public static Color convertColor(RGBColorValue c, float opacity) {
-		float r = resolveColorComponent(c.getR());
-		float g = resolveColorComponent(c.getG());
-		float b = resolveColorComponent(c.getB());
+		float r = resolveRGBColorComponent(c.getR());
+		float g = resolveRGBColorComponent(c.getG());
+		float b = resolveRGBColorComponent(c.getB());
 		float a = resolveAlphaComponent(c.getAlpha());
 		return new Color(r, g, b, a * opacity);
+	}
+
+	/**
+	 * Returns the value of one RGB color component (0 &lt;= result &lt;= 1).
+	 * 
+	 * @param v the value that declares the color component, either a percentage or
+	 *          a number in the range (0 &lt;= v &lt;= 1).
+	 * @return the value in the range (0 &lt;= v &lt;= 1).
+	 */
+	private static float resolveRGBColorComponent(NumericValue item) {
+		float f;
+		switch (item.getUnitType()) {
+		case CSSUnit.CSS_NUMBER:
+			f = item.getFloatValue();
+			f /= 255f;
+			if (f < 0f) {
+				f = 0f;
+			} else if (f > 1f) {
+				f = 1f;
+			}
+			return f;
+		case CSSUnit.CSS_PERCENTAGE:
+			f = item.getFloatValue();
+			if (f < 0f) {
+				f = 0f;
+			} else if (f > 100f) {
+				f = 100f;
+			}
+			return f / 100f;
+		}
+		throw new IllegalArgumentException("Invalid color component: " + item.getCssText());
 	}
 
 	/**

@@ -335,6 +335,8 @@ public abstract class SVGStylableElement extends SVGOMElement implements CSSStyl
 	 */
 	public class PresentationAttributeValue extends CSSOMValue implements LiveAttributeValue, CSSOMValue.ValueProvider {
 
+		private static final long serialVersionUID = 1L;
+
 		/**
 		 * The CSS engine.
 		 */
@@ -368,7 +370,7 @@ public abstract class SVGStylableElement extends SVGOMElement implements CSSStyl
 				}
 
 				@Override
-				protected void setPropertyText(String text) throws DOMException {
+				public void setPropertyText(String text) throws DOMException {
 					value = cssEngine.parsePropertyValue(SVGStylableElement.this, property, text);
 					mutate = true;
 					setAttributeNS(null, property, text);
@@ -471,7 +473,7 @@ public abstract class SVGStylableElement extends SVGOMElement implements CSSStyl
 				}
 
 				@Override
-				protected void setPropertyText(String text) throws DOMException {
+				public void setPropertyText(String text) throws DOMException {
 					value = cssEngine.parsePropertyValue(SVGStylableElement.this, property, text);
 					mutate = true;
 					setAttributeNS(null, property, text);
@@ -574,7 +576,7 @@ public abstract class SVGStylableElement extends SVGOMElement implements CSSStyl
 				}
 
 				@Override
-				protected void setPropertyText(String text) throws DOMException {
+				public void setPropertyText(String text) throws DOMException {
 					value = cssEngine.parsePropertyValue(SVGStylableElement.this, property, text);
 					mutate = true;
 					setAttributeNS(null, property, text);

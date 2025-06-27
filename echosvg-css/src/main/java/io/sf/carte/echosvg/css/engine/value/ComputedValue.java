@@ -106,7 +106,6 @@ public class ComputedValue implements Value {
 
 	@Override
 	public void setModificationHandler(ValueModificationHandler handler) {
-		throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "Cannot modify computed value.");
 	}
 
 	@Override

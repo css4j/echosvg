@@ -22,7 +22,9 @@ import org.w3c.css.om.typed.CSSUnitValue;
 import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
 
+import io.sf.carte.doc.DOMInvalidAccessException;
 import io.sf.carte.doc.style.css.CSSMathValue;
+import io.sf.carte.doc.style.css.CSSNumberValue;
 import io.sf.carte.doc.style.css.CSSTypedValue;
 import io.sf.carte.doc.style.css.CSSValueSyntax;
 import io.sf.carte.doc.style.css.CSSValueSyntax.Match;
@@ -76,25 +78,28 @@ public abstract class NumericDelegateValue<D extends CSSMathValue> extends Numer
 		Evaluator eval = new Evaluator(unit) {
 
 			@Override
-			protected CSSTypedValue absoluteTypedValue(CSSTypedValue typed) {
-				if (CSSUnit.isRelativeLengthUnitType(typed.getUnitType())) {
-					FloatValue relative = new FloatValue(typed.getUnitType(),
-							typed.getFloatValue(typed.getUnitType()));
-					FloatValue abs = NumericDelegateValue.this.absoluteValue(elt, pseudo, engine, idx, sm, relative);
-					short u;
-					if (abs.getUnitType() != CSSUnit.CSS_NUMBER) {
-						u = abs.getUnitType();
-					} else {
-						u = unit;
+			protected CSSNumberValue absoluteTypedValue(CSSTypedValue typed) {
+				if (typed.getPrimitiveType() == Type.NUMERIC) {
+					short unitType = typed.getUnitType();
+					if (CSSUnit.isRelativeLengthUnitType(unitType)) {
+						FloatValue relative = new FloatValue(unitType, typed.getFloatValue());
+						FloatValue abs = NumericDelegateValue.this.absoluteValue(elt, pseudo, engine, idx, sm,
+								relative);
+						short u;
+						if (abs.getUnitType() != CSSUnit.CSS_NUMBER) {
+							u = abs.getUnitType();
+						} else {
+							u = unit;
+						}
+						return NumberValue.createCSSNumberValue(u, abs.getFloatValue());
 					}
-					return NumberValue.createCSSNumberValue(u, abs.getFloatValue());
-				} else {
-					return typed;
+					return (CSSNumberValue) typed;
 				}
+				throw new DOMInvalidAccessException("Unexpected value: " + typed.getCssText());
 			}
 
 			@Override
-			protected float percentage(CSSTypedValue typed, short resultType) throws DOMException {
+			protected float percentage(CSSNumberValue typed, short resultType) throws DOMException {
 				FloatValue relative = new FloatValue(typed.getUnitType(), typed.getFloatValue(typed.getUnitType()));
 				FloatValue abs = NumericDelegateValue.this.absoluteValue(elt, pseudo, engine, idx, sm, relative);
 				return NumberValue.floatValueConversion(abs.getFloatValue(), abs.getUnitType(), resultType);

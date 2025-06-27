@@ -21,9 +21,12 @@ package io.sf.carte.echosvg.parser;
 import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
 
+import io.sf.carte.doc.DOMInvalidAccessException;
 import io.sf.carte.doc.style.css.CSSExpressionValue;
 import io.sf.carte.doc.style.css.CSSMathFunctionValue;
+import io.sf.carte.doc.style.css.CSSNumberValue;
 import io.sf.carte.doc.style.css.CSSTypedValue;
+import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.property.Evaluator;
 import io.sf.carte.doc.style.css.property.NumberValue;
 
@@ -202,18 +205,20 @@ public class DefaultLengthHandler implements LengthHandler {
 		}
 
 		@Override
-		protected CSSTypedValue absoluteTypedValue(CSSTypedValue typed) {
-			short unitType = typed.getUnitType();
-			if (CSSUnit.isRelativeLengthUnitType(unitType)) {
-				float f = unitToPixels(unitType, typed.getFloatValue(unitType), percentageInterpretation);
-				return NumberValue.createCSSNumberValue(CSSUnit.CSS_PX, f);
-			} else {
-				return typed;
+		protected CSSNumberValue absoluteTypedValue(CSSTypedValue typed) {
+			if (typed.getPrimitiveType() == Type.NUMERIC) {
+				short unitType = typed.getUnitType();
+				if (CSSUnit.isRelativeLengthUnitType(unitType)) {
+					float f = unitToPixels(unitType, typed.getFloatValue(), percentageInterpretation);
+					return NumberValue.createCSSNumberValue(CSSUnit.CSS_PX, f);
+				}
+				return (CSSNumberValue) typed;
 			}
+			throw new DOMInvalidAccessException("Unexpected value: " + typed.getCssText());
 		}
 
 		@Override
-		protected float percentage(CSSTypedValue typed, short resultType) throws DOMException {
+		protected float percentage(CSSNumberValue typed, short resultType) throws DOMException {
 			float f = unitToPixels(CSSUnit.CSS_PERCENTAGE, typed.getFloatValue(CSSUnit.CSS_PERCENTAGE),
 					percentageInterpretation);
 			return NumberValue.floatValueConversion(f, CSSUnit.CSS_PX, resultType);

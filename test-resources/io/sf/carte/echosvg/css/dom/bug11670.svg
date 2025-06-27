@@ -71,13 +71,12 @@
            "CSSStyleDeclaration.getCSSStyleValue returned null");
         return;
      }
-
-     val = val.getColorValue()
      
-     if (val.red.getFloatValue(1) != 2 ||
-         val.green.getFloatValue(1) != 3 ||
-         val.blue.getFloatValue(1) != 4) {
-        result.setAttributeNS(null, "errorCode", "invalid color components");
+     if (val.r.floatValue != 2 ||
+         val.g.floatValue != 3 ||
+         val.b.floatValue != 4) {
+        result.setAttributeNS(null, "errorCode",
+          "invalid color components. Expected 2,3,4, found: " + val.cssText);
         return;
      }
 

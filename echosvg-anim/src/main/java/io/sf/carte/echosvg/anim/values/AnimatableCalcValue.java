@@ -24,6 +24,7 @@ import org.w3c.dom.DOMException;
 import io.sf.carte.doc.style.css.CSSExpressionValue;
 import io.sf.carte.doc.style.css.CSSMathFunctionValue;
 import io.sf.carte.doc.style.css.CSSMathValue;
+import io.sf.carte.doc.style.css.CSSNumberValue;
 import io.sf.carte.doc.style.css.CSSTypedValue;
 import io.sf.carte.doc.style.css.property.Evaluator;
 import io.sf.carte.doc.style.css.property.NumberValue;
@@ -59,7 +60,7 @@ public class AnimatableCalcValue extends AnimatableNumericValue {
 		Evaluator eval = new Evaluator(lengthType) {
 
 			@Override
-			protected float percentage(CSSTypedValue value, short resultType) throws DOMException {
+			protected float percentage(CSSNumberValue value, short resultType) throws DOMException {
 				return target.svgToUserSpace(value.getFloatValue(CSSUnit.CSS_PERCENTAGE), lengthType,
 						percentageInterpretation);
 			}
@@ -78,9 +79,10 @@ public class AnimatableCalcValue extends AnimatableNumericValue {
 			throw new RuntimeException("Invalid result: " + calc.getCssText());
 		}
 
-		float f = result.getFloatValue(result.getUnitType());
-		if (lengthType != result.getUnitType() && result.getUnitType() != CSSUnit.CSS_NUMBER) {
-			f = NumberValue.floatValueConversion(f, result.getUnitType(), lengthType);
+		float f = result.getFloatValue();
+		short unit = result.getUnitType();
+		if (lengthType != unit && unit != CSSUnit.CSS_NUMBER) {
+			f = NumberValue.floatValueConversion(f, unit, lengthType);
 		}
 
 		return f;

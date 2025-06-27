@@ -747,87 +747,87 @@ public interface ValueConstants {
 	/**
 	 * The 'black' RGB color.
 	 */
-	Value BLACK_RGB_VALUE = RGBColorValue.createConstant(NUMBER_0, NUMBER_0, NUMBER_0);
+	ColorValue BLACK_RGB_VALUE = RGBColorValue.createConstant(NUMBER_0, NUMBER_0, NUMBER_0);
 
 	/**
 	 * The 'silver' RGB color.
 	 */
-	Value SILVER_RGB_VALUE = RGBColorValue.createConstant(NUMBER_192, NUMBER_192, NUMBER_192);
+	ColorValue SILVER_RGB_VALUE = RGBColorValue.createConstant(NUMBER_192, NUMBER_192, NUMBER_192);
 
 	/**
 	 * The 'gray' RGB color.
 	 */
-	Value GRAY_RGB_VALUE = RGBColorValue.createConstant(NUMBER_128, NUMBER_128, NUMBER_128);
+	ColorValue GRAY_RGB_VALUE = RGBColorValue.createConstant(NUMBER_128, NUMBER_128, NUMBER_128);
 
 	/**
 	 * The 'white' RGB color.
 	 */
-	Value WHITE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_255, NUMBER_255);
+	ColorValue WHITE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_255, NUMBER_255);
 
 	/**
 	 * The 'maroon' RGB color.
 	 */
-	Value MAROON_RGB_VALUE = RGBColorValue.createConstant(NUMBER_128, NUMBER_0, NUMBER_0);
+	ColorValue MAROON_RGB_VALUE = RGBColorValue.createConstant(NUMBER_128, NUMBER_0, NUMBER_0);
 
 	/**
 	 * The 'red' RGB color.
 	 */
-	Value RED_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_0, NUMBER_0);
+	ColorValue RED_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_0, NUMBER_0);
 
 	/**
 	 * The 'purple' RGB color.
 	 */
-	Value PURPLE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_128, NUMBER_0, NUMBER_128);
+	ColorValue PURPLE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_128, NUMBER_0, NUMBER_128);
 
 	/**
 	 * The 'fuchsia' RGB color.
 	 */
-	Value FUCHSIA_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_0, NUMBER_255);
+	ColorValue FUCHSIA_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_0, NUMBER_255);
 
 	/**
 	 * The 'green' RGB color.
 	 */
-	Value GREEN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_0, NUMBER_128, NUMBER_0);
+	ColorValue GREEN_RGB_VALUE = RGBColorValue.createConstant(NUMBER_0, NUMBER_128, NUMBER_0);
 
 	/**
 	 * The 'lime' RGB color.
 	 */
-	Value LIME_RGB_VALUE = RGBColorValue.createConstant(NUMBER_0, NUMBER_255, NUMBER_0);
+	ColorValue LIME_RGB_VALUE = RGBColorValue.createConstant(NUMBER_0, NUMBER_255, NUMBER_0);
 
 	/**
 	 * The 'olive' RGB color.
 	 */
-	Value OLIVE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_128, NUMBER_128, NUMBER_0);
+	ColorValue OLIVE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_128, NUMBER_128, NUMBER_0);
 
 	/**
 	 * The 'yellow' RGB color.
 	 */
-	Value YELLOW_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_255, NUMBER_0);
+	ColorValue YELLOW_RGB_VALUE = RGBColorValue.createConstant(NUMBER_255, NUMBER_255, NUMBER_0);
 
 	/**
 	 * The 'navy' RGB color.
 	 */
-	Value NAVY_RGB_VALUE = RGBColorValue.createConstant(NUMBER_0, NUMBER_0, NUMBER_128);
+	ColorValue NAVY_RGB_VALUE = RGBColorValue.createConstant(NUMBER_0, NUMBER_0, NUMBER_128);
 
 	/**
 	 * The 'blue' RGB color.
 	 */
-	Value BLUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_0, NUMBER_0, NUMBER_255);
+	ColorValue BLUE_RGB_VALUE = RGBColorValue.createConstant(NUMBER_0, NUMBER_0, NUMBER_255);
 
 	/**
 	 * The 'teal' RGB color.
 	 */
-	Value TEAL_RGB_VALUE = RGBColorValue.createConstant(NUMBER_0, NUMBER_128, NUMBER_128);
+	ColorValue TEAL_RGB_VALUE = RGBColorValue.createConstant(NUMBER_0, NUMBER_128, NUMBER_128);
 
 	/**
 	 * The 'aqua' RGB color.
 	 */
-	Value AQUA_RGB_VALUE = RGBColorValue.createConstant(NUMBER_0, NUMBER_255, NUMBER_255);
+	ColorValue AQUA_RGB_VALUE = RGBColorValue.createConstant(NUMBER_0, NUMBER_255, NUMBER_255);
 
 	/**
 	 * The 'transparent' RGB color.
 	 */
-	Value TRANSPARENT_RGB_VALUE = RGBColorValue.createConstant(NUMBER_0, NUMBER_0, NUMBER_0, NUMBER_0);
+	ColorValue TRANSPARENT_RGB_VALUE = RGBColorValue.createConstant(NUMBER_0, NUMBER_0, NUMBER_0, NUMBER_0);
 
 	/**
 	 * A lexical unit with value zero.

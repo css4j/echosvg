@@ -195,7 +195,7 @@ public abstract class AbstractValueManager extends AbstractValueFactory implemen
 	 * @param cv the value.
 	 */
 	protected DOMException createDOMException(Value cv) {
-		Object[] p = { cv.getCssText(), cv.getUnitType() };
+		Object[] p = { cv.getUnitType(), cv.getCssText() };
 		String s = Messages.formatMessage("invalid.value.access", p);
 		return new DOMException(DOMException.INVALID_ACCESS_ERR, s);
 	}

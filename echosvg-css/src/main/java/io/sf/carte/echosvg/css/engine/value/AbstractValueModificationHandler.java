@@ -59,6 +59,6 @@ public abstract class AbstractValueModificationHandler implements ValueModificat
 	 * 
 	 * @param text the property serialization.
 	 */
-	protected abstract void setPropertyText(String text) throws DOMException;
+	public abstract void setPropertyText(String text) throws DOMException;
 
 }

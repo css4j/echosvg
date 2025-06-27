@@ -104,7 +104,7 @@ public class CSSOMSVGStyleDeclaration extends CSSOMStyleDeclaration {
 				}
 
 				@Override
-				protected void setPropertyText(String text) throws DOMException {
+				public void setPropertyText(String text) throws DOMException {
 					if (handler == null) {
 						throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
 					}
@@ -151,7 +151,7 @@ public class CSSOMSVGStyleDeclaration extends CSSOMStyleDeclaration {
 				}
 
 				@Override
-				protected void setPropertyText(String text) throws DOMException {
+				public void setPropertyText(String text) throws DOMException {
 					if (handler == null) {
 						throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
 					}

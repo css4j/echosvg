@@ -109,7 +109,7 @@ public abstract class AbstractValue implements Value, Cloneable {
 	 * Creates an INVALID_ACCESS_ERR exception.
 	 */
 	protected DOMException createDOMException() {
-		Object[] p = { getPrimitiveType() };
+		Object[] p = { getPrimitiveType(), getCssText() };
 		String s = Messages.formatMessage("invalid.value.access", p);
 		return new DOMException(DOMException.INVALID_ACCESS_ERR, s);
 	}

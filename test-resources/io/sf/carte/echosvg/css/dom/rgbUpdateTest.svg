@@ -71,19 +71,18 @@
         return
      }
 
-     val = val.getColorValue()
+     val.r.value = 4
 
-     val.red.cssText = 4
-
-     if (val.red.cssText != "4"){
-        result.setAttributeNS(null, "errorCode", "invalid red component")
+     if (val.r.cssText != "4") {
+        result.setAttributeNS(null, "errorCode",
+          "invalid red component. Expected 4, found: " + val.r.cssText)
         var entry = document.createElementNS(testNS, "errorDescriptionEntry")
         entry.setAttributeNS(null, "id", "expected.red")
         entry.setAttributeNS(null, "value", "4")
         result.appendChild(entry)
         entry = document.createElementNS(testNS, "errorDescriptionEntry")
         entry.setAttributeNS(null, "id", "found.red")
-        entry.setAttributeNS(null, "value", "" + val.red)
+        entry.setAttributeNS(null, "value", "" + val.r)
         result.appendChild(entry)
         return
      }
@@ -92,41 +91,44 @@
 
      val.cssText = "#050607"
 
-     if (val.red.cssText != "5"){
-        result.setAttributeNS(null, "errorCode", "invalid red component")
+     if (val.r.cssText != "5") {
+        result.setAttributeNS(null, "errorCode",
+          "invalid red component. Expected 5, found: " + val.r.cssText)
         var entry = document.createElementNS(testNS, "errorDescriptionEntry")
         entry.setAttributeNS(null, "id", "expected.red")
         entry.setAttributeNS(null, "value", "5")
         result.appendChild(entry)
         entry = document.createElementNS(testNS, "errorDescriptionEntry")
         entry.setAttributeNS(null, "id", "found.red")
-        entry.setAttributeNS(null, "value", "" + val.red)
+        entry.setAttributeNS(null, "value", "" + val.r)
         result.appendChild(entry)
         return
      }
 
-     if (val.green.cssText != "6"){
-        result.setAttributeNS(null, "errorCode", "invalid green component");
+     if (val.g.cssText != "6") {
+        result.setAttributeNS(null, "errorCode",
+          "invalid green component. Expected 6, found: " + val.g.cssText);
         var entry = document.createElementNS(testNS, "errorDescriptionEntry");
         entry.setAttributeNS(null, "id", "expected.green");
         entry.setAttributeNS(null, "value", "6");
         result.appendChild(entry);
         entry = document.createElementNS(testNS, "errorDescriptionEntry");
         entry.setAttributeNS(null, "id", "found.green");
-        entry.setAttributeNS(null, "value", "" + val.green);
+        entry.setAttributeNS(null, "value", "" + val.g);
         result.appendChild(entry);
         return;
      }
 
-     if (val.blue.cssText != "7"){
-        result.setAttributeNS(null, "errorCode", "invalid blue component");
+     if (val.b.cssText != "7") {
+        result.setAttributeNS(null, "errorCode",
+          "invalid blue component. Expected 7, found: " + val.b.cssText);
         var entry = document.createElementNS(testNS, "errorDescriptionEntry");
         entry.setAttributeNS(null, "id", "expected.blue");
         entry.setAttributeNS(null, "value", "7");
         result.appendChild(entry);
         entry = document.createElementNS(testNS, "errorDescriptionEntry");
         entry.setAttributeNS(null, "id", "found.blue");
-        entry.setAttributeNS(null, "value", "" + val.blue);
+        entry.setAttributeNS(null, "value", "" + val.b);
         result.appendChild(entry);
         return;
      }

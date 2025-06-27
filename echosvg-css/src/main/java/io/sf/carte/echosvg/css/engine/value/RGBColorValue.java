@@ -104,11 +104,11 @@ public class RGBColorValue extends ColorValue implements CSSRGB {
 	 */
 	public RGBColorValue(float[] comp) {
 		super(new FloatValue(CSSUnit.CSS_NUMBER, comp[3]));
-		red = new FloatValue(CSSUnit.CSS_NUMBER, comp[0]);
+		red = new FloatValue(CSSUnit.CSS_NUMBER, comp[0] * 255f);
 		componentize(red);
-		green = new FloatValue(CSSUnit.CSS_NUMBER, comp[1]);
+		green = new FloatValue(CSSUnit.CSS_NUMBER, comp[1] * 255f);
 		componentize(green);
-		blue = new FloatValue(CSSUnit.CSS_NUMBER, comp[2]);
+		blue = new FloatValue(CSSUnit.CSS_NUMBER, comp[2] * 255f);
 		componentize(blue);
 	}
 
@@ -157,31 +157,6 @@ public class RGBColorValue extends ColorValue implements CSSRGB {
 	}
 
 	/**
-	 * Creates a color value from legacy RGB components.
-	 * <p>
-	 * If you want to have a modifiable copy of the returned value, clone it.
-	 * </p>
-	 * 
-	 * @param r the r component as a percentage or a number in the [0, 255] range.
-	 * @param g the g component as a percentage or a number in the [0, 255] range.
-	 * @param b the b component as a percentage or a number in the [0, 255] range.
-	 * @return an immutable color value.
-	 * @throws DOMSyntaxException       if the values aren't valid color components.
-	 * @throws IllegalArgumentException if a component is a mathematical expression.
-	 */
-	public static RGBColorValue createLegacy(NumericValue r, NumericValue g, NumericValue b)
-			throws DOMSyntaxException, IllegalArgumentException {
-		r = legacyRange(r);
-		g = legacyRange(g);
-		b = legacyRange(b);
-		RGBColorValue rgb = new RGBColorValue(r, g, b);
-		rgb.pcntSpecified = r.getUnitType() == CSSUnit.CSS_PERCENTAGE
-				|| g.getUnitType() == CSSUnit.CSS_PERCENTAGE
-				|| b.getUnitType() == CSSUnit.CSS_PERCENTAGE;
-		return rgb;
-	}
-
-	/**
 	 * Initialize a constant legacy component of this value.
 	 * 
 	 * @param c the component (0 &le; c &le; 255).
@@ -193,7 +168,7 @@ public class RGBColorValue extends ColorValue implements CSSRGB {
 			throws DOMSyntaxException, IllegalArgumentException {
 		if (ch.getUnitType() == CSSUnit.CSS_NUMBER) {
 			if (ch.getPrimitiveType() == Type.NUMERIC) {
-				ch = new ImmutableUnitValue(CSSUnit.CSS_NUMBER, ch.getFloatValue() / 255f);
+				ch = new ImmutableUnitValue(CSSUnit.CSS_NUMBER, ch.getFloatValue());
 			} else {
 				throw new IllegalArgumentException("Cannot normalize value to [0,1] now: " + ch.getCssText());
 			}
@@ -203,29 +178,6 @@ public class RGBColorValue extends ColorValue implements CSSRGB {
 		}
 		if (ch.handler != null) {
 			ch = new ImmutableUnitValue(ch.getUnitType(), ch.getFloatValue());
-		}
-		return ch;
-	}
-
-	/**
-	 * Initialize a legacy component of this value.
-	 * 
-	 * @param c the component (0 &le; c &le; 255).
-	 * @return the (0 &le; c &le; 1) component.
-	 * @throws DOMSyntaxException if the value is inadequate for a component.
-	 * @throws IllegalArgumentException if the value is a mathematical expression.
-	 */
-	private static NumericValue legacyRange(NumericValue ch)
-			throws DOMSyntaxException, IllegalArgumentException {
-		if (ch.getUnitType() == CSSUnit.CSS_NUMBER) {
-			if (ch.getPrimitiveType() == Type.NUMERIC) {
-				ch.setFloatValue(ch.getFloatValue() / 255f);
-			} else {
-				throw new IllegalArgumentException("Cannot normalize value to [0,1] now: " + ch.getCssText());
-			}
-		} else if (ch.getUnitType() != CSSUnit.CSS_PERCENTAGE) {
-			throw new DOMSyntaxException("RGB component must be a number or percentage, not a "
-					+ CSSUnit.dimensionUnitString(ch.getUnitType()) + '.');
 		}
 		return ch;
 	}
@@ -280,11 +232,9 @@ public class RGBColorValue extends ColorValue implements CSSRGB {
 			return comp.getCssText();
 		}
 
-		float f;
-		if (comp.getUnitType() == CSSUnit.CSS_NUMBER) {
-			f = comp.getFloatValue() * 255f;
-		} else {
-			f = comp.getFloatValue() * 2.55f;
+		float f = comp.getFloatValue();
+		if (comp.getUnitType() == CSSUnit.CSS_PERCENTAGE) {
+			f *= 2.55f;
 		}
 		return df.format(f);
 	}

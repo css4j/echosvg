@@ -26,6 +26,7 @@ import org.w3c.dom.svg.SVGICCColor;
 import org.w3c.dom.svg.SVGNumber;
 import org.w3c.dom.svg.SVGNumberList;
 
+import io.sf.carte.echosvg.css.engine.value.AbstractValueModificationHandler;
 import io.sf.carte.echosvg.css.engine.value.CSSVal;
 import io.sf.carte.echosvg.css.engine.value.ColorFunction;
 import io.sf.carte.echosvg.css.engine.value.ColorValue;
@@ -78,7 +79,10 @@ public class CSSOMSVGColor implements CSSVal, CSSColorValue, SVGICCColor, SVGNum
 
 	@Override
 	public void setCssText(String cssText) throws DOMException {
-		throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
+		if (!(handler instanceof AbstractValueModificationHandler)) {
+			throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
+		}
+		((AbstractValueModificationHandler) handler).setPropertyText(cssText);
 	}
 
 	@Override

@@ -112,7 +112,7 @@ public abstract class AbstractColorManager extends IdentifierManager {
 	/**
 	 * The computed identifier values.
 	 */
-	protected static final StringMap<Value> computedValues = new StringMap<>(18);
+	protected static final StringMap<ColorValue> computedValues = new StringMap<>(18);
 	static {
 		computedValues.put(CSSConstants.CSS_BLACK_VALUE, ValueConstants.BLACK_RGB_VALUE);
 		computedValues.put(CSSConstants.CSS_SILVER_VALUE, ValueConstants.SILVER_RGB_VALUE);
@@ -301,10 +301,22 @@ public abstract class AbstractColorManager extends IdentifierManager {
 	 */
 	protected ColorValue createRGBColor(NumericValue r, NumericValue g, NumericValue b,
 			boolean pcntSpecified, NumericValue a, boolean alphaPcntSpecified) {
+		if (pcntSpecified) {
+			// Homogenize % in components
+			checkPercentageRGBComponent(r);
+			checkPercentageRGBComponent(g);
+			checkPercentageRGBComponent(b);
+		}
 		RGBColorValue c = a == null ? new RGBColorValue(r, g, b) : new RGBColorValue(r, g, b, a);
 		c.setSpecifiedAsPercentage(pcntSpecified);
 		c.setAlphaSpecifiedAsPercentage(alphaPcntSpecified);
 		return c;
+	}
+
+	private void checkPercentageRGBComponent(NumericValue c) {
+		if (c.getUnitType() == CSSUnit.CSS_NUMBER) {
+			c.setFloatValue(CSSUnit.CSS_PERCENTAGE, c.getFloatValue() / 2.55f);
+		}
 	}
 
 	private Value createColorFunction(LexicalUnit lunit) {
@@ -365,10 +377,10 @@ public abstract class AbstractColorManager extends IdentifierManager {
 	protected NumericValue createRGBColorComponent(LexicalUnit lu) throws DOMException {
 		switch (lu.getLexicalUnitType()) {
 		case INTEGER:
-			return new FloatValue(CSSUnit.CSS_PERCENTAGE, lu.getIntegerValue() / 2.55f);
+			return new FloatValue(CSSUnit.CSS_NUMBER, lu.getIntegerValue());
 
 		case REAL:
-			return new FloatValue(CSSUnit.CSS_PERCENTAGE, lu.getFloatValue() / 2.55f);
+			return new FloatValue(CSSUnit.CSS_NUMBER, lu.getFloatValue());
 
 		case PERCENTAGE:
 			return new FloatValue(CSSUnit.CSS_PERCENTAGE, lu.getFloatValue());
