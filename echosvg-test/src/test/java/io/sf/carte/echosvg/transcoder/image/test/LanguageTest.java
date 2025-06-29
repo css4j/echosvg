@@ -51,11 +51,11 @@ public class LanguageTest extends AbstractImageTranscoderTest {
 	 */
 	@Test
 	public void testLanguage() throws TranscoderException {
-		testLanguage("test-resources/io/sf/carte/echosvg/transcoder/image/resources/language.svg",
+		testLanguage("samples/tests/transcoder/image//language.svg",
 				"test-references/io/sf/carte/echosvg/transcoder/image/languageEn.png", "en");
-		testLanguage("test-resources/io/sf/carte/echosvg/transcoder/image/resources/language.svg",
+		testLanguage("samples/tests/transcoder/image//language.svg",
 				"test-references/io/sf/carte/echosvg/transcoder/image/languageFr.png", "fr");
-		testLanguage("test-resources/io/sf/carte/echosvg/transcoder/image/resources/language.svg",
+		testLanguage("samples/tests/transcoder/image//language.svg",
 				"test-references/io/sf/carte/echosvg/transcoder/image/language.png", "");
 	}
 

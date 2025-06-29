@@ -32,7 +32,7 @@ import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
  */
 class AltUserSheetRenderingTest extends RenderingTest {
 
-	static final String DEFAULT_USER_SHEET = "/io/sf/carte/echosvg/transcoder/UserAgentStyleSheet.css";
+	static final String DEFAULT_USER_SHEET = "/io/sf/carte/echosvg/transcoder/test/UserAgentStyleSheet.css";
 
 	/**
 	 * Alternate sheet name.

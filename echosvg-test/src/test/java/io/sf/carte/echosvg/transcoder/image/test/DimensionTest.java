@@ -61,18 +61,18 @@ public class DimensionTest extends AbstractImageTranscoderTest {
 		testDimension("samples/anne.svg", "test-references/io/sf/carte/echosvg/transcoder/image/anneH600.png", -1, 600);
 		testDimension("samples/anne.svg", "test-references/io/sf/carte/echosvg/transcoder/image/anneWH600.png", 600,
 				600);
-		//
-		testDimension("test-resources/io/sf/carte/echosvg/transcoder/image/resources/butterfly.svg",
+
+		testDimension("samples/tests/transcoder/image/butterfly.svg",
 				"test-references/io/sf/carte/echosvg/transcoder/image/butterflyW200.png", 200, -1);
-		testDimension("test-resources/io/sf/carte/echosvg/transcoder/image/resources/butterfly.svg",
+		testDimension("samples/tests/transcoder/image/butterfly.svg",
 				"test-references/io/sf/carte/echosvg/transcoder/image/butterflyH200.png", -1, 200);
-		testDimension("test-resources/io/sf/carte/echosvg/transcoder/image/resources/butterfly.svg",
+		testDimension("samples/tests/transcoder/image/butterfly.svg",
 				"test-references/io/sf/carte/echosvg/transcoder/image/butterflyWH200.png", 200, 200);
-		testDimension("test-resources/io/sf/carte/echosvg/transcoder/image/resources/butterfly.svg",
+		testDimension("samples/tests/transcoder/image/butterfly.svg",
 				"test-references/io/sf/carte/echosvg/transcoder/image/butterflyW600.png", 600, -1);
-		testDimension("test-resources/io/sf/carte/echosvg/transcoder/image/resources/butterfly.svg",
+		testDimension("samples/tests/transcoder/image/butterfly.svg",
 				"test-references/io/sf/carte/echosvg/transcoder/image/butterflyH600.png", -1, 600);
-		testDimension("test-resources/io/sf/carte/echosvg/transcoder/image/resources/butterfly.svg",
+		testDimension("samples/tests/transcoder/image/butterfly.svg",
 				"test-references/io/sf/carte/echosvg/transcoder/image/butterflyWH600.png", 600, 600);
 	}
 

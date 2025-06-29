@@ -33,34 +33,36 @@ import io.sf.carte.echosvg.test.svg.SelfContainedSVGOnLoadTest;
 
 public class EcmaScriptCSSDOMTest extends SelfContainedSVGOnLoadTest {
 
+	private static final String PATH_PREFIX = "io/sf/carte/echosvg/css/dom/test/";
+
 	@Test
 	public void testRgb() throws Exception {
-		testSVGOnLoad("io/sf/carte/echosvg/css/dom/rgbTest.svg");
+		testSVGOnLoad(PATH_PREFIX + "rgbTest.svg");
 	}
 
 	@Test
 	public void testRgbUpdate() throws Exception {
-		testSVGOnLoad("io/sf/carte/echosvg/css/dom/rgbUpdateTest.svg");
+		testSVGOnLoad(PATH_PREFIX + "rgbUpdateTest.svg");
 	}
 
 	@Test
 	public void testRgbPresentation() throws Exception {
-		testSVGOnLoad("io/sf/carte/echosvg/css/dom/rgbPresentationTest.svg");
+		testSVGOnLoad(PATH_PREFIX + "rgbPresentationTest.svg");
 	}
 
 	@Test
 	public void testBug9740() throws Exception {
-		testSVGOnLoad("io/sf/carte/echosvg/css/dom/bug9740.svg");
+		testSVGOnLoad(PATH_PREFIX + "bug9740.svg");
 	}
 
 	@Test
 	public void testBug9779() throws Exception {
-		testSVGOnLoad("io/sf/carte/echosvg/css/dom/bug9779.svg");
+		testSVGOnLoad(PATH_PREFIX + "bug9779.svg");
 	}
 
 	@Test
 	public void testBug11670() throws Exception {
-		testSVGOnLoad("io/sf/carte/echosvg/css/dom/bug11670.svg");
+		testSVGOnLoad(PATH_PREFIX + "bug11670.svg");
 	}
 
 }

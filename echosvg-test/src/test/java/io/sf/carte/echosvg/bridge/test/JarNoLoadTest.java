@@ -47,7 +47,8 @@ public class JarNoLoadTest {
 	@Test
 	public void testJarNoLoad() throws Exception {
 		String scripts = "text/ecmascript";
-		String[] scriptSource = { "bridge/jarCheckNoLoadAny", "bridge/jarCheckNoLoadSameAsDocument",
+		String[] scriptSource = { "bridge/test/jarCheckNoLoadAny",
+				"bridge/test/jarCheckNoLoadSameAsDocument",
 				"bridge/jarCheckNoLoadEmbed", };
 		boolean[] secure = { true, false };
 		String[] scriptOrigin = { "ANY", "DOCUMENT", "EMBEDED", "NONE" };

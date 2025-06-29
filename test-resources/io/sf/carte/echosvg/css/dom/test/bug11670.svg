@@ -1,0 +1,91 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+
+<!--
+
+   See the NOTICE file distributed with this work for additional
+   information regarding copyright ownership.
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+-->
+<!-- ========================================================================= -->
+<!--                                                                           -->
+<!-- @author shillion@ilog.fr                                                  -->
+<!-- @author for later modifications, see Git history                          -->
+<!-- @version $Id$ -->
+<!-- ========================================================================= -->
+
+<svg xmlns="http://www.w3.org/2000/svg" 
+     xmlns:xlink="http://www.w3.org/1999/xlink" 
+     xmlns:test="https://css4j.github.io/echosvg/test"
+     width="450" height="500" viewBox="0 0 450 500"
+     onload="runTest(evt)" class="c">
+
+  <style type="text/css"><![CDATA[
+      .c rect { fill: #010203 ! important }
+      .c g rect { fill: #020304 ! important }
+  ]]></style>
+
+  <test:testResult id="testResult" />
+
+  <script type="text/ecmascript"><![CDATA[
+   var testNS = "https://css4j.github.io/echosvg/test";
+
+   function runTest() {
+     var result = document.getElementById("testResult");
+
+     var rect = document.getElementById("rect1");
+
+     if (rect == null){
+        result.setAttributeNS(null, "errorCode", "cannot.find.test.element");
+        var entry = document.createElementNS(testNS, "errorDescriptionEntry");
+        entry.setAttributeNS(null, "id", "missing.element.id");
+        entry.setAttributeNS(null, "value", "targetElement");
+        result.appendChild(entry);
+        return;
+     }
+
+     var style = document.documentElement.getComputedStyle(rect, null);
+
+     if (style == null){
+        result.setAttributeNS(null, "errorCode", "getComputedStyle() returned null");
+        return;
+     }
+
+     var val = style.getCSSStyleValue("fill");
+
+     if ( val == null ){
+        result.setAttributeNS(null, "errorCode",
+           "CSSStyleDeclaration.getCSSStyleValue returned null");
+        return;
+     }
+
+     if (val.r.floatValue != 2 ||
+         val.g.floatValue != 3 ||
+         val.b.floatValue != 4) {
+        result.setAttributeNS(null, "errorCode",
+          "invalid color components. Expected 2,3,4, found: " + val.cssText);
+        return;
+     }
+
+     result.setAttributeNS(null, "result", "passed");
+   }
+  ]]></script>
+
+  <g>
+  <rect id="rect1" x="10%" y="10%" width="80%" height="80%" style="fill: #030405"/>
+  </g>
+
+</svg>

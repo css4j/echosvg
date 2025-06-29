@@ -16,39 +16,25 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.script.rhino.test;
+package io.sf.carte.echosvg.bridge.test.load;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
-import io.sf.carte.echosvg.test.misc.ScriptUtil;
+import io.sf.carte.echosvg.bridge.ScriptHandler;
+import io.sf.carte.echosvg.bridge.Window;
 
 /**
- * Checks the permissions applied to Rhino Scripts.
+ * If this script is loaded by jarCheckLoad.svg, it will mark
+ * the test result as passed.
  *
+ * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
  * @version $Id$
  */
-public class RhinoTest {
-
-	@BeforeAll
-	public static void setUpBeforeAll() {
-		ScriptUtil.defaultRhinoShutter();
+public class IWasLoadedToo implements ScriptHandler {
+	@Override
+	public void run(final Document document, final Window win) {
+		Element result = document.getElementById("testResult");
+		result.setAttributeNS(null, "result", "passed");
 	}
-
-	@Test
-	@Tag("SecMan")
-	public void testECMAPermissionsDenied() throws Exception {
-		runTest("script/rhino/test/eval", true);
-	}
-
-	private void runTest(String id, boolean secure) throws Exception {
-		ScriptSelfTest t = new ScriptSelfTest();
-
-		t.setId(id);
-		t.setSecure(secure);
-
-		t.runTest();
-	}
-
 }

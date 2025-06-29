@@ -45,7 +45,7 @@ public class ImportNodeTest {
 
 	@Test
 	public void test() throws IOException {
-		runTest("io/sf/carte/echosvg/dom/svg/test.svg", "nodeID");
+		runTest("io/sf/carte/echosvg/dom/svg/test/test.svg", "nodeID");
 	}
 
 	void runTest(String testFileName, String targetId) throws IOException {

@@ -55,52 +55,66 @@ public class AOITest extends AbstractImageTranscoderTest {
 
 	@Test
 	public void test() throws TranscoderException {
-		testAOI("samples/anne.svg", "test-references/io/sf/carte/echosvg/transcoder/image/anneNW.png", 0f, 0f, 225f,
-				250f);
-		testAOI("samples/anne.svg", "test-references/io/sf/carte/echosvg/transcoder/image/anneNE.png", 225f, 0f, 225f,
-				250f);
-		testAOI("samples/anne.svg", "test-references/io/sf/carte/echosvg/transcoder/image/anneSW.png", 0f, 250f, 225f,
-				250f);
-		testAOI("samples/anne.svg", "test-references/io/sf/carte/echosvg/transcoder/image/anneSE.png", 225f, 250f, 225f,
-				250f);
-		testAOI("samples/anne.svg", "test-references/io/sf/carte/echosvg/transcoder/image/anneC.png", 125f, 150f, 225f,
-				250f);
-		testAOI("samples/anne.svg", "test-references/io/sf/carte/echosvg/transcoder/image/anneWNW.png", 0f, 0f, 225f,
-				250f, 225f, 250f);
-		testAOI("samples/anne.svg", "test-references/io/sf/carte/echosvg/transcoder/image/anneWNE.png", 225f, 0f, 225f,
-				250f, 225f, 250f);
-		testAOI("samples/anne.svg", "test-references/io/sf/carte/echosvg/transcoder/image/anneWSW.png", 0f, 250f, 225f,
-				250f, 225f, 250f);
-		testAOI("samples/anne.svg", "test-references/io/sf/carte/echosvg/transcoder/image/anneWSE.png", 225f, 250f,
-				225f, 250f, 225f, 250f);
-		testAOI("samples/anne.svg", "test-references/io/sf/carte/echosvg/transcoder/image/anneWC.png", 125f, 150f, 225f,
-				250f, 225f, 250f);
+		testAOI("samples/anne.svg",
+			"test-references/io/sf/carte/echosvg/transcoder/image/anneNW.png", 0f, 0f, 225f, 250f);
+		testAOI("samples/anne.svg",
+			"test-references/io/sf/carte/echosvg/transcoder/image/anneNE.png", 225f, 0f, 225f,
+			250f);
+		testAOI("samples/anne.svg",
+			"test-references/io/sf/carte/echosvg/transcoder/image/anneSW.png", 0f, 250f, 225f,
+			250f);
+		testAOI("samples/anne.svg",
+			"test-references/io/sf/carte/echosvg/transcoder/image/anneSE.png", 225f, 250f, 225f,
+			250f);
+		testAOI("samples/anne.svg",
+			"test-references/io/sf/carte/echosvg/transcoder/image/anneC.png", 125f, 150f, 225f,
+			250f);
+		testAOI("samples/anne.svg",
+			"test-references/io/sf/carte/echosvg/transcoder/image/anneWNW.png", 0f, 0f, 225f, 250f,
+			225f, 250f);
+		testAOI("samples/anne.svg",
+			"test-references/io/sf/carte/echosvg/transcoder/image/anneWNE.png", 225f, 0f, 225f,
+			250f, 225f, 250f);
+		testAOI("samples/anne.svg",
+			"test-references/io/sf/carte/echosvg/transcoder/image/anneWSW.png", 0f, 250f, 225f,
+			250f, 225f, 250f);
+		testAOI("samples/anne.svg",
+			"test-references/io/sf/carte/echosvg/transcoder/image/anneWSE.png", 225f, 250f, 225f,
+			250f, 225f, 250f);
+		testAOI("samples/anne.svg",
+			"test-references/io/sf/carte/echosvg/transcoder/image/anneWC.png", 125f, 150f, 225f,
+			250f, 225f, 250f);
 
-		testAOI("test-resources/io/sf/carte/echosvg/transcoder/image/resources/butterfly.svg",
-				"test-references/io/sf/carte/echosvg/transcoder/image/butterflyNW.png", 0f, 0f, 212.5f, 150f);
-		testAOI("test-resources/io/sf/carte/echosvg/transcoder/image/resources/butterfly.svg",
-				"test-references/io/sf/carte/echosvg/transcoder/image/butterflyNE.png", 212.5f, 0f, 212.5f, 150f);
-		testAOI("test-resources/io/sf/carte/echosvg/transcoder/image/resources/butterfly.svg",
-				"test-references/io/sf/carte/echosvg/transcoder/image/butterflySW.png", 0f, 150f, 212.5f, 150f);
-		testAOI("test-resources/io/sf/carte/echosvg/transcoder/image/resources/butterfly.svg",
-				"test-references/io/sf/carte/echosvg/transcoder/image/butterflySE.png", 212.5f, 150f, 212.5f, 150f);
-		testAOI("test-resources/io/sf/carte/echosvg/transcoder/image/resources/butterfly.svg",
-				"test-references/io/sf/carte/echosvg/transcoder/image/butterflyC.png", 125f, 150f, 212.5f, 150f);
-		testAOI("test-resources/io/sf/carte/echosvg/transcoder/image/resources/butterfly.svg",
-				"test-references/io/sf/carte/echosvg/transcoder/image/butterflyWNW.png", 0f, 0f, 212.5f, 150f, 212.5f,
-				150f);
-		testAOI("test-resources/io/sf/carte/echosvg/transcoder/image/resources/butterfly.svg",
-				"test-references/io/sf/carte/echosvg/transcoder/image/butterflyWNE.png", 212.5f, 0f, 212.5f, 150f,
-				212.5f, 150f);
-		testAOI("test-resources/io/sf/carte/echosvg/transcoder/image/resources/butterfly.svg",
-				"test-references/io/sf/carte/echosvg/transcoder/image/butterflyWSW.png", 0f, 150f, 212.5f, 150f, 212.5f,
-				150f);
-		testAOI("test-resources/io/sf/carte/echosvg/transcoder/image/resources/butterfly.svg",
-				"test-references/io/sf/carte/echosvg/transcoder/image/butterflyWSE.png", 212.5f, 150f, 212.5f, 150f,
-				212.5f, 150f);
-		testAOI("test-resources/io/sf/carte/echosvg/transcoder/image/resources/butterfly.svg",
-				"test-references/io/sf/carte/echosvg/transcoder/image/butterflyWC.png", 125f, 150f, 212.5f, 150f,
-				212.5f, 150f);
+		testAOI("samples/tests/transcoder/image/butterfly.svg",
+			"test-references/io/sf/carte/echosvg/transcoder/image/butterflyNW.png", 0f, 0f, 212.5f,
+			150f);
+		testAOI("samples/tests/transcoder/image/butterfly.svg",
+			"test-references/io/sf/carte/echosvg/transcoder/image/butterflyNE.png", 212.5f, 0f,
+			212.5f, 150f);
+		testAOI("samples/tests/transcoder/image/butterfly.svg",
+			"test-references/io/sf/carte/echosvg/transcoder/image/butterflySW.png", 0f, 150f,
+			212.5f, 150f);
+		testAOI("samples/tests/transcoder/image/butterfly.svg",
+			"test-references/io/sf/carte/echosvg/transcoder/image/butterflySE.png", 212.5f, 150f,
+			212.5f, 150f);
+		testAOI("samples/tests/transcoder/image/butterfly.svg",
+			"test-references/io/sf/carte/echosvg/transcoder/image/butterflyC.png", 125f, 150f,
+			212.5f, 150f);
+		testAOI("samples/tests/transcoder/image/butterfly.svg",
+			"test-references/io/sf/carte/echosvg/transcoder/image/butterflyWNW.png", 0f, 0f, 212.5f,
+			150f, 212.5f, 150f);
+		testAOI("samples/tests/transcoder/image/butterfly.svg",
+			"test-references/io/sf/carte/echosvg/transcoder/image/butterflyWNE.png", 212.5f, 0f,
+			212.5f, 150f, 212.5f, 150f);
+		testAOI("samples/tests/transcoder/image/butterfly.svg",
+			"test-references/io/sf/carte/echosvg/transcoder/image/butterflyWSW.png", 0f, 150f,
+			212.5f, 150f, 212.5f, 150f);
+		testAOI("samples/tests/transcoder/image/butterfly.svg",
+			"test-references/io/sf/carte/echosvg/transcoder/image/butterflyWSE.png", 212.5f, 150f,
+			212.5f, 150f, 212.5f, 150f);
+		testAOI("samples/tests/transcoder/image/butterfly.svg",
+			"test-references/io/sf/carte/echosvg/transcoder/image/butterflyWC.png", 125f, 150f,
+			212.5f, 150f, 212.5f, 150f);
 	}
 
 	/**

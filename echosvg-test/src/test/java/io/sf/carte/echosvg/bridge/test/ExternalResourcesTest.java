@@ -143,7 +143,7 @@ public class ExternalResourcesTest implements ErrorConstants {
 	/**
 	 * Location of bridge test files in filesystem.
 	 */
-	public static final String FILE_DIR = "test-resources/io/sf/carte/echosvg/bridge/";
+	public static final String FILE_DIR = "test-resources/io/sf/carte/echosvg/bridge/test/";
 
 	String svgURL;
 

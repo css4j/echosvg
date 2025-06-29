@@ -74,7 +74,7 @@ public class ScriptSelfTest extends SelfContainedSVGOnLoadTest {
 			}
 
 			try {
-				testSVGOnLoad("io/sf/carte/echosvg/bridge/" + id + ".svg", "");
+				testSVGOnLoad("io/sf/carte/echosvg/bridge/test/" + id + ".svg", "");
 			} finally {
 				try {
 					AccessController.doPrivileged(new PrivilegedExceptionAction<Void>() {

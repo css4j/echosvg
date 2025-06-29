@@ -65,8 +65,9 @@ public class EcmaNoLoadTest {
 	@Test
 	public void test() throws Exception {
 		String scripts = "application/java-archive";
-		String[] scriptSource = { "bridge/ecmaCheckNoLoadAny", "bridge/ecmaCheckNoLoadSameAsDocument",
-				"bridge/ecmaCheckNoLoadEmbed", "bridge/ecmaCheckNoLoadEmbedAttr", };
+		String[] scriptSource = { "bridge/test/ecmaCheckNoLoadAny",
+				"bridge/test/ecmaCheckNoLoadSameAsDocument", "bridge/test/ecmaCheckNoLoadEmbed",
+				"bridge/test/ecmaCheckNoLoadEmbedAttr", };
 		boolean[] secure = { true, false };
 		String[] scriptOrigin = { "ANY", "DOCUMENT", "EMBEDED", "NONE" };
 

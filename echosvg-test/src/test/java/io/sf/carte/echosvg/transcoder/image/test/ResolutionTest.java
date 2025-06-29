@@ -52,13 +52,13 @@ public class ResolutionTest extends AbstractImageTranscoderTest {
 
 	@Test
 	public void test96dpi() throws TranscoderException {
-		testResolution("test-resources/io/sf/carte/echosvg/transcoder/image/resources/resolution.svg",
+		testResolution("samples/tests/transcoder/image/resolution.svg",
 				"test-references/io/sf/carte/echosvg/transcoder/image/resolution96dpi.png", 96f);
 	}
 
 	@Test
 	public void test72dpi() throws TranscoderException {
-		testResolution("test-resources/io/sf/carte/echosvg/transcoder/image/resources/resolution.svg",
+		testResolution("samples/tests/transcoder/image/resolution.svg",
 				"test-references/io/sf/carte/echosvg/transcoder/image/resolution72dpi.png", 72f);
 	}
 

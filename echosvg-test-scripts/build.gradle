@@ -34,11 +34,11 @@ task iWasLoadedJar(type: Jar) {
 	}
 	manifest {
 		attributes (
-			'Script-Handler' : 'io.sf.carte.echosvg.bridge.IWasLoaded'
+			'Script-Handler' : 'io.sf.carte.echosvg.bridge.test.load.IWasLoaded'
 		)
 	}
 	with jar
-	include 'io/sf/carte/echosvg/bridge/IWasLoaded.class'
+	include 'io/sf/carte/echosvg/bridge/test/load/IWasLoaded.class'
 	duplicatesStrategy = 'exclude'
 }
 
@@ -50,11 +50,11 @@ task iWasLoadedTooJar(type: Jar) {
 	}
 	manifest {
 		attributes (
-			'Script-Handler' : 'io.sf.carte.echosvg.bridge.IWasLoadedToo'
+			'Script-Handler' : 'io.sf.carte.echosvg.bridge.test.load.IWasLoadedToo'
 		)
 	}
 	with jar
-	include 'io/sf/carte/echosvg/bridge/IWasLoadedToo.class'
+	include 'io/sf/carte/echosvg/bridge/test/load/IWasLoadedToo.class'
 	duplicatesStrategy = 'exclude'
 }
 
@@ -66,11 +66,11 @@ task jarCheckPermissionsDeniedJar(type: Jar) {
 	}
 	manifest {
 		attributes (
-			'Script-Handler' : 'io.sf.carte.echosvg.bridge.JarCheckPermissionsDenied'
+			'Script-Handler' : 'io.sf.carte.echosvg.bridge.test.load.JarCheckPermissionsDenied'
 		)
 	}
 	with jar
-	include 'io/sf/carte/echosvg/bridge/JarCheckPermissionsDenied*'
+	include 'io/sf/carte/echosvg/bridge/test/load/JarCheckPermissionsDenied*'
 	duplicatesStrategy = 'exclude'
 }
 
@@ -82,18 +82,18 @@ task jarCheckPermissionsGrantedJar(type: Jar) {
 	}
 	manifest {
 		attributes (
-			'Script-Handler' : 'io.sf.carte.echosvg.bridge.JarCheckPermissionsGranted'
+			'Script-Handler' : 'io.sf.carte.echosvg.bridge.test.load.JarCheckPermissionsGranted'
 		)
 	}
 	with jar
-	include 'io/sf/carte/echosvg/bridge/JarCheckPermissionsGranted*'
+	include 'io/sf/carte/echosvg/bridge/test/load/JarCheckPermissionsGranted*'
 	duplicatesStrategy = 'exclude'
 }
 
 task jarPolicyTestJar(type: Jar) {
 	archiveFileName = 'JarPolicyTest.jar'
 	dependsOn lineEndingConvCopy
-	from ("$rootDir/test-resources/io/sf/carte/echosvg/transcoder/image/text-red.css") {
+	from ("$rootDir/test-resources/io/sf/carte/echosvg/transcoder/image/test/text-red.css") {
 		into 'css'
 	}
 	duplicatesStrategy = 'exclude'
@@ -101,19 +101,21 @@ task jarPolicyTestJar(type: Jar) {
 
 // Copy script jar files to destination directory
 tasks.register('copyScriptJars', Copy) {
-	dependsOn tasks.jarCheckPermissionsDeniedJar
-	dependsOn tasks.jarCheckPermissionsGrantedJar
+	dependsOn iWasLoadedJar, iWasLoadedTooJar, jarCheckPermissionsDeniedJar, jarCheckPermissionsGrantedJar
 	include '**/JarCheckPermissions*.jar'
+	include '**/IWasLoaded*.jar'
+	from layout.buildDirectory.file('libs/IWasLoaded.jar')
+	from layout.buildDirectory.file('libs/IWasLoadedToo.jar')
 	from layout.buildDirectory.file('libs/JarCheckPermissionsDenied.jar')
 	from layout.buildDirectory.file('libs/JarCheckPermissionsGranted.jar')
-	into "${rootDir}/test-resources/io/sf/carte/echosvg/bridge"
+	into "${rootDir}/test-resources/io/sf/carte/echosvg/bridge/test"
 }
 
 // Copy policy test jar to destination directory
 tasks.register('copyPolicyJar', Copy) {
 	dependsOn tasks.jarPolicyTestJar
 	from layout.buildDirectory.file('libs/JarPolicyTest.jar')
-	into "${rootDir}/test-resources/io/sf/carte/echosvg/css"
+	into "${rootDir}/test-resources/io/sf/carte/echosvg/css/test"
 }
 
 check.dependsOn iWasLoadedJar

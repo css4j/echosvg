@@ -32,24 +32,26 @@ import io.sf.carte.echosvg.test.svg.SelfContainedSVGOnLoadTest;
 
 public class EcmaScriptSVGDOMTest extends SelfContainedSVGOnLoadTest {
 
+	private static final String PATH_PREFIX = "io/sf/carte/echosvg/dom/svg/test/";
+
 	@Test
 	public void testBug30580() throws Exception {
-		testSVGOnLoad("io/sf/carte/echosvg/dom/svg/bug30580.svg");
+		testSVGOnLoad(PATH_PREFIX + "bug30580.svg");
 	}
 
 	@Test
 	public void testLength() throws Exception {
-		testSVGOnLoad("io/sf/carte/echosvg/dom/svg/lengthTest.svg");
+		testSVGOnLoad(PATH_PREFIX + "lengthTest.svg");
 	}
 
 	@Test
 	public void testLocatable() throws Exception {
-		testSVGOnLoad("io/sf/carte/echosvg/dom/svg/locatableTest.svg");
+		testSVGOnLoad(PATH_PREFIX + "locatableTest.svg");
 	}
 
 	@Test
 	public void testPresentationAttrRemoval() throws Exception {
-		testSVGOnLoad("io/sf/carte/echosvg/dom/svg/presentationAttrRemovalTest.svg");
+		testSVGOnLoad(PATH_PREFIX + "presentationAttrRemovalTest.svg");
 	}
 
 }

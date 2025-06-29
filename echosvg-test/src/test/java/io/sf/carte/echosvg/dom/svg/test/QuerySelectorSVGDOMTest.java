@@ -47,10 +47,12 @@ import io.sf.carte.echosvg.dom.ArrayNodeList;
  */
 public class QuerySelectorSVGDOMTest {
 
+	private static final String PATH_PREFIX = "io/sf/carte/echosvg/dom/svg/test/";
+
 	@Test
 	public void test() throws IOException {
-		runTest("io/sf/carte/echosvg/dom/svg/test.svg", "#nodeID");
-		runTest("io/sf/carte/echosvg/dom/svg/test.svg", "svg");
+		runTest(PATH_PREFIX + "test.svg", "#nodeID");
+		runTest(PATH_PREFIX + "test.svg", "svg");
 	}
 
 	void runTest(String testFileName, String selector) throws IOException {

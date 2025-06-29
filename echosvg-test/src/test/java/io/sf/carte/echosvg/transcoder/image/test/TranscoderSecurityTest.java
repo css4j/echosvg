@@ -60,7 +60,7 @@ class TranscoderSecurityTest {
 	}
 
 	private void testResource(String fileName, Class<? extends Throwable> exClass, String message) {
-		final String resPath = "io/sf/carte/echosvg/transcoder/image/" + fileName;
+		final String resPath = "io/sf/carte/echosvg/transcoder/image/test/" + fileName;
 		TestTranscoderSecurity test = new TestTranscoderSecurity();
 
 		try {
