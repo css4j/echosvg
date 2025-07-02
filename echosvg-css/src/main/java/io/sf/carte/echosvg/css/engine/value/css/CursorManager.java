@@ -196,7 +196,10 @@ public class CursorManager extends AbstractValueManager {
 				if (ident != null) {
 					result.add(ident);
 				} else {
-					engine.getCSSEngineUserAgent().displayMessage("Unknown identifier: " + lu.getStringValue());
+					CSSEngineUserAgent ua = engine.getCSSEngineUserAgent();
+					if (ua != null) {
+						ua.displayMessage("Unknown identifier: " + lu.getStringValue());
+					}
 				}
 				lu = lu.getNextLexicalUnit();
 				if (lu != null) {
@@ -285,7 +288,7 @@ public class CursorManager extends AbstractValueManager {
 					if (sm.isAttrTainted(idx)) {
 						CSSEngineUserAgent ua = engine.getCSSEngineUserAgent();
 						if (ua != null) {
-							ua.displayMessage("attr()-tainted value: " + value.getCssText());
+							ua.warn("attr()-tainted value: " + value.getCssText());
 						}
 						return null;
 					}

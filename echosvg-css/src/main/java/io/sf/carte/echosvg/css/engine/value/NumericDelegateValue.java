@@ -127,14 +127,14 @@ public abstract class NumericDelegateValue<D extends CSSMathValue> extends Numer
 		return new FloatValue(u, f);
 	}
 
-	protected abstract CSSTypedValue evaluate(Evaluator eval);
+	protected abstract CSSTypedValue evaluate(Evaluator eval) throws DOMException;
 
 	protected FloatValue absoluteValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx,
 			StyleMap sm, FloatValue relative) throws DOMException {
 		return relative;
 	}
 
-	public Value floatValue(Evaluator eval) {
+	public Value floatValue(Evaluator eval) throws DOMException {
 		CSSTypedValue typed = evaluate(eval);
 		return new FloatValue(typed.getUnitType(), typed.getFloatValue());
 	}

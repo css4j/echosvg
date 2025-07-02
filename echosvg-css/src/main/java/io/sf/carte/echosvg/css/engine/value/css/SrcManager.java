@@ -270,7 +270,7 @@ public class SrcManager extends IdentifierManager {
 				if (v.getPrimitiveType() == Type.URI) {
 					CSSEngineUserAgent ua = engine.getCSSEngineUserAgent();
 					if (ua != null) {
-						ua.displayMessage("attr()-tainted value: " + value.getCssText());
+						ua.warn("attr()-tainted value: " + value.getCssText());
 					}
 					return null;
 				}

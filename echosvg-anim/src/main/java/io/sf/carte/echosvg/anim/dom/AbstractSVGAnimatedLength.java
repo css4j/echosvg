@@ -144,7 +144,7 @@ public abstract class AbstractSVGAnimatedLength extends AbstractSVGAnimatedValue
 	 * Gets the current animated length value. If the attribute is missing or
 	 * malformed, an exception is thrown.
 	 */
-	public float getCheckedValue() {
+	public float getCheckedValue() throws LiveAttributeException {
 		if (hasAnimVal) {
 			if (animVal == null) {
 				animVal = new AnimSVGLength(direction);

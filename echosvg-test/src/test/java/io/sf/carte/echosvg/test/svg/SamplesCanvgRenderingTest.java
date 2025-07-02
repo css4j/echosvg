@@ -523,7 +523,7 @@ public class SamplesCanvgRenderingTest extends AbstractSamplesRendering {
 
 	@Test
 	public void testIssue115() throws TranscoderException, IOException {
-		testNVErrIgnore("samples/canvg/issue115.svg", BROWSER_MEDIA, 1);
+		testNVErrIgnore("samples/canvg/issue115.svg", BROWSER_MEDIA, 0);
 	}
 
 	/**
@@ -750,7 +750,7 @@ public class SamplesCanvgRenderingTest extends AbstractSamplesRendering {
 	 */
 	@Test
 	public void testIssue206() throws TranscoderException, IOException {
-		testNVErrIgnore("samples/canvg/issue206.svg", BROWSER_MEDIA, 66);
+		testNVErrIgnore("samples/canvg/issue206.svg", BROWSER_MEDIA, 0);
 	}
 
 	@Test
@@ -1179,7 +1179,7 @@ public class SamplesCanvgRenderingTest extends AbstractSamplesRendering {
 
 	@Test
 	public void testIssue945() throws TranscoderException, IOException {
-		testNVErrIgnore("samples/canvg/issue945.svg", BROWSER_MEDIA, 11);
+		testNVErrIgnore("samples/canvg/issue945.svg", BROWSER_MEDIA, 2);
 	}
 
 	/**

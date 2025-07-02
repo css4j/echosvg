@@ -914,6 +914,7 @@ public abstract class CSSEngine {
 			// Apply the non-CSS presentational hints to the result.
 			if (nonCSSPresentationalHints != null) {
 				ShorthandManager.PropertyHandler ph = new ShorthandManager.PropertyHandler() {
+
 					@Override
 					public void property(String pname, LexicalUnit lu, boolean important) {
 						int idx = getPropertyIndex(pname);
@@ -942,6 +943,7 @@ public abstract class CSSEngine {
 							putAuthorProperty(result, idx, v, important, StyleMap.NON_CSS_ORIGIN);
 						}
 					}
+
 				};
 
 				NamedNodeMap attrs = elt.getAttributes();
@@ -950,22 +952,28 @@ public abstract class CSSEngine {
 					Node attr = attrs.item(i);
 					String an = attr.getNodeName();
 					if (nonCSSPresentationalHints.contains(an)) {
-						try {
-							LexicalUnit lu;
-							lu = parser.parsePropertyValue(new StringReader(attr.getNodeValue()));
-							ph.property(an, lu, false);
-						} catch (Exception e) {
-							String m = e.getMessage();
-							if (m == null)
-								m = "";
-							String u = ((documentURI == null) ? "<unknown>" : documentURI.toString());
-							String s = Messages.formatMessage("property.syntax.error.at",
+						String av = attr.getNodeValue();
+						if (!av.isEmpty()) {
+							try {
+								LexicalUnit lu;
+								lu = parser.parsePropertyValue(new StringReader(av));
+								ph.property(an, lu, false);
+							} catch (Exception e) {
+								String m = e.getMessage();
+								if (m == null)
+									m = "";
+								String u = ((documentURI == null) ? "<unknown>"
+									: documentURI.toString());
+								String s = Messages.formatMessage("property.syntax.error.at",
 									new Object[] { u, an, attr.getNodeValue(), m });
-							DOMException de = new DOMException(DOMException.SYNTAX_ERR, s);
-							de.initCause(e);
-							if (userAgent == null)
-								throw de;
-							userAgent.displayError(de);
+								DOMException de = new DOMException(DOMException.SYNTAX_ERR, s);
+								de.initCause(e);
+								if (userAgent == null)
+									throw de;
+								userAgent.displayError(de);
+							}
+						} else if (userAgent != null) {
+							userAgent.warn("Empty attribute: " + an);
 						}
 					}
 				}

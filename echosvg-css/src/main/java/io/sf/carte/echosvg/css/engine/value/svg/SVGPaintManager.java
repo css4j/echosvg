@@ -164,7 +164,7 @@ public class SVGPaintManager extends SVGColorManager {
 				if (sm.isAttrTainted(idx)) {
 					CSSEngineUserAgent ua = engine.getCSSEngineUserAgent();
 					if (ua != null) {
-						ua.displayMessage("attr()-tainted value: " + value.getCssText());
+						ua.warn("attr()-tainted value: " + value.getCssText());
 					}
 					return null;
 				}

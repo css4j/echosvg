@@ -18,6 +18,8 @@
  */
 package io.sf.carte.echosvg.css.engine.value;
 
+import org.w3c.dom.DOMException;
+
 import io.sf.carte.doc.style.css.CSSMathFunctionValue;
 import io.sf.carte.doc.style.css.CSSTypedValue;
 import io.sf.carte.doc.style.css.property.Evaluator;
@@ -45,7 +47,7 @@ public class MathFunctionValue extends NumericDelegateValue<CSSMathFunctionValue
 	}
 
 	@Override
-	protected CSSTypedValue evaluate(Evaluator eval) {
+	protected CSSTypedValue evaluate(Evaluator eval) throws DOMException {
 		return eval.evaluateFunction(getNumericDelegate());
 	}
 

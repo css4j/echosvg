@@ -1207,7 +1207,8 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 	/**
 	 * Adds glyph position attributes to an AttributedString.
 	 */
-	protected void addGlyphPositionAttributes(AttributedString as, Element element, BridgeContext ctx) {
+	protected void addGlyphPositionAttributes(AttributedString as, Element element, BridgeContext ctx)
+			throws BridgeException {
 
 		// 'requiredFeatures', 'requiredExtensions' and 'systemLanguage'
 		if ((!SVGUtilities.matchUserAgent(element, ctx.getUserAgent())) || (!CSSUtilities.convertDisplay(element))) {
@@ -1307,7 +1308,8 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 		}
 	}
 
-	protected void addChildGlyphPositionAttributes(AttributedString as, Element element, BridgeContext ctx) {
+	protected void addChildGlyphPositionAttributes(AttributedString as, Element element, BridgeContext ctx)
+			throws BridgeException {
 		// do the same for each child element
 		for (Node child = getFirstChild(element); child != null; child = getNextSibling(child)) {
 			if (child.getNodeType() != Node.ELEMENT_NODE)
@@ -1337,8 +1339,8 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 	}
 
 	protected void addChildPaintAttributes(AttributedString as, Element element, TextNode node, TextPaintInfo parentPI,
-			BridgeContext ctx) {
-		// Add Paint attributres for children of text element
+			BridgeContext ctx) throws BridgeException {
+		// Add Paint attributes for children of text element
 		for (Node child = getFirstChild(element); child != null; child = getNextSibling(child)) {
 			if (child.getNodeType() != Node.ELEMENT_NODE) {
 				continue;

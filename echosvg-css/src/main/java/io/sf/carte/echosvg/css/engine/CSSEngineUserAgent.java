@@ -39,4 +39,13 @@ public interface CSSEngineUserAgent {
 	 */
 	void displayMessage(String message);
 
+	/**
+	 * Report a warning to the user agent.
+	 * 
+	 * @param message the warning message.
+	 */
+	default void warn(String message) {
+		displayMessage(message);
+	}
+
 }
