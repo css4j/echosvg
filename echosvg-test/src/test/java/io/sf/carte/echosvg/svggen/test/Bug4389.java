@@ -35,7 +35,7 @@ public class Bug4389 implements Painter {
 	@Override
 	public void paint(Graphics2D g) {
 		ImageIcon image = new ImageIcon(
-				ClassLoader.getSystemResource("io/sf/carte/echosvg/svggen/resources/vangogh.png"));
+			Bug4389.class.getResource("/io/sf/carte/echosvg/svggen/resources/vangogh.png"));
 		g.translate(40, 40);
 		g.drawImage(image.getImage(), new AffineTransform(), null);
 	}

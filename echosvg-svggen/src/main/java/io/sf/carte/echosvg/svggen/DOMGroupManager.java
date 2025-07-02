@@ -205,23 +205,25 @@ public class DOMGroupManager implements SVGSyntax, ErrorConstants {
 						deltaGC.getContext().put(SVG_FILL_ATTRIBUTE, SVG_NONE_VALUE);
 					}
 					domTreeManager.getStyleHandler().setStyle(element, deltaGC.getContext(),
-							domTreeManager.getGeneratorContext());
+						domTreeManager.getGeneratorContext());
 					setTransform(element, deltaGC.getTransformStack());
 				} else {
 					//
 					// Need to create a new current group
 					//
-					currentGroup = domTreeManager.getDOMFactory().createElementNS(SVG_NAMESPACE_URI, SVG_G_TAG);
-					addElement(element, method);
+					currentGroup = domTreeManager.getDOMFactory().createElementNS(SVG_NAMESPACE_URI,
+						SVG_G_TAG);
+					addElement(element, method, elementGC);
 				}
 			} else {
 				//
 				// Transform stack is invalid. Create a new current
 				// group and validate the stack
 				//
-				currentGroup = domTreeManager.getDOMFactory().createElementNS(SVG_NAMESPACE_URI, SVG_G_TAG);
+				currentGroup = domTreeManager.getDOMFactory().createElementNS(SVG_NAMESPACE_URI,
+					SVG_G_TAG);
 				gc.validateTransformStack();
-				addElement(element, method);
+				addElement(element, method, elementGC);
 			}
 		}
 	}

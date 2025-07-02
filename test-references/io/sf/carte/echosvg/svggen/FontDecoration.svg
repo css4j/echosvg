@@ -9,7 +9,7 @@
       >Unicode symbols Σ √ ∞ ∫ π</text
     ></g
     ><g fill="color(prophoto-rgb 0.33 0.34 0.43)" text-rendering="optimizeLegibility" font-size="20px" font-weight="800" stroke="color(prophoto-rgb 0.33 0.34 0.43)"
-    ><text x="15" xml:space="preserve" y="40" stroke="none"
+    ><text x="15" xml:space="preserve" y="40" text-decoration="line-through" stroke="none"
       >Strike Through</text
       ><line y2="87" fill="none" x1="80" x2="80" stroke="color(rec2020 0.55 0.6 0.34)" y1="53"
       /><ellipse rx="4" fill="color(rec2020 0.55 0.6 0.34)" ry="10" cx="80" cy="70" stroke="none"
