@@ -65,9 +65,9 @@
         return
      }
 
-     if (rgb.r.cssText != "1"){
+     if (Math.abs(1/255 - rgb.r.floatValue) > 1e-7) { // 1 hex
         result.setAttributeNS(null, "errorCode",
-          "invalid red component. Expected 1, found: " + rgb.r.cssText);
+          "invalid red component. Expected 1/255, found: " + rgb.r.cssText);
         var entry = document.createElementNS(testNS, "errorDescriptionEntry");
         entry.setAttributeNS(null, "id", "expected.red");
         entry.setAttributeNS(null, "value", "1");
@@ -79,9 +79,9 @@
         return;
      }
 
-     if (rgb.g.cssText != "2"){
+     if (Math.abs(2/255 - rgb.g.floatValue) > 1e-7) { // 2 hex
         result.setAttributeNS(null, "errorCode",
-          "invalid green component. Expected 2, found: " + rgb.g.cssText);
+          "invalid green component. Expected 2/255, found: " + rgb.g.cssText);
         var entry = document.createElementNS(testNS, "errorDescriptionEntry");
         entry.setAttributeNS(null, "id", "expected.green");
         entry.setAttributeNS(null, "value", "2");
@@ -93,9 +93,9 @@
         return;
      }
 
-     if (rgb.b.cssText != "3"){
+     if (Math.abs(3/255 - rgb.b.floatValue) > 1e-7) { // 3 hex
         result.setAttributeNS(null, "errorCode",
-          "invalid blue component. Expected 3, found: " + rgb.b.cssText);
+          "invalid blue component. Expected 3/255, found: " + rgb.b.cssText);
         var entry = document.createElementNS(testNS, "errorDescriptionEntry");
         entry.setAttributeNS(null, "id", "expected.blue");
         entry.setAttributeNS(null, "value", "3");
@@ -109,9 +109,9 @@
 
      elt.setAttributeNS(null, "fill", "#030201")
 
-     if (rgb.r.cssText != "3"){
+     if (Math.abs(3/255 - rgb.r.floatValue) > 1e-7) { // 3 hex
         result.setAttributeNS(null, "errorCode",
-          "invalid red component. Expected 3, found: " + rgb.r.cssText);
+          "invalid red component. Expected 3/255, found: " + rgb.r.cssText);
         var entry = document.createElementNS(testNS, "errorDescriptionEntry");
         entry.setAttributeNS(null, "id", "expected.red");
         entry.setAttributeNS(null, "value", "1");
@@ -123,9 +123,9 @@
         return;
      }
 
-     if (rgb.g.cssText != "2"){
+     if (Math.abs(2/255 - rgb.g.floatValue) > 1e-7) { // 2 hex
         result.setAttributeNS(null, "errorCode",
-          "invalid green component. Expected 2, found: " + rgb.g.cssText);
+          "invalid green component. Expected 2/255, found: " + rgb.g.cssText);
         var entry = document.createElementNS(testNS, "errorDescriptionEntry");
         entry.setAttributeNS(null, "id", "expected.green");
         entry.setAttributeNS(null, "value", "2");
@@ -137,9 +137,9 @@
         return;
      }
 
-     if (rgb.b.cssText != "1"){
+     if (Math.abs(1/255 - rgb.b.floatValue) > 1e-7) { // 1 hex
         result.setAttributeNS(null, "errorCode",
-          "invalid blue component. Expected 1, found: " + rgb.b.cssText);
+          "invalid blue component. Expected 1/255, found: " + rgb.b.cssText);
         var entry = document.createElementNS(testNS, "errorDescriptionEntry");
         entry.setAttributeNS(null, "id", "expected.blue");
         entry.setAttributeNS(null, "value", "3");

@@ -43,6 +43,15 @@
   <script type="text/ecmascript"><![CDATA[
    var testNS = "https://css4j.github.io/echosvg/test";
 
+   function assertFloatValue(expected, numval, tol, result) {
+     if (Math.abs(expected - numval) > tol) {
+        result.setAttributeNS(null, "errorCode",
+          "invalid color component. Expected " + expected + ", found: " + numval.floatValue);
+        return false;
+     }
+     return true;
+   }
+
    function runTest() {
      var result = document.getElementById("testResult");
 
@@ -72,11 +81,15 @@
         return;
      }
 
-     if (val.r.floatValue != 2 ||
-         val.g.floatValue != 3 ||
-         val.b.floatValue != 4) {
+     if (!assertFloatValue(0.007843137, val.r, 1e-8, result)
+        || !assertFloatValue(0.01176470588, val.g, 1e-9, result)
+        || !assertFloatValue(0.01568627451, val.b, 1e-9, result)) {
+        return;
+     }
+
+     if (!"rgb(2, 3, 4)".equals(val.cssText)) {
         result.setAttributeNS(null, "errorCode",
-          "invalid color components. Expected 2,3,4, found: " + val.cssText);
+          "invalid color components. Expected rgb(2,3,4), found: " + val.cssText);
         return;
      }
 

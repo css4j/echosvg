@@ -116,4 +116,9 @@ public class SamplesSpec2RenderingTest extends AbstractSamplesRendering {
 		testNVErrIgnore("samples/tests/spec2/styling/nesting.svg", PRINT_MEDIA, 0);
 	}
 
+	@Test
+	public void testRelativeColors() throws TranscoderException, IOException {
+		testNV("samples/tests/spec2/styling/relativeColors.svg");
+	}
+
 }

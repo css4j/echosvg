@@ -190,14 +190,32 @@ public abstract class AbstractValueManager extends AbstractValueFactory implemen
 		return new URIValue(sv, resolveURI(engine.getCSSBaseURI(), sv));
 	}
 
+	static LexicalUnit nextLexicalUnit(LexicalUnit lu, LexicalUnit firstUnit) throws DOMException {
+		lu = lu.getNextLexicalUnit();
+		if (lu == null) {
+			throw createDOMSyntaxException(firstUnit);
+		}
+		return lu;
+	}
+
 	/**
 	 * Creates an INVALID_ACCESS_ERR exception.
 	 * @param cv the value.
 	 */
 	protected DOMException createDOMException(Value cv) {
-		Object[] p = { cv.getUnitType(), cv.getCssText() };
+		Object[] p = { CSSUnit.dimensionUnitString(cv.getUnitType()), cv.getCssText() };
 		String s = Messages.formatMessage("invalid.value.access", p);
 		return new DOMException(DOMException.INVALID_ACCESS_ERR, s);
+	}
+
+	/**
+	 * Creates a SYNTAX_ERR exception.
+	 * @param lu the value.
+	 */
+	static DOMException createDOMSyntaxException(LexicalUnit lu) {
+		Object[] p = { lu.toString() };
+		String s = Messages.formatMessage("invalid.value.syntax", p);
+		return new DOMException(DOMException.SYNTAX_ERR, s);
 	}
 
 }

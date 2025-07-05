@@ -28,6 +28,8 @@ import org.w3c.css.om.typed.CSSStyleValueList;
 import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
 
+import io.sf.carte.doc.style.css.CSSNumberValue;
+
 /**
  * color() function.
  *
@@ -64,7 +66,7 @@ public class ColorFunction extends ColorValue implements CSSColor {
 	 * Creates a new ColorFunction.
 	 * 
 	 * @param colorSpace the color space.
-	 * @param channels a channel list to copy from.
+	 * @param channels a channel list to copy from, without the alpha channel.
 	 * @throws DOMSyntaxException if a supplied component is invalid.
 	 */
 	public ColorFunction(String colorSpace, CSSStyleValueList<NumericValue> channels)
@@ -137,6 +139,25 @@ public class ColorFunction extends ColorValue implements CSSColor {
 			return getAlpha();
 		}
 		return channels.item(index - 1);
+	}
+
+	@Override
+	CSSNumberValue componentValue(String lcComponent) throws DOMException {
+		switch (lcComponent) {
+		case "r":
+		case "x":
+			return zeroToOne(channels.item(0));
+		case "g":
+		case "y":
+			return zeroToOne(channels.item(1));
+		case "b":
+		case "z":
+			return zeroToOne(channels.item(2));
+		case "alpha":
+			return zeroToOne(getAlpha());
+		default:
+			throw new DOMException(DOMException.SYNTAX_ERR, "Unknown component: " + lcComponent);
+		}
 	}
 
 	@Override

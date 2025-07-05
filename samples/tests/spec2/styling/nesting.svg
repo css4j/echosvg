@@ -38,7 +38,7 @@
 g {
     --fillColorBlue: #0000fd; /* blue */
     --fillColorRed: #ff0000; /* red */
-    --fillColorGreen: #00ff00; /* green */
+    --fillColorGreen: #00ff00; /* lime */
     --fillColorYellow: #ffff00; /* yellow */
     --strokeColorBlue: #000044; /* dark blue */
     --strokeColorRed: #440000; /* dark red */

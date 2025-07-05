@@ -68,12 +68,12 @@
            showFill("r1", ".a");
         
            fill = showFill("r2", ".b");
-           r = fill.getR(); r.setValue(80);
-           fill.b.setValue(128);
+           r = fill.getR(); r.setValue(0.31372549);
+           fill.b.setValue(0.50196078);
            fill = showFill("r2", ".a");
 
            fill = showFill("r3", ".b");
-           r = fill.getR(); r.setValue(50);
+           r = fill.getR(); r.setValue(0.19607843);
            showFill("r3", ".a");
 
            fill = showFill("r4", ".b", "color(display-p3 0.94 0.55 0.31)");
@@ -81,7 +81,7 @@
            showFill("r4", ".a");
 
            fill = showFill("r5", ".b");
-           r = fill.getR(); r.setValue("128");
+           r = fill.getR(); r.setValue("0.50196078");
            fill.setAlpha(0.95);
            showFill("r5", ".a");
 
@@ -98,11 +98,11 @@
            showFill("r8", ".a");
 
            fill = showFill("r9", ".b");
-           b = fill.getB(); b.setValue("50");
+           b = fill.getB(); b.setValue("0.19607843");
            showFill("r9", ".a");
 
            fill = showFill("r10", ".b");
-           b = fill.getB(); b.setValue(50);
+           b = fill.getB(); b.setValue(0.19607843);
            showFill("r10", ".a");
 
            fill = showFill("r11", ".b", "rgba(220, 0, 128, 1)");

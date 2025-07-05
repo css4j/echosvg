@@ -79,16 +79,16 @@ ellipse {
 
 @supports (color: lch(67% 45 240)) {
   g {
-    --fillColorBlue: oklch(44.93% 0.311 264.1); /* blue */
-    --fillColorRed: lch(48% 77 33); /* red */
-    --fillColorGreen: lch(88% 109 134); /* green */
-    --fillColorYellow: lch(96% 92 99.6); /* yellow */
-    --strokeColorBlue: oklch(55.859% 0.117 234.07); /* dark blue */
-    --strokeColorRed: oklab(37.5781% 0.137022 0.067737); /* dark red */
-    --fillColorBlueAlpha: lch(67% 45 240/0.3); /* blue with transparency */
-    --fillColorRedAlpha: lch(48% 77 33/.22); /* red with transparency */
-    --fillColorGreenAlpha: lch(88% 109 134/0.3); /* green */
-    --fillColorYellowAlpha: lch(96% 92 99.6/.3); /* yellow */
+    --fillColorBlue: #0100fd; /* blue */
+    --fillColorRed: #d52c30; /* red */
+    --fillColorGreen: #33fe1d; /* green */
+    --fillColorYellow: color(srgb 0.980392 0.980392 0.0705882); /* yellow */
+    --strokeColorBlue: #007eae; /* dark blue */
+    --strokeColorRed: #7f000c; /* dark red */
+    --fillColorBlueAlpha: lch(65.20983% 46.141591 244.80216 / 0.3); /* blue with transparency */
+    --fillColorRedAlpha: lch(47.896% 73.221 26.589 / 0.22); /* red with transparency */
+    --fillColorGreenAlpha: hwb(104.12 2.65194% 0.6641% / 0.3); /* green with transparency */
+    --fillColorYellowAlpha: lch(96% 92 99.6/.3); /* yellow with transparency */
     --textColor: lch(37.1% 43.5 269);
     --circle-stroke-width: calc(1px + 5px);
     --ellipse-stroke-width: calc(1px + var(--onePixel));
@@ -125,47 +125,6 @@ ellipse {
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  svg {
-    background-color: #000;
-  }
-  g {
-    --fillColorBlue: #3b3be7;
-    --fillColorRed: #c82f2f;
-    --fillColorGreen: #1e7a1e;
-    --fillColorYellow: #b6b601;
-    --strokeColorBlue: #1919b1;
-    --strokeColorRed: #3d1a1a;
-    --strokeColorYellow: #4a490f;
-    --strokeColorGreen: #0c280b;
-    --fillColorBlueAlpha: #1616f97a;
-    --fillColorRedAlpha: #bc333366;
-    --fillColorGreenAlpha: #04f3044c;
-    --fillColorYellowAlpha: #caca055c;
-    --textColor: #9ec5eb;
-  }
-}
-
-/* The next rule is ignored */
-@supports ((fill: 24dpi) and (fill: yellow)) {
-  g {
-    --fillColorBlue: #f50600;
-    --fillColorRed: #0300fa;
-    --fillColorGreen: #fdef20;
-    --fillColorYellow: #05fc01;
-    --strokeColorBlue: navy;
-    --strokeColorRed: #440000;
-    --strokeColorYellow: #968400;
-    --strokeColorGreen: #048a00;
-    --fillColorBlueAlpha: #0610ef5c;
-    --fillColorRedAlpha: #f307023c;
-    --fillColorGreenAlpha: #10fa024c;
-    --fillColorYellowAlpha: #f0fe083c;
-    --circle-stroke-width: 15px;
-    --ellipse-stroke-width: 16px;
-  }
-}
-
 @supports (not selector(div col.foo||td)) {
   text.itemdesc {
     fill: var(--textColor);
@@ -176,18 +135,18 @@ ellipse {
   </style>
 
   <g>
-  <circle cx="250" cy="300" r="20" style="fill:var(--fillColorBlue); stroke:var(--strokeColorBlue)"/>
-  <circle cx="150" cy="150" r="20" style="fill:var(--fillColorRed); stroke:var(--strokeColorRed)"/>
-  <circle cx="280" cy="150" r="20" style="fill:var(--fillColorYellow); stroke:var(--strokeColorYellow)"/>
-  <circle cx="120" cy="300" r="20" style="fill:var(--fillColorGreen); stroke:var(--strokeColorGreen)"/>
+  <circle cx="250" cy="300" r="20" style="fill:rgb(from var(--fillColorBlue) r g b); stroke:rgb(from var(--strokeColorBlue) r g b)"/>
+  <circle cx="150" cy="150" r="20" style="fill:rgb(from var(--fillColorRed) r g b); stroke:rgb(from var(--strokeColorRed) r g b)"/>
+  <circle cx="280" cy="150" r="20" style="fill:rgb(from var(--fillColorYellow) r g b/ alpha); stroke:rgb(from var(--strokeColorYellow) r g b)"/>
+  <circle cx="120" cy="300" r="20" style="fill:rgb(from var(--fillColorGreen) r g b/ alpha); stroke:rgb(from var(--strokeColorGreen) r g b)"/>
   <ellipse cx="250" cy="300" rx="100" ry="130" transform="rotate(-20 250 300)"
-style="fill:var(--fillColorBlueAlpha); stroke:var(--fillColorBlue)"/>
+style="fill:rgb(from var(--fillColorBlueAlpha) r calc(g + 6) b / alpha); stroke:rgb(from var(--fillColorBlue) r g b / alpha)"/>
   <ellipse cx="150" cy="150" rx="100" ry="130" transform="rotate(-20 150 150)"
-style="fill:var(--fillColorRedAlpha); stroke:var(--fillColorRed)"/>
+style="fill:oklch(from var(--fillColorRedAlpha) l c calc(h + 5) / alpha); stroke:rgb(from var(--fillColorRed) r g b / alpha)"/>
   <ellipse cx="280" cy="150" rx="100" ry="130" transform="rotate(30 280 150)"
-style="fill:var(--fillColorYellowAlpha); stroke:var(--fillColorYellow)"/>
+style="fill:color(from var(--fillColorYellowAlpha) srgb r g b / alpha); stroke:rgb(from var(--fillColorYellow) r g b/ alpha)"/>
   <ellipse cx="120" cy="300" rx="100" ry="130" transform="rotate(30 120 300)"
-style="fill:var(--fillColorGreenAlpha); stroke:var(--fillColorGreen)"/>
+style="fill:lch(from var(--fillColorGreenAlpha) l c calc(h + 2)/ alpha); stroke:rgb(from var(--fillColorGreen) r g b / alpha)"/>
   <text x="80" y="50" class="itemdesc" text-anchor="middle">Media Queries</text>
   <text x="320" y="50" class="itemdesc" text-anchor="middle" id="txtcr">Conditional rules</text>
   <text x="91" y="400" class="itemdesc" text-anchor="middle" id="txtcl4">Color Level 4 / calc()</text>

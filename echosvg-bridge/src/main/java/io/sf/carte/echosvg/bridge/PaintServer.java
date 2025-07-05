@@ -366,42 +366,11 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 	 * @param opacity The opacity value (0 &lt;= o &lt;= 1).
 	 */
 	public static Color convertColor(RGBColorValue c, float opacity) {
-		float r = resolveRGBColorComponent(c.getR());
-		float g = resolveRGBColorComponent(c.getG());
-		float b = resolveRGBColorComponent(c.getB());
+		float r = resolveColorComponent(c.getR());
+		float g = resolveColorComponent(c.getG());
+		float b = resolveColorComponent(c.getB());
 		float a = resolveAlphaComponent(c.getAlpha());
 		return new Color(r, g, b, a * opacity);
-	}
-
-	/**
-	 * Returns the value of one RGB color component (0 &lt;= result &lt;= 1).
-	 * 
-	 * @param v the value that declares the color component, either a percentage or
-	 *          a number in the range (0 &lt;= v &lt;= 1).
-	 * @return the value in the range (0 &lt;= v &lt;= 1).
-	 */
-	private static float resolveRGBColorComponent(NumericValue item) {
-		float f;
-		switch (item.getUnitType()) {
-		case CSSUnit.CSS_NUMBER:
-			f = item.getFloatValue();
-			f /= 255f;
-			if (f < 0f) {
-				f = 0f;
-			} else if (f > 1f) {
-				f = 1f;
-			}
-			return f;
-		case CSSUnit.CSS_PERCENTAGE:
-			f = item.getFloatValue();
-			if (f < 0f) {
-				f = 0f;
-			} else if (f > 100f) {
-				f = 100f;
-			}
-			return f / 100f;
-		}
-		throw new IllegalArgumentException("Invalid color component: " + item.getCssText());
 	}
 
 	/**
@@ -435,6 +404,9 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 			return color;
 		case ColorValue.CS_SRGB_LINEAR:
 			ColorSpace cs = ColorSpace.getInstance(ColorSpace.CS_LINEAR_RGB);
+			return convert3Color(cs, c, opacity);
+		case ColorValue.CS_SRGB:
+			cs = ColorSpace.getInstance(ColorSpace.CS_sRGB);
 			return convert3Color(cs, c, opacity);
 		case ColorValue.CS_XYZ:
 		case ColorValue.CS_XYZ_D65:
@@ -671,7 +643,7 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 		case CSSUnit.CSS_PERCENTAGE:
 			f = v.getFloatValue();
 			f = (f > 100f) ? 100f : (f < 0f) ? 0f : f;
-			return f * 0.01f;
+			return f / 100f;
 		case CSSUnit.CSS_NUMBER:
 			f = v.getFloatValue();
 			f = (f > 1f) ? 1f : (f < 0f) ? 0f : f;

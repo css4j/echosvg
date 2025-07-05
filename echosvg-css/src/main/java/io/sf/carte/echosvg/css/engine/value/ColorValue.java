@@ -22,6 +22,10 @@ import org.w3c.api.DOMSyntaxException;
 import org.w3c.css.om.typed.CSSColorValue;
 import org.w3c.css.om.typed.CSSNumericValue;
 import org.w3c.css.om.unit.CSSUnit;
+import org.w3c.dom.DOMException;
+
+import io.sf.carte.doc.style.css.CSSNumberValue;
+import io.sf.carte.doc.style.css.property.NumberValue;
 
 /**
  * CSS colors.
@@ -153,6 +157,33 @@ public abstract class ColorValue extends ComponentValue implements TypedValue, C
 			return alpha.getFloatValue() == 100f;
 		}
 		return false;
+	}
+
+	/**
+	 * The component of the given name.
+	 * 
+	 * @param component the lowercase component name.
+	 * @return the component value.
+	 */
+	abstract CSSNumberValue componentValue(String component) throws DOMException;
+
+	CSSNumberValue zeroToOne(NumericValue c) {
+		float f = 0f;
+		if (c != null) {
+			f = c.getFloatValue();
+			if (c.getUnitType() == CSSUnit.CSS_PERCENTAGE) {
+				f /= 100f;
+			}
+		}
+		NumberValue num = new NumberValue();
+		num.setFloatValue(CSSUnit.CSS_NUMBER, f);
+		return num;
+	}
+
+	CSSNumberValue toCSSNumberValue(NumericValue c) {
+		NumberValue num = new NumberValue();
+		num.setFloatValue(c.getUnitType(), c.getFloatValue());
+		return num;
 	}
 
 	@Override

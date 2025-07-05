@@ -24,6 +24,7 @@ import org.w3c.css.om.typed.CSSNumericValue;
 import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
 
+import io.sf.carte.doc.style.css.CSSNumberValue;
 import io.sf.carte.echosvg.css.engine.value.svg.SVGValueConstants;
 
 /**
@@ -180,6 +181,22 @@ public class LabColorValue extends ColorValue implements CSSLab {
 			return getAlpha();
 		default:
 			return null;
+		}
+	}
+
+	@Override
+	CSSNumberValue componentValue(String lcComponent) throws DOMException {
+		switch (lcComponent) {
+		case "l":
+			return toCSSNumberValue(getL());
+		case "a":
+			return toCSSNumberValue(getA());
+		case "b":
+			return toCSSNumberValue(getB());
+		case "alpha":
+			return zeroToOne(getAlpha());
+		default:
+			throw new DOMException(DOMException.SYNTAX_ERR, "Unknown component: " + lcComponent);
 		}
 	}
 

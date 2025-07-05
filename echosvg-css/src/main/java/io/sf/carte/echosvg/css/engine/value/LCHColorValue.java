@@ -24,6 +24,8 @@ import org.w3c.css.om.typed.CSSNumericValue;
 import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
 
+import io.sf.carte.doc.style.css.CSSNumberValue;
+import io.sf.carte.doc.style.css.property.NumberValue;
 import io.sf.carte.echosvg.css.engine.value.svg.SVGValueConstants;
 
 /**
@@ -193,6 +195,36 @@ public class LCHColorValue extends ColorValue implements CSSLCH {
 		default:
 			return null;
 		}
+	}
+
+	@Override
+	CSSNumberValue componentValue(String lcComponent) throws DOMException {
+		switch (lcComponent) {
+		case "l":
+			return toCSSNumberValue(getL());
+		case "c":
+			return toCSSNumberValue(getC());
+		case "h":
+			return zeroTo360(getH());
+		case "alpha":
+			return zeroToOne(getAlpha());
+		default:
+			throw new DOMException(DOMException.SYNTAX_ERR, "Unknown component: " + lcComponent);
+		}
+	}
+
+	private CSSNumberValue zeroTo360(NumericValue c) throws DOMException {
+		float f = 0f;
+		if (c != null) {
+			f = c.getFloatValue();
+			short unit = c.getUnitType();
+			if (unit != CSSUnit.CSS_NUMBER && unit != CSSUnit.CSS_DEG) {
+				f = NumberValue.floatValueConversion(f, unit, CSSUnit.CSS_DEG);
+			}
+		}
+		NumberValue num = new NumberValue();
+		num.setFloatValue(CSSUnit.CSS_DEG, f);
+		return num;
 	}
 
 	@Override

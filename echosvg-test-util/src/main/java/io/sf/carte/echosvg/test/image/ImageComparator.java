@@ -209,7 +209,7 @@ public class ImageComparator {
 			return DIFFERENT_DATA_TYPES;
 		}
 
-		final float numpxFrac = w * h * numBands * 0.01f;
+		final float numpxFrac = w * h * numBands / 100f;
 		final int maxDiffPx = computeMaxDiffPixels(numpxFrac, allowedPercentOverThreshold, w, h);
 		final int maxDiffPxBelow = computeMaxDiffPixels(numpxFrac, allowedPercentBelowThreshold, w,
 				h);
@@ -391,7 +391,7 @@ public class ImageComparator {
 		}
 
 		final int numBands = ref.getSampleModel().getNumBands();
-		final float numpxFrac = w * h * numBands * 0.01f;
+		final float numpxFrac = w * h * numBands / 100f;
 		final int maxDiffPx = computeMaxDiffPixels(numpxFrac, allowedPercentOverThreshold, w, h);
 		final int maxDiffPxBelow = computeMaxDiffPixels(numpxFrac, allowedPercentBelowThreshold, w,
 				h);

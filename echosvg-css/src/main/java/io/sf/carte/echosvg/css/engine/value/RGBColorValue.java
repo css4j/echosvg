@@ -28,6 +28,8 @@ import org.w3c.css.om.typed.CSSRGB;
 import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
 
+import io.sf.carte.doc.style.css.CSSNumberValue;
+import io.sf.carte.doc.style.css.property.NumberValue;
 import io.sf.carte.echosvg.css.engine.value.svg.SVGValueConstants;
 
 /**
@@ -104,11 +106,11 @@ public class RGBColorValue extends ColorValue implements CSSRGB {
 	 */
 	public RGBColorValue(float[] comp) {
 		super(new FloatValue(CSSUnit.CSS_NUMBER, comp[3]));
-		red = new FloatValue(CSSUnit.CSS_NUMBER, comp[0] * 255f);
+		red = new FloatValue(CSSUnit.CSS_NUMBER, comp[0]);
 		componentize(red);
-		green = new FloatValue(CSSUnit.CSS_NUMBER, comp[1] * 255f);
+		green = new FloatValue(CSSUnit.CSS_NUMBER, comp[1]);
 		componentize(green);
-		blue = new FloatValue(CSSUnit.CSS_NUMBER, comp[2] * 255f);
+		blue = new FloatValue(CSSUnit.CSS_NUMBER, comp[2]);
 		componentize(blue);
 	}
 
@@ -161,20 +163,16 @@ public class RGBColorValue extends ColorValue implements CSSRGB {
 	 * 
 	 * @param c the component (0 &le; c &le; 255).
 	 * @return the (0 &le; c &le; 1) constant component.
-	 * @throws DOMSyntaxException if the value is inadequate for a component.
+	 * @throws DOMSyntaxException       if the value is inadequate for a component.
 	 * @throws IllegalArgumentException if the value is a mathematical expression.
 	 */
 	private static NumericValue constantLegacyRange(NumericValue ch)
-			throws DOMSyntaxException, IllegalArgumentException {
+		throws DOMSyntaxException, IllegalArgumentException {
 		if (ch.getUnitType() == CSSUnit.CSS_NUMBER) {
-			if (ch.getPrimitiveType() == Type.NUMERIC) {
-				ch = new ImmutableUnitValue(CSSUnit.CSS_NUMBER, ch.getFloatValue());
-			} else {
-				throw new IllegalArgumentException("Cannot normalize value to [0,1] now: " + ch.getCssText());
-			}
+			return new ImmutableUnitValue(CSSUnit.CSS_NUMBER, ch.getFloatValue() / 255f);
 		} else if (ch.getUnitType() != CSSUnit.CSS_PERCENTAGE) {
-			throw new DOMSyntaxException("RGB component must be a number or percentage, not a "
-					+ CSSUnit.dimensionUnitString(ch.getUnitType()) + '.');
+			throw new DOMSyntaxException(
+				"RGB component must be a number or percentage, not " + ch.getCssText() + '.');
 		}
 		if (ch.handler != null) {
 			ch = new ImmutableUnitValue(ch.getUnitType(), ch.getFloatValue());
@@ -232,9 +230,14 @@ public class RGBColorValue extends ColorValue implements CSSRGB {
 			return comp.getCssText();
 		}
 
-		float f = comp.getFloatValue();
-		if (comp.getUnitType() == CSSUnit.CSS_PERCENTAGE) {
-			f *= 2.55f;
+		double f = comp.getFloatValue();
+		switch (comp.getUnitType()) {
+		case CSSUnit.CSS_NUMBER:
+			f *= 255d;
+			break;
+		case CSSUnit.CSS_PERCENTAGE:
+			f *= 2.55d;
+			break;
 		}
 		return df.format(f);
 	}
@@ -244,7 +247,7 @@ public class RGBColorValue extends ColorValue implements CSSRGB {
 			return alpha.getCssText();
 		}
 
-		return df.format(alpha.getFloatValue() * 0.01f);
+		return df.format(alpha.getFloatValue() / 100f);
 	}
 
 	@Override
@@ -376,6 +379,40 @@ public class RGBColorValue extends ColorValue implements CSSRGB {
 		default:
 			return null;
 		}
+	}
+
+	@Override
+	CSSNumberValue componentValue(String lcComponent) throws DOMException {
+		switch (lcComponent) {
+		case "r":
+			return zeroTo255(getR());
+		case "g":
+			return zeroTo255(getG());
+		case "b":
+			return zeroTo255(getB());
+		case "alpha":
+			return zeroToOne(getAlpha());
+		default:
+			throw new DOMException(DOMException.SYNTAX_ERR, "Unknown component: " + lcComponent);
+		}
+	}
+
+	private CSSNumberValue zeroTo255(NumericValue c) {
+		float f = 0f;
+		if (c != null) {
+			f = c.getFloatValue();
+			switch (c.getUnitType()) {
+			case CSSUnit.CSS_NUMBER:
+				f *= 255f;
+				break;
+			case CSSUnit.CSS_PERCENTAGE:
+				f *= 2.55f;
+				break;
+			}
+		}
+		NumberValue num = new NumberValue();
+		num.setFloatValue(CSSUnit.CSS_NUMBER, f);
+		return num;
 	}
 
 	@Override

@@ -71,11 +71,11 @@
         return
      }
 
-     val.r.value = 4
+     val.r.value = 4/255
 
-     if (val.r.cssText != "4") {
+     if (Math.abs(4/255 - rgb.r.floatValue) > 1e-7) { // 4 hex
         result.setAttributeNS(null, "errorCode",
-          "invalid red component. Expected 4, found: " + val.r.cssText)
+          "invalid red component. Expected 4/255, found: " + val.r.cssText)
         var entry = document.createElementNS(testNS, "errorDescriptionEntry")
         entry.setAttributeNS(null, "id", "expected.red")
         entry.setAttributeNS(null, "value", "4")
@@ -91,9 +91,9 @@
 
      val.cssText = "#050607"
 
-     if (val.r.cssText != "5") {
+     if (Math.abs(5/255 - rgb.r.floatValue) > 1e-7) { // 5 hex
         result.setAttributeNS(null, "errorCode",
-          "invalid red component. Expected 5, found: " + val.r.cssText)
+          "invalid red component. Expected 5/255, found: " + val.r.cssText)
         var entry = document.createElementNS(testNS, "errorDescriptionEntry")
         entry.setAttributeNS(null, "id", "expected.red")
         entry.setAttributeNS(null, "value", "5")
@@ -105,9 +105,9 @@
         return
      }
 
-     if (val.g.cssText != "6") {
+     if (Math.abs(6/255 - rgb.g.floatValue) > 1e-7) { // 6 hex
         result.setAttributeNS(null, "errorCode",
-          "invalid green component. Expected 6, found: " + val.g.cssText);
+          "invalid green component. Expected 6/255, found: " + val.g.cssText);
         var entry = document.createElementNS(testNS, "errorDescriptionEntry");
         entry.setAttributeNS(null, "id", "expected.green");
         entry.setAttributeNS(null, "value", "6");
@@ -119,9 +119,9 @@
         return;
      }
 
-     if (val.b.cssText != "7") {
+     if (Math.abs(7/255 - rgb.b.floatValue) > 1e-7) { // 7 hex
         result.setAttributeNS(null, "errorCode",
-          "invalid blue component. Expected 7, found: " + val.b.cssText);
+          "invalid blue component. Expected 7/255, found: " + val.b.cssText);
         var entry = document.createElementNS(testNS, "errorDescriptionEntry");
         entry.setAttributeNS(null, "id", "expected.blue");
         entry.setAttributeNS(null, "value", "7");

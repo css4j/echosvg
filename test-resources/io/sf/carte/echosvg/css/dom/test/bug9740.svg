@@ -72,7 +72,7 @@
         return;
      }
 
-     if (val.r.getValue() != 255 ||
+     if (val.r.getValue() != 1 ||
          val.g.getValue() != 0 ||
          val.b.getValue() != 0) {
         result.setAttributeNS(null, "errorCode", "invalid color components: " + val.cssText);
