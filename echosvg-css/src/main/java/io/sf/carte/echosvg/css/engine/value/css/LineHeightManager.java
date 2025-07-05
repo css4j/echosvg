@@ -151,7 +151,7 @@ public class LineHeightManager extends LengthManager {
 			return value;
 
 		case CSSUnit.CSS_PERCENTAGE:
-			return fontSizeRelative(elt, pseudo, engine, sm, value.getFloatValue() * 0.01f);
+			return fontSizeRelative(elt, pseudo, engine, sm, value.getFloatValue() / 100f);
 
 		case CSSUnit.CSS_LH:
 			float f = value.getFloatValue();

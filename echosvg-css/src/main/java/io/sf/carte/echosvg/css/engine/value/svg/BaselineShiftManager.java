@@ -154,7 +154,7 @@ public class BaselineShiftManager extends LengthManager {
 			Value lh = engine.getComputedStyle(parent, null, lhi);
 			float flh = lineHeightValue(parent, null, engine, lh);
 			float v = value.getFloatValue();
-			return new FloatValue(CSSUnit.CSS_PX, flh * v * 0.01f);
+			return new FloatValue(CSSUnit.CSS_PX, flh * v / 100f);
 		}
 		return super.computeValue(elt, pseudo, engine, idx, sm, value);
 	}

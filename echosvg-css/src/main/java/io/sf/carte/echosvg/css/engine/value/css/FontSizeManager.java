@@ -200,7 +200,7 @@ public class FontSizeManager extends LengthManager {
 				break;
 			case CSSUnit.CSS_PERCENTAGE:
 				doParentRelative = true;
-				scale = value.getFloatValue() * 0.01f;
+				scale = value.getFloatValue() / 100f;
 				break;
 			case CSSUnit.CSS_LH:
 				sm.putLineHeightRelative(idx, true);
@@ -239,12 +239,12 @@ public class FontSizeManager extends LengthManager {
 				sm.putViewportRelative(idx, true);
 				v = value.getFloatValue();
 				return new FloatValue(CSSUnit.CSS_PX,
-						v * engine.getCSSContext().getViewport(elt).getWidth() * 0.01f);
+						v * engine.getCSSContext().getViewport(elt).getWidth() / 100f);
 			case CSSUnit.CSS_VH:
 				sm.putViewportRelative(idx, true);
 				v = value.getFloatValue();
 				return new FloatValue(CSSUnit.CSS_PX,
-						v * engine.getCSSContext().getViewport(elt).getHeight() * 0.01f);
+						v * engine.getCSSContext().getViewport(elt).getHeight() / 100f);
 			case CSSUnit.CSS_VMIN:
 				sm.putViewportRelative(idx, true);
 				v = value.getFloatValue();
@@ -252,7 +252,7 @@ public class FontSizeManager extends LengthManager {
 				float w = vp.getWidth();
 				float h = vp.getHeight();
 				float min = Math.min(w, h);
-				return new FloatValue(CSSUnit.CSS_PX, v * min * 0.01f);
+				return new FloatValue(CSSUnit.CSS_PX, v * min / 100f);
 			case CSSUnit.CSS_VMAX:
 				sm.putViewportRelative(idx, true);
 				v = value.getFloatValue();
@@ -260,7 +260,7 @@ public class FontSizeManager extends LengthManager {
 				w = vp.getWidth();
 				h = vp.getHeight();
 				float max = Math.max(w, h);
-				return new FloatValue(CSSUnit.CSS_PX, v * max * 0.01f);
+				return new FloatValue(CSSUnit.CSS_PX, v * max / 100f);
 			default:
 				// Maybe it is one of the new absolute length units
 				return new FloatValue(CSSUnit.CSS_PX,
