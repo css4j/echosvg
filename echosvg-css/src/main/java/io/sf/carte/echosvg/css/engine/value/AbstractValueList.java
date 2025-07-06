@@ -79,6 +79,7 @@ public class AbstractValueList<V extends Value> extends ComponentValue implement
 	@Override
 	public AbstractValueList<V> clone() {
 		AbstractValueList<V> clon = (AbstractValueList<V>) super.clone();
+		clon.items = new ArrayList<>(clon.getLength());
 		for (V item : items) {
 			clon.items.add((V) item.clone());
 		}

@@ -94,6 +94,7 @@ public class StyleRule extends RuleGroup implements DeclarationsRule, GroupingRu
 	/**
 	 * Sets the style map.
 	 */
+	@Override
 	public void setStyleDeclaration(StyleDeclaration sd) {
 		styleDeclaration = sd;
 	}
@@ -101,6 +102,7 @@ public class StyleRule extends RuleGroup implements DeclarationsRule, GroupingRu
 	/**
 	 * Returns the style declaration.
 	 */
+	@Override
 	public StyleDeclaration getStyleDeclaration() {
 		return styleDeclaration;
 	}

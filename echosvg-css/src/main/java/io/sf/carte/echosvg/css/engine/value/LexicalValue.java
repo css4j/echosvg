@@ -66,7 +66,6 @@ public class LexicalValue extends AbstractValue {
 	@Override
 	public LexicalValue clone() {
 		LexicalValue clon = (LexicalValue) super.clone();
-		clon.lunit = lunit;
 		return clon;
 	}
 

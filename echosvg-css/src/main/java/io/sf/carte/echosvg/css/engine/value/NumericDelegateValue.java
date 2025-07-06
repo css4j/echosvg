@@ -144,12 +144,4 @@ public abstract class NumericDelegateValue<D extends CSSMathValue> extends Numer
 		throw new DOMException(DOMException.NOT_SUPPORTED_ERR, "Not supported.");
 	}
 
-	@Override
-	public NumericDelegateValue<D> clone() {
-		@SuppressWarnings("unchecked")
-		NumericDelegateValue<D> clon = (NumericDelegateValue<D>) super.clone();
-		clon.delegate = delegate;
-		return clon;
-	}
-
 }

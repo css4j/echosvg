@@ -57,11 +57,4 @@ public class PendingValue extends LexicalValue {
 		return "";
 	}
 
-	@Override
-	public PendingValue clone() {
-		PendingValue clon = (PendingValue) super.clone();
-		clon.shorthandName = shorthandName;
-		return clon;
-	}
-
 }

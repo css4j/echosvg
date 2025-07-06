@@ -64,11 +64,4 @@ public class URIValue extends AbstractStringValue implements CSSStringValue {
 		return "url(" + cssText + ')';
 	}
 
-	@Override
-	public URIValue clone() {
-		URIValue clon = (URIValue) super.clone();
-		clon.cssText = cssText;
-		return clon;
-	}
-
 }
