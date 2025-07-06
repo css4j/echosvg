@@ -421,8 +421,6 @@ public class RGBColorValue extends ColorValue implements CSSRGB {
 		clon.red = red.clone();
 		clon.green = green.clone();
 		clon.blue = blue.clone();
-		clon.pcntSpecified = pcntSpecified;
-		clon.alphaPcntSpecified = alphaPcntSpecified;
 		return clon;
 	}
 

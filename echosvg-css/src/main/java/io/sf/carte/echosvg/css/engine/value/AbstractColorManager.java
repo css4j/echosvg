@@ -18,6 +18,8 @@
  */
 package io.sf.carte.echosvg.css.engine.value;
 
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.Locale;
 
 import org.w3c.css.om.unit.CSSUnit;
@@ -31,10 +33,14 @@ import io.sf.carte.doc.style.css.CSSValue;
 import io.sf.carte.doc.style.css.CSSValue.CssType;
 import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.RGBAColor;
+import io.sf.carte.doc.style.css.nsac.CSSParseException;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit.LexicalType;
+import io.sf.carte.doc.style.css.parser.CSSParser;
+import io.sf.carte.doc.style.css.property.CSSLexicalProcessingException;
 import io.sf.carte.doc.style.css.property.Evaluator;
 import io.sf.carte.doc.style.css.property.PercentageEvaluator;
+import io.sf.carte.doc.style.css.property.PrimitiveValue;
 import io.sf.carte.doc.style.css.property.StyleValue;
 import io.sf.carte.doc.style.css.property.ValueFactory;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
@@ -132,11 +138,13 @@ public abstract class AbstractColorManager extends IdentifierManager {
 		computedValues.put(CSSConstants.CSS_TRANSPARENT_VALUE, ValueConstants.TRANSPARENT_RGB_VALUE);
 	}
 
-	/**
-	 * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
-	 */
 	@Override
 	public Value createValue(LexicalUnit lunit, CSSEngine engine) throws DOMException {
+		return createValue(lunit, null, null, engine, -1, null);
+	}
+
+	private Value createValue(LexicalUnit lunit, CSSStylableElement elt, String pseudo,
+			CSSEngine engine, int idx, StyleMap sm) throws DOMException {
 		switch (lunit.getLexicalUnitType()) {
 		case LABCOLOR:
 		case LCHCOLOR:
@@ -144,7 +152,21 @@ public abstract class AbstractColorManager extends IdentifierManager {
 		case OKLCHCOLOR:
 		case COLOR_MIX: {
 			ValueFactory vf = new ValueFactory();
-			StyleValue css4jValue = vf.createCSSValue(lunit);
+			PrimitiveValue css4jValue;
+			try {
+				css4jValue = vf.createCSSPrimitiveValue(lunit);
+			} catch (DOMException e) {
+				String msg = e.getMessage();
+				if (msg == null || !msg.contains("currentColor")) {
+					throw e;
+				}
+				if (sm == null) {
+					return new PendingStyleValue(lunit);
+				}
+				LexicalUnit replUnit = replaceCurrentColor(lunit.shallowClone(), elt, pseudo,
+						engine, idx, sm);
+				css4jValue = vf.createCSSPrimitiveValue(replUnit);
+			}
 			CssType cssType = css4jValue.getCssValueType();
 			if (cssType != CssType.TYPED) {
 				if (cssType == CssType.PROXY) {
@@ -156,7 +178,7 @@ public abstract class AbstractColorManager extends IdentifierManager {
 			if (color.isInGamut(io.sf.carte.doc.style.css.ColorSpace.srgb)) {
 				color = color.toColorSpace(io.sf.carte.doc.style.css.ColorSpace.srgb);
 				double[] comps = color.toNumberArray();
-				float [] fcomps = new float[4];
+				float[] fcomps = new float[4];
 				fcomps[0] = (float) comps[0];
 				fcomps[1] = (float) comps[1];
 				fcomps[2] = (float) comps[2];
@@ -184,7 +206,7 @@ public abstract class AbstractColorManager extends IdentifierManager {
 			return cfunc;
 		}
 		case COLOR_FUNCTION:
-			return createColorFunction(lunit, engine);
+			return createColorFunction(lunit, elt, pseudo, engine, idx, sm);
 		case HSLCOLOR:
 		case HWBCOLOR: {
 			ValueFactory vf = new ValueFactory();
@@ -206,13 +228,77 @@ public abstract class AbstractColorManager extends IdentifierManager {
 			return new RGBColorValue(frgb);
 		}
 		case RGBCOLOR:
-			return createRGBColor(lunit, engine);
+			return createRGBColor(lunit, elt, pseudo, engine, idx, sm);
 		case IDENT:
-			// Clone so colors can be modified
-			return createIdentValue(lunit.getStringValue(), engine).clone();
+			String sv = lunit.getStringValue();
+			sv = sv.toLowerCase(Locale.ROOT).intern();
+			try {
+				// Clone so colors can be modified
+				return createIdentValue(sv, engine).clone();
+			} catch (DOMException e) {
+				if (CSSConstants.CSS_CURRENTCOLOR_VALUE == sv) {
+					if (sm == null) {
+						return new PendingStyleValue(lunit);
+					}
+					return computeCurrentColor(elt, pseudo, engine, idx, sm);
+				} else {
+					throw e;
+				}
+			}
 		default:
 			return super.createValue(lunit, engine);
 		}
+	}
+
+	private LexicalUnit replaceCurrentColor(LexicalUnit lunit, CSSStylableElement elt,
+			String pseudo, CSSEngine engine, int idx, StyleMap sm) throws DOMException {
+		LexicalUnit param;
+		CSSParser parser = new CSSParser();
+		switch (lunit.getLexicalUnitType()) {
+		case IDENT:
+			if (CSSConstants.CSS_CURRENTCOLOR_VALUE.equalsIgnoreCase(lunit.getStringValue())) {
+				Value cc = computeCurrentColor(elt, pseudo, engine, idx, sm);
+				String text = cc.getCssText();
+				LexicalUnit replUnit;
+				try {
+					replUnit = parser.parsePropertyValue(new StringReader(text));
+				} catch (CSSParseException | IOException e) {
+					DOMException ex = new DOMException(DOMException.SYNTAX_ERR,
+							"Invalid color: " + text);
+					ex.initCause(e);
+					throw ex;
+				}
+				if (lunit.isParameter()) {
+					lunit.countReplaceBy(replUnit);
+				}
+				lunit = replUnit;
+			}
+			break;
+		case VAR:
+		case ATTR:
+			throw new CSSLexicalProcessingException();
+		default:
+			if ((param = lunit.getParameters()) != null) {
+				do {
+					replaceCurrentColor(param, elt, pseudo, engine, idx, sm);
+				} while ((param = param.getNextLexicalUnit()) != null);
+			} else {
+				throw new DOMException(DOMException.SYNTAX_ERR,
+						"Invalid color: " + lunit.getCssText());
+			}
+		}
+		return lunit;
+	}
+
+	private static Value computeCurrentColor(CSSStylableElement elt, String pseudo,
+			CSSEngine engine, int idx, StyleMap sm) {
+		sm.putColorRelative(idx, true);
+		int colorIdx = engine.getColorIndex();
+		Value ccv = sm.getValue(colorIdx);
+		if (ccv == null) {
+			ccv = engine.getComputedStyle(elt, pseudo, colorIdx);
+		}
+		return ccv;
 	}
 
 	/**
@@ -222,8 +308,9 @@ public abstract class AbstractColorManager extends IdentifierManager {
 	@Override
 	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx, StyleMap sm,
 			Value value) {
-		if (value.getPrimitiveType() == CSSValue.Type.IDENT) {
-			String ident = ((AbstractStringValue) value).getValue();
+		switch (value.getPrimitiveType()) {
+		case IDENT:
+			String ident = value.getIdentifierValue();
 			// Search for a direct computed value.
 			// 'ident' must come from a constant, so no need to call intern()
 			Value v = computedValues.get(ident);
@@ -235,57 +322,82 @@ public abstract class AbstractColorManager extends IdentifierManager {
 				throw new IllegalStateException("Not a system-color:" + ident);
 			}
 			return engine.getCSSContext().getSystemColor(ident);
+		case UNKNOWN:
+			LexicalUnit lunit = ((PendingStyleValue) value).getLexicalUnit();
+			return createValue(lunit, elt, pseudo, engine, idx, sm);
+		default:
 		}
 		return super.computeValue(elt, pseudo, engine, idx, sm, value);
 	}
 
-	private Value createRGBColor(LexicalUnit lunit, CSSEngine engine) {
+	private Value createRGBColor(LexicalUnit lunit, CSSStylableElement elt, String pseudo,
+			CSSEngine engine, int idx, StyleMap sm) {
 		LexicalUnit lu = lunit.getParameters();
 
 		ColorValue from = null;
 
-		// from?
-		if (lu.getLexicalUnitType() == LexicalType.IDENT) {
-			if ("from".equalsIgnoreCase(lu.getStringValue())) {
-				lu = nextLexicalUnit(lu, lunit);
-				LexicalUnit colorUnit = lu.shallowClone();
-				Value fromval = createValue(colorUnit, engine);
-				Type pType = fromval.getPrimitiveType();
-				if (pType != Type.COLOR) {
-					if (pType == Type.LEXICAL) {
-						return createLexicalValue(lunit);
-					} else if (pType == Type.IDENT) {
-						String name = fromval.getStringValue().toLowerCase(Locale.ROOT);
-						ColorValue v = computedValues.get(name);
-						if (v != null) {
-							fromval = v;
-						} else {
-							fromval = values.get(name);
-							if (fromval == null) {
-								// Not a system color...
-								throw createDOMSyntaxException(lunit);
-							}
-							name = fromval.getStringValue();
-							fromval = engine.getCSSContext().getSystemColor(name);
-						}
-					} else {
-						throw createDOMSyntaxException(lunit);
-					}
-				}
-				from = (ColorValue) fromval;
-				if (!ColorValue.RGB_FUNCTION.equalsIgnoreCase(from.getCSSColorSpace())) {
-					// Color identifiers are all rgb(), so we can use colorUnit and ignore fromval
-					from = toRGBColor(colorUnit);
-				}
-				lu = nextLexicalUnit(lu, lunit);
-			}
-		}
-
-		boolean pcntSpecified = lu.getLexicalUnitType() == LexicalType.PERCENTAGE;
 		boolean alphaPcntSpecified = false;
+		boolean pcntSpecified;
 
 		NumericValue red, green, blue, alpha;
+
 		try {
+			// from?
+			if (lu.getLexicalUnitType() == LexicalType.IDENT) {
+				if ("from".equalsIgnoreCase(lu.getStringValue())) {
+					lu = nextLexicalUnitNonNull(lu, lunit);
+					LexicalUnit colorUnit = lu.shallowClone();
+					Value fromval = createValue(colorUnit, elt, pseudo, engine, idx, sm);
+					Type pType = fromval.getPrimitiveType();
+					if (pType != Type.COLOR) {
+						if (pType == Type.LEXICAL) {
+							return createLexicalValue(lunit);
+						} else if (pType == Type.IDENT) {
+							String name = fromval.getStringValue().toLowerCase(Locale.ROOT);
+							ColorValue v = computedValues.get(name);
+							if (v != null) {
+								fromval = v;
+							} else {
+								fromval = values.get(name);
+								if (fromval == null) {
+									if (CSSConstants.CSS_CURRENTCOLOR_VALUE.equals(name)) {
+										if (sm == null) {
+											return new PendingStyleValue(lunit);
+										}
+										fromval = computeCurrentColor(elt, pseudo, engine, idx, sm);
+									} else {
+										// Not a system color...
+										throw createDOMSyntaxException(lunit);
+									}
+								} else {
+									name = fromval.getStringValue();
+									fromval = engine.getCSSContext().getSystemColor(name);
+								}
+							}
+						} else if (pType == Type.UNKNOWN) {
+							assert sm == null;
+							return new PendingStyleValue(lunit);
+						} else {
+							throw createDOMSyntaxException(lunit);
+						}
+					}
+					from = (ColorValue) fromval;
+					if (!ColorValue.RGB_FUNCTION.equalsIgnoreCase(from.getCSSColorSpace())) {
+						if (colorUnit.getLexicalUnitType() != LexicalType.IDENT
+								&& !CSSConstants.CSS_CURRENTCOLOR_VALUE
+										.equalsIgnoreCase(colorUnit.getStringValue())) {
+							// Color identifiers are all rgb(), so we can use colorUnit and ignore fromval
+							from = toRGBColor(colorUnit);
+						} else {
+							from = toRGBColor(from);
+						}
+					}
+					lu = nextLexicalUnitNonNull(lu, lunit);
+				}
+			}
+
+			pcntSpecified = lu.getLexicalUnitType() == LexicalType.PERCENTAGE;
+
 			red = createRGBColorComponent(lu, from);
 			lu = lu.getNextLexicalUnit();
 			if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.OPERATOR_COMMA) {
@@ -306,11 +418,11 @@ public abstract class AbstractColorManager extends IdentifierManager {
 			lu = lu.getNextLexicalUnit();
 			if (lu != null) {
 				if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.OPERATOR_COMMA
-					|| lu.getLexicalUnitType() == LexicalUnit.LexicalType.OPERATOR_SLASH) {
+						|| lu.getLexicalUnitType() == LexicalUnit.LexicalType.OPERATOR_SLASH) {
 					lu = lu.getNextLexicalUnit();
 					if (lu == null) {
 						throw new DOMException(DOMException.SYNTAX_ERR,
-							"Invalid color: " + lunit.getCssText());
+								"Invalid color: " + lunit.getCssText());
 					}
 				}
 				alphaPcntSpecified = lu.getLexicalUnitType() == LexicalType.PERCENTAGE;
@@ -325,7 +437,7 @@ public abstract class AbstractColorManager extends IdentifierManager {
 		return createRGBColor(red, green, blue, pcntSpecified, alpha, alphaPcntSpecified);
 	}
 
-	private RGBColorValue toRGBColor(LexicalUnit lunit) {
+	private RGBColorValue toRGBColor(LexicalUnit lunit) throws DOMException {
 		ValueFactory vf = new ValueFactory();
 		RGBAColor color;
 		try {
@@ -337,6 +449,10 @@ public abstract class AbstractColorManager extends IdentifierManager {
 		} catch (DOMException e) {
 			throw createInvalidLexicalUnitDOMException(lunit.getLexicalUnitType());
 		}
+		return toNativeRGBColor(color);
+	}
+
+	private static RGBColorValue toNativeRGBColor(RGBAColor color) throws DOMException {
 		double[] comps = color.toNumberArray();
 		FloatValue r = new FloatValue(CSSUnit.CSS_NUMBER, (float) comps[0]);
 		FloatValue g = new FloatValue(CSSUnit.CSS_NUMBER, (float) comps[1]);
@@ -344,6 +460,15 @@ public abstract class AbstractColorManager extends IdentifierManager {
 		FloatValue a = normalizedComponentValue(color.getAlpha());
 		RGBColorValue rgb = new RGBColorValue(r, g, b, a);
 		return rgb;
+	}
+
+	private static RGBColorValue toRGBColor(ColorValue from) throws DOMException {
+		String text = from.getCssText();
+		ValueFactory vf = new ValueFactory();
+		StyleValue css4jValue = vf.parseProperty(text);
+		// Must be TYPED
+		RGBAColor color = ((io.sf.carte.doc.style.css.CSSTypedValue) css4jValue).toRGBColor();
+		return toNativeRGBColor(color);
 	}
 
 	private static FloatValue normalizedComponentValue(CSSPrimitiveValue c) throws DOMException {
@@ -389,43 +514,59 @@ public abstract class AbstractColorManager extends IdentifierManager {
 		}
 	}
 
-	private Value createColorFunction(LexicalUnit lunit, CSSEngine engine) {
+	private Value createColorFunction(LexicalUnit lunit, CSSStylableElement elt, String pseudo,
+			CSSEngine engine, int idx, StyleMap sm) {
 		LexicalUnit lu = lunit.getParameters();
 
 		ColorValue from = null;
 		LexicalUnit colorUnit = null;
 
-		// from?
-		if (lu.getLexicalUnitType() == LexicalType.IDENT) {
-			if ("from".equalsIgnoreCase(lu.getStringValue())) {
-				lu = nextLexicalUnit(lu, lunit);
-				colorUnit = lu.shallowClone();
-				Value fromval = createValue(colorUnit, engine);
-				Type pType = fromval.getPrimitiveType();
-				if (pType != Type.COLOR) {
-					if (pType == Type.LEXICAL) {
-						return createLexicalValue(lunit);
-					} else if (pType == Type.IDENT) {
-						String name = fromval.getStringValue().toLowerCase(Locale.ROOT);
-						ColorValue v = computedValues.get(name);
-						if (v != null) {
-							fromval = v;
-						} else {
-							fromval = values.get(name);
-							if (fromval == null) {
-								// Not a system color...
-								throw createDOMSyntaxException(lunit);
+		try {
+			// from?
+			if (lu.getLexicalUnitType() == LexicalType.IDENT) {
+				if ("from".equalsIgnoreCase(lu.getStringValue())) {
+					lu = nextLexicalUnitNonNull(lu, lunit);
+					colorUnit = lu.shallowClone();
+					Value fromval = createValue(colorUnit, elt, pseudo, engine, idx, sm);
+					Type pType = fromval.getPrimitiveType();
+					if (pType != Type.COLOR) {
+						if (pType == Type.LEXICAL) {
+							return createLexicalValue(lunit);
+						} else if (pType == Type.IDENT) {
+							String name = fromval.getStringValue().toLowerCase(Locale.ROOT);
+							ColorValue v = computedValues.get(name);
+							if (v != null) {
+								fromval = v;
+							} else {
+								fromval = values.get(name);
+								if (fromval == null) {
+									if (CSSConstants.CSS_CURRENTCOLOR_VALUE.equals(name)) {
+										if (sm == null) {
+											return new PendingStyleValue(lunit);
+										}
+										fromval = computeCurrentColor(elt, pseudo, engine, idx, sm);
+									} else {
+										// Not a system color...
+										throw createDOMSyntaxException(lunit);
+									}
+								} else {
+									name = fromval.getStringValue();
+									fromval = engine.getCSSContext().getSystemColor(name);
+								}
 							}
-							name = fromval.getStringValue();
-							fromval = engine.getCSSContext().getSystemColor(name);
+						} else if (pType == Type.UNKNOWN) {
+							assert sm == null;
+							return new PendingStyleValue(lunit);
+						} else {
+							throw createDOMSyntaxException(lunit);
 						}
-					} else {
-						throw createDOMSyntaxException(lunit);
 					}
+					from = (ColorValue) fromval;
+					lu = nextLexicalUnitNonNull(lu, lunit);
 				}
-				from = (ColorValue) fromval;
-				lu = nextLexicalUnit(lu, lunit);
 			}
+		} catch (CSSProxyValueException e) {
+			return createLexicalValue(lunit);
 		}
 
 		AbstractValueList<NumericValue> components = new AbstractValueList<>(' ', 4);
@@ -439,7 +580,7 @@ public abstract class AbstractColorManager extends IdentifierManager {
 			return createLexicalValue(lunit);
 		default:
 			throw new DOMException(DOMException.TYPE_MISMATCH_ERR,
-				"Color space must be identifier: " + lunit.toString());
+					"Color space must be identifier: " + lunit.toString());
 		}
 
 		String colorSpace = lu.getStringValue();
@@ -451,8 +592,13 @@ public abstract class AbstractColorManager extends IdentifierManager {
 		if (from != null) {
 			String fromcs = from.getCSSColorSpace();
 			if (!fromcs.equalsIgnoreCase(colorSpace)) {
-				// Color identifiers are all rgb(), so we can use colorUnit and ignore 'from'
-				from = toColorSpace(colorUnit, colorSpace);
+				if (colorUnit.getLexicalUnitType() != LexicalType.IDENT
+						&& !CSSConstants.CSS_CURRENTCOLOR_VALUE
+								.equalsIgnoreCase(colorUnit.getStringValue())) {
+					from = toColorSpace(colorUnit, colorSpace);
+				} else {
+					from = toColorSpace(from, colorSpace);
+				}
 			}
 		}
 
@@ -473,7 +619,8 @@ public abstract class AbstractColorManager extends IdentifierManager {
 					alpha = createColorComponent(lu, from);
 					lu = lu.getNextLexicalUnit();
 					if (lu != null) {
-						throw new DOMException(DOMException.SYNTAX_ERR, "Wrong value: " + lunit.toString());
+						throw new DOMException(DOMException.SYNTAX_ERR,
+								"Wrong value: " + lunit.toString());
 					}
 					break;
 				}
@@ -498,19 +645,27 @@ public abstract class AbstractColorManager extends IdentifierManager {
 		try {
 			StyleValue css4jValue = vf.createCSSValue(lunit);
 			if (!(css4jValue instanceof io.sf.carte.doc.style.css.CSSColorValue)) {
-				throw createInvalidLexicalUnitDOMException(lunit.getLexicalUnitType());
-			}
-			color = ((io.sf.carte.doc.style.css.CSSColorValue) css4jValue).getColor();
-			if (color == null) {
-				throw createDOMSyntaxException(lunit);
+				if (css4jValue.getPrimitiveType() != Type.IDENT) {
+					throw createInvalidLexicalUnitDOMException(lunit.getLexicalUnitType());
+				}
+				color = ((io.sf.carte.doc.style.css.CSSTypedValue) css4jValue).toRGBColor();
+			} else {
+				color = ((io.sf.carte.doc.style.css.CSSColorValue) css4jValue).getColor();
+				if (color == null) {
+					throw createDOMSyntaxException(lunit);
+				}
 			}
 			color = color.toColorSpace(colorSpace);
 		} catch (DOMException e) {
 			throw createInvalidLexicalUnitDOMException(lunit.getLexicalUnitType());
 		}
 
-		AbstractValueList<NumericValue> components = new AbstractValueList<>(' ', 4);
+		return toNativeColorFunction(color, colorSpace);
+	}
+
+	private static ColorFunction toNativeColorFunction(CSSColor color, String colorSpace) {
 		double[] comps = color.toNumberArray();
+		AbstractValueList<NumericValue> components = new AbstractValueList<>(' ', 4);
 		for (int i = 0; i < comps.length; i++) {
 			FloatValue num = new FloatValue(CSSUnit.CSS_NUMBER, (float) comps[i]);
 			components.add(num);
@@ -519,6 +674,17 @@ public abstract class AbstractColorManager extends IdentifierManager {
 		FloatValue a = normalizedComponentValue(color.getAlpha());
 		colorFunction.setAlpha(a);
 		return colorFunction;
+	}
+
+	private static ColorFunction toColorSpace(ColorValue from, String colorSpace) {
+		String text = from.getCssText();
+		ValueFactory vf = new ValueFactory();
+		StyleValue css4jValue = vf.parseProperty(text);
+		assert css4jValue.getCssValueType() == CssType.TYPED;
+		CSSColor color = ((io.sf.carte.doc.style.css.CSSColorValue) css4jValue).getColor();
+		color = color.toColorSpace(colorSpace);
+
+		return toNativeColorFunction(color, colorSpace);
 	}
 
 	/**

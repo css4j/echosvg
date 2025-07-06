@@ -191,6 +191,15 @@ public class StringMap<E> {
 			this.next = next;
 		}
 
+		@Override
+		public String toString() {
+			StringBuilder buf = new StringBuilder();
+			buf.append(key);
+			buf.append(": ");
+			buf.append(value);
+			return buf.toString();
+		}
+
 	}
 
 }

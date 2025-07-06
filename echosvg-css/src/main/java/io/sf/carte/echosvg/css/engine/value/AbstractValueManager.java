@@ -27,6 +27,7 @@ import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.CSSValueSyntax;
 import io.sf.carte.doc.style.css.CSSValueSyntax.Match;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
+import io.sf.carte.doc.style.css.nsac.LexicalUnit.LexicalType;
 import io.sf.carte.doc.style.css.parser.SyntaxParser;
 import io.sf.carte.doc.style.css.property.StyleValue;
 import io.sf.carte.doc.style.css.property.ValueFactory;
@@ -190,10 +191,15 @@ public abstract class AbstractValueManager extends AbstractValueFactory implemen
 		return new URIValue(sv, resolveURI(engine.getCSSBaseURI(), sv));
 	}
 
-	static LexicalUnit nextLexicalUnit(LexicalUnit lu, LexicalUnit firstUnit) throws DOMException {
+	static LexicalUnit nextLexicalUnitNonNull(LexicalUnit lu, LexicalUnit firstUnit)
+			throws DOMException {
 		lu = lu.getNextLexicalUnit();
 		if (lu == null) {
 			throw createDOMSyntaxException(firstUnit);
+		}
+		LexicalType type = lu.getLexicalUnitType();
+		if (type == LexicalType.VAR || type == LexicalType.ATTR) {
+			throw new CSSProxyValueException();
 		}
 		return lu;
 	}

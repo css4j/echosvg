@@ -102,6 +102,22 @@ public class PaintServerTest {
 	}
 
 	@Test
+	public void testConvertRelativeRGBCurrentColor() {
+		Color color = convertPaint(CSSConstants.CSS_FILL_PROPERTY, "rgb(4.335 73.95 123.565 / 0.8)",
+			"color:hsl(210 94.138% 29% / 0.8);fill:rgb(from currentColor r g calc(b - 20)/alpha)",
+			null);
+		assertNotNull(color);
+		float[] comp = new float[3];
+		color.getColorComponents(comp);
+		assertEquals(0.017f, comp[0], 1e-3f); // R
+		assertEquals(0.29f, comp[1], 1e-3f); // G
+		assertEquals(0.48457f, comp[2], 1e-4f); // B
+		assertEquals(204, color.getAlpha());
+
+		assertNull(context.getColorSpace());
+	}
+
+	@Test
 	public void testConvertRelativeRGB_ColorFunction() {
 		Color color = convertPaint(CSSConstants.CSS_FILL_PROPERTY,
 			"rgb(from color(srgb 0.196078431 0.784313725 0.705882353) r calc(g - 90) b / alpha)",
@@ -208,6 +224,23 @@ public class PaintServerTest {
 		assertEquals(.34248f, comp[1], 1e-4f);
 		assertEquals(.75564f, comp[2], 1e-4f);
 		assertEquals(255, color.getAlpha());
+
+		assertNull(context.getColorSpace());
+	}
+
+	@Test
+	public void testConvertRelativeColorFunctionCurrentColor() {
+		Color color = convertPaint(CSSConstants.CSS_FILL_PROPERTY,
+			"color(display-p3 0.11897 0.285275 0.444182 / 0.8)",
+			"color:hsl(210 94.138% 29% / 0.8);fill:color(from currentColor display-p3 r g calc(b - 0.1)/alpha)",
+			null);
+		assertNotNull(color);
+		float[] comp = new float[3];
+		color.getColorComponents(comp);
+		assertEquals(0.11897f, comp[0], 2e-5f); // R
+		assertEquals(0.285275f, comp[1], 1e-5f); // G
+		assertEquals(0.4442f, comp[2], 1e-4f); // B
+		assertEquals(204, color.getAlpha());
 
 		assertNull(context.getColorSpace());
 	}
@@ -534,6 +567,25 @@ public class PaintServerTest {
 		assertEquals(204, color.getAlpha());
 
 		assertSame(StandardColorSpaces.getRec2020(), context.getColorSpace());
+	}
+
+	@Test
+	public void testConvertOkLChRelativeCurrentColor() {
+		// hsl(210 94.138% 29% / 0.8) is oklch(41.2949% 0.1307 254.6 / 0.8)
+		Color color = convertPaint(CSSConstants.CSS_FILL_PROPERTY,
+			"rgb(15.0208% 27.1672% 56.8998% / 0.8)",
+			"color:hsl(210 94.138% 29% / 0.8);fill:oklch(from currentColor l c calc(h + 10)/alpha)",
+			null);
+		assertNotNull(color);
+		// oklch(0.412949 0.1307 264.6 / 0.8) is rgb(15.02% 27.16% 56.9% / 0.8)
+		float[] comp = new float[3];
+		color.getColorComponents(comp);
+		assertEquals(0.15026149f, comp[0], 1e-5f); // R
+		assertEquals(0.27166f, comp[1], 5e-5f); // G
+		assertEquals(0.56899f, comp[2], 3e-4f); // B
+		assertEquals(204, color.getAlpha());
+
+		assertNull(context.getColorSpace());
 	}
 
 	@Test
