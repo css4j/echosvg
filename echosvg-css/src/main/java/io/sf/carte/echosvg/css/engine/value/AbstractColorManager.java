@@ -755,8 +755,27 @@ public abstract class AbstractColorManager extends IdentifierManager {
 	}
 
 	private static NumericValue fromLegacyRange(NumericValue ch) {
+		float f = ch.getFloatValue();
 		if (ch.getUnitType() == CSSUnit.CSS_NUMBER) {
-			ch = new FloatValue(CSSUnit.CSS_NUMBER, ch.getFloatValue() / 255f);
+			if (f > 255f) {
+				f = 255f;
+			} else if (f < 0f) {
+				f = 0f;
+			}
+			ch = new FloatValue(CSSUnit.CSS_NUMBER, f / 255f);
+		}
+		return ch;
+	}
+
+	private static NumericValue componentRange(NumericValue ch) {
+		float f = ch.getFloatValue();
+		if (ch.getUnitType() == CSSUnit.CSS_NUMBER) {
+			if (f > 1f) {
+				f = 1f;
+			} else if (f < 0f) {
+				f = 0f;
+			}
+			ch = new FloatValue(CSSUnit.CSS_NUMBER, f);
 		}
 		return ch;
 	}
@@ -786,7 +805,7 @@ public abstract class AbstractColorManager extends IdentifierManager {
 			} else if (calc.getPrimitiveType() != Type.EXPRESSION) {
 				break;
 			}
-			return evaluateComponent((CalcValue) calc, from);
+			return componentRange(evaluateComponent((CalcValue) calc, from));
 
 		case MATH_FUNCTION:
 			Value v;
@@ -827,7 +846,8 @@ public abstract class AbstractColorManager extends IdentifierManager {
 		throws DOMException {
 		Evaluator eval = createEvaluator(from);
 		CSSTypedValue result = calc.evaluate(eval);
-		return new FloatValue(CSSUnit.CSS_NUMBER, result.getFloatValue(CSSUnit.CSS_NUMBER));
+		float f = result.getFloatValue(CSSUnit.CSS_NUMBER);
+		return new FloatValue(CSSUnit.CSS_NUMBER, f);
 	}
 
 	private Evaluator createEvaluator(ColorValue from) {

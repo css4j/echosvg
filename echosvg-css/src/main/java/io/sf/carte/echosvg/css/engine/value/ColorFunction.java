@@ -203,7 +203,7 @@ public class ColorFunction extends ColorValue implements CSSColor {
 		try {
 			clon = new ColorFunction(getColorSpace().getValue(), this.channels);
 		} catch (DOMSyntaxException e) {
-			clon = null;
+			throw new IllegalStateException(e);
 		}
 		return clon;
 	}

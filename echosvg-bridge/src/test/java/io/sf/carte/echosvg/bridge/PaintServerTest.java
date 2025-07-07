@@ -89,13 +89,27 @@ public class PaintServerTest {
 	}
 
 	@Test
+	public void testConvertRelativeRGB_Clamp() {
+		Color color = convertPaint(CSSConstants.CSS_FILL_PROPERTY,
+				"rgb(from rgb(50 200 180/0.8) calc(r*6) calc(g + 90) calc(b/2) / calc(alpha + .5))",
+				null);
+		assertNotNull(color);
+		assertEquals(255, color.getRed());
+		assertEquals(255, color.getGreen());
+		assertEquals(90, color.getBlue());
+		assertEquals(255, color.getAlpha());
+
+		assertNull(context.getColorSpace());
+	}
+
+	@Test
 	public void testConvertRelativeRGBIdent() {
 		Color color = convertPaint(CSSConstants.CSS_FILL_PROPERTY,
-			"rgb(from lime 120 calc(g - 120) 200)", null);
+			"rgb(from lime 120 calc(g - 120) calc(b - 50))", null);
 		assertNotNull(color);
 		assertEquals(120, color.getRed());
 		assertEquals(135, color.getGreen());
-		assertEquals(200, color.getBlue());
+		assertEquals(0, color.getBlue());
 		assertEquals(255, color.getAlpha());
 
 		assertNull(context.getColorSpace());
@@ -104,8 +118,8 @@ public class PaintServerTest {
 	@Test
 	public void testConvertRelativeRGBCurrentColor() {
 		Color color = convertPaint(CSSConstants.CSS_FILL_PROPERTY, "rgb(4.335 73.95 123.565 / 0.8)",
-			"color:hsl(210 94.138% 29% / 0.8);fill:rgb(from currentColor r g calc(b - 20)/alpha)",
-			null);
+				"color:hsl(210 94.138% 29% / 0.8);fill:rgb(from currentColor r g calc(b - 20)/alpha)",
+				null);
 		assertNotNull(color);
 		float[] comp = new float[3];
 		color.getColorComponents(comp);
@@ -226,6 +240,22 @@ public class PaintServerTest {
 		assertEquals(255, color.getAlpha());
 
 		assertNull(context.getColorSpace());
+	}
+
+	@Test
+	public void testConvertRelativeColorFunctionP3_Clamp() {
+		Color color = convertPaint(CSSConstants.CSS_FILL_PROPERTY,
+			"color(from rgb(100 60 200) display-p3 calc(r - .4) calc(g + 0.1) calc(b + .4))", null);
+		// Reference color is color(display-p3 0.37005 0.24248 0.75564)
+		assertNotNull(color);
+		float[] comp = new float[3];
+		color.getColorComponents(comp);
+		assertEquals(0f, comp[0], 1e-4f);
+		assertEquals(0.34248f, comp[1], 1e-4f);
+		assertEquals(1f, comp[2], 1e-4f);
+		assertEquals(255, color.getAlpha());
+
+		assertSame(StandardColorSpaces.getDisplayP3(), context.getColorSpace());
 	}
 
 	@Test
