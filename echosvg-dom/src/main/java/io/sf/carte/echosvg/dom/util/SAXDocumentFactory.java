@@ -293,6 +293,15 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 	}
 
 	/**
+	 * Gets the document that is being processed.
+	 * 
+	 * @return the document.
+	 */
+	protected Document getDocument() {
+		return document;
+	}
+
+	/**
 	 * Creates a Document instance.
 	 * 
 	 * @param ns   The namespace URI of the root element of the document.
