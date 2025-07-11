@@ -26,7 +26,6 @@ import java.util.List;
 
 import io.sf.carte.echosvg.bridge.StrokingTextPainter;
 import io.sf.carte.echosvg.bridge.TextNode;
-import io.sf.carte.echosvg.bridge.TextPainter;
 import io.sf.carte.echosvg.bridge.TextSpanLayout;
 
 /**
@@ -43,12 +42,12 @@ public class FlowExtTextPainter extends StrokingTextPainter {
 	/**
 	 * A unique instance of this class.
 	 */
-	protected static TextPainter singleton = new FlowExtTextPainter();
+	protected static FlowExtTextPainter singleton = new FlowExtTextPainter();
 
 	/**
 	 * Returns a unique instance of this class.
 	 */
-	public static TextPainter getInstance() {
+	public static FlowExtTextPainter getInstance() {
 		return singleton;
 	}
 
