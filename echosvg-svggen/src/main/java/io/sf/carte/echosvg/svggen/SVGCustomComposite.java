@@ -68,15 +68,16 @@ public class SVGCustomComposite extends AbstractSVGConverter {
 
 		if (compositeDesc == null) {
 			// First time this composite is used. Request handler
-			// to do the convertion
-			SVGCompositeDescriptor desc = getGeneratorContext().getExtensionHandler().handleComposite(composite,
+			// to do the conversion
+			compositeDesc = getGeneratorContext().getExtensionHandler().handleComposite(composite,
 					getGeneratorContext());
 
-			if (desc != null) {
-				Element def = desc.getDef();
-				if (def != null)
+			if (compositeDesc != null) {
+				Element def = compositeDesc.getDef();
+				if (def != null) {
 					defSet.add(def);
-				descMap.put(composite, desc);
+				}
+				descMap.put(composite, compositeDesc);
 			}
 		}
 
