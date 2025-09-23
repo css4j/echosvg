@@ -46,7 +46,7 @@ public abstract class PreconfiguredRenderingTest extends SVGRenderingAccuracyTes
 	public static final char PATH_SEPARATOR = '/';
 
 	public static final String PLATFORM_VARIATION_SUFFIX = "_platform";
-	public static final String[] DEFAULT_VARIATION_PLATFORMS = { "xfce", "win10Light" };
+	public static final String[] DEFAULT_VARIATION_PLATFORMS = { "xfce", "windows-2025" };
 
 	static {
 		ScriptUtil.defaultRhinoShutter();
