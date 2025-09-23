@@ -140,6 +140,13 @@ public interface DocumentFactory {
 	DocumentDescriptor getDocumentDescriptor();
 
 	/**
+	 * Get the reader to be used in the parsing.
+	 * 
+	 * @return the XML reader.
+	 */
+	XMLReader getXMLReader();
+
+	/**
 	 * Set the factory to parse with the given {@code XMLReader}.
 	 * 
 	 * @param reader the reader.

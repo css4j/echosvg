@@ -614,6 +614,11 @@ public class SAXDocumentFactory extends DocumentBuilder
 	}
 
 	@Override
+	public XMLReader getXMLReader() {
+		return parser;
+	}
+
+	@Override
 	public void setXMLReader(XMLReader reader) {
 		this.parser = getXMLReader(reader);
 	}
