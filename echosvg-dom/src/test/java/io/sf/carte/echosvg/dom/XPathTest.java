@@ -96,7 +96,6 @@ public class XPathTest {
 		try {
 			reader.setProperty("jdk.xml.maxParameterEntitySizeLimit", 0xffff);
 		} catch (SAXNotRecognizedException | SAXNotSupportedException e) {
-			throw new IllegalStateException(e);
 		}
 
 		try {
