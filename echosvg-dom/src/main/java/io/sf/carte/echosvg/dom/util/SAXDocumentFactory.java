@@ -599,6 +599,11 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 	}
 
 	@Override
+	public XMLReader getXMLReader() {
+		return parser;
+	}
+
+	@Override
 	public void setXMLReader(XMLReader reader) {
 		this.parser = getXMLReader(reader);
 	}
