@@ -217,6 +217,11 @@ public class SamplesRenderingTest extends AbstractSamplesRendering {
 		test("test-resources/io/sf/carte/echosvg/test/svg/bug19363.svg");
 	}
 
+	@Test
+	public void testIssue1383() throws TranscoderException, IOException {
+		testNV("samples/issue1383.svg");
+	}
+
 	@Override
 	float getBelowThresholdAllowed() {
 		return 0.3f;

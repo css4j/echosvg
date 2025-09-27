@@ -198,7 +198,8 @@ public class Any2RGBRed extends AbstractRed {
 		BufferedImage srcBI, dstBI;
 		srcBI = new BufferedImage(srcBICM, srcWr.createWritableTranslatedChild(0, 0), false, null);
 
-		ColorConvertOp op = new ColorConvertOp(dstCM.getColorSpace(), null);
+		ColorConvertOp op = new ColorConvertOp(srcBICM.getColorSpace(), dstCM.getColorSpace(),
+				null);
 		dstBI = op.filter(srcBI, null);
 
 		WritableRaster wr00 = wr.createWritableTranslatedChild(0, 0);
