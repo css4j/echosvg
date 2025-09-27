@@ -269,7 +269,7 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 	/**
 	 * The SVG element factories.
 	 */
-	protected static HashMap<String, ElementFactory> svgFactories = new HashMap<>(85);
+	protected static HashMap<String, ElementFactory> svgFactories = new HashMap<>(81);
 
 	static {
 		svgFactories.put(SVGConstants.SVG_A_TAG, new AElementFactory());
@@ -299,8 +299,6 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		svgFactories.put(SVGConstants.SVG_DEFS_TAG, new DefsElementFactory());
 
 		svgFactories.put(SVGConstants.SVG_DESC_TAG, new DescElementFactory());
-
-		svgFactories.put(SVGConstants.SVG_DISCARD_TAG, new DiscardElementFactory());
 
 		svgFactories.put(SVGConstants.SVG_ELLIPSE_TAG, new EllipseElementFactory());
 
@@ -683,24 +681,6 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		@Override
 		public Element create(String prefix, Document doc) {
 			return new SVGOMDescElement(prefix, (AbstractDocument) doc);
-		}
-
-	}
-
-	/**
-	 * To create a 'discard' element.
-	 */
-	protected static class DiscardElementFactory implements ElementFactory {
-
-		public DiscardElementFactory() {
-		}
-
-		/**
-		 * Creates an instance of the associated element type.
-		 */
-		@Override
-		public Element create(String prefix, Document doc) {
-			return new SVGOMDiscardElement(prefix, (AbstractDocument) doc);
 		}
 
 	}
