@@ -628,9 +628,35 @@ abstract class AbstractConfigTest implements SVGConverterController {
 		cn = computedConfig.hints.size();
 
 		// ERROR_UNEXPECTED_NUMBER_OF_HINTS
-		assertEquals(en, cn);
+		if (en != cn) {
+			HashMap<Key, Object> diff = new HashMap<>();
+			String msgpref, msgsuf;
+			if (en > cn) {
+				msgpref = "Expected hint [";
+				msgsuf = "] was not found.";
+				diff.putAll(expectedConfig.hints);
+				for (Key hintKey : computedConfig.hints.keySet()) {
+					diff.remove(hintKey);
+				}
+			} else {
+				msgpref = "Unexpected hint [";
+				msgsuf = "] found.";
+				diff.putAll(computedConfig.hints);
+				for (Key hintKey : expectedConfig.hints.keySet()) {
+					diff.remove(hintKey);
+				}
+			}
 
-		for (Object hintKey : expectedConfig.hints.keySet()) {
+			for (Key hintKey : diff.keySet()) {
+				Object hintValue = diff.get(hintKey);
+
+				System.err.println(msgpref + hintKey.toString() + ", " + hintValue.toString() + msgsuf);
+			}
+
+			assertEquals(en, cn, "Unexpected number of hints.");
+		}
+
+		for (Key hintKey : expectedConfig.hints.keySet()) {
 			Object expectedHintValue = expectedConfig.hints.get(hintKey);
 
 			Object computedHintValue = computedConfig.hints.get(hintKey);

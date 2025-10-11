@@ -122,9 +122,12 @@ class SMApplicationSecurityEnforcer extends ApplicationSecurityEnforcer {
 			// force reloading of the policy file in case there
 			// has been a change since it was last enforced (this
 			// may happen with dynamically generated policy files).
-			System.setSecurityManager(null);
-			previousSecurityManagerInstalled = sm;
-			installSecurityManager();
+			try {
+				System.setSecurityManager(null);
+				previousSecurityManagerInstalled = sm;
+				installSecurityManager();
+			} catch (UnsupportedOperationException e) {
+			}
 		} else {
 			if (sm != null) {
 				System.setSecurityManager(previousSecurityManagerInstalled);

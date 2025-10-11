@@ -50,8 +50,11 @@ public class LoadPermissionsTest {
 
 				@Override
 				public Void run() throws Exception {
-					System.setSecurityManager(null);
-					System.setProperty("java.security.policy", "");
+					try {
+						System.setSecurityManager(null);
+						System.setProperty("java.security.policy", "");
+					} catch (UnsupportedOperationException e) {
+					}
 					return null;
 				}
 

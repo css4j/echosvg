@@ -877,7 +877,9 @@ public class SVGConverter {
 		}
 
 		// Sets the resolution
-		map.put(SVGAbstractTranscoder.KEY_RESOLUTION_DPI, resolutionDPI);
+		if (resolutionDPI != 96f) {
+			map.put(SVGAbstractTranscoder.KEY_RESOLUTION_DPI, resolutionDPI);
+		}
 
 		// Set validation
 		if (validate) {

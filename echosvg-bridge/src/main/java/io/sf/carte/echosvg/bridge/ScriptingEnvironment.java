@@ -47,6 +47,9 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.MutationEvent;
 import org.w3c.dom.svg.SVGDocument;
+import org.xml.sax.SAXNotRecognizedException;
+import org.xml.sax.SAXNotSupportedException;
+import org.xml.sax.XMLReader;
 
 import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
 import io.sf.carte.echosvg.anim.dom.SVGOMDocument;
@@ -893,6 +896,12 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
 		public Node parseXML(String text, Document doc) {
 			// Try and parse it as an SVGDocument
 			SAXSVGDocumentFactory df = new SAXSVGDocumentFactory();
+			XMLReader reader = df.getXMLReader();
+			try {
+				reader.setProperty("jdk.xml.maxParameterEntitySizeLimit", 0x1ffff);
+			} catch (SAXNotRecognizedException | SAXNotSupportedException e) {
+			}
+
 			URL urlObj = null;
 			if (doc instanceof SVGOMDocument) {
 				urlObj = ((SVGOMDocument) doc).getURLObject();

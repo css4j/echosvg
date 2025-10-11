@@ -32,6 +32,9 @@ import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.xml.sax.SAXNotRecognizedException;
+import org.xml.sax.SAXNotSupportedException;
+import org.xml.sax.XMLReader;
 
 import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
 import io.sf.carte.echosvg.bridge.BridgeContext;
@@ -197,6 +200,12 @@ public class ExternalResourcesTest implements ErrorConstants {
 		// Load the input SVG into a Document object
 		//
 		SAXSVGDocumentFactory f = new SAXSVGDocumentFactory();
+		XMLReader reader = f.getXMLReader();
+		try {
+			reader.setProperty("jdk.xml.maxParameterEntitySizeLimit", 0xffff);
+		} catch (SAXNotRecognizedException | SAXNotSupportedException e) {
+		}
+
 		Document doc = f.createDocument(svgURL);
 
 		//

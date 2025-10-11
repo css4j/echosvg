@@ -33,6 +33,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import org.xml.sax.SAXNotRecognizedException;
+import org.xml.sax.SAXNotSupportedException;
+import org.xml.sax.XMLReader;
 
 import io.sf.carte.echosvg.dom.AbstractElement;
 
@@ -49,7 +52,12 @@ public class NodeIsEqualNodeTest {
 
 	@Test
 	public void test() throws SAXException, IOException {
-		DocumentBuilder df = new SAXSVGDocumentFactory();
+		SAXSVGDocumentFactory df = new SAXSVGDocumentFactory();
+		XMLReader reader = df.getXMLReader();
+		try {
+			reader.setProperty("jdk.xml.maxParameterEntitySizeLimit", 0xffff);
+		} catch (SAXNotRecognizedException | SAXNotSupportedException e) {
+		}
 
 		InputSource source = new InputSource(new StringReader(DOC));
 		source.setSystemId("http://example.org/");

@@ -34,6 +34,8 @@ import javax.xml.parsers.SAXParserFactory;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
+import org.xml.sax.SAXNotRecognizedException;
+import org.xml.sax.SAXNotSupportedException;
 import org.xml.sax.XMLReader;
 
 import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
@@ -103,6 +105,11 @@ public class TranscoderInputTest {
 		// Document
 		{
 			SAXSVGDocumentFactory f = new SAXSVGDocumentFactory();
+			XMLReader reader = f.getXMLReader();
+			try {
+				reader.setProperty("jdk.xml.maxParameterEntitySizeLimit", 0xffff);
+			} catch (SAXNotRecognizedException | SAXNotSupportedException e) {
+			}
 			Document doc = f.createDocument(TEST_URI, "utf-8");
 			TranscoderInput ti = new TranscoderInput(doc);
 			ti.setURI(TEST_URI);
