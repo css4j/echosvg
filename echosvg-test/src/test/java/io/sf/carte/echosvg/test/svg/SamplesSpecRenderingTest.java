@@ -555,7 +555,7 @@ public class SamplesSpecRenderingTest extends AbstractSamplesRendering {
 
 	@Test
 	public void testShapesEmptyShape() throws TranscoderException, IOException {
-		test("samples/tests/spec/shapes/emptyShape.svg", true);
+		test("samples/tests/spec/shapes/emptyShape.svg");
 	}
 
 	/*
