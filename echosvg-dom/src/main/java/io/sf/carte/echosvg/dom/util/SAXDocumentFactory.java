@@ -289,10 +289,30 @@ public class SAXDocumentFactory extends DocumentBuilder
 				}
 				// saxFactory has secure defaults
 			}
+
+			// The Java 24+ defaults are too small
+			// See https://bugs.openjdk.org/browse/JDK-8368902
+			setPropertyIfLower(reader, "jdk.xml.maxParameterEntitySizeLimit", 0x40000);
+			setPropertyIfLower(reader, "jdk.xml.totalEntitySizeLimit", 0x100000);
+			setPropertyIfLower(reader, "jdk.xml.maxGeneralEntitySizeLimit", 0x100000);
+
+			// Set the resolver
 			reader.setEntityResolver(createEntityResolver());
 		}
 
 		return reader;
+	}
+
+	private static void setPropertyIfLower(XMLReader xmlReader, String property, int value) {
+		try {
+			String oldval = (String) xmlReader.getProperty(property);
+			int iold;
+			if (oldval == null || ((iold = Integer.parseInt(oldval)) != 0 && iold < value)) {
+				xmlReader.setProperty(property, value);
+			}
+		} catch (SAXNotRecognizedException | SAXNotSupportedException | RuntimeException e) {
+			// Ignore SAX and class cast exceptions
+		}
 	}
 
 	/**

@@ -25,9 +25,6 @@ import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.xml.sax.SAXNotRecognizedException;
-import org.xml.sax.SAXNotSupportedException;
-import org.xml.sax.XMLReader;
 
 import io.sf.carte.echosvg.dom.GenericDOMImplementation;
 import io.sf.carte.echosvg.dom.util.DocumentFactory;
@@ -120,16 +117,7 @@ public abstract class XMLAbstractTranscoder extends AbstractTranscoder {
 		boolean validating = xmlParserValidating != null && (Boolean) xmlParserValidating;
 		f.setValidating(validating);
 
-		XMLReader xmlRdr = input.getXMLReader();
-		if (xmlRdr != null) {
-			f.setXMLReader(xmlRdr);
-		} else {
-			xmlRdr = f.getXMLReader();
-			try {
-				xmlRdr.setProperty("jdk.xml.maxParameterEntitySizeLimit", 0x1ffff);
-			} catch (SAXNotRecognizedException | SAXNotSupportedException e) {
-			}
-		}
+		f.setXMLReader(input.getXMLReader());
 
 		InputSource source = new InputSource();
 		source.setSystemId(input.getURI());
