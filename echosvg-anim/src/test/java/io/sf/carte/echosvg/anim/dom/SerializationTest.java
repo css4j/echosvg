@@ -28,14 +28,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URL;
 
-import javax.xml.parsers.DocumentBuilder;
-
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
-import org.xml.sax.SAXNotRecognizedException;
-import org.xml.sax.SAXNotSupportedException;
-import org.xml.sax.XMLReader;
 
 /**
  * To test the Java serialization.
@@ -54,11 +49,6 @@ public class SerializationTest {
 
 	void testSerialization(String testFileName) throws Exception {
 		SAXSVGDocumentFactory df = new SAXSVGDocumentFactory();
-		XMLReader reader = df.getXMLReader();
-		try {
-			reader.setProperty("jdk.xml.maxParameterEntitySizeLimit", 0xffff);
-		} catch (SAXNotRecognizedException | SAXNotSupportedException e) {
-		}
 
 		Document doc;
 		URL url = getClass().getClassLoader().getResource(testFileName);

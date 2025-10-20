@@ -32,9 +32,6 @@ import java.nio.charset.StandardCharsets;
 
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
-import org.xml.sax.SAXNotRecognizedException;
-import org.xml.sax.SAXNotSupportedException;
-import org.xml.sax.XMLReader;
 
 import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
 import io.sf.carte.echosvg.dom.GenericDOMImplementation;
@@ -158,11 +155,6 @@ public class SVGAccuracyTest {
 		byte[] data = bos.toByteArray();
 
 		SAXSVGDocumentFactory f = new SAXSVGDocumentFactory();
-		XMLReader reader = f.getXMLReader();
-		try {
-			reader.setProperty("jdk.xml.maxParameterEntitySizeLimit", 0xffff);
-		} catch (SAXNotRecognizedException | SAXNotSupportedException e) {
-		}
 
 		String failMessage = XmlUtil.xmlDiff(refURL, data, null, f);
 

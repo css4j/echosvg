@@ -30,9 +30,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.xpath.XPathEvaluator;
 import org.w3c.dom.xpath.XPathResult;
-import org.xml.sax.SAXNotRecognizedException;
-import org.xml.sax.SAXNotSupportedException;
-import org.xml.sax.XMLReader;
 
 import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
 
@@ -92,11 +89,6 @@ public class XPathTest {
 		StringReader re = new StringReader(xml);
 		SAXDocumentFactory f = new SAXSVGDocumentFactory();
 		f.setValidating(false);
-		XMLReader reader = f.getXMLReader();
-		try {
-			reader.setProperty("jdk.xml.maxParameterEntitySizeLimit", 0xffff);
-		} catch (SAXNotRecognizedException | SAXNotSupportedException e) {
-		}
 
 		try {
 			return f.createDocument("file:///memory", re);

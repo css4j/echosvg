@@ -30,9 +30,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
-import org.xml.sax.SAXNotRecognizedException;
-import org.xml.sax.SAXNotSupportedException;
-import org.xml.sax.XMLReader;
 
 import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
 import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
@@ -53,11 +50,6 @@ public class ImportNodeTest {
 
 	void runTest(String testFileName, String targetId) throws IOException {
 		SAXSVGDocumentFactory df = new SAXSVGDocumentFactory();
-		XMLReader reader = df.getXMLReader();
-		try {
-			reader.setProperty("jdk.xml.maxParameterEntitySizeLimit", 0xffff);
-		} catch (SAXNotRecognizedException | SAXNotSupportedException e) {
-		}
 
 		URL url = getClass().getClassLoader().getResource(testFileName);
 		Document doc = df.createDocument(url.toString(), url.openStream(), "utf-8");

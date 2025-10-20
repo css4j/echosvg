@@ -31,9 +31,6 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 import org.junit.jupiter.api.Test;
-import org.xml.sax.SAXNotRecognizedException;
-import org.xml.sax.SAXNotSupportedException;
-import org.xml.sax.XMLReader;
 
 import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
 import io.sf.carte.echosvg.test.misc.TestLocations;
@@ -146,11 +143,6 @@ public class WMFAccuracyTest {
 		wmft.transcode(input, output);
 
 		SAXSVGDocumentFactory df = new SAXSVGDocumentFactory();
-		XMLReader reader = df.getXMLReader();
-		try {
-			reader.setProperty("jdk.xml.maxParameterEntitySizeLimit", 0xffff);
-		} catch (SAXNotRecognizedException | SAXNotSupportedException e) {
-		}
 
 		byte[] data = out.toByteArray();
 		String failMessage = XmlUtil.xmlDiff(refURL, data, saveSVG, df);

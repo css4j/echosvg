@@ -26,17 +26,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
-import javax.xml.parsers.DocumentBuilder;
-
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.xml.sax.SAXNotRecognizedException;
-import org.xml.sax.SAXNotSupportedException;
-import org.xml.sax.XMLReader;
 
 /**
  * @author <a href="mailto:shillion@ilog.fr">Stephane Hillion</a>
@@ -54,11 +49,6 @@ public class SetAttributeTest {
 	void testSetAttribute(String testFileName, String targetId, String targetAttribute,
 			String targetValue) throws IOException, SAXException {
 		SAXSVGDocumentFactory df = new SAXSVGDocumentFactory();
-		XMLReader reader = df.getXMLReader();
-		try {
-			reader.setProperty("jdk.xml.maxParameterEntitySizeLimit", 0xffff);
-		} catch (SAXNotRecognizedException | SAXNotSupportedException e) {
-		}
 
 		Document doc;
 		URL url = getClass().getClassLoader().getResource(testFileName);

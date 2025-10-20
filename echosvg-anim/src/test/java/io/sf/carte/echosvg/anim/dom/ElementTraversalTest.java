@@ -27,15 +27,10 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import java.io.IOException;
 import java.io.StringReader;
 
-import javax.xml.parsers.DocumentBuilder;
-
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.xml.sax.SAXNotRecognizedException;
-import org.xml.sax.SAXNotSupportedException;
-import org.xml.sax.XMLReader;
 
 import io.sf.carte.echosvg.dom.AbstractElement;
 import io.sf.carte.echosvg.w3c.dom.ElementTraversal;
@@ -54,11 +49,6 @@ public class ElementTraversalTest {
 	@Test
 	public void test() throws SAXException, IOException {
 		SAXSVGDocumentFactory df = new SAXSVGDocumentFactory();
-		XMLReader reader = df.getXMLReader();
-		try {
-			reader.setProperty("jdk.xml.maxParameterEntitySizeLimit", 0xffff);
-		} catch (SAXNotRecognizedException | SAXNotSupportedException e) {
-		}
 
 		InputSource source = new InputSource(new StringReader(DOC));
 		source.setSystemId("http://example.org/");
