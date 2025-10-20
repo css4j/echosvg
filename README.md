@@ -27,7 +27,7 @@ To build EchoSVG you need the following software installed:
 - The [Git version control system](https://git-scm.com/downloads) is required to
 obtain the sources. Any recent version should suffice.
 
-- A Java compiler, version 11 to 21. You can install it from your favourite
+- A Java compiler, version 11 to 24. You can install it from your favourite
 package manager or by downloading from [Adoptium](https://adoptium.net/).
 
 <br/>
@@ -280,7 +280,7 @@ dependencies {
 }
 ```
 where `echosvgVersion` would be defined in a `gradle.properties` file (current
-version is `2.2`).
+version is `2.2.1`).
 
 <br/>
 
