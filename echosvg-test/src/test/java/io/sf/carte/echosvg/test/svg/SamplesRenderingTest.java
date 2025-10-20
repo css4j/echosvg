@@ -218,8 +218,8 @@ public class SamplesRenderingTest extends AbstractSamplesRendering {
 	}
 
 	@Test
-	public void testIssue1383() throws TranscoderException, IOException {
-		testNV("samples/issue1383.svg");
+	public void testBatik1383() throws TranscoderException, IOException {
+		testNV("samples/BATIK-1383.svg");
 	}
 
 	@Override
