@@ -160,6 +160,21 @@ tasks.withType(Javadoc) {
 	options.links 'https://javadoc.io/doc/org.mozilla/rhino/1.8.0/'
 }
 
+tasks.withType(Test) {
+	// Exclude tests via gradlew test -PexcludeTests="SamplesSpecRenderingTest.testVerticalText,..."
+	if (project.hasProperty('excludeTests')) {
+		filter {
+			project.properties['excludeTests']?.replaceAll('\s', '')?.split(',').each {
+				excludeTestsMatching "*.${it}"
+			}
+		}
+	}
+
+	testLogging {
+		exceptionFormat = 'full'
+	}
+}
+
 tasks.register('lineEndingConvCopy', CRLFConvertCopy) {
 	description = 'Convert LICENSE and NOTICE to Windows line endings'
 	from "$rootDir/LICENSE"

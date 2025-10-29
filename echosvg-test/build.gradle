@@ -68,24 +68,21 @@ test {
 		excludeTags 'SecMan'
 		excludeTags 'memleak'
 	}
-
-	// Exclude tests via gradlew test -PexcludeTests="SamplesSpecRenderingTest.testVerticalText,..."
-	if (project.hasProperty('excludeTests')) {
-		filter {
-			project.properties['excludeTests']?.replaceAll('\s', '')?.split(',').each {
-				excludeTestsMatching "*.${it}"
-			}
-		}
-	}
-
-	testLogging {
-		exceptionFormat = 'full'
-	}
 }
 
 tasks.withType(Test) {
 	def curJavaVer = JavaVersion.current()
-	if (curJavaVer > JavaVersion.VERSION_11 && curJavaVer < JavaVersion.VERSION_24) {
+	//
+	// 'allow' and 'disallow' are valid values for the 'java.security.manager'
+	// property since Java 12, see https://bugs.openjdk.org/browse/JDK-8212047
+	//
+	// From Java 18 to 23 'disallow' is the default value, see
+	// https://bugs.openjdk.org/browse/JDK-8270380
+	//
+	// Since Java 24 the property cannot be set, see
+	// https://openjdk.org/jeps/486
+	//
+	if (curJavaVer > JavaVersion.VERSION_17 && curJavaVer < JavaVersion.VERSION_24) {
 		systemProperty('java.security.manager', 'allow')
 	}
 }
