@@ -18,8 +18,7 @@
  */
 package io.sf.carte.echosvg.svggen;
 
-import java.awt.GradientPaint;
-import java.awt.Paint;
+import java.awt.*;
 import java.awt.geom.Point2D;
 
 import org.w3c.dom.Document;
@@ -28,14 +27,12 @@ import org.w3c.dom.Element;
 import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
 
 /**
- * Utility class that converts a Java GradientPaint into an SVG linear gradient
+ * Utility class that converts a Java LinearGradientPaint into an SVG linear gradient
  * element
  *
- * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
- * @author For later modifications, see Git history.
- * @version $Id$
+ * @author <a href="mailto:schegge42@gmail.com">Jens Kaiser</a>
  */
-public class SVGLinearGradient extends AbstractSVGConverter {
+public class SVGLinearGradient extends AbstractSVGGradient {
 
 	/**
 	 * @param generatorContext used to build Elements
@@ -51,96 +48,45 @@ public class SVGLinearGradient extends AbstractSVGConverter {
 	 * @param gc GraphicContext to be converted
 	 * @return descriptor of the attributes required to represent some or all of the
 	 *         GraphicContext state, along with the related definitions
-	 * @see io.sf.carte.echosvg.svggen.SVGDescriptor
+	 * @see SVGDescriptor
 	 */
 	@Override
 	public SVGDescriptor toSVG(GraphicContext gc) {
 		Paint paint = gc.getPaint();
-		return toSVG((GradientPaint) paint);
+		return toSVG((LinearGradientPaint) paint);
 	}
 
 	/**
-	 * @param gradient the GradientPaint to be converted
+	 * @param gradient the LinearGradientPaint to be converted
 	 * @return a description of the SVG paint and opacity corresponding to the
 	 *         gradient Paint. The definiton of the linearGradient is put in the
 	 *         linearGradientDefsMap
 	 */
-	public SVGPaintDescriptor toSVG(GradientPaint gradient) {
+	public SVGPaintDescriptor toSVG(LinearGradientPaint gradient) {
 		// Reuse definition if gradient has already been converted
-		SVGPaintDescriptor gradientDesc = (SVGPaintDescriptor) descMap.get(gradient);
-
-		Document domFactory = getGeneratorContext().getDOMFactory();
-
-		if (gradientDesc == null) {
-			Element gradientDef = domFactory.createElementNS(SVG_NAMESPACE_URI, SVG_LINEAR_GRADIENT_TAG);
-			gradientDef.setAttributeNS(null, SVG_GRADIENT_UNITS_ATTRIBUTE, SVG_USER_SPACE_ON_USE_VALUE);
-
-			//
-			// Process gradient vector
-			//
-			Point2D p1 = gradient.getPoint1();
-			Point2D p2 = gradient.getPoint2();
-			gradientDef.setAttributeNS(null, SVG_X1_ATTRIBUTE, doubleString(p1.getX()));
-			gradientDef.setAttributeNS(null, SVG_Y1_ATTRIBUTE, doubleString(p1.getY()));
-			gradientDef.setAttributeNS(null, SVG_X2_ATTRIBUTE, doubleString(p2.getX()));
-			gradientDef.setAttributeNS(null, SVG_Y2_ATTRIBUTE, doubleString(p2.getY()));
-
-			//
-			// Spread method
-			//
-			String spreadMethod = SVG_PAD_VALUE;
-			if (gradient.isCyclic())
-				spreadMethod = SVG_REFLECT_VALUE;
-			gradientDef.setAttributeNS(null, SVG_SPREAD_METHOD_ATTRIBUTE, spreadMethod);
-
-			//
-			// First gradient stop
-			//
-			Element gradientStop = domFactory.createElementNS(SVG_NAMESPACE_URI, SVG_STOP_TAG);
-			gradientStop.setAttributeNS(null, SVG_OFFSET_ATTRIBUTE, SVG_ZERO_PERCENT_VALUE);
-
-			SVGPaintDescriptor colorDesc = SVGColor.toSVG(gradient.getColor1(), getGeneratorContext());
-			gradientStop.setAttributeNS(null, SVG_STOP_COLOR_ATTRIBUTE, colorDesc.getPaintValue());
-			gradientStop.setAttributeNS(null, SVG_STOP_OPACITY_ATTRIBUTE, colorDesc.getOpacityValue());
-
-			gradientDef.appendChild(gradientStop);
-
-			//
-			// Second gradient stop
-			//
-			gradientStop = domFactory.createElementNS(SVG_NAMESPACE_URI, SVG_STOP_TAG);
-			gradientStop.setAttributeNS(null, SVG_OFFSET_ATTRIBUTE, SVG_HUNDRED_PERCENT_VALUE);
-
-			colorDesc = SVGColor.toSVG(gradient.getColor2(), getGeneratorContext());
-			gradientStop.setAttributeNS(null, SVG_STOP_COLOR_ATTRIBUTE, colorDesc.getPaintValue());
-			gradientStop.setAttributeNS(null, SVG_STOP_OPACITY_ATTRIBUTE, colorDesc.getOpacityValue());
-
-			gradientDef.appendChild(gradientStop);
-
-			//
-			// Gradient ID
-			//
-			gradientDef.setAttributeNS(null, SVG_ID_ATTRIBUTE,
-					getGeneratorContext().getIDGenerator().generateID(ID_PREFIX_LINEAR_GRADIENT));
-
-			//
-			// Build Paint descriptor
-			//
-			StringBuilder paintAttrBuf = new StringBuilder(URL_PREFIX);
-			paintAttrBuf.append(SIGN_POUND);
-			paintAttrBuf.append(gradientDef.getAttributeNS(null, SVG_ID_ATTRIBUTE));
-			paintAttrBuf.append(URL_SUFFIX);
-
-			gradientDesc = new SVGPaintDescriptor(paintAttrBuf.toString(), SVG_OPAQUE_VALUE, gradientDef);
-
-			//
-			// Update maps so that gradient can be reused if needed
-			//
-			descMap.put(gradient, gradientDesc);
-			defSet.add(gradientDef);
-		}
-
-		return gradientDesc;
+		return (SVGPaintDescriptor) descMap.computeIfAbsent(gradient, g -> createtSvgPaintDescriptor((LinearGradientPaint)g));
 	}
 
+	private SVGPaintDescriptor createtSvgPaintDescriptor(LinearGradientPaint gradient) {
+		Document domFactory = getGeneratorContext().getDOMFactory();
+		Element gradientDef = domFactory.createElementNS(SVG_NAMESPACE_URI, SVG_LINEAR_GRADIENT_TAG);
+		gradientDef.setAttribute(SVG_GRADIENT_UNITS_ATTRIBUTE, SVG_USER_SPACE_ON_USE_VALUE);
+
+		Point2D p1 = gradient.getStartPoint();
+		Point2D p2 = gradient.getEndPoint();
+
+		String id = getGeneratorContext().getIDGenerator().generateID(ID_PREFIX_LINEAR_GRADIENT);
+		gradientDef.setAttribute(SVG_ID_ATTRIBUTE, id);
+		gradientDef.setAttribute(SVG_X1_ATTRIBUTE, doubleString(p1.getX()));
+		gradientDef.setAttribute(SVG_Y1_ATTRIBUTE, doubleString(p1.getY()));
+		gradientDef.setAttribute(SVG_X2_ATTRIBUTE, doubleString(p2.getX()));
+		gradientDef.setAttribute(SVG_Y2_ATTRIBUTE, doubleString(p2.getY()));
+		gradientDef.setAttribute(SVG_SPREAD_METHOD_ATTRIBUTE, getSpreadMethod(gradient));
+
+		addGradientStops(gradient, gradientDef, domFactory);
+
+		defSet.add(gradientDef);
+
+		return new SVGPaintDescriptor(URL_PREFIX + SIGN_POUND + id + URL_SUFFIX, SVG_OPAQUE_VALUE, gradientDef);
+	}
 }

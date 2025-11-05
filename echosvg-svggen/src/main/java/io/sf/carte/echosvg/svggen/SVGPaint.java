@@ -18,10 +18,7 @@
  */
 package io.sf.carte.echosvg.svggen;
 
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Paint;
-import java.awt.TexturePaint;
+import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -36,15 +33,25 @@ import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
- * @see io.sf.carte.echosvg.svggen.SVGLinearGradient
- * @see io.sf.carte.echosvg.svggen.SVGTexturePaint
+ * @see SVGLinearGradient
+ * @see SVGTexturePaint
  */
 public class SVGPaint implements SVGConverter {
 
 	/**
 	 * All GradientPaint convertions are handed to svgLinearGradient
 	 */
+	private SVGGradient svgGradient;
+
+	/**
+	 * All LinearGradientPaint convertions are handed to svgLinearGradient
+	 */
 	private SVGLinearGradient svgLinearGradient;
+
+	/**
+	 * All RadialGradientPaint convertions are handed to svgRadialGradient
+	 */
+	private SVGRadialGradient svgRadialGradient;
 
 	/**
 	 * All TexturePaint convertions are handed to svgTextureGradient
@@ -70,7 +77,9 @@ public class SVGPaint implements SVGConverter {
 	 * @param generatorContext the context.
 	 */
 	public SVGPaint(SVGGeneratorContext generatorContext) {
+		this.svgGradient = new SVGGradient(generatorContext);
 		this.svgLinearGradient = new SVGLinearGradient(generatorContext);
+		this.svgRadialGradient = new SVGRadialGradient(generatorContext);
 		this.svgTexturePaint = new SVGTexturePaint(generatorContext);
 		this.svgCustomPaint = new SVGCustomPaint(generatorContext);
 		this.svgColor = new SVGColor(generatorContext);
@@ -83,7 +92,9 @@ public class SVGPaint implements SVGConverter {
 	 */
 	@Override
 	public List<Element> getDefinitionSet() {
-		List<Element> paintDefs = new LinkedList<>(svgLinearGradient.getDefinitionSet());
+		List<Element> paintDefs = new LinkedList<>(svgGradient.getDefinitionSet());
+		paintDefs.addAll(svgLinearGradient.getDefinitionSet());
+		paintDefs.addAll(svgRadialGradient.getDefinitionSet());
 		paintDefs.addAll(svgTexturePaint.getDefinitionSet());
 		paintDefs.addAll(svgCustomPaint.getDefinitionSet());
 		paintDefs.addAll(svgColor.getDefinitionSet());
@@ -94,8 +105,16 @@ public class SVGPaint implements SVGConverter {
 		return svgTexturePaint;
 	}
 
-	public SVGLinearGradient getGradientPaintConverter() {
+	public SVGGradient getGradientPaintConverter() {
+		return svgGradient;
+	}
+
+	public SVGLinearGradient getLinearGradientPaintConverter() {
 		return svgLinearGradient;
+	}
+
+	public SVGRadialGradient getRadialGradientPaintConverter() {
+		return svgRadialGradient;
 	}
 
 	public SVGCustomPaint getCustomPaintConverter() {
@@ -113,7 +132,7 @@ public class SVGPaint implements SVGConverter {
 	 * @param gc GraphicContext to be converted
 	 * @return descriptor of the attributes required to represent some or all of the
 	 *         GraphicContext state, along with the related definitions
-	 * @see io.sf.carte.echosvg.svggen.SVGDescriptor
+	 * @see SVGDescriptor
 	 */
 	@Override
 	public SVGDescriptor toSVG(GraphicContext gc) {
@@ -128,15 +147,20 @@ public class SVGPaint implements SVGConverter {
 		// we first try the extension handler because we may
 		// want to override the way a Paint is managed!
 		SVGPaintDescriptor paintDesc = svgCustomPaint.toSVG(paint);
-
-		if (paintDesc == null) {
-			if (paint instanceof Color)
-				paintDesc = SVGColor.toSVG((Color) paint, generatorContext);
-			else if (paint instanceof GradientPaint)
-				paintDesc = svgLinearGradient.toSVG((GradientPaint) paint);
-			else if (paint instanceof TexturePaint)
-				paintDesc = svgTexturePaint.toSVG((TexturePaint) paint);
+		if (paintDesc != null) {
+			return paintDesc;
 		}
+
+		if (paint instanceof Color)
+			paintDesc = SVGColor.toSVG((Color) paint, generatorContext);
+		else if (paint instanceof GradientPaint)
+			paintDesc = svgGradient.toSVG((GradientPaint) paint);
+		else if (paint instanceof LinearGradientPaint)
+			paintDesc = svgLinearGradient.toSVG((LinearGradientPaint) paint);
+		else if (paint instanceof RadialGradientPaint)
+			paintDesc = svgRadialGradient.toSVG((RadialGradientPaint) paint);
+		else if (paint instanceof TexturePaint)
+			paintDesc = svgTexturePaint.toSVG((TexturePaint) paint);
 
 		return paintDesc;
 	}
