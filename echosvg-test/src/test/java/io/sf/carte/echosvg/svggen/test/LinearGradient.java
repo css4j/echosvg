@@ -18,7 +18,12 @@
  */
 package io.sf.carte.echosvg.svggen.test;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.LinearGradientPaint;
+import java.awt.MultipleGradientPaint;
+import java.awt.Paint;
+import java.awt.RenderingHints;
 import java.awt.geom.GeneralPath;
 
 /**
@@ -52,7 +57,7 @@ public class LinearGradient implements Painter {
 		// Simple test checking color values and start
 		// and end points
 		//
-		Paint gradient = new LinearGradientPaint(30, 40, 30, 120, new float[] { 0f, 1f}, new Color[] { Color.red, Color.yellow });
+		Paint gradient = new LinearGradientPaint(30, 40, 30, 120, new float[]{0f, 1f}, new Color[]{Color.red, Color.yellow});
 		g.setPaint(labelColor);
 		g.drawString("Simple vertical gradient", 10, 20);
 		g.setPaint(gradient);
@@ -70,8 +75,8 @@ public class LinearGradient implements Painter {
 		//
 		// Now, test cycling behavior
 		//
-		Paint nonCyclicGradient = new LinearGradientPaint(0, 0,  20, 0, new float[] { 0f, 1f}, new Color[] { Color.red, Color.yellow });
-		Paint cyclicGradient = new LinearGradientPaint(0, 0, 20, 0, new float[] { 0f, 1f}, new Color[] { Color.red, Color.yellow }, MultipleGradientPaint.CycleMethod.REFLECT);
+		Paint nonCyclicGradient = new LinearGradientPaint(0, 0, 20, 0, new float[]{0f, 1f}, new Color[]{Color.red, Color.yellow});
+		Paint cyclicGradient = new LinearGradientPaint(0, 0, 20, 0, new float[]{0f, 1f}, new Color[]{Color.red, Color.yellow}, MultipleGradientPaint.CycleMethod.REFLECT);
 
 		g.setPaint(labelColor);
 		g.drawString("Non Cyclic / Cyclic Gradients", 10, 20);
@@ -98,7 +103,7 @@ public class LinearGradient implements Painter {
 		g.drawString("Sheared GradientPaint", 10, 20);
 		g.translate(10, 25);
 
-		Paint shearedGradient = new LinearGradientPaint(0, 0, 100, 0, new float[] { 0f, 1f}, new Color[] { Color.red, Color.yellow });
+		Paint shearedGradient = new LinearGradientPaint(0, 0, 100, 0, new float[]{0f, 1f}, new Color[]{Color.red, Color.yellow});
 		g.setPaint(shearedGradient);
 		g.shear(0.5, 0);
 
@@ -110,7 +115,7 @@ public class LinearGradient implements Painter {
 		g.setPaint(labelColor);
 		g.drawString("Opacity in stop color", 10, 20);
 
-		Paint transparentGradient = new LinearGradientPaint(10, 30, 110, 30, new float[] { 0f, 1f}, new Color[] { new Color(255, 0, 0, 0), Color.yellow });
+		Paint transparentGradient = new LinearGradientPaint(10, 30, 110, 30, new float[]{0f, 1f}, new Color[]{new Color(255, 0, 0, 0), Color.yellow});
 
 		g.setPaint(transparentGradient);
 		g.fillRect(10, 30, 100, 30);

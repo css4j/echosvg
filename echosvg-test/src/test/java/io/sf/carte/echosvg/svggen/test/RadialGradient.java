@@ -18,9 +18,13 @@
  */
 package io.sf.carte.echosvg.svggen.test;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.MultipleGradientPaint;
+import java.awt.Paint;
+import java.awt.RadialGradientPaint;
+import java.awt.RenderingHints;
 import java.awt.geom.GeneralPath;
-import java.awt.geom.Point2D;
 
 /**
  * This test validates the convertion of Java 2D GradientPaints into SVG
@@ -125,8 +129,9 @@ public class RadialGradient implements Painter {
 
 		Paint transparentGradient = new RadialGradientPaint(10, 30, 100,
 			new float[]{0.0f, 0.5f, 1.0f},
-			new Color[]{ new Color(255, 0, 0, 0), new Color(255, 200, 0, 128), Color.yellow},
-			MultipleGradientPaint.CycleMethod.NO_CYCLE);;
+			new Color[]{new Color(255, 0, 0, 0), new Color(255, 200, 0, 128), Color.yellow},
+			MultipleGradientPaint.CycleMethod.NO_CYCLE);
+		;
 
 		g.setPaint(transparentGradient);
 		g.fillRect(10, 30, 100, 30);
