@@ -18,13 +18,17 @@
  */
 package io.sf.carte.echosvg.svggen;
 
-import java.awt.*;
-import java.util.LinkedList;
-import java.util.List;
-
+import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
 import org.w3c.dom.Element;
 
-import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.LinearGradientPaint;
+import java.awt.Paint;
+import java.awt.RadialGradientPaint;
+import java.awt.TexturePaint;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Utility class that converts a Paint object into an SVG element.
@@ -88,7 +92,7 @@ public class SVGPaint implements SVGConverter {
 
 	/**
 	 * @return Set of Elements defining the Paints this converter has processed
-	 *         since it was created
+	 * since it was created
 	 */
 	@Override
 	public List<Element> getDefinitionSet() {
@@ -131,7 +135,7 @@ public class SVGPaint implements SVGConverter {
 	 *
 	 * @param gc GraphicContext to be converted
 	 * @return descriptor of the attributes required to represent some or all of the
-	 *         GraphicContext state, along with the related definitions
+	 * GraphicContext state, along with the related definitions
 	 * @see SVGDescriptor
 	 */
 	@Override

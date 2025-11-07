@@ -18,13 +18,13 @@
  */
 package io.sf.carte.echosvg.svggen;
 
-import java.awt.*;
-import java.awt.geom.Point2D;
-
+import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
+import java.awt.LinearGradientPaint;
+import java.awt.Paint;
+import java.awt.geom.Point2D;
 
 /**
  * Utility class that converts a Java LinearGradientPaint into an SVG linear gradient
@@ -47,7 +47,7 @@ public class SVGLinearGradient extends AbstractSVGGradient {
 	 *
 	 * @param gc GraphicContext to be converted
 	 * @return descriptor of the attributes required to represent some or all of the
-	 *         GraphicContext state, along with the related definitions
+	 * GraphicContext state, along with the related definitions
 	 * @see SVGDescriptor
 	 */
 	@Override
@@ -59,12 +59,12 @@ public class SVGLinearGradient extends AbstractSVGGradient {
 	/**
 	 * @param gradient the LinearGradientPaint to be converted
 	 * @return a description of the SVG paint and opacity corresponding to the
-	 *         gradient Paint. The definiton of the linearGradient is put in the
-	 *         linearGradientDefsMap
+	 * gradient Paint. The definiton of the linearGradient is put in the
+	 * linearGradientDefsMap
 	 */
 	public SVGPaintDescriptor toSVG(LinearGradientPaint gradient) {
 		// Reuse definition if gradient has already been converted
-		return (SVGPaintDescriptor) descMap.computeIfAbsent(gradient, g -> createtSvgPaintDescriptor((LinearGradientPaint)g));
+		return (SVGPaintDescriptor) descMap.computeIfAbsent(gradient, g -> createtSvgPaintDescriptor((LinearGradientPaint) g));
 	}
 
 	private SVGPaintDescriptor createtSvgPaintDescriptor(LinearGradientPaint gradient) {

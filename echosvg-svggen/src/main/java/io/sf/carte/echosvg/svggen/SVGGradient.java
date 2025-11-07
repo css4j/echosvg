@@ -22,7 +22,8 @@ import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import java.awt.*;
+import java.awt.GradientPaint;
+import java.awt.Paint;
 import java.awt.geom.Point2D;
 
 /**
@@ -48,7 +49,7 @@ public class SVGGradient extends AbstractSVGConverter {
 	 *
 	 * @param gc GraphicContext to be converted
 	 * @return descriptor of the attributes required to represent some or all of the
-	 *         GraphicContext state, along with the related definitions
+	 * GraphicContext state, along with the related definitions
 	 * @see SVGDescriptor
 	 */
 	@Override
@@ -60,8 +61,8 @@ public class SVGGradient extends AbstractSVGConverter {
 	/**
 	 * @param gradient the GradientPaint to be converted
 	 * @return a description of the SVG paint and opacity corresponding to the
-	 *         gradient Paint. The definiton of the linearGradient is put in the
-	 *         linearGradientDefsMap
+	 * gradient Paint. The definiton of the linearGradient is put in the
+	 * linearGradientDefsMap
 	 */
 	public SVGPaintDescriptor toSVG(GradientPaint gradient) {
 		// Reuse definition if gradient has already been converted
@@ -119,7 +120,7 @@ public class SVGGradient extends AbstractSVGConverter {
 			// Gradient ID
 			//
 			gradientDef.setAttributeNS(null, SVG_ID_ATTRIBUTE,
-					getGeneratorContext().getIDGenerator().generateID(ID_PREFIX_LINEAR_GRADIENT));
+				getGeneratorContext().getIDGenerator().generateID(ID_PREFIX_LINEAR_GRADIENT));
 
 			//
 			// Build Paint descriptor

@@ -21,7 +21,8 @@ package io.sf.carte.echosvg.svggen;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.MultipleGradientPaint;
 
 /**
  * Abstract Utility class that converts a Java MultipleGradientPaint into an SVG gradient
