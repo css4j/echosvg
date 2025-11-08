@@ -64,10 +64,10 @@ public class SVGLinearGradient extends AbstractSVGGradient {
 	 */
 	public SVGPaintDescriptor toSVG(LinearGradientPaint gradient) {
 		// Reuse definition if gradient has already been converted
-		return (SVGPaintDescriptor) descMap.computeIfAbsent(gradient, g -> createtSvgPaintDescriptor((LinearGradientPaint) g));
+		return (SVGPaintDescriptor) descMap.computeIfAbsent(gradient, g -> createSvgPaintDescriptor((LinearGradientPaint) g));
 	}
 
-	private SVGPaintDescriptor createtSvgPaintDescriptor(LinearGradientPaint gradient) {
+	private SVGPaintDescriptor createSvgPaintDescriptor(LinearGradientPaint gradient) {
 		Document domFactory = getGeneratorContext().getDOMFactory();
 		Element gradientDef = domFactory.createElementNS(SVG_NAMESPACE_URI, SVG_LINEAR_GRADIENT_TAG);
 		gradientDef.setAttribute(SVG_GRADIENT_UNITS_ATTRIBUTE, SVG_USER_SPACE_ON_USE_VALUE);

@@ -30,9 +30,7 @@ import java.awt.geom.GeneralPath;
  * This test validates the convertion of Java 2D GradientPaints into SVG
  * linearGradient definition and reference.
  *
- * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>
- * @author <a href="mailto:vhardy@eng.sun.com">Vincent Hardy</a>
- * @author For later modifications, see Git history.
+ * @author <a href="mailto:schegge42@gmail.com">Jens Kaiser</a>
  * @version $Id$
  */
 public class RadialGradient implements Painter {
@@ -131,7 +129,6 @@ public class RadialGradient implements Painter {
 			new float[]{0.0f, 0.5f, 1.0f},
 			new Color[]{new Color(255, 0, 0, 0), new Color(255, 200, 0, 128), Color.yellow},
 			MultipleGradientPaint.CycleMethod.NO_CYCLE);
-		;
 
 		g.setPaint(transparentGradient);
 		g.fillRect(10, 30, 100, 30);

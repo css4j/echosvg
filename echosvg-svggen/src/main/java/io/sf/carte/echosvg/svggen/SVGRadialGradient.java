@@ -58,10 +58,10 @@ public class SVGRadialGradient extends AbstractSVGGradient {
 	 * radialGradientDefsMap
 	 */
 	public SVGPaintDescriptor toSVG(RadialGradientPaint gradient) {
-		return (SVGPaintDescriptor) descMap.computeIfAbsent(gradient, g -> createtSvgPaintDescriptor((RadialGradientPaint) g));
+		return (SVGPaintDescriptor) descMap.computeIfAbsent(gradient, g -> createSvgPaintDescriptor((RadialGradientPaint) g));
 	}
 
-	private SVGPaintDescriptor createtSvgPaintDescriptor(RadialGradientPaint gradient) {
+	private SVGPaintDescriptor createSvgPaintDescriptor(RadialGradientPaint gradient) {
 		Document domFactory = getGeneratorContext().getDOMFactory();
 		Element gradientDef = domFactory.createElementNS(SVG_NAMESPACE_URI, SVG_RADIAL_GRADIENT_TAG);
 		gradientDef.setAttribute(SVG_GRADIENT_UNITS_ATTRIBUTE, SVG_USER_SPACE_ON_USE_VALUE);
