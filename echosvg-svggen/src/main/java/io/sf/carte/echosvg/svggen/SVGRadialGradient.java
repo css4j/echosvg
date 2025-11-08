@@ -22,22 +22,17 @@ import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import java.awt.LinearGradientPaint;
-import java.awt.Paint;
+import java.awt.RadialGradientPaint;
 import java.awt.geom.Point2D;
 
 /**
- * Utility class that converts a Java LinearGradientPaint into an SVG linear gradient
+ * Utility class that converts a Java RadialGradientPaint into an SVG radial gradient
  * element
  *
  * @author <a href="mailto:schegge42@gmail.com">Jens Kaiser</a>
  */
-public class SVGLinearGradient extends AbstractSVGGradient {
-
-	/**
-	 * @param generatorContext used to build Elements
-	 */
-	public SVGLinearGradient(SVGGeneratorContext generatorContext) {
+public class SVGRadialGradient extends AbstractSVGGradient {
+	public SVGRadialGradient(SVGGeneratorContext generatorContext) {
 		super(generatorContext);
 	}
 
@@ -52,35 +47,35 @@ public class SVGLinearGradient extends AbstractSVGGradient {
 	 */
 	@Override
 	public SVGDescriptor toSVG(GraphicContext gc) {
-		Paint paint = gc.getPaint();
-		return toSVG((LinearGradientPaint) paint);
+		return toSVG((RadialGradientPaint) gc.getPaint());
 	}
+
 
 	/**
-	 * @param gradient the LinearGradientPaint to be converted
+	 * @param gradient the RadialGradientPaint to be converted
 	 * @return a description of the SVG paint and opacity corresponding to the
-	 * gradient Paint. The definiton of the linearGradient is put in the
-	 * linearGradientDefsMap
+	 * gradient Paint. The definiton of the radialGradient is put in the
+	 * radialGradientDefsMap
 	 */
-	public SVGPaintDescriptor toSVG(LinearGradientPaint gradient) {
-		// Reuse definition if gradient has already been converted
-		return (SVGPaintDescriptor) descMap.computeIfAbsent(gradient, g -> createSvgPaintDescriptor((LinearGradientPaint) g));
+	public SVGPaintDescriptor toSVG(RadialGradientPaint gradient) {
+		return (SVGPaintDescriptor) descMap.computeIfAbsent(gradient, g -> createSvgPaintDescriptor((RadialGradientPaint) g));
 	}
 
-	private SVGPaintDescriptor createSvgPaintDescriptor(LinearGradientPaint gradient) {
+	private SVGPaintDescriptor createSvgPaintDescriptor(RadialGradientPaint gradient) {
 		Document domFactory = getGeneratorContext().getDOMFactory();
-		Element gradientDef = domFactory.createElementNS(SVG_NAMESPACE_URI, SVG_LINEAR_GRADIENT_TAG);
+		Element gradientDef = domFactory.createElementNS(SVG_NAMESPACE_URI, SVG_RADIAL_GRADIENT_TAG);
 		gradientDef.setAttribute(SVG_GRADIENT_UNITS_ATTRIBUTE, SVG_USER_SPACE_ON_USE_VALUE);
 
-		Point2D p1 = gradient.getStartPoint();
-		Point2D p2 = gradient.getEndPoint();
+		Point2D center = gradient.getCenterPoint();
+		Point2D focus = gradient.getFocusPoint();
 
-		String id = getGeneratorContext().getIDGenerator().generateID(ID_PREFIX_LINEAR_GRADIENT);
+		String id = getGeneratorContext().getIDGenerator().generateID(ID_PREFIX_RADIAL_GRADIENT);
 		gradientDef.setAttribute(SVG_ID_ATTRIBUTE, id);
-		gradientDef.setAttribute(SVG_X1_ATTRIBUTE, doubleString(p1.getX()));
-		gradientDef.setAttribute(SVG_Y1_ATTRIBUTE, doubleString(p1.getY()));
-		gradientDef.setAttribute(SVG_X2_ATTRIBUTE, doubleString(p2.getX()));
-		gradientDef.setAttribute(SVG_Y2_ATTRIBUTE, doubleString(p2.getY()));
+		gradientDef.setAttribute(SVG_CX_ATTRIBUTE, doubleString(center.getX()));
+		gradientDef.setAttribute(SVG_CY_ATTRIBUTE, doubleString(center.getY()));
+		gradientDef.setAttribute(SVG_FX_ATTRIBUTE, doubleString(focus.getX()));
+		gradientDef.setAttribute(SVG_FY_ATTRIBUTE, doubleString(focus.getY()));
+		gradientDef.setAttribute(SVG_R_ATTRIBUTE, doubleString(gradient.getRadius()));
 		gradientDef.setAttribute(SVG_SPREAD_METHOD_ATTRIBUTE, getSpreadMethod(gradient));
 
 		addGradientStops(gradient, gradientDef, domFactory);
