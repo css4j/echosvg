@@ -80,10 +80,10 @@ public abstract class AbstractValueManager extends AbstractValueFactory implemen
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected FloatValue absoluteValue(CSSStylableElement elt, String pseudo, CSSEngine engine,
-					int idx, StyleMap sm, FloatValue relative) {
-				return (FloatValue) AbstractValueManager.this.computeValue(elt, pseudo, engine, idx, sm,
-						relative);
+			protected FloatValue absoluteValue(CSSStylableElement elt, String pseudo,
+					CSSEngine engine, int idx, StyleMap sm, FloatValue relative) {
+				return (FloatValue) AbstractValueManager.this.computeTypedValue(elt, pseudo, engine,
+						idx, sm, relative);
 			}
 
 		};
@@ -126,10 +126,10 @@ public abstract class AbstractValueManager extends AbstractValueFactory implemen
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected FloatValue absoluteValue(CSSStylableElement elt, String pseudo, CSSEngine engine,
-					int idx, StyleMap sm, FloatValue relative) {
-				return (FloatValue) AbstractValueManager.this.computeValue(elt, pseudo, engine, idx, sm,
-						relative);
+			protected FloatValue absoluteValue(CSSStylableElement elt, String pseudo,
+					CSSEngine engine, int idx, StyleMap sm, FloatValue relative) {
+				return (FloatValue) AbstractValueManager.this.computeTypedValue(elt, pseudo, engine,
+						idx, sm, relative);
 			}
 
 		};
@@ -167,8 +167,29 @@ public abstract class AbstractValueManager extends AbstractValueFactory implemen
 		return value;
 	}
 
-	protected Value evaluateMath(NumericDelegateValue<?> value, CSSStylableElement elt, String pseudo,
-			CSSEngine engine, int idx, StyleMap sm, short destUnit) throws DOMException {
+	/**
+	 * Compute a typed value.
+	 * <p>
+	 * When a value computation expects a list of values, this method can be used to
+	 * compute the list items (for example via {@code calc()}).
+	 * </p>
+	 * 
+	 * @param elt    The owner of the value.
+	 * @param pseudo The pseudo element.
+	 * @param engine The CSSEngine.
+	 * @param idx    The property index in the engine.
+	 * @param sm     The computed style map.
+	 * @param value  The value to compute.
+	 * @return the computed value.
+	 */
+	public Value computeTypedValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx,
+			StyleMap sm, Value value) {
+		return computeValue(elt, pseudo, engine, idx, sm, value);
+	}
+
+	protected FloatValue evaluateMath(NumericDelegateValue<?> value, CSSStylableElement elt,
+			String pseudo, CSSEngine engine, int idx, StyleMap sm, short destUnit)
+			throws DOMException {
 		return value.evaluate(elt, pseudo, engine, idx, sm, destUnit);
 	}
 

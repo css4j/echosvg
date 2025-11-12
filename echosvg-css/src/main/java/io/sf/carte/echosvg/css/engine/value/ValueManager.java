@@ -74,6 +74,7 @@ public interface ValueManager {
 	 * 
 	 * @param lu     The SAC lexical unit used to create the value.
 	 * @param engine The calling CSSEngine.
+	 * @return the new value.
 	 */
 	Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException;
 
@@ -86,7 +87,9 @@ public interface ValueManager {
 	 * @param idx    The property index in the engine.
 	 * @param sm     The computed style map.
 	 * @param value  The value to compute.
+	 * @return the computed value.
 	 */
-	Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx, StyleMap sm, Value value);
+	Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx,
+			StyleMap sm, Value value);
 
 }

@@ -22,12 +22,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.geom.Dimension2D;
 import java.nio.file.Paths;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.CDATASection;
 import org.w3c.dom.DOMImplementation;
@@ -42,26 +39,13 @@ import io.sf.carte.echosvg.util.SVGConstants;
 /**
  * Test cursor manager.
  */
-public class CursorManagerTest {
+public class CursorManagerTest extends AbstractManagerCheck {
 
 	private static String documentURI;
-
-	BridgeContext context;
-
-	int errorCount;
-
-	int messageCount;
 
 	@BeforeAll
 	public static void setupBeforeAll() {
 		documentURI = Paths.get(".").toAbsolutePath().normalize().toUri().toString();
-	}
-
-	@BeforeEach
-	public void setupBeforeEach() {
-		context = createBridgeContext();
-		errorCount = 0;
-		messageCount = 0;
 	}
 
 	@Test
@@ -185,27 +169,6 @@ public class CursorManagerTest {
 		context.initializeDocument(doc);
 
 		return circle;
-	}
-
-	private BridgeContext createBridgeContext() {
-		return new BridgeContext(new UserAgentAdapter() {
-
-			@Override
-			public Dimension2D getViewportSize() {
-				return new Dimension(200, 200);
-			}
-
-			@Override
-			public void displayError(String message) {
-				errorCount++;
-			}
-
-			@Override
-			public void displayMessage(String message) {
-				messageCount++;
-			}
-
-		});
 	}
 
 }

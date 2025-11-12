@@ -88,7 +88,7 @@ public interface CSSVal extends io.sf.carte.doc.style.css.CSSValue, CSSStyleValu
 	 * 
 	 * @return the float value.
 	 */
-	float getFloatValue();
+	float getFloatValue() throws DOMException;
 
 	@Override
 	default void writeCssText(SimpleWriter wri) throws IOException {

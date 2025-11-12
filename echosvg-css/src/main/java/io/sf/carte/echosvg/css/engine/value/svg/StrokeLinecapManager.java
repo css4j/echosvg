@@ -18,6 +18,9 @@
  */
 package io.sf.carte.echosvg.css.engine.value.svg;
 
+import io.sf.carte.echosvg.css.engine.CSSEngine;
+import io.sf.carte.echosvg.css.engine.CSSStylableElement;
+import io.sf.carte.echosvg.css.engine.StyleMap;
 import io.sf.carte.echosvg.css.engine.value.IdentifierManager;
 import io.sf.carte.echosvg.css.engine.value.StringMap;
 import io.sf.carte.echosvg.css.engine.value.Value;
@@ -93,6 +96,12 @@ public class StrokeLinecapManager extends IdentifierManager {
 	@Override
 	public Value getDefaultValue() {
 		return SVGValueConstants.BUTT_VALUE;
+	}
+
+	@Override
+	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx,
+			StyleMap sm, Value value) {
+		return value;
 	}
 
 	/**

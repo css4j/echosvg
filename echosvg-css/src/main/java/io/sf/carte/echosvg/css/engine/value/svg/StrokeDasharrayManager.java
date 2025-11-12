@@ -22,8 +22,10 @@ import org.w3c.dom.DOMException;
 
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
+import io.sf.carte.echosvg.css.engine.CSSEngineUserAgent;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
+import io.sf.carte.echosvg.css.engine.value.CSSProxyValueException;
 import io.sf.carte.echosvg.css.engine.value.LengthManager;
 import io.sf.carte.echosvg.css.engine.value.ListValue;
 import io.sf.carte.echosvg.css.engine.value.RevertValue;
@@ -128,19 +130,19 @@ public class StrokeDasharrayManager extends LengthManager {
 			 */
 			ListValue lv = new ListValue(' ');
 			LexicalUnit lu = lunit;
-			do {
-				Value v = super.createValue(lu, engine);
-				lv.append(v);
-				lu = lu.getNextLexicalUnit();
-				if (lu != null) {
-					if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.OPERATOR_COMMA) {
+			try {
+				do {
+					Value v = super.createValue(lu, engine);
+					lv.append(v);
+					lu = lu.getNextLexicalUnit();
+					if (lu != null
+							&& lu.getLexicalUnitType() == LexicalUnit.LexicalType.OPERATOR_COMMA) {
 						lu = lu.getNextLexicalUnit();
 					}
-					if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.VAR) {
-						return createLexicalValue(lunit);
-					}
-				}
-			} while (lu != null);
+				} while (lu != null);
+			} catch (CSSProxyValueException e) {
+				return createLexicalValue(lunit);
+			}
 			return lv;
 		}
 	}
@@ -150,21 +152,48 @@ public class StrokeDasharrayManager extends LengthManager {
 	 * {@link ValueManager#computeValue(CSSStylableElement,String,CSSEngine,int,StyleMap,Value)}.
 	 */
 	@Override
-	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx, StyleMap sm,
-			Value value) {
+	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx,
+			StyleMap sm, Value value) {
 		switch (value.getCssValueType()) {
 		case TYPED:
 			return value;
 		case LIST:
 			ListValue result = new ListValue(' ');
 			for (int i = 0; i < value.getLength(); i++) {
-				result.append(super.computeValue(elt, pseudo, engine, idx, sm, value.item(i)));
+				// <dasharray> = [ [ <length-percentage> | <number> ]+ ]#
+				Value v = computeTypedValue(elt, pseudo, engine, idx, sm, value.item(i));
+				// "If any value in the list is negative, the <dasharray> value is invalid"
+				if (v == null || v.getFloatValue() < 0f) {
+					CSSEngineUserAgent ua = engine.getCSSEngineUserAgent();
+					if (ua != null) {
+						ua.displayMessage(
+								"Invalid " + getPropertyName() + " value: " + value.getCssText());
+					}
+					return null;
+				}
+				result.append(v);
+			}
+			/*
+			 * If the list has an odd number of values, then it is repeated to yield an even
+			 * number of values.
+			 */
+			int len = result.getLength();
+			if ((len & 1) != 0) {
+				for (int i = 0; i < len; i++) {
+					result.add(result.item(i).clone());
+				}
 			}
 			return result;
 		default:
 			throw createDOMException();
 		}
 
+	}
+
+	@Override
+	public Value computeTypedValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx,
+			StyleMap sm, Value value) {
+		return super.computeValue(elt, pseudo, engine, idx, sm, value);
 	}
 
 	/**

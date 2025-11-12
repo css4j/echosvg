@@ -153,8 +153,8 @@ public class StrokeMiterlimitManager extends AbstractValueManager {
 	}
 
 	@Override
-	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx, StyleMap sm,
-			Value value) {
+	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx,
+			StyleMap sm, Value value) {
 		return value;
 	}
 

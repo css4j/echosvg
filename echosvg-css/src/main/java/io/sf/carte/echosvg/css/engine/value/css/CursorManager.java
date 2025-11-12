@@ -306,4 +306,14 @@ public class CursorManager extends AbstractValueManager {
 		return super.computeValue(elt, pseudo, engine, idx, sm, value);
 	}
 
+	/*
+	 * Overriding computeTypedValue() allows skipping the above LIST check in calc()
+	 * calls.
+	 */
+	@Override
+	public Value computeTypedValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx,
+			StyleMap sm, Value value) {
+		return super.computeValue(elt, pseudo, engine, idx, sm, value);
+	}
+
 }

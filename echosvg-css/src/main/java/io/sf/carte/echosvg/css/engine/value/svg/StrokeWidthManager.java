@@ -22,6 +22,9 @@ import org.w3c.dom.DOMException;
 
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
+import io.sf.carte.echosvg.css.engine.CSSEngineUserAgent;
+import io.sf.carte.echosvg.css.engine.CSSStylableElement;
+import io.sf.carte.echosvg.css.engine.StyleMap;
 import io.sf.carte.echosvg.css.engine.value.LengthManager;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.ValueConstants;
@@ -95,6 +98,23 @@ public class StrokeWidthManager extends LengthManager {
 			return ValueConstants.INHERIT_VALUE;
 		}
 		return super.createValue(lu, engine);
+	}
+
+	@Override
+	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx,
+			StyleMap sm, Value value) {
+		Value v = super.computeValue(elt, pseudo, engine, idx, sm, value);
+
+		// If negative value, it is invalid.
+		if (v.getFloatValue() < 0f) {
+			CSSEngineUserAgent ua = engine.getCSSEngineUserAgent();
+			if (ua != null) {
+				ua.displayMessage("Invalid " + getPropertyName() + " value: " + value.getCssText());
+			}
+			return null;
+		}
+
+		return v;
 	}
 
 	/**

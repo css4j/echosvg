@@ -49,7 +49,7 @@ public class AbstractManagerTestSetup {
 		cssParser = new CSSParser();
 	}
 
-	static LexicalUnit parsePropertyValue(String value) throws CSSParseException {
+	protected static LexicalUnit parsePropertyValue(String value) throws CSSParseException {
 		try {
 			return cssParser.parsePropertyValue(new StringReader(value));
 		} catch (IOException e) {
@@ -57,7 +57,7 @@ public class AbstractManagerTestSetup {
 		}
 	}
 
-	static CSSEngine createCSSEngine() {
+	protected static CSSEngine createCSSEngine() {
 		ParsedURL purl = new ParsedURL("https://www.example.com/");
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder;

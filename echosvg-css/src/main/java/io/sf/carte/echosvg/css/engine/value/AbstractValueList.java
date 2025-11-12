@@ -119,10 +119,12 @@ public class AbstractValueList<V extends Value> extends ComponentValue implement
 	@Override
 	public String getCssText() {
 		int length = items.size();
-		StringBuilder sb = new StringBuilder(length * 8);
-		if (length > 0) {
-			sb.append(items.get(0).toString());
+		if (length == 0) {
+			return "";
 		}
+		String s = items.get(0).toString();
+		StringBuilder sb = new StringBuilder(s.length() + (length - 1) * 8);
+		sb.append(s);
 		for (int i = 1; i < length; i++) {
 			sb.append(separator);
 			sb.append(items.get(i).toString());

@@ -126,15 +126,17 @@ public abstract class LengthManager extends AbstractValueManager {
 	 * {@link ValueManager#computeValue(CSSStylableElement,String,CSSEngine,int,StyleMap,Value)}.
 	 */
 	@Override
-	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx, StyleMap sm,
-			Value value) {
+	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx,
+			StyleMap sm, Value value) {
 		Type pType = value.getPrimitiveType();
 		if (pType != Type.NUMERIC) {
 			if (pType != Type.EXPRESSION && pType != Type.MATH_FUNCTION) {
+				// Maybe a keyword or a specialized function
 				return value;
 			}
 			try {
-				return evaluateMath((NumericDelegateValue<?>) value, elt, pseudo, engine, idx, sm, CSSUnit.CSS_PX);
+				return evaluateMath((NumericDelegateValue<?>) value, elt, pseudo, engine, idx, sm,
+						CSSUnit.CSS_PX);
 			} catch (Exception e) {
 				return isInheritedProperty() ? null : getDefaultValue();
 			}
@@ -144,27 +146,32 @@ public abstract class LengthManager extends AbstractValueManager {
 		switch (value.getUnitType()) {
 		case CSSUnit.CSS_NUMBER:
 		case CSSUnit.CSS_PX:
-			return value;
+			break;
 
 		case CSSUnit.CSS_MM:
 			float v = value.getFloatValue();
-			return new FloatValue(CSSUnit.CSS_PX, v * 3.779527559055f);
+			value = new FloatValue(CSSUnit.CSS_PX, v * 3.779527559055f);
+			break;
 
 		case CSSUnit.CSS_CM:
 			v = value.getFloatValue();
-			return new FloatValue(CSSUnit.CSS_PX, v * 37.79527559055f);
+			value = new FloatValue(CSSUnit.CSS_PX, v * 37.79527559055f);
+			break;
 
 		case CSSUnit.CSS_IN:
 			v = value.getFloatValue();
-			return new FloatValue(CSSUnit.CSS_PX, v * 96f);
+			value = new FloatValue(CSSUnit.CSS_PX, v * 96f);
+			break;
 
 		case CSSUnit.CSS_PT:
 			v = value.getFloatValue();
-			return new FloatValue(CSSUnit.CSS_PX, v / 0.75f);
+			value = new FloatValue(CSSUnit.CSS_PX, v / 0.75f);
+			break;
 
 		case CSSUnit.CSS_PC:
 			v = value.getFloatValue();
-			return new FloatValue(CSSUnit.CSS_PX, v * 16f);
+			value = new FloatValue(CSSUnit.CSS_PX, v * 16f);
+			break;
 
 		case CSSUnit.CSS_EM:
 			sm.putFontSizeRelative(idx, true);
@@ -173,7 +180,8 @@ public abstract class LengthManager extends AbstractValueManager {
 			int fsidx = engine.getFontSizeIndex();
 			Value cv = engine.getComputedStyle(elt, pseudo, fsidx);
 			float fs = lengthValue(cv);
-			return new FloatValue(CSSUnit.CSS_PX, v * fs);
+			value = new FloatValue(CSSUnit.CSS_PX, v * fs);
+			break;
 
 		case CSSUnit.CSS_EX:
 			sm.putFontSizeRelative(idx, true);
@@ -182,7 +190,8 @@ public abstract class LengthManager extends AbstractValueManager {
 			fsidx = engine.getFontSizeIndex();
 			cv = engine.getComputedStyle(elt, pseudo, fsidx);
 			fs = cv.getFloatValue();
-			return new FloatValue(CSSUnit.CSS_PX, v * fs * 0.5f);
+			value = new FloatValue(CSSUnit.CSS_PX, v * fs * 0.5f);
+			break;
 
 		case CSSUnit.CSS_PERCENTAGE:
 			ctx = engine.getCSSContext();
@@ -202,7 +211,8 @@ public abstract class LengthManager extends AbstractValueManager {
 				double h = ctx.getBlockHeight(elt);
 				fs = (float) (value.getFloatValue() * (Math.sqrt(w * w + h * h) / SQRT2) / 100.0);
 			}
-			return new FloatValue(CSSUnit.CSS_PX, fs);
+			value = new FloatValue(CSSUnit.CSS_PX, fs);
+			break;
 
 		case CSSUnit.CSS_LH:
 			sm.putLineHeightRelative(idx, true);
@@ -211,17 +221,20 @@ public abstract class LengthManager extends AbstractValueManager {
 			int lhidx = engine.getLineHeightIndex();
 			cv = engine.getComputedStyle(elt, pseudo, lhidx);
 			float lh = lineHeightValue(elt, pseudo, engine, cv);
-			return new FloatValue(CSSUnit.CSS_PX, v * lh);
+			value = new FloatValue(CSSUnit.CSS_PX, v * lh);
+			break;
 
 		case CSSUnit.CSS_REM:
 			sm.putRootFontSizeRelative(idx, true);
 
 			v = value.getFloatValue();
 			fsidx = engine.getFontSizeIndex();
-			CSSStylableElement root = (CSSStylableElement) elt.getOwnerDocument().getDocumentElement();
+			CSSStylableElement root = (CSSStylableElement) elt.getOwnerDocument()
+					.getDocumentElement();
 			cv = engine.getComputedStyle(root, null, fsidx);
 			fs = cv.getFloatValue();
-			return new FloatValue(CSSUnit.CSS_PX, v * fs);
+			value = new FloatValue(CSSUnit.CSS_PX, v * fs);
+			break;
 
 		case CSSUnit.CSS_REX:
 			sm.putRootFontSizeRelative(idx, true);
@@ -231,7 +244,8 @@ public abstract class LengthManager extends AbstractValueManager {
 			root = (CSSStylableElement) elt.getOwnerDocument().getDocumentElement();
 			cv = engine.getComputedStyle(root, null, fsidx);
 			fs = cv.getFloatValue();
-			return new FloatValue(CSSUnit.CSS_PX, v * fs * 0.5f);
+			value = new FloatValue(CSSUnit.CSS_PX, v * fs * 0.5f);
+			break;
 
 		case CSSUnit.CSS_RLH:
 			sm.putRootLineHeightRelative(idx, true);
@@ -241,21 +255,24 @@ public abstract class LengthManager extends AbstractValueManager {
 			root = (CSSStylableElement) elt.getOwnerDocument().getDocumentElement();
 			cv = engine.getComputedStyle(root, null, lhidx);
 			lh = lineHeightValue(root, null, engine, cv);
-			return new FloatValue(CSSUnit.CSS_PX, v * lh);
+			value = new FloatValue(CSSUnit.CSS_PX, v * lh);
+			break;
 
 		case CSSUnit.CSS_VW:
 			sm.putViewportRelative(idx, true);
 
 			v = value.getFloatValue();
-			return new FloatValue(CSSUnit.CSS_PX, v *
-					engine.getCSSContext().getViewport(elt).getWidth() / 100f);
+			value = new FloatValue(CSSUnit.CSS_PX,
+					v * engine.getCSSContext().getViewport(elt).getWidth() / 100f);
+			break;
 
 		case CSSUnit.CSS_VH:
 			sm.putViewportRelative(idx, true);
 
 			v = value.getFloatValue();
-			return new FloatValue(CSSUnit.CSS_PX, v *
-					engine.getCSSContext().getViewport(elt).getHeight() / 100f);
+			value = new FloatValue(CSSUnit.CSS_PX,
+					v * engine.getCSSContext().getViewport(elt).getHeight() / 100f);
+			break;
 
 		case CSSUnit.CSS_VMIN:
 			sm.putViewportRelative(idx, true);
@@ -265,7 +282,8 @@ public abstract class LengthManager extends AbstractValueManager {
 			float w = vp.getWidth();
 			float h = vp.getHeight();
 			float min = Math.min(w, h);
-			return new FloatValue(CSSUnit.CSS_PX, v * min / 100f);
+			value = new FloatValue(CSSUnit.CSS_PX, v * min / 100f);
+			break;
 
 		case CSSUnit.CSS_VMAX:
 			sm.putViewportRelative(idx, true);
@@ -275,17 +293,19 @@ public abstract class LengthManager extends AbstractValueManager {
 			w = vp.getWidth();
 			h = vp.getHeight();
 			float max = Math.max(w, h);
-			return new FloatValue(CSSUnit.CSS_PX, v * max / 100f);
+			value = new FloatValue(CSSUnit.CSS_PX, v * max / 100f);
+			break;
 
 		case CSSUnit.CSS_INVALID:
 		case CSSUnit.CSS_OTHER:
+			value = null;
 			break;
+
 		default:
 			// Maybe it is one of the new absolute length units
 			try {
-				value = new FloatValue(CSSUnit.CSS_PX,
-						NumberValue.floatValueConversion(value.getFloatValue(), value.getUnitType(),
-								CSSUnit.CSS_PX));
+				value = new FloatValue(CSSUnit.CSS_PX, NumberValue.floatValueConversion(
+						value.getFloatValue(), value.getUnitType(), CSSUnit.CSS_PX));
 			} catch (DOMException e) {
 				value = null;
 			}

@@ -269,11 +269,16 @@ public class FontSizeManager extends LengthManager {
 			}
 		} else if (pType == Type.EXPRESSION || pType == Type.MATH_FUNCTION) {
 			try {
-				Value calc = evaluateMath((NumericDelegateValue<?>) value, elt, pseudo, engine, idx, sm,
-						CSSUnit.CSS_PX);
-				return new FloatValue(CSSUnit.CSS_PX, calc.getFloatValue());
+				FloatValue calc = evaluateMath((NumericDelegateValue<?>) value, elt, pseudo, engine,
+						idx, sm, CSSUnit.CSS_PX);
+				if (calc.getUnitType() != CSSUnit.CSS_PX) {
+					float fv = calc.getFloatValue();
+					fv = NumberValue.floatValueConversion(fv, calc.getUnitType(), CSSUnit.CSS_PX);
+					calc = new FloatValue(CSSUnit.CSS_PX, fv);
+				}
+				return calc;
 			} catch (Exception e) {
-				return isInheritedProperty() ? null : getDefaultValue();
+				return null;
 			}
 		}
 
@@ -347,7 +352,7 @@ public class FontSizeManager extends LengthManager {
 		return new FloatValue(CSSUnit.CSS_PX, fs);
 	}
 
-	private Value rootRelative(CSSStylableElement elt, CSSEngine engine, int idx, float scale) {
+	private FloatValue rootRelative(CSSStylableElement elt, CSSEngine engine, int idx, float scale) {
 		CSSStylableElement root = (CSSStylableElement) elt.getOwnerDocument().getDocumentElement();
 		if (elt == root) {
 			CSSContext ctx = engine.getCSSContext();

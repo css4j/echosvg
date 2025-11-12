@@ -81,6 +81,7 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 	 * @param e    the element with the marker CSS properties
 	 * @param node the shape node
 	 * @param ctx  the bridge context
+	 * @return the ShapePainter object or {@code null} if none.
 	 */
 	public static ShapePainter convertMarkers(Element e, ShapeNode node, BridgeContext ctx) {
 		Value v;
@@ -113,6 +114,7 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 	 * @param e   the painted element
 	 * @param v   the CSS value describing the marker to construct
 	 * @param ctx the bridge context
+	 * @return the Marker object or {@code null} if none.
 	 */
 	public static Marker convertMarker(Element e, Value v, BridgeContext ctx) {
 
@@ -153,8 +155,12 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 	 * @param e    the element interested in a shape painter
 	 * @param node the shape node
 	 * @param ctx  the bridge context
+	 * @return the ShapePainter object or {@code null} if none.
+	 * @throws UnsupportedOperationException if the color space is not supported.
+	 * @throws IllegalArgumentException      if the paint components are invalid.
 	 */
-	public static ShapePainter convertFillAndStroke(Element e, ShapeNode node, BridgeContext ctx) {
+	public static ShapePainter convertFillAndStroke(Element e, ShapeNode node, BridgeContext ctx)
+			throws UnsupportedOperationException, IllegalArgumentException {
 		Shape shape = node.getShape();
 		if (shape == null)
 			return null;
@@ -178,7 +184,8 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 		return cp;
 	}
 
-	public static ShapePainter convertStrokePainter(Element e, ShapeNode node, BridgeContext ctx) {
+	public static ShapePainter convertStrokePainter(Element e, ShapeNode node, BridgeContext ctx)
+			throws UnsupportedOperationException, IllegalArgumentException {
 		Shape shape = node.getShape();
 		if (shape == null)
 			return null;
@@ -205,8 +212,12 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 	 * @param strokedElement the element interested in a Paint
 	 * @param strokedNode    the graphics node to stroke
 	 * @param ctx            the bridge context
+	 * @return the Paint definition or {@code null} if none.
+	 * @throws UnsupportedOperationException if the color space is not supported.
+	 * @throws IllegalArgumentException      if the paint components are invalid.
 	 */
-	public static Paint convertStrokePaint(Element strokedElement, GraphicsNode strokedNode, BridgeContext ctx) {
+	public static Paint convertStrokePaint(Element strokedElement, GraphicsNode strokedNode,
+			BridgeContext ctx) throws UnsupportedOperationException, IllegalArgumentException {
 		Value v = CSSUtilities.getComputedStyle(strokedElement, SVGCSSEngine.STROKE_OPACITY_INDEX);
 		float opacity = convertOpacity(v);
 		v = CSSUtilities.getComputedStyle(strokedElement, SVGCSSEngine.STROKE_INDEX);
@@ -221,8 +232,12 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 	 * @param filledElement the element interested in a Paint
 	 * @param filledNode    the graphics node to fill
 	 * @param ctx           the bridge context
+	 * @return the Paint definition or {@code null} if none.
+	 * @throws UnsupportedOperationException if the color space is not supported.
+	 * @throws IllegalArgumentException      if the paint components are invalid.
 	 */
-	public static Paint convertFillPaint(Element filledElement, GraphicsNode filledNode, BridgeContext ctx) {
+	public static Paint convertFillPaint(Element filledElement, GraphicsNode filledNode,
+			BridgeContext ctx) throws UnsupportedOperationException, IllegalArgumentException {
 		Value v = CSSUtilities.getComputedStyle(filledElement, SVGCSSEngine.FILL_OPACITY_INDEX);
 		float opacity = convertOpacity(v);
 		v = CSSUtilities.getComputedStyle(filledElement, SVGCSSEngine.FILL_INDEX);
@@ -239,9 +254,13 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 	 * @param paintDef       the paint definition
 	 * @param opacity        the opacity to consider for the Paint
 	 * @param ctx            the bridge context
+	 * @return the Paint definition or {@code null} if none.
+	 * @throws UnsupportedOperationException if the color space is not supported.
+	 * @throws IllegalArgumentException      if the paint components are invalid.
 	 */
-	public static Paint convertPaint(Element paintedElement, GraphicsNode paintedNode, Value paintDef, float opacity,
-			BridgeContext ctx) {
+	public static Paint convertPaint(Element paintedElement, GraphicsNode paintedNode,
+			Value paintDef, float opacity, BridgeContext ctx)
+			throws UnsupportedOperationException, IllegalArgumentException {
 		if (paintDef.getCssValueType() == CssType.TYPED) {
 			switch (paintDef.getPrimitiveType()) {
 			case IDENT:
@@ -291,10 +310,10 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 	 * @param paintDef       the paint definition
 	 * @param opacity        the opacity to consider for the Paint
 	 * @param ctx            the bridge context
-	 * @return the paint object or null when impossible
+	 * @return the paint object or {@code null} when impossible
 	 */
-	public static Paint silentConvertURIPaint(Element paintedElement, GraphicsNode paintedNode, Value paintDef,
-			float opacity, BridgeContext ctx) {
+	public static Paint silentConvertURIPaint(Element paintedElement, GraphicsNode paintedNode,
+			Value paintDef, float opacity, BridgeContext ctx) {
 		Paint paint = null;
 		try {
 			paint = convertURIPaint(paintedElement, paintedNode, paintDef, opacity, ctx);
@@ -311,9 +330,13 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 	 * @param paintDef       the paint definition
 	 * @param opacity        the opacity to consider for the Paint
 	 * @param ctx            the bridge context
+	 * @return the paint definition, or {@code null} if an error was found and the
+	 *         UA did not throw an exception.
+	 * @throws BridgeException if an error occurred and there was no user agent (UA)
+	 *                         or the UA threw it.
 	 */
-	public static Paint convertURIPaint(Element paintedElement, GraphicsNode paintedNode, Value paintDef, float opacity,
-			BridgeContext ctx) {
+	public static Paint convertURIPaint(Element paintedElement, GraphicsNode paintedNode,
+			Value paintDef, float opacity, BridgeContext ctx) throws BridgeException {
 
 		String uri = paintDef.getURIValue();
 		Element paintElement = ctx.getReferencedElement(paintedElement, uri);
@@ -336,7 +359,8 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 			userAgent.displayError(ex);
 			return null;
 		}
-		return ((PaintBridge) bridge).createPaint(ctx, paintElement, paintedElement, paintedNode, opacity);
+		return ((PaintBridge) bridge).createPaint(ctx, paintElement, paintedElement, paintedNode,
+				opacity);
 	}
 
 	/**
@@ -345,8 +369,12 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 	 * @param c       The CSS color to convert.
 	 * @param opacity The opacity value (0 &lt;= o &lt;= 1).
 	 * @param ctx     the bridge context.
+	 * @return the color.
+	 * @throws UnsupportedOperationException if the color space is not supported.
+	 * @throws IllegalArgumentException      if the color components are invalid.
 	 */
-	public static Color convertColor(ColorValue c, float opacity, BridgeContext ctx) {
+	public static Color convertColor(ColorValue c, float opacity, BridgeContext ctx)
+			throws UnsupportedOperationException, IllegalArgumentException {
 		switch (c.getCSSColorSpace()) {
 		case ColorValue.RGB_FUNCTION:
 			return convertColor((RGBColorValue) c, opacity);
@@ -364,8 +392,11 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 	 * 
 	 * @param c       The CSS color to convert.
 	 * @param opacity The opacity value (0 &lt;= o &lt;= 1).
+	 * @return the color.
+	 * @throws IllegalArgumentException if the color components are invalid.
 	 */
-	public static Color convertColor(RGBColorValue c, float opacity) {
+	public static Color convertColor(RGBColorValue c, float opacity)
+			throws IllegalArgumentException {
 		float r = resolveColorComponent(c.getR());
 		float g = resolveColorComponent(c.getG());
 		float b = resolveColorComponent(c.getB());
@@ -379,8 +410,12 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 	 * @param c       The CSS color function to convert.
 	 * @param opacity The opacity value (0 &lt;= o &lt;= 1).
 	 * @param ctx     the bridge context.
+	 * @return the color.
+	 * @throws UnsupportedOperationException if the color space is not supported.
+	 * @throws IllegalArgumentException      if the color components are invalid.
 	 */
-	public static Color convertColor(ColorFunction c, float opacity, BridgeContext ctx) {
+	public static Color convertColor(ColorFunction c, float opacity, BridgeContext ctx)
+			throws UnsupportedOperationException, IllegalArgumentException {
 		switch (c.getCSSColorSpace()) {
 		case ColorValue.CS_DISPLAY_P3:
 			ICC_ColorSpace space = StandardColorSpaces.getDisplayP3();
@@ -441,7 +476,8 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 	// Color utility methods
 	/////////////////////////////////////////////////////////////////////////
 
-	private static Color convert3Color(ColorSpace space, ColorFunction c, float opacity) {
+	private static Color convert3Color(ColorSpace space, ColorFunction c, float opacity)
+			throws IllegalArgumentException {
 		CSSStyleValueList<NumericValue> chs = c.getChannels();
 		float[] ch = new float[3];
 		ch[0] = resolveColorComponent(chs.item(0));
@@ -457,8 +493,9 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 	 * @param v the value that declares the color component, either a percentage or
 	 *          a number in the range (0 &lt;= v &lt;= 1).
 	 * @return the value in the range (0 &lt;= v &lt;= 1).
+	 * @throws IllegalArgumentException if the color component is invalid.
 	 */
-	private static float resolveColorComponent(NumericValue item) {
+	private static float resolveColorComponent(NumericValue item) throws IllegalArgumentException {
 		float f;
 		switch (item.getUnitType()) {
 		case CSSUnit.CSS_NUMBER:
@@ -502,6 +539,7 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 	 * Converts a <code>Stroke</code> object defined on the specified element.
 	 *
 	 * @param e the element on which the stroke is specified
+	 * @return the Stroke or {@code null} if none.
 	 */
 	public static Stroke convertStroke(Element e) {
 		Value v;
@@ -556,6 +594,7 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 	 * units.
 	 *
 	 * @param v the CSS value describing the dasharray property
+	 * @return the dasharray or {@code null} if none.
 	 */
 	public static float[] convertStrokeDasharray(Value v) {
 		float[] dasharray = null;
@@ -593,7 +632,7 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 	 * 
 	 * @param v the CSS value describing the linecap property
 	 */
-	public static int convertStrokeLinecap(Value v) {
+	public static int convertStrokeLinecap(Value v) throws IllegalArgumentException {
 		String s = v.getIdentifierValue();
 		switch (s.charAt(0)) {
 		case 'b':
@@ -603,6 +642,7 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 		case 's':
 			return BasicStroke.CAP_SQUARE;
 		default:
+			// Should not happen if the value was created by createValue()
 			throw new IllegalArgumentException("Linecap argument is not an appropriate CSS value");
 		}
 	}
@@ -612,7 +652,7 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 	 * 
 	 * @param v the CSS value describing the linejoin property
 	 */
-	public static int convertStrokeLinejoin(Value v) {
+	public static int convertStrokeLinejoin(Value v) throws IllegalArgumentException {
 		String s = v.getIdentifierValue();
 		switch (s.charAt(0)) {
 		case 'm':
@@ -622,6 +662,7 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 		case 'b':
 			return BasicStroke.JOIN_BEVEL;
 		default:
+			// Should not happen if the value was created by createValue()
 			throw new IllegalArgumentException("Linejoin argument is not an appropriate CSS value");
 		}
 	}
@@ -637,7 +678,7 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 	 *          a number in the range (0 &lt;= v &lt;= 1).
 	 * @return the value in the range (0 &lt;= v &lt;= 1).
 	 */
-	private static float resolveAlphaComponent(Value v) {
+	private static float resolveAlphaComponent(Value v) throws IllegalArgumentException {
 		float f;
 		switch (v.getUnitType()) {
 		case CSSUnit.CSS_PERCENTAGE:
@@ -649,7 +690,8 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 			f = (f > 1f) ? 1f : (f < 0f) ? 0f : f;
 			return f;
 		default:
-			throw new IllegalArgumentException("Color alpha argument is not an appropriate CSS value");
+			throw new IllegalArgumentException(
+					"Color alpha argument is not an appropriate CSS value");
 		}
 	}
 
