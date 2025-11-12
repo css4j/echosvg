@@ -40,8 +40,6 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.Map;
 
-import org.apache.commons.io.IOUtils;
-
 import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageTagRegistry;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriter;
@@ -317,7 +315,9 @@ public abstract class AbstractImageTranscoderTest {
 
 		private boolean dataFromFileEqual(File file, byte[] data) throws IOException {
 			ByteArrayOutputStream out = new ByteArrayOutputStream(data.length);
-			IOUtils.copy(new BufferedInputStream(new FileInputStream(file)), out);
+			try (InputStream is = new BufferedInputStream(new FileInputStream(file))) {
+				is.transferTo(out);
+			}
 			return Arrays.equals(out.toByteArray(), data);
 		}
 

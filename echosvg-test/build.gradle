@@ -41,7 +41,6 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	testImplementation "org.mozilla:rhino:${rhinoVersion}"
 	testImplementation "nu.validator:htmlparser:${htmlParserVersion}"
-	testImplementation "commons-io:commons-io:${commonsIOVersion}"
 	if (!project.getPluginManager().hasPlugin('eclipse')) {
 		compileOnly "xml-apis:xml-apis:$xmlApisVersion" // Required by Java 8 compat
 		jmhCompileOnly "xml-apis:xml-apis:$xmlApisVersion" // Required by Java 8 compat
