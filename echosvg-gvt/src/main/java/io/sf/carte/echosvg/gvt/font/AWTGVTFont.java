@@ -285,7 +285,7 @@ public class AWTGVTFont implements GVTFont {
 	public static AWTGlyphGeometryCache.Value getGlyphGeometry(AWTGVTFont font, char c, GlyphVector gv, int glyphIndex,
 			Point2D glyphPos) {
 
-		AWTGlyphGeometryCache glyphCache = (AWTGlyphGeometryCache) fontCache.get(font.awtFont);
+		AWTGlyphGeometryCache glyphCache = fontCache.get(font.awtFont);
 
 		AWTGlyphGeometryCache.Value v = glyphCache.get(c);
 		if (v == null) {
@@ -307,20 +307,12 @@ public class AWTGVTFont implements GVTFont {
 	// static cache for AWTGVTFont
 	//
 
-	static Map<Font, Object> fontCache = new HashMap<>(11);
+	static Map<Font, AWTGlyphGeometryCache> fontCache = new HashMap<>(11);
 
 	static void initializeFontCache(Font awtFont) {
 		if (!fontCache.containsKey(awtFont)) {
 			fontCache.put(awtFont, new AWTGlyphGeometryCache());
 		}
-	}
-
-	static void putAWTGVTFont(AWTGVTFont font) {
-		fontCache.put(font.awtFont, font);
-	}
-
-	static AWTGVTFont getAWTGVTFont(Font awtFont) {
-		return (AWTGVTFont) fontCache.get(awtFont);
 	}
 
 }
