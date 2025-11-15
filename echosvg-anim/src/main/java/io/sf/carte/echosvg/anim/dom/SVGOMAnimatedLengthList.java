@@ -251,7 +251,6 @@ public class SVGOMAnimatedLengthList extends AbstractSVGAnimatedValue implements
 		 */
 		@Override
 		protected SVGException createSVGException(short type, String key, Object[] args) {
-
 			return ((SVGOMElement) element).createSVGException(type, key, args);
 		}
 
@@ -387,7 +386,6 @@ public class SVGOMAnimatedLengthList extends AbstractSVGAnimatedValue implements
 		 */
 		@Override
 		protected SVGException createSVGException(short type, String key, Object[] args) {
-
 			return ((SVGOMElement) element).createSVGException(type, key, args);
 		}
 

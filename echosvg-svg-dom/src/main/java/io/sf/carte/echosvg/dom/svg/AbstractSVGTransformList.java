@@ -185,7 +185,7 @@ public abstract class AbstractSVGTransformList extends AbstractSVGList implement
 	@Override
 	protected void checkItemType(Object newItem) {
 		if (!(newItem instanceof SVGTransform)) {
-			createSVGException(SVGException.SVG_WRONG_TYPE_ERR, "expected.transform", null);
+			throw createSVGException(SVGException.SVG_WRONG_TYPE_ERR, "expected.transform", null);
 		}
 	}
 

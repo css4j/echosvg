@@ -155,7 +155,7 @@ public abstract class AbstractSVGLengthList extends AbstractSVGList implements S
 	@Override
 	protected void checkItemType(Object newItem) throws SVGException {
 		if (!(newItem instanceof SVGLength)) {
-			createSVGException(SVGException.SVG_WRONG_TYPE_ERR, "expected.length", null);
+			throw createSVGException(SVGException.SVG_WRONG_TYPE_ERR, "expected.length", null);
 		}
 	}
 
