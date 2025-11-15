@@ -107,7 +107,7 @@ public final class TurbulencePatternRed extends AbstractRed {
 			this.wrapY = stitchInfo.wrapY;
 		}
 
-		final void assign(StitchInfo stitchInfo) {
+		void assign(StitchInfo stitchInfo) {
 			this.width = stitchInfo.width;
 			this.height = stitchInfo.height;
 			this.wrapX = stitchInfo.wrapX;
@@ -122,7 +122,7 @@ public final class TurbulencePatternRed extends AbstractRed {
 		 * wrapY = tileY*baseFrequencyY + PerlinN + height
 		 *
 		 */
-		final void doubleFrequency() {
+		void doubleFrequency() {
 			width *= 2;
 			height *= 2;
 			wrapX *= 2;
@@ -239,7 +239,7 @@ public final class TurbulencePatternRed extends AbstractRed {
 		return channels;
 	}
 
-	public final int setupSeed(int seed) {
+	public int setupSeed(int seed) {
 		if (seed <= 0)
 			seed = -(seed % (RAND_m - 1)) + 1;
 		if (seed > RAND_m - 1)
@@ -247,7 +247,7 @@ public final class TurbulencePatternRed extends AbstractRed {
 		return seed;
 	}
 
-	public final int random(int seed) {
+	public int random(int seed) {
 		int result = RAND_a * (seed % RAND_q) - RAND_r * (seed / RAND_q);
 		if (result <= 0)
 			result += RAND_m;
@@ -296,11 +296,11 @@ public final class TurbulencePatternRed extends AbstractRed {
 			gradient[(BSize * 8) + j] = gradient[j];
 	}
 
-	private static final double s_curve(final double t) {
+	private static double s_curve(final double t) {
 		return (t * t * (3 - 2 * t));
 	}
 
-	private static final double lerp(double t, double a, double b) {
+	private static double lerp(double t, double a, double b) {
 		return (a + t * (b - a));
 	}
 
@@ -313,7 +313,7 @@ public final class TurbulencePatternRed extends AbstractRed {
 	 * @param vec0  The X coordiate to generate noise for
 	 * @param vec1  The Y coordiate to generate noise for
 	 */
-	private final void noise2(final double[] noise, double vec0, double vec1) {
+	private void noise2(final double[] noise, double vec0, double vec1) {
 		int b0, b1;
 		final int i, j;
 		final double rx0, rx1, ry0, ry1, sx, sy;
@@ -379,7 +379,7 @@ public final class TurbulencePatternRed extends AbstractRed {
 	 * @param vec1       The Y coordiate to generate noise for
 	 * @param stitchInfo The stitching information for the noise function.
 	 */
-	private final void noise2Stitch(final double[] noise, final double vec0, final double vec1,
+	private void noise2Stitch(final double[] noise, final double vec0, final double vec1,
 			final StitchInfo stitchInfo) {
 		int b0, b1;
 		final int i, j, b00, b10, b01, b11;
@@ -469,7 +469,7 @@ public final class TurbulencePatternRed extends AbstractRed {
 	 * @param fSum   array used to avoid reallocating double array for each pixel
 	 * @return The ARGB pixel value.
 	 */
-	private final int turbulence_4(double pointX, double pointY, final double[] fSum) {
+	private int turbulence_4(double pointX, double pointY, final double[] fSum) {
 		double n, ratio = 255;
 		int i, j, b0, b1, nOctave;
 		double px, py, rx0, rx1, ry0, ry1, sx, sy;
@@ -584,7 +584,7 @@ public final class TurbulencePatternRed extends AbstractRed {
 	 * @param fSum   array used to avoid reallocating double array for each pixel
 	 * @param noise  array used to avoid reallocating double array for each pixel
 	 */
-	private final void turbulence(final int[] rgb, double pointX, double pointY, final double[] fSum,
+	private void turbulence(final int[] rgb, double pointX, double pointY, final double[] fSum,
 			final double[] noise) {
 		fSum[0] = fSum[1] = fSum[2] = fSum[3] = 0;
 		double ratio = 255;
@@ -716,7 +716,7 @@ public final class TurbulencePatternRed extends AbstractRed {
 	 *                   pixel
 	 * @param stitchInfo The stitching information for the noise function
 	 */
-	private final void turbulenceStitch(final int[] rgb, double pointX, double pointY, final double[] fSum,
+	private void turbulenceStitch(final int[] rgb, double pointX, double pointY, final double[] fSum,
 			final double[] noise, StitchInfo stitchInfo) {
 		double ratio = 1;
 		pointX *= baseFrequencyX;
@@ -847,7 +847,7 @@ public final class TurbulencePatternRed extends AbstractRed {
 	 * @param fSum   array used to avoid reallocating double array for each pixel
 	 * @return The ARGB pixel
 	 */
-	private final int turbulenceFractal_4(double pointX, double pointY, final double[] fSum) {
+	private int turbulenceFractal_4(double pointX, double pointY, final double[] fSum) {
 		int b0, b1, nOctave, i, j;
 		double px, py, rx0, rx1, ry0, ry1, sx, sy, ratio = 127.5;
 
@@ -946,7 +946,7 @@ public final class TurbulencePatternRed extends AbstractRed {
 	 * @param fSum   array used to avoid reallocating double array for each pixel
 	 * @param noise  array used to avoid reallocating double array for each pixel
 	 */
-	private final void turbulenceFractal(final int[] rgb, double pointX, double pointY, final double[] fSum,
+	private void turbulenceFractal(final int[] rgb, double pointX, double pointY, final double[] fSum,
 			final double[] noise) {
 		double ratio = 127.5;
 		int nOctave;
@@ -1005,7 +1005,7 @@ public final class TurbulencePatternRed extends AbstractRed {
 	 *                   pixel
 	 * @param stitchInfo The stitching information for the noise function
 	 */
-	private final void turbulenceFractalStitch(final int[] rgb, double pointX, double pointY, final double[] fSum,
+	private void turbulenceFractalStitch(final int[] rgb, double pointX, double pointY, final double[] fSum,
 			final double[] noise, StitchInfo stitchInfo) {
 		double ratio = 127.5;
 		int nOctave;

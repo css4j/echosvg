@@ -78,7 +78,7 @@ public final class DestinationType {
 	 * @return Transcoder object or <code>null</code> if there isn't a proper
 	 *         transcoder.
 	 */
-	protected Transcoder getTranscoder() {
+	Transcoder getTranscoder() {
 		switch (code) {
 		case PNG_CODE:
 			return new PNGTranscoder();

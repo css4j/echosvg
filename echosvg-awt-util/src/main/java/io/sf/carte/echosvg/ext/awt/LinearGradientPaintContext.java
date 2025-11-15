@@ -143,7 +143,7 @@ final class LinearGradientPaintContext extends MultipleGradientPaintContext {
 		}
 	}
 
-	protected void fillHardNoCycle(int[] pixels, int off, int adjust, int x, int y, int w, int h) {
+	void fillHardNoCycle(int[] pixels, int off, int adjust, int x, int y, int w, int h) {
 
 		// constant which can be pulled out of the inner loop
 		final float initConst = (dgdX * x) + gc;
@@ -291,7 +291,7 @@ final class LinearGradientPaintContext extends MultipleGradientPaintContext {
 		}
 	}
 
-	protected void fillSimpleNoCycle(int[] pixels, int off, int adjust, int x, int y, int w, int h) {
+	void fillSimpleNoCycle(int[] pixels, int off, int adjust, int x, int y, int w, int h) {
 		// constant which can be pulled out of the inner loop
 		final float initConst = (dgdX * x) + gc;
 		final float step = dgdX * fastGradientArraySize;
@@ -369,7 +369,7 @@ final class LinearGradientPaintContext extends MultipleGradientPaintContext {
 		}
 	}
 
-	protected void fillSimpleRepeat(int[] pixels, int off, int adjust, int x, int y, int w, int h) {
+	void fillSimpleRepeat(int[] pixels, int off, int adjust, int x, int y, int w, int h) {
 
 		final float initConst = (dgdX * x) + gc;
 
@@ -415,7 +415,7 @@ final class LinearGradientPaintContext extends MultipleGradientPaintContext {
 		}
 	}
 
-	protected void fillSimpleReflect(int[] pixels, int off, int adjust, int x, int y, int w, int h) {
+	void fillSimpleReflect(int[] pixels, int off, int adjust, int x, int y, int w, int h) {
 		final float initConst = (dgdX * x) + gc;
 
 		final int[] grad = gradient;
