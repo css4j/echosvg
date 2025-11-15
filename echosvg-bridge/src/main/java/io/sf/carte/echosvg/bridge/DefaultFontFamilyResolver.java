@@ -57,11 +57,11 @@ public final class DefaultFontFamilyResolver implements FontFamilyResolver {
 	 * List of all available fonts on the current system, plus a few common
 	 * alternatives.
 	 */
-	protected static final Map<String, String> fonts = new HashMap<>();
+	static final Map<String, String> fonts = new HashMap<>();
 
-	protected static final List<AWTFontFamily> awtFontFamilies = new ArrayList<>();
+	static final List<AWTFontFamily> awtFontFamilies = new ArrayList<>();
 
-	protected static final List<AWTGVTFont> awtFonts = new ArrayList<>();
+	static final List<AWTGVTFont> awtFonts = new ArrayList<>();
 
 	/**
 	 * This sets up the list of available fonts.
@@ -130,7 +130,7 @@ public final class DefaultFontFamilyResolver implements FontFamilyResolver {
 	 * This keeps track of all the resolved font families. This is to hopefully
 	 * reduce the number of font family objects used.
 	 */
-	protected static final Map<String, GVTFontFamily> resolvedFontFamilies = new HashMap<>();
+	static final Map<String, GVTFontFamily> resolvedFontFamilies = new HashMap<>();
 
 	/**
 	 * Get the singleton instance of {@code DefaultFontFamilyResolver}.
