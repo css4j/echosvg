@@ -133,7 +133,7 @@ public abstract class AbstractSVGPointList extends AbstractSVGList implements SV
 	@Override
 	protected void checkItemType(Object newItem) throws SVGException {
 		if (!(newItem instanceof SVGPoint)) {
-			createSVGException(SVGException.SVG_WRONG_TYPE_ERR, "expected.point", null);
+			throw createSVGException(SVGException.SVG_WRONG_TYPE_ERR, "expected.point", null);
 		}
 	}
 

@@ -225,7 +225,6 @@ public class SVGOMAnimatedTransformList extends AbstractSVGAnimatedValue impleme
 		 */
 		@Override
 		protected SVGException createSVGException(short type, String key, Object[] args) {
-
 			return ((SVGOMElement) element).createSVGException(type, key, args);
 		}
 
@@ -344,7 +343,6 @@ public class SVGOMAnimatedTransformList extends AbstractSVGAnimatedValue impleme
 		 */
 		@Override
 		protected SVGException createSVGException(short type, String key, Object[] args) {
-
 			return ((SVGOMElement) element).createSVGException(type, key, args);
 		}
 

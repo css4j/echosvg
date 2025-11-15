@@ -151,7 +151,7 @@ public abstract class AbstractSVGNumberList extends AbstractSVGList implements S
 	protected void checkItemType(Object newItem) throws SVGException {
 		if (!(newItem instanceof SVGNumber)) {
 			// XXX Fix error code.
-			createSVGException(SVGException.SVG_WRONG_TYPE_ERR, "expected SVGNumber", null);
+			throw createSVGException(SVGException.SVG_WRONG_TYPE_ERR, "expected SVGNumber", null);
 		}
 	}
 

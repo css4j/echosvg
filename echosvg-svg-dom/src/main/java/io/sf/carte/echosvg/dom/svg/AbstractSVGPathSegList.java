@@ -163,7 +163,7 @@ public abstract class AbstractSVGPathSegList extends AbstractSVGList implements 
 	@Override
 	protected void checkItemType(Object newItem) {
 		if (!(newItem instanceof SVGPathSeg)) {
-			createSVGException(SVGException.SVG_WRONG_TYPE_ERR, "expected SVGPathSeg", null);
+			throw createSVGException(SVGException.SVG_WRONG_TYPE_ERR, "expected SVGPathSeg", null);
 		}
 	}
 
