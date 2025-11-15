@@ -537,7 +537,7 @@ abstract class AbstractMainTest {
 	}
 
 	void assertNoError(String errorCode) {
-		assertNull("Unexpected error code", errorCode);
+		assertNull(errorCode, "Unexpected error code");
 	}
 
 	void assertError(String expectedErrorCode, String errorCode) {
