@@ -50,7 +50,7 @@ import io.sf.carte.echosvg.ext.awt.image.GraphicsUtil;
  */
 abstract class MultipleGradientPaintContext implements PaintContext {
 
-	protected static final boolean DEBUG = false;
+	static final boolean DEBUG = false;
 
 	/**
 	 * The color model data is generated in (always un premult).
