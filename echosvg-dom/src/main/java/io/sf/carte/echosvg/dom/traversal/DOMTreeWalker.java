@@ -337,7 +337,6 @@ public class DOMTreeWalker implements TreeWalker {
 				// Fall through
 			default: // NodeFilter.FILTER_REJECT
 				n = result;
-				continue;
 			}
 		}
 	}
@@ -374,7 +373,6 @@ public class DOMTreeWalker implements TreeWalker {
 				// Fall through
 			default: // NodeFilter.FILTER_REJECT
 				n = result;
-				continue;
 			}
 		}
 	}

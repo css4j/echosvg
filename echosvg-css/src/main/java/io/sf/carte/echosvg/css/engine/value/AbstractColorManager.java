@@ -666,8 +666,8 @@ public abstract class AbstractColorManager extends IdentifierManager {
 	private static ColorFunction toNativeColorFunction(CSSColor color, String colorSpace) {
 		double[] comps = color.toNumberArray();
 		AbstractValueList<NumericValue> components = new AbstractValueList<>(' ', 4);
-		for (int i = 0; i < comps.length; i++) {
-			FloatValue num = new FloatValue(CSSUnit.CSS_NUMBER, (float) comps[i]);
+		for (double comp : comps) {
+			FloatValue num = new FloatValue(CSSUnit.CSS_NUMBER, (float) comp);
 			components.add(num);
 		}
 		ColorFunction colorFunction = new ColorFunction(colorSpace, components);

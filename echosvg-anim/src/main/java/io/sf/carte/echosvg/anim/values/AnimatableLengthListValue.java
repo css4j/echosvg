@@ -113,9 +113,9 @@ public class AnimatableLengthListValue extends AnimatableValue {
 			float newLengthValue = baseLengthValues[i];
 			if (canInterpolate) {
 				if (hasTo
-						&& !AnimatableLengthValue.compatibleTypes(newLengthType, percentageInterpretation,
+						&& !AnimatableNumericValue.compatibleTypes(newLengthType, percentageInterpretation,
 								toLengthList.lengthTypes[i], toLengthList.percentageInterpretation)
-						|| hasAcc && !AnimatableLengthValue.compatibleTypes(newLengthType, percentageInterpretation,
+						|| hasAcc && !AnimatableNumericValue.compatibleTypes(newLengthType, percentageInterpretation,
 								accLengthList.lengthTypes[i], accLengthList.percentageInterpretation)) {
 					newLengthValue = target.svgToUserSpace(newLengthValue, newLengthType, percentageInterpretation);
 					newLengthType = CSSUnit.CSS_NUMBER;

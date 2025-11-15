@@ -19,7 +19,6 @@
 package io.sf.carte.echosvg.ext.awt.image.spi;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.ServiceLoader;
 
@@ -50,9 +49,7 @@ public final class ImageWriterRegistry {
 	private void setup() {
 		ServiceLoader<ImageWriter> loader = ServiceLoader.load(ImageWriter.class);
 
-		Iterator<ImageWriter> iter = loader.iterator();
-		while (iter.hasNext()) {
-			ImageWriter writer = iter.next();
+		for (ImageWriter writer : loader) {
 			register(writer);
 		}
 	}

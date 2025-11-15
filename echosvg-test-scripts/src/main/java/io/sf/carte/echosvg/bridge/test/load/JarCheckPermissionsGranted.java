@@ -196,13 +196,13 @@ public class JarCheckPermissionsGranted implements ScriptHandler {
 						successCnt++;
 					}
 				} else {
-					for (int i = 0; i < permissions.length; i++) {
-						Permission p = (Permission) permissions[i][1];
+					for (Object[] permission : permissions) {
+						Permission p = (Permission) permission[1];
 						try {
 							sm.checkPermission(p);
 							successCnt++;
 						} catch (SecurityException se) {
-							unexpectedDenial.add((String) permissions[i][0]);
+							unexpectedDenial.add((String) permission[0]);
 							unexpectedDenialCnt++;
 						}
 					}

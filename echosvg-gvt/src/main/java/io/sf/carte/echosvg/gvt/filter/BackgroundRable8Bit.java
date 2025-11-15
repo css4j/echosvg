@@ -25,7 +25,6 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.RenderedImage;
 import java.awt.image.renderable.RenderContext;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import io.sf.carte.echosvg.ext.awt.image.CompositeRule;
@@ -89,10 +88,8 @@ public class BackgroundRable8Bit extends AbstractRable {
 		// System.out.println("Child: " + child);
 
 		List<GraphicsNode> children = cgn.getChildren();
-		Iterator<GraphicsNode> i = children.iterator();
 		Rectangle2D r2d = null;
-		while (i.hasNext()) {
-			GraphicsNode gn = i.next();
+		for (GraphicsNode gn : children) {
 			if (gn == child)
 				break;
 
