@@ -120,18 +120,18 @@ public class AWTGlyphGeometryCache {
 			Entry e = table[index];
 			if (e != null) {
 				if ((e.hash == hash) && e.match(c)) {
-					Object old = e.get();
+					Value old = e.get();
 					table[index] = new Entry(hash, c, value, e.next);
-					return (Value) old;
+					return old;
 				}
 				Entry o = e;
 				e = e.next;
 				while (e != null) {
 					if ((e.hash == hash) && e.match(c)) {
-						Object old = e.get();
+						Value old = e.get();
 						e = new Entry(hash, c, value, e.next);
 						o.next = e;
-						return (Value) old;
+						return old;
 					}
 
 					o = e;
@@ -146,11 +146,12 @@ public class AWTGlyphGeometryCache {
 				rehash();
 				index = hash % table.length;
 			}
+
+			table[index] = new Entry(hash, c, value, table[index]);
 		} finally {
 			tableLock.unlock();
 		}
 
-		table[index] = new Entry(hash, c, value, table[index]);
 		return null;
 	}
 
