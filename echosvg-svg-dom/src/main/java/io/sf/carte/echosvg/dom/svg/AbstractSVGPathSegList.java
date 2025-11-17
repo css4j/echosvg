@@ -75,13 +75,6 @@ public abstract class AbstractSVGPathSegList extends AbstractSVGList implements 
 	}
 
 	/**
-	 * Create an SVGException when the checkItemType fails.
-	 *
-	 * @return SVGException
-	 */
-	protected abstract SVGException createSVGException(short type, String key, Object[] args);
-
-	/**
 	 */
 	@Override
 	public SVGPathSeg initialize(SVGPathSeg newItem) throws DOMException, SVGException {
@@ -157,9 +150,7 @@ public abstract class AbstractSVGPathSegList extends AbstractSVGList implements 
 	 */
 	@Override
 	protected void checkItemType(Object newItem) {
-		if (!(newItem instanceof SVGPathSeg)) {
-			throw createSVGException(SVGException.SVG_WRONG_TYPE_ERR, "expected SVGPathSeg", null);
-		}
+		assert newItem instanceof SVGPathSeg : getErrorMessage("expected.pathseg", null);
 	}
 
 	/**

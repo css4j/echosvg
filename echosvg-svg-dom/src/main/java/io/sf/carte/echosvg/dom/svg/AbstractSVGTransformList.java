@@ -53,13 +53,6 @@ public abstract class AbstractSVGTransformList extends AbstractSVGList implement
 	}
 
 	/**
-	 * Create an SVGException when the checkItemType fails.
-	 * 
-	 * @return SVGException
-	 */
-	protected abstract SVGException createSVGException(short type, String key, Object[] args);
-
-	/**
 	 * <b>DOM</b>: Implements {@link SVGTransformList#initialize(SVGTransform)}.
 	 */
 	@Override
@@ -184,9 +177,7 @@ public abstract class AbstractSVGTransformList extends AbstractSVGList implement
 	 */
 	@Override
 	protected void checkItemType(Object newItem) {
-		if (!(newItem instanceof SVGTransform)) {
-			throw createSVGException(SVGException.SVG_WRONG_TYPE_ERR, "expected.transform", null);
-		}
+		assert newItem instanceof SVGTransform : getErrorMessage("expected.transform", null);
 	}
 
 	/**

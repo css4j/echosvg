@@ -25,6 +25,8 @@ import java.util.List;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.svg.SVGException;
 
+import io.sf.carte.echosvg.dom.AbstractDocument;
+import io.sf.carte.echosvg.dom.AbstractElement;
 import io.sf.carte.echosvg.parser.ParseException;
 
 /**
@@ -104,9 +106,26 @@ public abstract class AbstractSVGList {
 	protected abstract void setAttributeValue(String value);
 
 	/**
-	 * Create a DOM Exception.
+	 * Returns the element owning this SVG list.
 	 */
-	protected abstract DOMException createDOMException(short type, String key, Object[] args);
+	protected abstract AbstractElement getElement();
+
+	/**
+	 * Get an error message when the checkItemType fails.
+	 * 
+	 * @param key  the message key.
+	 * @param args the message arguments.
+	 * @return the error message, or the key if it couldn't be created.
+	 */
+	protected String getErrorMessage(String key, Object[] args) {
+		String m;
+		try {
+			m = ((AbstractDocument) getElement().getOwnerDocument()).formatMessage(key, args);
+		} catch (Exception e) {
+			m = key;
+		}
+		return m;
+	}
 
 	/**
 	 * Returns the number of items in the list.
@@ -184,10 +203,18 @@ public abstract class AbstractSVGList {
 		revalidate();
 
 		if (index < 0 || itemList == null || index >= itemList.size()) {
-			throw createDOMException(DOMException.INDEX_SIZE_ERR, "index.out.of.bounds", new Object[] { index });
+			throw createDOMException(DOMException.INDEX_SIZE_ERR, "index.out.of.bounds",
+					new Object[] { index });
 		}
 
 		return itemList.get(index);
+	}
+
+	/**
+	 * Create a DOM Exception.
+	 */
+	private DOMException createDOMException(short type, String key, Object[] args) {
+		return getElement().createDOMException(type, key, args);
 	}
 
 	/**
@@ -211,13 +238,15 @@ public abstract class AbstractSVGList {
 	 *                         <code>newItem</code> is the wrong type of object for
 	 *                         the given list.
 	 */
-	protected SVGItem insertItemBeforeImpl(Object newItem, int index) throws DOMException, SVGException {
+	protected SVGItem insertItemBeforeImpl(Object newItem, int index)
+			throws DOMException, SVGException {
 
 		checkItemType(newItem);
 
 		revalidate();
 		if (index < 0) {
-			throw createDOMException(DOMException.INDEX_SIZE_ERR, "index.out.of.bounds", new Object[] { index });
+			throw createDOMException(DOMException.INDEX_SIZE_ERR, "index.out.of.bounds",
+					new Object[] { index });
 		}
 
 		if (index > itemList.size()) {
@@ -263,7 +292,8 @@ public abstract class AbstractSVGList {
 
 		revalidate();
 		if (index < 0 || index >= itemList.size()) {
-			throw createDOMException(DOMException.INDEX_SIZE_ERR, "index.out.of.bounds", new Object[] { index });
+			throw createDOMException(DOMException.INDEX_SIZE_ERR, "index.out.of.bounds",
+					new Object[] { index });
 		}
 
 		SVGItem item = removeIfNeeded(newItem);
@@ -296,7 +326,8 @@ public abstract class AbstractSVGList {
 		revalidate();
 
 		if (index < 0 || index >= itemList.size()) {
-			throw createDOMException(DOMException.INDEX_SIZE_ERR, "index.out.of.bounds", new Object[] { index });
+			throw createDOMException(DOMException.INDEX_SIZE_ERR, "index.out.of.bounds",
+					new Object[] { index });
 		}
 
 		SVGItem item = itemList.remove(index);

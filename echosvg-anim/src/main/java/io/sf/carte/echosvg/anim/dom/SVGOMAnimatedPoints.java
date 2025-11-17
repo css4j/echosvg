@@ -225,20 +225,9 @@ public class SVGOMAnimatedPoints extends AbstractSVGAnimatedValue implements SVG
 			return valid;
 		}
 
-		/**
-		 * Create a DOMException.
-		 */
 		@Override
-		protected DOMException createDOMException(short type, String key, Object[] args) {
-			return element.createDOMException(type, key, args);
-		}
-
-		/**
-		 * Create a SVGException.
-		 */
-		@Override
-		protected SVGException createSVGException(short type, String key, Object[] args) {
-			return ((SVGOMElement) element).createSVGException(type, key, args);
+		protected AbstractElement getElement() {
+			return element;
 		}
 
 		/**
@@ -346,20 +335,9 @@ public class SVGOMAnimatedPoints extends AbstractSVGAnimatedValue implements SVG
 			itemList = new ArrayList<>(1);
 		}
 
-		/**
-		 * Create a DOMException.
-		 */
 		@Override
-		protected DOMException createDOMException(short type, String key, Object[] args) {
-			return element.createDOMException(type, key, args);
-		}
-
-		/**
-		 * Create a SVGException.
-		 */
-		@Override
-		protected SVGException createSVGException(short type, String key, Object[] args) {
-			return ((SVGOMElement) element).createSVGException(type, key, args);
+		protected AbstractElement getElement() {
+			return element;
 		}
 
 		/**

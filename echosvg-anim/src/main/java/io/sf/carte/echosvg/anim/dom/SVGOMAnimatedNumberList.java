@@ -23,7 +23,6 @@ import java.util.Iterator;
 
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
-import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGAnimatedNumberList;
 import org.w3c.dom.svg.SVGException;
 import org.w3c.dom.svg.SVGNumber;
@@ -223,27 +222,11 @@ public class SVGOMAnimatedNumberList extends AbstractSVGAnimatedValue implements
 		protected boolean malformed;
 
 		/**
-		 * Create a DOMException.
-		 */
-		@Override
-		protected DOMException createDOMException(short type, String key, Object[] args) {
-			return element.createDOMException(type, key, args);
-		}
-
-		/**
-		 * Create a SVGException.
-		 */
-		@Override
-		protected SVGException createSVGException(short type, String key, Object[] args) {
-			return ((SVGOMElement) element).createSVGException(type, key, args);
-		}
-
-		/**
 		 * Returns the element owning the attribute with which this length list is
 		 * associated.
 		 */
 		@Override
-		protected Element getElement() {
+		protected AbstractElement getElement() {
 			return element;
 		}
 
@@ -355,26 +338,10 @@ public class SVGOMAnimatedNumberList extends AbstractSVGAnimatedValue implements
 		}
 
 		/**
-		 * Create a DOMException.
-		 */
-		@Override
-		protected DOMException createDOMException(short type, String key, Object[] args) {
-			return element.createDOMException(type, key, args);
-		}
-
-		/**
-		 * Create a SVGException.
-		 */
-		@Override
-		protected SVGException createSVGException(short type, String key, Object[] args) {
-			return ((SVGOMElement) element).createSVGException(type, key, args);
-		}
-
-		/**
 		 * Returns the element owning this SVGNumberList.
 		 */
 		@Override
-		protected Element getElement() {
+		protected AbstractElement getElement() {
 			return element;
 		}
 

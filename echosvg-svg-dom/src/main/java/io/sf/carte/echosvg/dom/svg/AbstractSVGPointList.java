@@ -50,13 +50,6 @@ public abstract class AbstractSVGPointList extends AbstractSVGList implements SV
 	}
 
 	/**
-	 * Create an SVGException when the checkItemType fails.
-	 * 
-	 * @return SVGException
-	 */
-	protected abstract SVGException createSVGException(short type, String key, Object[] args);
-
-	/**
 	 * <b>DOM</b>: Implements {@link SVGPointList#initialize(SVGPoint)}.
 	 */
 	@Override
@@ -131,9 +124,7 @@ public abstract class AbstractSVGPointList extends AbstractSVGList implements SV
 	 */
 	@Override
 	protected void checkItemType(Object newItem) throws SVGException {
-		if (!(newItem instanceof SVGPoint)) {
-			throw createSVGException(SVGException.SVG_WRONG_TYPE_ERR, "expected.point", null);
-		}
+		assert newItem instanceof SVGPoint : getErrorMessage("expected.point", null);
 	}
 
 	/**

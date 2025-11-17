@@ -212,20 +212,9 @@ public class SVGOMAnimatedTransformList extends AbstractSVGAnimatedValue impleme
 		 */
 		protected boolean malformed;
 
-		/**
-		 * Create a DOMException.
-		 */
 		@Override
-		protected DOMException createDOMException(short type, String key, Object[] args) {
-			return element.createDOMException(type, key, args);
-		}
-
-		/**
-		 * Create a SVGException.
-		 */
-		@Override
-		protected SVGException createSVGException(short type, String key, Object[] args) {
-			return ((SVGOMElement) element).createSVGException(type, key, args);
+		protected AbstractElement getElement() {
+			return element;
 		}
 
 		/**
@@ -330,20 +319,9 @@ public class SVGOMAnimatedTransformList extends AbstractSVGAnimatedValue impleme
 			itemList = new ArrayList<>(1);
 		}
 
-		/**
-		 * Create a DOMException.
-		 */
 		@Override
-		protected DOMException createDOMException(short type, String key, Object[] args) {
-			return element.createDOMException(type, key, args);
-		}
-
-		/**
-		 * Create a SVGException.
-		 */
-		@Override
-		protected SVGException createSVGException(short type, String key, Object[] args) {
-			return ((SVGOMElement) element).createSVGException(type, key, args);
+		protected AbstractElement getElement() {
+			return element;
 		}
 
 		/**

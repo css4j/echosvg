@@ -19,7 +19,6 @@
 package io.sf.carte.echosvg.dom.svg;
 
 import org.w3c.dom.DOMException;
-import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGException;
 import org.w3c.dom.svg.SVGNumber;
 import org.w3c.dom.svg.SVGNumberList;
@@ -49,16 +48,6 @@ public abstract class AbstractSVGNumberList extends AbstractSVGList implements S
 	protected String getItemSeparator() {
 		return SVG_NUMBER_LIST_SEPARATOR;
 	}
-
-	/**
-	 * Create an SVGException when the {@link #checkItemType(Object)} fails.
-	 */
-	protected abstract SVGException createSVGException(short type, String key, Object[] args);
-
-	/**
-	 * Returns the element associated with this SVGNumberList.
-	 */
-	protected abstract Element getElement();
 
 	/**
 	 * Creates a new SVGNumberList.
@@ -146,10 +135,7 @@ public abstract class AbstractSVGNumberList extends AbstractSVGList implements S
 	 */
 	@Override
 	protected void checkItemType(Object newItem) throws SVGException {
-		if (!(newItem instanceof SVGNumber)) {
-			// XXX Fix error code.
-			throw createSVGException(SVGException.SVG_WRONG_TYPE_ERR, "expected SVGNumber", null);
-		}
+		assert newItem instanceof SVGNumber : getErrorMessage("expected.number", null);
 	}
 
 	/**

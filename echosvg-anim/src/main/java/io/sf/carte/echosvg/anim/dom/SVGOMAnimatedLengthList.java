@@ -24,7 +24,6 @@ import java.util.List;
 
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
-import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGAnimatedLengthList;
 import org.w3c.dom.svg.SVGException;
 import org.w3c.dom.svg.SVGLength;
@@ -239,27 +238,11 @@ public class SVGOMAnimatedLengthList extends AbstractSVGAnimatedValue implements
 		}
 
 		/**
-		 * Create a DOMException.
-		 */
-		@Override
-		protected DOMException createDOMException(short type, String key, Object[] args) {
-			return element.createDOMException(type, key, args);
-		}
-
-		/**
-		 * Create a SVGException.
-		 */
-		@Override
-		protected SVGException createSVGException(short type, String key, Object[] args) {
-			return ((SVGOMElement) element).createSVGException(type, key, args);
-		}
-
-		/**
 		 * Returns the element owning the attribute with which this length list is
 		 * associated.
 		 */
 		@Override
-		protected Element getElement() {
+		protected AbstractElement getElement() {
 			return element;
 		}
 
@@ -374,26 +357,10 @@ public class SVGOMAnimatedLengthList extends AbstractSVGAnimatedValue implements
 		}
 
 		/**
-		 * Create a DOMException.
-		 */
-		@Override
-		protected DOMException createDOMException(short type, String key, Object[] args) {
-			return element.createDOMException(type, key, args);
-		}
-
-		/**
-		 * Create a SVGException.
-		 */
-		@Override
-		protected SVGException createSVGException(short type, String key, Object[] args) {
-			return ((SVGOMElement) element).createSVGException(type, key, args);
-		}
-
-		/**
 		 * Returns the element owning this SVGLengthList.
 		 */
 		@Override
-		protected Element getElement() {
+		protected AbstractElement getElement() {
 			return element;
 		}
 

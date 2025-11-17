@@ -20,7 +20,6 @@ package io.sf.carte.echosvg.anim.dom;
 
 import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
-import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGException;
 import org.w3c.dom.svg.SVGLength;
 import org.w3c.dom.svg.SVGLengthList;
@@ -59,18 +58,6 @@ public abstract class AbstractSVGLengthList extends AbstractSVGList implements S
 	protected String getItemSeparator() {
 		return SVG_LENGTH_LIST_SEPARATOR;
 	}
-
-	/**
-	 * Create an SVGException when the checkItemType fails.
-	 * 
-	 * @return SVGException
-	 */
-	protected abstract SVGException createSVGException(short type, String key, Object[] args);
-
-	/**
-	 * Returns the element owning this SVGLengthList.
-	 */
-	protected abstract Element getElement();
 
 	/**
 	 * Creates a new SVGLengthList.
@@ -154,9 +141,7 @@ public abstract class AbstractSVGLengthList extends AbstractSVGList implements S
 	 */
 	@Override
 	protected void checkItemType(Object newItem) throws SVGException {
-		if (!(newItem instanceof SVGLength)) {
-			throw createSVGException(SVGException.SVG_WRONG_TYPE_ERR, "expected.length", null);
-		}
+		assert newItem instanceof SVGLength : getErrorMessage("expected.length", null);
 	}
 
 	@Override
