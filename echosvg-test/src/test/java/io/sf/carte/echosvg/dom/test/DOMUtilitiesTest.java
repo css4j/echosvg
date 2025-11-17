@@ -78,7 +78,7 @@ public class DOMUtilitiesTest {
 
 	@Test
 	public void testWriteDocument() throws DOMException, IOException {
-		DOMImplementation impl = new SVGDOMImplementation();
+		DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
 		Document doc = impl.createDocument(SVGConstants.SVG_NAMESPACE_URI, "svg", null);
 
 		Element svg = doc.getDocumentElement();
