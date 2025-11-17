@@ -106,6 +106,20 @@ relevant data being in the `id` and `value` attributes.
 
 <br/>
 
+#### Test infrastructure
+
+ If you want to contribute to the testing infrastructure please make sure to run
+all of the tests including the Security Manager tests, which currently is only
+possible from the Eclipse IDE ("Run as JUnit test"). Gradle does an undocumented
+use of the security manager, so the SM tests are not run by Gradle.
+
+ The modified tests should be runnable from any of the main Java IDEs, with the
+aforementioned exception of the SM tests that so far only work on Eclipse. This
+project shall keep supporting the SM as long as Java 11 or 17 LTS receive normal
+updates.
+
+<br/>
+
 ### Benchmarks
 
  EchoSVG uses [JMH](https://github.com/openjdk/jmh) for benchmarks, with the
