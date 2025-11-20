@@ -27,6 +27,7 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.CDATASection;
 import org.w3c.dom.Comment;
 import org.w3c.dom.Document;
+import org.w3c.dom.DocumentType;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -36,23 +37,24 @@ import org.w3c.dom.Text;
 import io.sf.carte.echosvg.util.SVGConstants;
 
 /**
- * Writes a Node as text output. Package access. This is *not* a full Xml
- * printout implementation. It only covers what is needed by the Graphics2D
- * class. The code for this class draws heavily from the work done for Sun's
- * Project X by David Brownell.
+ * Writes a Node as text output. This is *not* a full Xml printout
+ * implementation. It only covers what is needed by the Graphics2D class. The
+ * code for this class draws heavily from the work done for Sun's Project X by
+ * David Brownell.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-class XmlWriter implements SVGConstants {
+public class XmlWriter implements SVGConstants {
 
 	private static String EOL;
 	private static final String TAG_END = "/>";
 	private static final String TAG_START = "</";
 
-	private static final char[] SPACES = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-			' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' };
+	private static final char[] SPACES = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
+			' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
+			' ', ' ' };
 	private static final int SPACES_LEN = SPACES.length;
 
 	static {
@@ -65,15 +67,20 @@ class XmlWriter implements SVGConstants {
 		EOL = temp;
 	}
 
-	static class IndentWriter extends Writer {
+	private final IndentWriter out;
+
+	private final boolean escaped;
+
+	public static class IndentWriter extends Writer {
 
 		protected Writer proxied;
 		protected int indentLevel;
 		protected int column;
 
-		public IndentWriter(Writer proxied) {
-			if (proxied == null)
-				throw new SVGGraphics2DRuntimeException(ErrorConstants.ERR_PROXY);
+		public IndentWriter(Writer proxied) throws SVGGraphics2DRuntimeException {
+			if (proxied == null) {
+				throw new SVGGraphics2DRuntimeException(ErrorConstants.ERR_WRITER);
+			}
 
 			this.proxied = proxied;
 		}
@@ -152,21 +159,73 @@ class XmlWriter implements SVGConstants {
 
 	}
 
-	private static void writeXml(Attr attr, IndentWriter out, boolean escaped) throws IOException {
+	/**
+	 * Construct a new XmlWriter.
+	 * 
+	 * @param writer  the output.
+	 * @param escaped defines if the characters in Text nodes and attribute values
+	 *                should be escaped.
+	 */
+	public XmlWriter(IndentWriter writer, boolean escaped) {
+		super();
+		if (writer == null) {
+			throw new SVGGraphics2DRuntimeException(ErrorConstants.ERR_WRITER);
+		}
+		this.out = writer;
+		this.escaped = escaped;
+	}
+
+	/**
+	 * Construct a new XmlWriter.
+	 * 
+	 * @param writer  the output.
+	 * @param escaped defines if the characters in Text nodes and attribute values
+	 *                should be escaped.
+	 */
+	public XmlWriter(Writer writer, boolean escaped) {
+		super();
+		this.out = new IndentWriter(writer);
+		this.escaped = escaped;
+	}
+
+	/**
+	 * Gets the output writer.
+	 * 
+	 * @return the writer.
+	 */
+	protected final IndentWriter getWriter() {
+		return out;
+	}
+
+	/**
+	 * Tells whether the {@code Text} and attribute value characters will be
+	 * escaped.
+	 * 
+	 * @return {@code true} if characters will be escaped.
+	 */
+	protected boolean isEscaped() {
+		return escaped;
+	}
+
+	protected void writeXml(Attr attr) throws IOException {
 		String name = attr.getName();
 		out.write(name);
 		out.write("=\"");
-		writeChildrenXml(attr, out, escaped);
+		writeAttributeValue(attr);
 		out.write('"');
 	}
 
 	/**
 	 * Writes the attribute's value.
 	 */
-	private static void writeChildrenXml(Attr attr, IndentWriter out, boolean escaped) throws IOException {
-		char[] data = attr.getValue().toCharArray();
-		if (data == null)
+	protected void writeAttributeValue(Attr attr) throws IOException {
+		String value = attr.getValue();
+
+		if (value == null) {
 			return;
+		}
+
+		char[] data = value.toCharArray();
 
 		int length = data.length;
 		int start = 0, last = 0;
@@ -194,7 +253,7 @@ class XmlWriter implements SVGConstants {
 				out.write("&quot;");
 				break;
 			default: // to be able to escape characters if allowed
-				if (escaped && (c > 0x007F)) {
+				if (isEscaped() && (c > 0x007F)) {
 					out.write(data, start, last - start);
 					String hex = "0000" + Integer.toHexString(c);
 					out.write("&#x" + hex.substring(hex.length() - 4) + ";");
@@ -204,22 +263,26 @@ class XmlWriter implements SVGConstants {
 			}
 			last++;
 		}
+
 		out.write(data, start, last - start);
 	}
 
 	/**
-	 * Writes out the comment. Note that spaces may be added to prevent illegal
-	 * comments: between consecutive dashes ("--") or if the last character of the
-	 * comment is a dash.
+	 * Writes out the comment.
+	 * <p>
+	 * Note that spaces may be added to prevent illegal comments: between
+	 * consecutive dashes ("--") or if the last character of the comment is a dash.
+	 * </p>
 	 */
-	private static void writeXml(Comment comment, IndentWriter out, boolean escaped) throws IOException {
+	protected void writeXml(Comment comment) throws IOException {
+		String sdata = comment.getData();
 
-		char[] data = comment.getData().toCharArray();
-
-		if (data == null) {
+		if (sdata == null || sdata.isEmpty()) {
 			out.write("<!---->");
 			return;
 		}
+
+		char[] data = sdata.toCharArray();
 
 		out.write("<!--");
 		boolean sawDash = false;
@@ -247,18 +310,24 @@ class XmlWriter implements SVGConstants {
 		out.write("-->");
 	}
 
-	private static void writeXml(Text text, IndentWriter out, boolean escaped) throws IOException {
-		writeXml(text, out, false, escaped);
+	/**
+	 * Serialize a Text node.
+	 * 
+	 * @param text the Text node.
+	 * @throws IOException if an I/O error occurs.
+	 */
+	protected void writeXml(Text text) throws IOException {
+		writeXml(text, false);
 	}
 
-	private static void writeXml(Text text, IndentWriter out, boolean trimWS, boolean escaped) throws IOException {
-		char[] data = text.getData().toCharArray();
+	private void writeXml(Text text, boolean trimWS) throws IOException {
+		String sdata = text.getData();
 
-		// XXX saw this once -- being paranoid
-		if (data == null) {
-			System.err.println("Null text data??");
+		if (sdata == null || sdata.isEmpty()) {
 			return;
 		}
+
+		char[] data = sdata.toCharArray();
 
 		int length = data.length;
 		int start = 0, last = 0;
@@ -336,7 +405,7 @@ class XmlWriter implements SVGConstants {
 				out.write("&amp;");
 				break;
 			default: // to be able to escape characters if allowed
-				if (escaped && (c > 0x007F)) {
+				if (isEscaped() && (c > 0x007F)) {
 					out.write(data, start, last - start);
 					String hex = "0000" + Integer.toHexString(c);
 					out.write("&#x" + hex.substring(hex.length() - 4) + ";");
@@ -349,12 +418,21 @@ class XmlWriter implements SVGConstants {
 		out.write(data, start, last - start);
 	}
 
-	private static void writeXml(CDATASection cdataSection, IndentWriter out, boolean escaped) throws IOException {
-		char[] data = cdataSection.getData().toCharArray();
-		if (data == null) {
+	/**
+	 * Serialize a CDATASection node.
+	 * 
+	 * @param cdataSection the CDATASection node.
+	 * @throws IOException if an I/O error occurs.
+	 */
+	protected void writeXml(CDATASection cdataSection) throws IOException {
+		String sdata = cdataSection.getData();
+
+		if (sdata == null || sdata.isEmpty()) {
 			out.write("<![CDATA[]]>");
 			return;
 		}
+
+		char[] data = sdata.toCharArray();
 
 		out.write("<![CDATA[");
 		int length = data.length;
@@ -365,7 +443,8 @@ class XmlWriter implements SVGConstants {
 			// embedded "]]>" needs to be split into adjacent
 			// CDATA blocks ... can be split at either point
 			if (c == ']') {
-				if (((last + 2) < data.length) && (data[last + 1] == ']') && (data[last + 2] == '>')) {
+				if (((last + 2) < data.length) && (data[last + 1] == ']')
+						&& (data[last + 2] == '>')) {
 					out.write(data, start, last - start);
 					start = last + 1;
 					out.write("]]]]><![CDATA[>");
@@ -378,8 +457,13 @@ class XmlWriter implements SVGConstants {
 		out.write("]]>");
 	}
 
-	private static void writeXml(Element element, IndentWriter out, boolean escaped)
-			throws IOException, SVGGraphics2DIOException {
+	/**
+	 * Serialize an Element node.
+	 * 
+	 * @param element the Element node.
+	 * @throws IOException if an I/O error occurs.
+	 */
+	protected void writeXml(Element element) throws IOException {
 		out.write(TAG_START, 0, 1); // "<"
 		out.write(element.getTagName());
 
@@ -389,7 +473,7 @@ class XmlWriter implements SVGConstants {
 			for (int i = 0; i < nAttr; i++) {
 				Attr attr = (Attr) attributes.item(i);
 				out.write(' ');
-				writeXml(attr, out, escaped);
+				writeXml(attr);
 			}
 		}
 
@@ -414,7 +498,7 @@ class XmlWriter implements SVGConstants {
 			out.setIndentLevel(out.getIndentLevel() + 2);
 		}
 
-		writeChildrenXml(element, out, escaped);
+		writeChildrenXml(element);
 
 		out.write(TAG_START, 0, 2); // "</"
 		out.write(element.getTagName());
@@ -424,16 +508,24 @@ class XmlWriter implements SVGConstants {
 		out.write(TAG_END, 1, 1); // ">"
 	}
 
-	private static void writeChildrenXml(Element element, IndentWriter out, boolean escaped)
-			throws IOException, SVGGraphics2DIOException {
+	protected void writeChildrenXml(Element element) throws IOException {
 		Node child = element.getFirstChild();
 		while (child != null) {
-			writeXml(child, out, escaped);
+			writeXml(child);
 			child = child.getNextSibling();
 		}
 	}
 
-	private static void writeDocumentHeader(IndentWriter out) throws IOException {
+	/**
+	 * Write an XML header.
+	 * <p>
+	 * If the writer has any encoding information, it is used. Otherwise UTF-8 is
+	 * assumed.
+	 * </p>
+	 * 
+	 * @throws IOException if an I/O error occurs.
+	 */
+	protected void writeXmlHeader() throws IOException {
 		String encoding = null;
 
 		if (out.getProxied() instanceof OutputStreamWriter) {
@@ -441,6 +533,10 @@ class XmlWriter implements SVGConstants {
 			encoding = java2std(osw.getEncoding());
 		}
 
+		writeXmlHeader(out, encoding);
+	}
+
+	static void writeXmlHeader(Writer out, String encoding) throws IOException {
 		out.write("<?xml version=\"1.0\"");
 		if (encoding != null) {
 			out.write(" encoding=\"");
@@ -449,36 +545,76 @@ class XmlWriter implements SVGConstants {
 		}
 		out.write("?>");
 		out.write(EOL);
+	}
 
-		// Write DOCTYPE declaration here. Skip until specification is released.
-		out.write("<!DOCTYPE svg PUBLIC '");
-		out.write(SVG_PUBLIC_ID);
-		out.write("'");
-		out.write(EOL);
+	/**
+	 * Serialize a DocumentType node.
+	 * 
+	 * @param docType the DocumentType node.
+	 * @throws IOException if an I/O error occurs.
+	 */
+	protected void writeXml(DocumentType docType) throws IOException {
+		writeDocumentType(out, docType.getName(), docType.getPublicId(), docType.getSystemId());
+	}
 
-		out.write("          '");
-		out.write(SVG_SYSTEM_ID);
-		out.write("'");
-		out.write(">");
+	/**
+	 * Serialize a document type with the given identifiers.
+	 * 
+	 * @param out      the writer to write the serialization output.
+	 * @param name     the document type name.
+	 * @param publicId the public identifier, or {@code null} if none.
+	 * @param systemId the system identifier, or {@code null} if none.
+	 * @throws IOException if an I/O error occurs.
+	 */
+	static void writeDocumentType(Writer out, String name, String publicId, String systemId)
+			throws IOException {
+		out.write("<!DOCTYPE ");
+		out.write(name);
+
+		if (publicId != null) {
+			out.write(" PUBLIC '");
+			out.write(publicId);
+			out.write('\'');
+			out.write(EOL);
+			out.write("         ");
+		}
+
+		if (systemId != null) {
+			out.write(" '");
+			out.write(systemId);
+			out.write('\'');
+		}
+
+		out.write('>');
 		out.write(EOL);
 	}
 
-	private static void writeXml(Document document, IndentWriter out, boolean escaped)
-			throws IOException, SVGGraphics2DIOException {
-		writeDocumentHeader(out);
+	/**
+	 * Serialize a Document node.
+	 * 
+	 * @param document the Document node.
+	 * @throws IOException if an I/O error occurs.
+	 */
+	protected void writeXml(Document document) throws IOException {
+		writeXmlHeader();
 		NodeList childList = document.getChildNodes();
-		writeXml(childList, out, escaped);
+		writeXml(childList);
 	}
 
-	private static void writeXml(NodeList childList, IndentWriter out, boolean escaped)
-			throws IOException, SVGGraphics2DIOException {
+	/**
+	 * Serialize a list of child nodes.
+	 * 
+	 * @param childList the child node list.
+	 * @throws IOException if an I/O error occurs.
+	 */
+	protected void writeXml(NodeList childList) throws IOException {
 		int length = childList.getLength();
 
 		if (length == 0)
 			return;
 		for (int i = 0; i < length; i++) {
 			Node child = childList.item(i);
-			writeXml(child, out, escaped);
+			writeXml(child);
 			out.write(EOL);
 		}
 	}
@@ -526,43 +662,40 @@ class XmlWriter implements SVGConstants {
 		return "UTF-8";
 	}
 
-	public static void writeXml(Node node, Writer writer, boolean escaped) throws SVGGraphics2DIOException {
-		try {
-			IndentWriter out = null;
-			if (writer instanceof IndentWriter)
-				out = (IndentWriter) writer;
-			else
-				out = new IndentWriter(writer);
-
-			switch (node.getNodeType()) {
-			case Node.ATTRIBUTE_NODE:
-				writeXml((Attr) node, out, escaped);
-				break;
-			case Node.COMMENT_NODE:
-				writeXml((Comment) node, out, escaped);
-				break;
-			case Node.TEXT_NODE:
-				writeXml((Text) node, out, escaped);
-				break;
-			case Node.CDATA_SECTION_NODE:
-				writeXml((CDATASection) node, out, escaped);
-				break;
-			case Node.DOCUMENT_NODE:
-				writeXml((Document) node, out, escaped);
-				break;
-			case Node.DOCUMENT_FRAGMENT_NODE:
-				writeDocumentHeader(out);
-				NodeList childList = node.getChildNodes();
-				writeXml(childList, out, escaped);
-				break;
-			case Node.ELEMENT_NODE:
-				writeXml((Element) node, out, escaped);
-				break;
-			default:
-				throw new SVGGraphics2DRuntimeException(ErrorConstants.INVALID_NODE + node.getClass().getName());
-			}
-		} catch (IOException io) {
-			throw new SVGGraphics2DIOException(io);
+	/**
+	 * Serialize the given XML node.
+	 * 
+	 * @param node the node to serialize.
+	 * @throws IOException                   if a generic I/O error occurs.
+	 * @throws SVGGraphics2DRuntimeException if an invalid node type is found.
+	 */
+	public void writeXml(Node node) throws IOException, SVGGraphics2DRuntimeException {
+		switch (node.getNodeType()) {
+		case Node.ELEMENT_NODE:
+			writeXml((Element) node);
+			break;
+		case Node.ATTRIBUTE_NODE:
+			writeXml((Attr) node);
+			break;
+		case Node.TEXT_NODE:
+			writeXml((Text) node);
+			break;
+		case Node.COMMENT_NODE:
+			writeXml((Comment) node);
+			break;
+		case Node.CDATA_SECTION_NODE:
+			writeXml((CDATASection) node);
+			break;
+		case Node.DOCUMENT_NODE:
+			writeXml((Document) node);
+			break;
+		case Node.DOCUMENT_FRAGMENT_NODE:
+			NodeList childList = node.getChildNodes();
+			writeXml(childList);
+			break;
+		default:
+			throw new SVGGraphics2DRuntimeException(
+					ErrorConstants.INVALID_NODE + node.getClass().getName());
 		}
 	}
 

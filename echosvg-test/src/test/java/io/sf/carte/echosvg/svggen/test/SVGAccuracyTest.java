@@ -38,6 +38,7 @@ import io.sf.carte.echosvg.dom.GenericDOMImplementation;
 import io.sf.carte.echosvg.svggen.SVGGeneratorContext;
 import io.sf.carte.echosvg.svggen.SVGGeneratorContext.GraphicContextDefaults;
 import io.sf.carte.echosvg.svggen.SVGGraphics2D;
+import io.sf.carte.echosvg.svggen.XmlSerializer;
 import io.sf.carte.echosvg.test.misc.TestFonts;
 import io.sf.carte.echosvg.test.xml.XmlUtil;
 import io.sf.carte.echosvg.util.SVGConstants;
@@ -88,6 +89,11 @@ public class SVGAccuracyTest {
 	private Integer compressionLevel;
 
 	/**
+	 * The serializer.
+	 */
+	private XmlSerializer xmlSerializer;
+
+	/**
 	 * Constructor
 	 * 
 	 * @param painter the <code>Painter</code> object which will perform an
@@ -98,6 +104,10 @@ public class SVGAccuracyTest {
 	public SVGAccuracyTest(Painter painter, URL refURL) {
 		this.painter = painter;
 		this.refURL = refURL;
+	}
+
+	protected Painter getPainter() {
+		return painter;
 	}
 
 	/**
@@ -117,6 +127,25 @@ public class SVGAccuracyTest {
 	 */
 	public void setCompressionLevel(Integer compressionLevel) {
 		this.compressionLevel = compressionLevel;
+	}
+
+	/**
+	 * Get the object to use in SVG serialization.
+	 * 
+	 * @return the SVG serializer, or {@code null} if the default should be used.
+	 */
+	public XmlSerializer getXmlSerializer() {
+		return xmlSerializer;
+	}
+
+	/**
+	 * Set the object to use in SVG serialization.
+	 * 
+	 * @param xmlSerializer the SVG serializer, or {@code null} if the default
+	 *                      should be used.
+	 */
+	public void setXmlSerializer(XmlSerializer xmlSerializer) {
+		this.xmlSerializer = xmlSerializer;
 	}
 
 	void setSaveSVG(File saveSVG) {
@@ -216,6 +245,7 @@ public class SVGAccuracyTest {
 		ctx.setGraphicContextDefaults(defaults);
 		ctx.setPrecision(12);
 		ctx.setCompressionLevel(compressionLevel);
+		ctx.setXmlSerializer(xmlSerializer);
 
 		return new SVGGraphics2D(ctx, false);
 	}

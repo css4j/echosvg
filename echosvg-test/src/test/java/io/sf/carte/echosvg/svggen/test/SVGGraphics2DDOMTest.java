@@ -80,14 +80,16 @@ public class SVGGraphics2DDOMTest {
 		acctest.runTest(SVGAccuracyTest.FAIL_ON_ERROR);
 	}
 
-	private SVGAccuracyTest makeSVGAccuracyTest(Painter painter, String id) throws MalformedURLException {
+	private SVGAccuracyTest makeSVGAccuracyTest(Painter painter, String id)
+			throws MalformedURLException {
 		String cl = SVGGeneratorTest.getNonQualifiedClassName(painter);
 
-		SVGAccuracyTest test = new SVGAccuracyTest(painter,
-				SVGGeneratorTest.getReferenceURL(painter, SVGGeneratorTest.PLAIN_GENERATION_PREFIX));
+		SVGAccuracyTest test = new SVGAccuracyTest(painter, SVGGeneratorTest
+				.getReferenceURL(painter, SVGGeneratorTest.PLAIN_GENERATION_PREFIX, null));
 
-		String filename = new URL(SVGGeneratorTest.GENERATOR_REFERENCE_BASE + SVGGeneratorTest.CANDIDATE_REF_DIR
-				+ '/' + cl + SVGGeneratorTest.SVG_EXTENSION).getFile();
+		String filename = new URL(SVGGeneratorTest.GENERATOR_REFERENCE_BASE
+				+ SVGGeneratorTest.CANDIDATE_REF_DIR + '/' + cl + SVGGeneratorTest.SVG_EXTENSION)
+						.getFile();
 
 		test.setSaveSVG(new File(filename));
 

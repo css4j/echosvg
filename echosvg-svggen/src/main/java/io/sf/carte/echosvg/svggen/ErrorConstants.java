@@ -46,7 +46,7 @@ public interface ErrorConstants {
 	String ERR_ACI = "AttributedCharacterIterator not supported yet";
 
 	// XmlWriter
-	String ERR_PROXY = "proxy should not be null";
+	String ERR_WRITER = "Writer should not be null";
 	String INVALID_NODE = "Unable to write node of type ";
 
 	// DOMGroup/TreeManager
