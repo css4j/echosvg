@@ -864,18 +864,20 @@ public class StrokingTextPainter extends BasicTextPainter {
 				// horizontal layouts
 
 				Shape decorationShape = textRun.getLayout().getDecorationOutline(decorationType);
+				Rectangle2D bounds = decorationShape.getBounds2D();
+
 				if (decorationRect == null) {
 					// create a new one
-					Rectangle2D r2d = decorationShape.getBounds2D();
-					decorationRect = new Rectangle2D.Double(r2d.getX(), yLoc, r2d.getWidth(), height);
+					decorationRect = new Rectangle2D.Double(bounds.getX(), yLoc, bounds.getWidth(),
+							height);
 				} else {
 					// extend the current one
-					Rectangle2D bounds = decorationShape.getBounds2D();
 					double minX = Math.min(decorationRect.getX(), bounds.getX());
 					double maxX = Math.max(decorationRect.getMaxX(), bounds.getMaxX());
 					decorationRect.setRect(minX, yLoc, maxX - minX, height);
 				}
 			}
+
 			prevPaint = paint;
 			prevStroke = stroke;
 			prevStrokePaint = strokePaint;
@@ -1119,13 +1121,14 @@ public class StrokingTextPainter extends BasicTextPainter {
 				// plain horizontal layouts
 
 				Shape decorationShape = textRun.getLayout().getDecorationOutline(decorationType);
+				Rectangle2D bounds = decorationShape.getBounds2D();
+
 				if (decorationRect == null) {
 					// create a new one
-					Rectangle2D r2d = decorationShape.getBounds2D();
-					decorationRect = new Rectangle2D.Double(r2d.getX(), yLoc, r2d.getWidth(), height);
+					decorationRect = new Rectangle2D.Double(bounds.getX(), yLoc, bounds.getWidth(),
+							height);
 				} else {
 					// extend the current one
-					Rectangle2D bounds = decorationShape.getBounds2D();
 					double minX = Math.min(decorationRect.getX(), bounds.getX());
 					double maxX = Math.max(decorationRect.getMaxX(), bounds.getMaxX());
 					decorationRect.setRect(minX, yLoc, maxX - minX, height);
@@ -1238,14 +1241,14 @@ public class StrokingTextPainter extends BasicTextPainter {
 				// plain horizontal layouts
 
 				Shape decorationShape = textRun.getLayout().getDecorationOutline(decorationType);
+				Rectangle2D bounds = decorationShape.getBounds2D();
 
 				if (decorationRect == null) {
 					// create a new one
-					Rectangle2D r2d = decorationShape.getBounds2D();
-					decorationRect = new Rectangle2D.Double(r2d.getX(), yLoc, r2d.getWidth(), height);
+					decorationRect = new Rectangle2D.Double(bounds.getX(), yLoc, bounds.getWidth(),
+							height);
 				} else {
 					// extend the current one
-					Rectangle2D bounds = decorationShape.getBounds2D();
 					double minX = Math.min(decorationRect.getX(), bounds.getX());
 					double maxX = Math.max(decorationRect.getMaxX(), bounds.getMaxX());
 					decorationRect.setRect(minX, yLoc, maxX - minX, height);
