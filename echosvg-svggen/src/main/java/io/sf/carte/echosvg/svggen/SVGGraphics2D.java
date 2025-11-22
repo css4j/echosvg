@@ -448,15 +448,31 @@ public class SVGGraphics2D extends AbstractGraphics2D implements SVGSyntax, Erro
 			//
 			svgRoot.setAttributeNS(XMLNS_NAMESPACE_URI, XMLNS_PREFIX, SVG_NAMESPACE_URI);
 
-			svgRoot.setAttributeNS(XMLNS_NAMESPACE_URI, XMLNS_PREFIX + ":" + XLINK_PREFIX, XLINK_NAMESPACE_URI);
+			svgRoot.setAttributeNS(XMLNS_NAMESPACE_URI, XMLNS_PREFIX + ":" + XLINK_PREFIX,
+					XLINK_NAMESPACE_URI);
 
 			DocumentFragment svgDocument = svgRoot.getOwnerDocument().createDocumentFragment();
 			svgDocument.appendChild(svgRoot);
 
-			if (useCss)
+			if (useCss) {
 				SVGCSSStyler.style(svgDocument);
+			}
 
-			XmlWriter.writeXml(svgDocument, writer, escaped);
+			XmlSerializer xmlWri = getGeneratorContext().getXmlSerializer();
+
+			if (xmlWri == null) {
+				xmlWri = new XmlSerializer() {
+				};
+			}
+
+			// <?xml version="1.0" encoding="..."?>
+			// Should end with a newline so the serializer starts at column 1
+			writeDocumentHeader(writer);
+
+			// Write DOCTYPE declaration here.
+			xmlWri.writeDocumentType(writer, SVG_SVG_TAG, SVG_PUBLIC_ID, SVG_SYSTEM_ID);
+			xmlWri.serializeXML(svgDocument, writer, escaped);
+
 			writer.flush();
 		} catch (SVGGraphics2DIOException e) {
 			// this catch prevents from catching an SVGGraphics2DIOException
@@ -466,6 +482,12 @@ public class SVGGraphics2D extends AbstractGraphics2D implements SVGSyntax, Erro
 			generatorCtx.getErrorHandler().handleError(e);
 		} catch (IOException io) {
 			generatorCtx.getErrorHandler().handleError(new SVGGraphics2DIOException(io));
+		} catch (SVGGraphics2DRuntimeException e) {
+			// this catch prevents from catching an SVGGraphics2DRuntimeException
+			// and wrapping it again in another SVGGraphics2DRuntimeException
+			generatorCtx.getErrorHandler().handleError(e);
+		} catch (RuntimeException e) {
+			generatorCtx.getErrorHandler().handleError(new SVGGraphics2DRuntimeException(e));
 		} finally {
 			// Restore the svgRoot to its original tree position
 			if (rootParent != null) {
@@ -476,6 +498,17 @@ public class SVGGraphics2D extends AbstractGraphics2D implements SVGSyntax, Erro
 				}
 			}
 		}
+	}
+
+	private void writeDocumentHeader(Writer out) throws IOException {
+		String encoding = null;
+
+		if (out instanceof OutputStreamWriter) {
+			OutputStreamWriter osw = (OutputStreamWriter) out;
+			encoding = XmlWriter.java2std(osw.getEncoding());
+		}
+
+		XmlWriter.writeXmlHeader(out, encoding);
 	}
 
 	/**

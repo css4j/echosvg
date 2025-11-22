@@ -117,6 +117,8 @@ public class SVGGeneratorContext implements ErrorConstants {
 	 */
 	private Integer compressionLevel = null;
 
+	private XmlSerializer xmlSerializer = null;
+
 	/**
 	 * Class to describe the GraphicContext defaults to be used. Note that this
 	 * class does *not* contain a default for the initial transform, as this
@@ -471,6 +473,25 @@ public class SVGGeneratorContext implements ErrorConstants {
 			format += "#";
 			decimalFormats[i] = new DecimalFormat(format, dsf);
 		}
+	}
+
+	/**
+	 * Get the object to use in SVG serialization.
+	 * 
+	 * @return the SVG serializer, or {@code null} if the default should be used.
+	 */
+	public XmlSerializer getXmlSerializer() {
+		return xmlSerializer;
+	}
+
+	/**
+	 * Set the object to use in SVG serialization.
+	 * 
+	 * @param xmlSerializer the SVG serializer, or {@code null} if the default
+	 *                      should be used.
+	 */
+	public void setXmlSerializer(XmlSerializer xmlSerializer) {
+		this.xmlSerializer = xmlSerializer;
 	}
 
 }

@@ -100,6 +100,9 @@ public class GeneratorContext extends SVGAccuracyTest {
 		// Set ID generator
 		ctx.setIDGenerator(new TestIDGenerator());
 
+		ctx.setCompressionLevel(getCompressionLevel());
+		ctx.setXmlSerializer(getXmlSerializer());
+
 		// Extension Handler to be done
 
 		// Image Handler to be done

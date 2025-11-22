@@ -31,6 +31,8 @@ import java.net.URL;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import io.sf.carte.echosvg.svggen.CompactXmlSerializer;
+import io.sf.carte.echosvg.svggen.XmlSerializer;
 import io.sf.carte.echosvg.test.image.ImageCompareUtil;
 import io.sf.carte.echosvg.test.image.TempImageFiles;
 import io.sf.carte.echosvg.test.misc.TestFonts;
@@ -219,6 +221,12 @@ public class SVGGeneratorTest {
 	}
 
 	@Test
+	public void testNegativeLengths_Compact() throws TranscoderException, IOException {
+		XmlSerializer ser = new CompactXmlSerializer();
+		runTests("NegativeLengths", SVGAccuracyTest.FAIL_ON_ERROR, null, ser);
+	}
+
+	@Test
 	public void testPaints() throws TranscoderException, IOException {
 		runTests("Paints");
 	}
@@ -262,7 +270,7 @@ public class SVGGeneratorTest {
 	 * @throws TranscoderException
 	 */
 	void runTests(Painter painter) throws IOException, TranscoderException {
-		runTests(painter, SVGAccuracyTest.FAIL_ON_ERROR, null);
+		runTests(painter, SVGAccuracyTest.FAIL_ON_ERROR, null, null);
 	}
 
 	/**
@@ -285,6 +293,18 @@ public class SVGGeneratorTest {
 	 */
 	void runTests(String painterClassname, int accuracyTestErrorHandling, Integer compressionLevel)
 			throws IOException, TranscoderException {
+		runTests(painterClassname, accuracyTestErrorHandling, compressionLevel, null);
+	}
+
+	/**
+	 * The id should be the Painter's class name prefixed with the package name
+	 * defined in getPackageName
+	 * 
+	 * @throws IOException         If an I/O error occurs
+	 * @throws TranscoderException
+	 */
+	void runTests(String painterClassname, int accuracyTestErrorHandling, Integer compressionLevel,
+			XmlSerializer xmlSerializer) throws IOException, TranscoderException {
 		String clName = getClass().getPackage().getName() + "." + painterClassname;
 		Class<?> cl;
 
@@ -308,7 +328,7 @@ public class SVGGeneratorTest {
 
 		Painter painter = (Painter) o;
 
-		runTests(painter, accuracyTestErrorHandling, compressionLevel);
+		runTests(painter, accuracyTestErrorHandling, compressionLevel, xmlSerializer);
 	}
 
 	/**
@@ -318,27 +338,28 @@ public class SVGGeneratorTest {
 	 * @throws IOException         If an I/O error occurs
 	 * @throws TranscoderException
 	 */
-	void runTests(Painter painter, int accuracyTestErrorHandling, Integer compressionLevel)
-		throws IOException, TranscoderException {
+	void runTests(Painter painter, int accuracyTestErrorHandling, Integer compressionLevel,
+			XmlSerializer xmlSerializer) throws IOException, TranscoderException {
 
-		SVGAccuracyTest acctest = makeSVGAccuracyTest(painter);
-		acctest.setCompressionLevel(compressionLevel);
+		SVGAccuracyTest acctest = makeSVGAccuracyTest(painter, compressionLevel, xmlSerializer);
 		acctest.runTest(accuracyTestErrorHandling);
 
-		GeneratorContext genctxt = makeGeneratorContext(painter);
+		GeneratorContext genctxt = makeGeneratorContext(painter, xmlSerializer);
 		genctxt.setCompressionLevel(compressionLevel);
+		genctxt.setXmlSerializer(xmlSerializer);
 		genctxt.runTest(accuracyTestErrorHandling);
 
 		float allowedPercentBelowThreshold = 0.01f;
 		float allowedPercentOverThreshold = 0.01f;
-		SVGRenderingAccuracyTest t = makeSVGRenderingAccuracyTest(painter, PLAIN_GENERATION_PREFIX);
+		SVGRenderingAccuracyTest t = makeSVGRenderingAccuracyTest(painter, PLAIN_GENERATION_PREFIX,
+				xmlSerializer);
 		t.runTest(allowedPercentBelowThreshold, allowedPercentOverThreshold);
 
-		t = makeSVGRenderingAccuracyTest(painter, CUSTOM_CONTEXT_GENERATION_PREFIX);
+		t = makeSVGRenderingAccuracyTest(painter, CUSTOM_CONTEXT_GENERATION_PREFIX, xmlSerializer);
 		t.runTest(allowedPercentBelowThreshold, allowedPercentOverThreshold);
 
 		ImageCompareUtil ict = makeImageCompareTest(painter, PLAIN_GENERATION_PREFIX,
-			CUSTOM_CONTEXT_GENERATION_PREFIX);
+				CUSTOM_CONTEXT_GENERATION_PREFIX);
 		// Tolerances must be higher, as rendering varies a bit
 		String err = ict.compare(1.1f, 0.004f);
 		if (err != null) {
@@ -357,23 +378,30 @@ public class SVGGeneratorTest {
 		return new ImageCompareUtil(fileUtil, PIXEL_THRESHOLD, testReferenceA, testReferenceB);
 	}
 
-	private SVGRenderingAccuracyTest makeSVGRenderingAccuracyTest(Painter painter, String prefix)
-		throws MalformedURLException {
-		String cl = prefix + getNonQualifiedClassName(painter);
-		String testSource = GENERATOR_REFERENCE_BASE + cl + SVG_EXTENSION;
+	private SVGRenderingAccuracyTest makeSVGRenderingAccuracyTest(Painter painter, String prefix,
+			XmlSerializer xmlSerializer) throws MalformedURLException {
+		String simpleName = getNonQualifiedClassName(painter);
+		String cl = prefix + simpleName;
+		String svgId = prefix + getSVGTestID(simpleName, xmlSerializer);
+
+		String testSource = GENERATOR_REFERENCE_BASE + svgId + SVG_EXTENSION;
+
 		String testReference = GENERATOR_REFERENCE_BASE + RENDERING_DIR + "/" + cl + PNG_EXTENSION;
+
 		String[] variationURLs = new String[VARIATION_PLATFORMS.length + 1];
-		variationURLs[0] = GENERATOR_REFERENCE_BASE + RENDERING_DIR + "/" + ACCEPTED_VARIATION_DIR + "/" + cl
-			+ PNG_EXTENSION;
+		variationURLs[0] = GENERATOR_REFERENCE_BASE + RENDERING_DIR + "/" + ACCEPTED_VARIATION_DIR
+				+ "/" + cl + PNG_EXTENSION;
 		for (int i = 0; i < VARIATION_PLATFORMS.length; i++) {
-			variationURLs[i + 1] = GENERATOR_REFERENCE_BASE + RENDERING_DIR + "/" + ACCEPTED_VARIATION_DIR + "/" + cl
-				+ '_' + VARIATION_PLATFORMS[i] + PNG_EXTENSION;
+			variationURLs[i + 1] = GENERATOR_REFERENCE_BASE + RENDERING_DIR + "/"
+					+ ACCEPTED_VARIATION_DIR + "/" + cl + '_' + VARIATION_PLATFORMS[i]
+					+ PNG_EXTENSION;
 		}
-		String vPath = GENERATOR_REFERENCE_BASE + RENDERING_DIR + "/" + CANDIDATE_VARIATION_DIR + "/" + cl;
+		String vPath = GENERATOR_REFERENCE_BASE + RENDERING_DIR + "/" + CANDIDATE_VARIATION_DIR
+				+ "/" + cl;
 		String saveRangeVariation = vPath + PNG_EXTENSION;
 		String savePlatformVariation = vPath + PLATFORM_VARIATION_SUFFIX + PNG_EXTENSION;
-		String candidateReference = GENERATOR_REFERENCE_BASE + RENDERING_DIR + "/" + RENDERING_CANDIDATE_REF_DIR + "/"
-			+ cl + PNG_EXTENSION;
+		String candidateReference = GENERATOR_REFERENCE_BASE + RENDERING_DIR + "/"
+				+ RENDERING_CANDIDATE_REF_DIR + "/" + cl + PNG_EXTENSION;
 
 		SVGRenderingAccuracyTest test = new SVGRenderingAccuracyTest(testSource, testReference);
 		for (String variationURL : variationURLs) {
@@ -387,33 +415,52 @@ public class SVGGeneratorTest {
 		return test;
 	}
 
-	private GeneratorContext makeGeneratorContext(Painter painter) throws MalformedURLException {
-		String cl = CUSTOM_CONTEXT_GENERATION_PREFIX + getNonQualifiedClassName(painter);
+	private GeneratorContext makeGeneratorContext(Painter painter, XmlSerializer xmlSerializer)
+			throws MalformedURLException {
+		String simpleName = getNonQualifiedClassName(painter);
+		String cl = CUSTOM_CONTEXT_GENERATION_PREFIX + getSVGTestID(simpleName, xmlSerializer);
 
 		GeneratorContext test = new GeneratorContext(painter,
-			getReferenceURL(painter, CUSTOM_CONTEXT_GENERATION_PREFIX));
+				getReferenceURL(painter, CUSTOM_CONTEXT_GENERATION_PREFIX, xmlSerializer));
 
-		String filename = new URL(GENERATOR_REFERENCE_BASE + CANDIDATE_REF_DIR + "/" + cl + SVG_EXTENSION).getFile();
+		String filename = new URL(
+				GENERATOR_REFERENCE_BASE + CANDIDATE_REF_DIR + "/" + cl + SVG_EXTENSION).getFile();
 		test.setSaveSVG(new File(filename));
 		return test;
 	}
 
-	private SVGAccuracyTest makeSVGAccuracyTest(Painter painter) throws MalformedURLException {
-		String cl = PLAIN_GENERATION_PREFIX + painter.getClass().getSimpleName();
+	private SVGAccuracyTest makeSVGAccuracyTest(Painter painter, Integer compressionLevel,
+			XmlSerializer xmlSerializer) throws MalformedURLException {
+		String simpleName = getNonQualifiedClassName(painter);
+		String cl = PLAIN_GENERATION_PREFIX + getSVGTestID(simpleName, xmlSerializer);
 
-		SVGAccuracyTest test = new SVGAccuracyTest(painter, getReferenceURL(painter, PLAIN_GENERATION_PREFIX));
+		SVGAccuracyTest test = new SVGAccuracyTest(painter,
+				getReferenceURL(painter, PLAIN_GENERATION_PREFIX, xmlSerializer));
 
-		String filename = new URL(GENERATOR_REFERENCE_BASE + CANDIDATE_REF_DIR + "/" + cl + SVG_EXTENSION).getFile();
+		test.setCompressionLevel(compressionLevel);
+		test.setXmlSerializer(xmlSerializer);
+
+		String filename = new URL(
+				GENERATOR_REFERENCE_BASE + CANDIDATE_REF_DIR + "/" + cl + SVG_EXTENSION).getFile();
 		test.setSaveSVG(new File(filename));
 		return test;
 	}
 
-	static String getNonQualifiedClassName(Painter painter) {
+	static String getSVGTestID(String simpleName, XmlSerializer xmlSerializer) {
+		if (xmlSerializer != null) {
+			simpleName += '_' + getNonQualifiedClassName(xmlSerializer);
+		}
+		return simpleName;
+	}
+
+	static String getNonQualifiedClassName(Object painter) {
 		return painter.getClass().getSimpleName();
 	}
 
-	static URL getReferenceURL(Painter painter, String prefix) throws MalformedURLException {
-		String suffix = prefix + getNonQualifiedClassName(painter) + SVG_EXTENSION;
+	static URL getReferenceURL(Painter painter, String prefix, XmlSerializer xmlSerializer)
+			throws MalformedURLException {
+		String simpleName = getNonQualifiedClassName(painter);
+		String suffix = prefix + getSVGTestID(simpleName, xmlSerializer) + SVG_EXTENSION;
 		return new URL(GENERATOR_REFERENCE_BASE + suffix);
 	}
 
