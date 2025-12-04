@@ -22,7 +22,6 @@ import java.awt.AlphaComposite;
 import java.awt.Composite;
 import java.awt.CompositeContext;
 import java.awt.RenderingHints;
-import java.awt.color.ColorSpace;
 import java.awt.image.ColorModel;
 import java.awt.image.DataBufferInt;
 import java.awt.image.PackedColorModel;
@@ -120,15 +119,6 @@ public class SVGComposite implements Composite {
 
 	@Override
 	public CompositeContext createContext(ColorModel srcCM, ColorModel dstCM, RenderingHints hints) {
-		if (false) {
-			ColorSpace srcCS = srcCM.getColorSpace();
-			ColorSpace dstCS = dstCM.getColorSpace();
-			System.out.println("srcCS: " + srcCS);
-			System.out.println("dstCS: " + dstCS);
-			System.out.println("lRGB: " + ColorSpace.getInstance(ColorSpace.CS_LINEAR_RGB));
-			System.out.println("sRGB: " + ColorSpace.getInstance(ColorSpace.CS_sRGB));
-		}
-
 		// Orig Time no int_pack = 51792
 		// Simple int_pack = 19600
 		boolean use_int_pack = (is_INT_PACK(srcCM) && is_INT_PACK(dstCM));

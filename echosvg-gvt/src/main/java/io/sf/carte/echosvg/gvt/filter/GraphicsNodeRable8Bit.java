@@ -281,10 +281,6 @@ public class GraphicsNodeRable8Bit extends AbstractRable implements GraphicsNode
 		}
 
 		// Fell through let's do a new rendering...
-		if (false) {
-			System.out.println("Not using Cached Red: " + usr2dev);
-			System.out.println("Old:                  " + cachedUsr2dev);
-		}
 
 		if ((bounds2D.getWidth() > 0) && (bounds2D.getHeight() > 0)) {
 			cachedUsr2dev = (AffineTransform) usr2dev.clone();
