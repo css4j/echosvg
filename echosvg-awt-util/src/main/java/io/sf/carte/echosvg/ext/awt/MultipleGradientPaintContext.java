@@ -50,8 +50,6 @@ import io.sf.carte.echosvg.ext.awt.image.GraphicsUtil;
  */
 abstract class MultipleGradientPaintContext implements PaintContext {
 
-	static final boolean DEBUG = false;
-
 	/**
 	 * The color model data is generated in (always un premult).
 	 */
@@ -864,8 +862,6 @@ abstract class MultipleGradientPaintContext implements PaintContext {
 	protected final int indexGradientAntiAlias(float position, float sz) {
 		// first, manipulate position value depending on the cycle method.
 		if (cycleMethod == MultipleGradientPaint.NO_CYCLE) {
-			if (DEBUG)
-				System.out.println("NO_CYCLE");
 			float p1 = position - (sz / 2);
 			float p2 = position + (sz / 2);
 
@@ -920,7 +916,8 @@ abstract class MultipleGradientPaintContext implements PaintContext {
 				pB += (((tPix << 4) & 0xFF0) * norm) >> 16;
 			}
 
-			return (((pA & 0xFF0) << 20) | ((pR & 0xFF0) << 12) | ((pG & 0xFF0) << 4) | ((pB & 0xFF0) >> 4));
+			return (((pA & 0xFF0) << 20) | ((pR & 0xFF0) << 12) | ((pG & 0xFF0) << 4)
+					| ((pB & 0xFF0) >> 4));
 		}
 
 		// See how many times we are going to "wrap around" the gradient,
@@ -948,8 +945,6 @@ abstract class MultipleGradientPaintContext implements PaintContext {
 		// Go up and down from position by 1/2 sz.
 		float p1 = position - (sz / 2);
 		float p2 = position + (sz / 2);
-		if (DEBUG)
-			System.out.println("P1: " + p1 + " P2: " + p2);
 
 		// These indicate the direction to go from p1 and p2 when
 		// averaging...
@@ -957,9 +952,6 @@ abstract class MultipleGradientPaintContext implements PaintContext {
 		boolean p2_up = false;
 
 		if (cycleMethod == MultipleGradientPaint.REPEAT) {
-			if (DEBUG)
-				System.out.println("REPEAT");
-
 			// Get positions between -1 and 1
 			p1 = p1 - (int) p1;
 			p2 = p2 - (int) p2;
@@ -969,12 +961,7 @@ abstract class MultipleGradientPaintContext implements PaintContext {
 				p1 += 1;
 			if (p2 < 0)
 				p2 += 1;
-		}
-
-		else { // cycleMethod == MultipleGradientPaint.REFLECT
-			if (DEBUG)
-				System.out.println("REFLECT");
-
+		} else { // cycleMethod == MultipleGradientPaint.REFLECT
 			// take absolute values
 			// Note when we reflect we change sense of p1/2_up.
 			if (p2 < 0) {
@@ -1020,7 +1007,8 @@ abstract class MultipleGradientPaintContext implements PaintContext {
 		return getAntiAlias(p1, p1_up, p2, p2_up, sz, weight);
 	}
 
-	private int getAntiAlias(float p1, boolean p1_up, float p2, boolean p2_up, float sz, float weight) {
+	private int getAntiAlias(float p1, boolean p1_up, float p2, boolean p2_up, float sz,
+			float weight) {
 
 		// Until the last set of ops these are 28.4 fixed point values.
 		int ach = 0, rch = 0, gch = 0, bch = 0;
@@ -1158,9 +1146,6 @@ abstract class MultipleGradientPaintContext implements PaintContext {
 				f2 = idx2 = GRADIENT_SIZE_INDEX;
 			}
 
-			if (DEBUG)
-				System.out.println("I1: " + i1 + " Idx1: " + idx1 + " I2: " + i2 + " Idx2: " + idx2);
-
 			// Simple case within one gradient array (so the average
 			// of the two idx gives us the true average of colors).
 			if ((i1 == i2) && (idx1 <= idx2) && p1_up && !p2_up)
@@ -1171,7 +1156,8 @@ abstract class MultipleGradientPaintContext implements PaintContext {
 			int pix, norm;
 			int base = (int) ((1 << 16) / sz);
 			if ((i1 < i2) && p1_up && !p2_up) {
-				norm = (int) ((base * normalizedIntervals[i1] * (GRADIENT_SIZE_INDEX - f1)) / GRADIENT_SIZE_INDEX);
+				norm = (int) ((base * normalizedIntervals[i1] * (GRADIENT_SIZE_INDEX - f1))
+						/ GRADIENT_SIZE_INDEX);
 				pix = gradients[i1][(idx1 + GRADIENT_SIZE) >> 1];
 				ach += (((pix >>> 20) & 0xFF0) * norm) >> 16;
 				rch += (((pix >>> 12) & 0xFF0) * norm) >> 16;
@@ -1196,7 +1182,8 @@ abstract class MultipleGradientPaintContext implements PaintContext {
 				bch += (((pix << 4) & 0xFF0) * norm) >> 16;
 			} else {
 				if (p1_up) {
-					norm = (int) ((base * normalizedIntervals[i1] * (GRADIENT_SIZE_INDEX - f1)) / GRADIENT_SIZE_INDEX);
+					norm = (int) ((base * normalizedIntervals[i1] * (GRADIENT_SIZE_INDEX - f1))
+							/ GRADIENT_SIZE_INDEX);
 					pix = gradients[i1][(idx1 + GRADIENT_SIZE) >> 1];
 				} else {
 					norm = (int) ((base * normalizedIntervals[i1] * f1) / GRADIENT_SIZE_INDEX);
@@ -1208,7 +1195,8 @@ abstract class MultipleGradientPaintContext implements PaintContext {
 				bch += (((pix << 4) & 0xFF0) * norm) >> 16;
 
 				if (p2_up) {
-					norm = (int) ((base * normalizedIntervals[i2] * (GRADIENT_SIZE_INDEX - f2)) / GRADIENT_SIZE_INDEX);
+					norm = (int) ((base * normalizedIntervals[i2] * (GRADIENT_SIZE_INDEX - f2))
+							/ GRADIENT_SIZE_INDEX);
 					pix = gradients[i2][(idx2 + GRADIENT_SIZE) >> 1];
 				} else {
 					norm = (int) ((base * normalizedIntervals[i2] * f2) / GRADIENT_SIZE_INDEX);
@@ -1263,8 +1251,6 @@ abstract class MultipleGradientPaintContext implements PaintContext {
 			rch = (rch + 0x08) >> 4;
 			gch = (gch + 0x08) >> 4;
 			bch = (bch + 0x08) >> 4;
-			if (DEBUG)
-				System.out.println("Pix: [" + ach + ", " + rch + ", " + gch + ", " + bch + ']');
 		}
 
 		if (weight != 1) {
