@@ -286,12 +286,12 @@ public abstract class CSSEngine {
 	/**
 	 * The non CSS presentational hints.
 	 */
-	protected Set<String> nonCSSPresentationalHints;
+	protected final Set<String> nonCSSPresentationalHints;
 
 	/**
 	 * The non CSS presentational hints namespace URI.
 	 */
-	protected String nonCSSPresentationalHintsNamespaceURI;
+	protected final String nonCSSPresentationalHintsNamespaceURI;
 
 	/**
 	 * The style declaration document handler.
@@ -453,18 +453,22 @@ public abstract class CSSEngine {
 		}
 
 		if (hints) {
-			nonCSSPresentationalHints = new HashSet<>(vm.length + sm.length);
+			HashSet<String> ncph = new HashSet<>(vm.length + sm.length);
 			nonCSSPresentationalHintsNamespaceURI = hintsNS;
 			len = vm.length;
 			for (int i = 0; i < len; i++) {
 				String pn = vm[i].getPropertyName();
-				nonCSSPresentationalHints.add(pn);
+				ncph.add(pn);
 			}
 			len = sm.length;
 			for (int i = 0; i < len; i++) {
 				String pn = sm[i].getPropertyName();
-				nonCSSPresentationalHints.add(pn);
+				ncph.add(pn);
 			}
+			nonCSSPresentationalHints = Collections.unmodifiableSet(ncph);
+		} else {
+			nonCSSPresentationalHints = null;
+			nonCSSPresentationalHintsNamespaceURI = null;
 		}
 
 		if (cssContext.isDynamic() && document instanceof EventTarget) {
@@ -823,6 +827,24 @@ public abstract class CSSEngine {
 	 */
 	public List<FontFaceRule> getFontFaces() {
 		return fontFaces;
+	}
+
+	/**
+	 * Get the set of non-CSS presentational hints.
+	 * 
+	 * @return the non-CSS presentational hints.
+	 */
+	protected Set<String> getNonCSSPresentationalHints() {
+		return nonCSSPresentationalHints;
+	}
+
+	/**
+	 * Get the namespace URI of non-CSS presentational hints.
+	 * 
+	 * @return the namespace URI of non-CSS presentational hints.
+	 */
+	protected String getNonCSSPresentationalHintsNamespaceURI() {
+		return nonCSSPresentationalHintsNamespaceURI;
 	}
 
 	/**
