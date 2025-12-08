@@ -201,19 +201,24 @@ public class DoublyIndexedTable<K, L> {
 	 */
 	protected void rehash() {
 		Entry[] oldTable = table;
+		int olen = oldTable.length;
 
-		table = new DoublyIndexedTable.Entry[oldTable.length * 2 + 1];
+		int rehlen = olen * 2 + 1;
+		Entry[] rehTable = new DoublyIndexedTable.Entry[rehlen];
 
-		for (int i = oldTable.length - 1; i >= 0; i--) {
-			for (Entry old = oldTable[i]; old != null;) {
+		for (int i = olen - 1; i >= 0; i--) {
+			Entry old = oldTable[i];
+			while (old != null) {
 				Entry e = old;
 				old = old.next;
 
-				int index = e.hash % table.length;
-				e.next = table[index];
-				table[index] = e;
+				int index = e.hash % rehlen;
+				e.next = rehTable[index];
+				rehTable[index] = e;
 			}
 		}
+
+		table = rehTable;
 	}
 
 	/**
