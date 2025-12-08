@@ -94,9 +94,12 @@ please open an issue for it.
 When a generated image does not match the reference, a side-by-side and a diff
 image are saved into the project's `build/reports/tests/test/images` directory.
 
-For example:
+This is an example of a side-by-side comparison:
+<img width="900" height="500" alt="gradientLimit side-by-side" src="https://github.com/user-attachments/assets/1c7e1009-d085-42f0-b6b6-ddcc1af3e448" />
 
-![side-by-side](https://private-user-images.githubusercontent.com/38894633/523483814-01c5561f-2976-484e-a15b-8857d7230060.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjUyMDM4OTAsIm5iZiI6MTc2NTIwMzU5MCwicGF0aCI6Ii8zODg5NDYzMy81MjM0ODM4MTQtMDFjNTU2MWYtMjk3Ni00ODRlLWExNWItODg1N2Q3MjMwMDYwLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTEyMDglMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUxMjA4VDE0MTk1MFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWRkMDAzMDBmODNjMjhmMzFkYWE0Y2M3ZDUxN2JiYzNhMjkxM2QxNzEzNmQ0MGQ2ZWU2MDM0Nzk0N2ZiMTBkOTQmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.c9TaXVv92L0LRk9Jmi-0guPr7V39MwNYbZDZqPDXNhM)
+and here is the corresponding diff:
+
+<img width="450" height="500" alt="gradientLimit diff" src="https://github.com/user-attachments/assets/313c1741-4c39-4572-ab24-ecf196d388d4" />
 
 <br/>
 
