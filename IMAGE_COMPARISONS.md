@@ -68,7 +68,7 @@ for the light theme of Windows 10. They use the `xfce` and `win10Light` suffixes
 
 The following is an example of a platform variation image:
 
-![Variant example](https://raw.githubusercontent.com/css4j/echosvg/master/test-resources/io/sf/carte/echosvg/test/image/systemColors_xfce.png)
+![Variant example](https://raw.githubusercontent.com/css4j/echosvg/v2.3/test-references/samples/tests/spec/color/accepted-variation/systemColors_xfce.png)
 
 To enable a range variant, move the variant to the `accepted-variation` directory.
 If a range variant was already there, just overwrite it (the new range variant
