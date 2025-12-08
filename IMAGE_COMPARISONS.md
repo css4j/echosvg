@@ -106,6 +106,8 @@ The SVG2 tests can be run with different Media Query-matching configurations
 like the `print` medium or the dark mode (`prefers-color-scheme: dark`); in that
 case the reference and variant images carry the appropriate suffix(es).
 
-For example, the `css3.html` test has three reference images: `css3.png` (light
-mode and `screen` medium which is the default), `css3-print.png` (`print`
-medium) and `css3-dark.png` (default medium and dark mode).
+For example, the [`css3.html`](https://raw.githubusercontent.com/css4j/echosvg/v2.3/samples/tests/spec2/styling/css3.html)
+test has three reference images: [`css3.png`](https://raw.githubusercontent.com/css4j/echosvg/v2.3/test-references/samples/tests/spec2/styling/css3.png)
+(light mode and `screen` medium which is the default), [`css3-print.png`](https://raw.githubusercontent.com/css4j/echosvg/v2.3/test-references/samples/tests/spec2/styling/css3-print.png)
+(`print` medium) and [`css3-dark.png`](https://raw.githubusercontent.com/css4j/echosvg/v2.3/test-references/samples/tests/spec2/styling/css3-dark.png)
+(default medium and dark mode).
