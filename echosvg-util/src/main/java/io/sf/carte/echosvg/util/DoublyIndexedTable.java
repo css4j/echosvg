@@ -38,22 +38,22 @@ public class DoublyIndexedTable<K, L> {
 	/**
 	 * The underlying array
 	 */
-	protected Entry[] table;
+	private Entry[] table;
 
 	/**
 	 * The number of entries
 	 */
-	protected int count;
+	private int count;
 
 	/**
-	 * Creates a new DoublyIndexedTable.
+	 * Creates a new DoublyIndexedTable with an initial capacity of 16.
 	 */
 	public DoublyIndexedTable() {
 		this(16);
 	}
 
 	/**
-	 * Creates a new DoublyIndexedTable.
+	 * Creates a new DoublyIndexedTable with the given initial capacity.
 	 * 
 	 * @param c The initial capacity.
 	 */
@@ -163,6 +163,7 @@ public class DoublyIndexedTable<K, L> {
 				return e.value;
 			}
 		}
+
 		return null;
 	}
 
@@ -237,22 +238,22 @@ public class DoublyIndexedTable<K, L> {
 		/**
 		 * The hash code.
 		 */
-		protected int hash;
+		private int hash;
 
 		/**
 		 * The first key.
 		 */
-		protected K key1;
+		private K key1;
 
 		/**
 		 * The second key.
 		 */
-		protected L key2;
+		private L key2;
 
 		/**
 		 * The value.
 		 */
-		protected Object value;
+		private Object value;
 
 		/**
 		 * The next entry.

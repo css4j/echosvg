@@ -237,9 +237,9 @@ public class AWTGlyphGeometryCache {
 	 */
 	public static class Value {
 
-		protected Shape outline;
-		protected Rectangle2D gmB;
-		protected Rectangle2D outlineBounds;
+		private final Shape outline;
+		private final Rectangle2D gmB;
+		private final Rectangle2D outlineBounds;
 
 		/**
 		 * Constructs a new Value with the specified parameter.
@@ -281,17 +281,17 @@ public class AWTGlyphGeometryCache {
 		/**
 		 * The hash code
 		 */
-		public int hash;
+		private final int hash;
 
 		/**
 		 * The character
 		 */
-		public char c;
+		private final char c;
 
 		/**
 		 * The next entry
 		 */
-		public Entry next;
+		private Entry next;
 
 		/**
 		 * Creates a new entry
@@ -307,7 +307,7 @@ public class AWTGlyphGeometryCache {
 		 * Whether this entry match the given keys.
 		 */
 		public boolean match(char o2) {
-			return (c == o2);
+			return c == o2;
 		}
 
 	}
