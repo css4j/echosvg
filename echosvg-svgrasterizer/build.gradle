@@ -10,7 +10,8 @@ sourceSets {
 }
 
 dependencies {
-	api project(':echosvg-transcoder-svg')
+	api project(':echosvg-transcoder-api')
+	implementation project(':echosvg-transcoder-svg')
 	testImplementation project(':echosvg-test-util')
 	testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
