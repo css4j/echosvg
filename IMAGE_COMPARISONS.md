@@ -1,5 +1,6 @@
 # Image comparisons in tests
 
+<br/>
 
 ## Introduction
 Most of the testing infrastructure relies on image comparisons, and understanding
@@ -13,6 +14,7 @@ produced on a different platform, or with a different version of Java or the
 operating system. The image comparison infrastructure must allow for this, while
 at the same time being sensitive enough to catch real issues.
 
+<br/>
 
 ## The comparison procedure
 First, the two images are compared, and most tests allow a small percentage of
@@ -38,6 +40,7 @@ and the test fails. However, the rendering (and related) tests attempt to
 account for variations. Variations (or "variants") are images that represent the
 differences between the reference and an accepted image.
 
+<br/>
 
 ## Understanding variations
 Allowed variations are stored in directories called `accepted-variation`, also
@@ -83,6 +86,19 @@ the latter are widened to allow an easier visual inspection.
 
 If you want an additional platform variant to be supported (like a MacOS variant)
 please open an issue for it.
+
+<br/>
+
+## Examining a failed comparison
+
+When a generated image does not match the reference, a side-by-side and a diff
+image are saved into the project's `build/reports/tests/test/images` directory.
+
+For example:
+
+![side-by-side](https://private-user-images.githubusercontent.com/38894633/523483814-01c5561f-2976-484e-a15b-8857d7230060.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjUyMDM4OTAsIm5iZiI6MTc2NTIwMzU5MCwicGF0aCI6Ii8zODg5NDYzMy81MjM0ODM4MTQtMDFjNTU2MWYtMjk3Ni00ODRlLWExNWItODg1N2Q3MjMwMDYwLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTEyMDglMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUxMjA4VDE0MTk1MFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWRkMDAzMDBmODNjMjhmMzFkYWE0Y2M3ZDUxN2JiYzNhMjkxM2QxNzEzNmQ0MGQ2ZWU2MDM0Nzk0N2ZiMTBkOTQmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.c9TaXVv92L0LRk9Jmi-0guPr7V39MwNYbZDZqPDXNhM)
+
+<br/>
 
 ## Media Query-specific tests
 

@@ -49,8 +49,12 @@ cd echosvg
 Most of the (JUnit-based) test suite is executed during build (except some tests
 that are currently incompatible with Gradle), but **beware that some tests are
 platform-dependent and could fail**. If you encounter test failures, please open
-an issue with the details so the necessary tweaks can be made. If the failing
-test involves an image comparison, you may want to read [IMAGE_COMPARISONS](IMAGE_COMPARISONS.md).
+an issue with the details so the necessary tweaks can be made.
+
+If the failing test involves an image comparison, you may want to read
+[IMAGE_COMPARISONS](IMAGE_COMPARISONS.md). For each failed image comparison,
+side-by-side and diff images are saved into the project's `build/reports/tests/test/images`
+directory.
 
 To build without running the tests:
 ```shell
