@@ -64,7 +64,7 @@ variant. To deal with the usual, small random variations in rendering we want to
 use the range variant, while to account for —generally large— systematic platform
 differences one shall use platform variants. As of this writing, a couple of
 platform variants are accepted: one for the Xfce desktop environment, and another
-for the light theme of Windows 10. They use the `xfce` and `win10Light` suffixes.
+for Windows Server 2025. They use the [`xfce` and `windows-2025` suffixes](https://github.com/css4j/echosvg/blob/master/echosvg-test/src/test/java/io/sf/carte/echosvg/test/svg/PreconfiguredRenderingTest.java#L49).
 
 The following is an example of a platform variation image:
 
