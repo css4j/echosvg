@@ -53,7 +53,7 @@ jobs:
 
       # Upload test artifact
       - name: Upload test output
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         if: ${{ failure() }}
         with:
           name: test-output-${{ matrix.java }}
