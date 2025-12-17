@@ -65,5 +65,5 @@ jobs:
 
       # Generate modular javadocs
       - name: Modular javadocs
-        if: ${{ success() }}
+        if: ${{ success() && (matrix.java == '21') }}
         run: ./gradlew modularJavadoc
