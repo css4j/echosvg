@@ -1,9 +1,11 @@
 /* -*- Mode: groovy; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 4 -*-
- * This file is dual licensed under the BSD-3-Clause and the MPL.
+ * This file is licensed under the BSD-2-Clause, Apache 2.0 or the MPL.
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+// SPDX-License-Identifier: BSD-2-Clause OR MPL-2.0 OR Apache-2.0
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
