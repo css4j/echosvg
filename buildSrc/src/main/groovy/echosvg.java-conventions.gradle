@@ -202,6 +202,21 @@ jacocoTestReport {
 	dependsOn test
 }
 
+// OWASP dependency check
+//
+// You can put the NVD API key in the NVD_API_KEY environment variable or in the
+// nvdApiKey project property.
+dependencyCheck {
+	nvd {
+		def envNvdApiKey = System.env.NVD_API_KEY
+		if (envNvdApiKey != null) {
+			apiKey = envNvdApiKey
+		} else if (project.hasProperty('nvdApiKey')) {
+			apiKey = nvdApiKey
+		}
+	}
+}
+
 // Check licenses
 licenseReport {
 	allowedLicensesFile = new File("$rootDir/buildSrc/allowed-licenses.json")
