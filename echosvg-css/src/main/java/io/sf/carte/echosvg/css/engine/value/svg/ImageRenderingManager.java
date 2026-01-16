@@ -38,11 +38,13 @@ public class ImageRenderingManager extends IdentifierManager {
 	/**
 	 * The identifier values.
 	 */
-	protected static final StringMap<Value> values = new StringMap<>(4);
+	protected static final StringMap<Value> values = new StringMap<>(5);
 	static {
 		values.put(CSSConstants.CSS_AUTO_VALUE, ValueConstants.AUTO_VALUE);
 		values.put(CSSConstants.CSS_OPTIMIZEQUALITY_VALUE, SVGValueConstants.OPTIMIZEQUALITY_VALUE);
+		values.put(CSSConstants.CSS_SMOOTH_VALUE, SVGValueConstants.OPTIMIZEQUALITY_VALUE);
 		values.put(CSSConstants.CSS_OPTIMIZESPEED_VALUE, SVGValueConstants.OPTIMIZESPEED_VALUE);
+		values.put(CSSConstants.CSS_PIXELATED_VALUE, SVGValueConstants.OPTIMIZESPEED_VALUE);
 	}
 
 	/**

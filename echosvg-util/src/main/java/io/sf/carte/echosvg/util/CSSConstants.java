@@ -328,6 +328,7 @@ public interface CSSConstants {
 	String CSS_PEACHPUFF_VALUE = "peachpuff";
 	String CSS_PERU_VALUE = "peru";
 	String CSS_PINK_VALUE = "pink";
+	String CSS_PIXELATED_VALUE = "pixelated";
 	String CSS_PLUM_VALUE = "plum";
 	String CSS_POINTER_VALUE = "pointer";
 	String CSS_POWDERBLUE_VALUE = "powderblue";
@@ -364,6 +365,7 @@ public interface CSSConstants {
 	String CSS_SMALL_CAPS_VALUE = "small-caps";
 	String CSS_SMALL_CAPTION_VALUE = "small-caption";
 	String CSS_SMALL_VALUE = "small";
+	String CSS_SMOOTH_VALUE = "smooth";
 	String CSS_SNOW_VALUE = "snow";
 	String CSS_SPRINGGREEN_VALUE = "springgreen";
 	String CSS_SQUARE_VALUE = "square";
