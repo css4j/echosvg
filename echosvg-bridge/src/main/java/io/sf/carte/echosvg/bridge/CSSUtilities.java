@@ -340,8 +340,8 @@ public abstract class CSSUtilities implements CSSConstants, ErrorConstants, XMLC
 	 * <dd>
 	 * <ul>
 	 * <li>KEY_RENDERING=VALUE_RENDER_QUALITY</li>
-	 * <li>KEY_ANTIALIASING=VALUE_ANTIALIAS_DEFAULT</li>
-	 * <li>KEY_TEXT_ANTIALIASING=VALUE_TEXT_ANTIALIAS_DEFAULT</li>
+	 * <li>KEY_ANTIALIASING=VALUE_ANTIALIAS_ON</li>
+	 * <li>KEY_TEXT_ANTIALIASING=VALUE_TEXT_ANTIALIAS_ON</li>
 	 * <li>KEY_FRACTIONALMETRICS=VALUE_FRACTIONALMETRICS_ON</li>
 	 * </ul>
 	 * </dd>
@@ -360,13 +360,18 @@ public abstract class CSSUtilities implements CSSConstants, ErrorConstants, XMLC
 		Value v = getComputedStyle(e, SVGCSSEngine.TEXT_RENDERING_INDEX);
 		String s = v.getIdentifierValue();
 		int len = s.length();
-		if ((len == 4) && (s.charAt(0) == 'a')) // auto
-			return hints;
-		if (len < 13)
-			return hints; // Unknown.
 
-		if (hints == null)
+		if (len == 4 && s.charAt(0) == 'a') { // auto
+			return hints;
+		}
+
+		if (len < 13) {
+			return hints; // Unknown.
+		}
+
+		if (hints == null) {
 			hints = new RenderingHints(null);
+		}
 
 		switch (s.charAt(8)) {
 		case 's': // optimizeSpeed
@@ -378,7 +383,7 @@ public abstract class CSSUtilities implements CSSConstants, ErrorConstants, XMLC
 			break;
 		case 'l': // optimizeLegibility
 			hints.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-			hints.put(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
+			hints.put(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 			hints.put(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			// hints.put(RenderingHints.KEY_FRACTIONALMETRICS,
 			// RenderingHints.VALUE_FRACTIONALMETRICS_OFF);
@@ -391,6 +396,7 @@ public abstract class CSSUtilities implements CSSConstants, ErrorConstants, XMLC
 			hints.put(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
 			break;
 		}
+
 		return hints;
 	}
 
