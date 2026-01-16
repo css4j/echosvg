@@ -539,6 +539,11 @@ public class SamplesSpecRenderingTest extends AbstractSamplesRendering {
 		test("samples/tests/spec/rendering/zeroWidthViewbox.svg");
 	}
 
+	@Test
+	public void testBatik1027() throws TranscoderException, IOException {
+		testNV("samples/tests/spec/rendering/BATIK-1027.svg");
+	}
+
 	/*
 	 * Shapes
 	 */
