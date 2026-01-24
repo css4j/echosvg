@@ -264,7 +264,8 @@ public class Any2sRGBRed extends AbstractRed {
 		// System.out.println("src: " + srcBI.getWidth() + "x" +
 		// srcBI.getHeight());
 
-		ColorConvertOp op = new ColorConvertOp(dstCM.getColorSpace(), null);
+		ColorConvertOp op = new ColorConvertOp(srcBICM.getColorSpace(), dstCM.getColorSpace(),
+				null);
 		dstBI = op.filter(srcBI, null);
 
 		// System.out.println("After filter:");
