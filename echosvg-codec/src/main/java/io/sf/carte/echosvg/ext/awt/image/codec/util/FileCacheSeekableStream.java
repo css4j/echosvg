@@ -78,7 +78,7 @@ public final class FileCacheSeekableStream extends SeekableStream {
 	 */
 	public FileCacheSeekableStream(InputStream stream) throws IOException {
 		this.stream = stream;
-		this.cacheFile = Files.createTempFile("jai-FCSS-", ".tmp").toFile();
+		this.cacheFile = Files.createTempFile("ech-FCSS-", ".tmp").toFile();
 		cacheFile.deleteOnExit();
 		this.cache = new RandomAccessFile(cacheFile, "rw");
 	}
