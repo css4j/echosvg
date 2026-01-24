@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -369,7 +370,7 @@ public class SVGConverterTest {
 			protected void configure(SVGConverter c) {
 				File dummy = null;
 				try {
-					dummy = File.createTempFile("dummyPNG", ".png");
+					dummy = Files.createTempFile("dummyPNG", ".png").toFile();
 				} catch (IOException ioEx) {
 					throw new RuntimeException(ioEx.getMessage());
 				}

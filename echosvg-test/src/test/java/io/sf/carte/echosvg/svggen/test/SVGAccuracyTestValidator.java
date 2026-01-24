@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.net.UnknownHostException;
+import java.nio.file.Files;
 
 import org.junit.jupiter.api.Test;
 
@@ -138,7 +139,7 @@ public class SVGAccuracyTestValidator {
 	static class DiffWithReferenceImage extends ValidPainterTest {
 
 		public void test() throws IOException {
-			File tmpFile = File.createTempFile("EmptySVGReference", null);
+			File tmpFile = Files.createTempFile("EmptySVGReference", null).toFile();
 			tmpFile.deleteOnExit();
 
 			SVGAccuracyTest t = new SVGAccuracyTest(this, tmpFile.toURI().toURL());
@@ -150,7 +151,7 @@ public class SVGAccuracyTestValidator {
 	static class SameAsReferenceImage extends ValidPainterTest {
 
 		public void test() throws IOException {
-			File tmpFile = File.createTempFile("SVGReference", null);
+			File tmpFile = Files.createTempFile("SVGReference", null).toFile();
 			tmpFile.deleteOnExit();
 
 			SVGAccuracyTest t = new SVGAccuracyTest(this, tmpFile.toURI().toURL());

@@ -21,6 +21,7 @@ package io.sf.carte.echosvg.test.image;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 
 /**
  * Produce image-based filenames.
@@ -85,7 +86,7 @@ public class TempImageFiles implements ImageFileBuilder {
 		StringBuilder buf = new StringBuilder(path.length() + fileSuffix.length() + dotExtension.length());
 		buf.append(path).append(fileSuffix).append(dotExtension);
 
-		return File.createTempFile("TempImageFiles", buf.toString(), null);
+		return Files.createTempFile("TempImageFiles", buf.toString()).toFile();
 	}
 
 	@Override
@@ -100,7 +101,7 @@ public class TempImageFiles implements ImageFileBuilder {
 			}
 		}
 
-		return File.createTempFile("TempImageFiles", imageNameWithExtension, null);
+		return Files.createTempFile("TempImageFiles", imageNameWithExtension).toFile();
 	}
 
 }

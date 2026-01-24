@@ -21,10 +21,10 @@ package io.sf.carte.echosvg.svggen.test;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -137,11 +137,11 @@ public class JPainterCompare extends JPanel implements SVGConstants {
 		//
 		// Generate SVG content
 		//
-		File tmpFile = null;
+		Path tmpFile = null;
 		try {
-			tmpFile = File.createTempFile(CONFIG_TMP_FILE_PREFIX, ".svg");
+			tmpFile = Files.createTempFile(CONFIG_TMP_FILE_PREFIX, ".svg");
 
-			OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(tmpFile),
+			OutputStreamWriter osw = new OutputStreamWriter(Files.newOutputStream(tmpFile),
 					StandardCharsets.UTF_8);
 
 			painter.paint(g2d);
@@ -161,7 +161,7 @@ public class JPainterCompare extends JPanel implements SVGConstants {
 		svgCanvas.addSVGDocumentLoaderListener(l);
 
 		try {
-			svgCanvas.setURI(tmpFile.toURI().toURL().toString());
+			svgCanvas.setURI(tmpFile.toUri().toURL().toString());
 			synchronized (l.sem) {
 				l.sem.wait();
 			}
