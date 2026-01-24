@@ -154,8 +154,8 @@ public class SVGFont extends AbstractSVGConverter {
 			// was not in use before, so we need to create a fresh one
 			chl = new CharListHelper();
 		}
-		for (int i = 0; i < string.length(); i++) {
-			char ch = string.charAt(i); // todo take care of surrogate chars here...
+		for (int i = 0; i < string.length(); i = string.offsetByCodePoints(i, 1)) {
+			int ch = string.codePointAt(i);
 			chl.add(ch);
 		}
 
@@ -163,7 +163,17 @@ public class SVGFont extends AbstractSVGConverter {
 	}
 
 	private String getFontKey(Font commonSizeFont) {
-		return commonSizeFont.getFamily() + commonSizeFont.getStyle();
+		String family = commonSizeFont.getFamily();
+		String weight = weightToSVG(commonSizeFont);
+		StringBuilder buf = new StringBuilder(family.length() + 6);
+		buf.append(family);
+		if (!"normal".equals(weight)) {
+			buf.append('_').append(weight);
+		}
+		if (commonSizeFont.isItalic()) {
+			buf.append("_i");
+		}
+		return buf.toString();
 	}
 
 	/**
@@ -172,10 +182,15 @@ public class SVGFont extends AbstractSVGConverter {
 	 * size attribute modified.
 	 */
 	private static Font createCommonSizeFont(Font font) {
-		Map<TextAttribute, Float> attributes = new HashMap<>();
-		attributes.put(TextAttribute.SIZE, (float) COMMON_FONT_SIZE);
+		Map<TextAttribute, Object> attributes = new HashMap<>();
+		attributes.put(TextAttribute.SIZE, Float.valueOf(COMMON_FONT_SIZE));
 		// Remove Transform from font otherwise it will be applied twice.
 		attributes.put(TextAttribute.TRANSFORM, null);
+		Map<TextAttribute, ?> oattr = font.getAttributes();
+		Object w = oattr.get(TextAttribute.WEIGHT);
+		if (w != null) {
+			attributes.put(TextAttribute.WEIGHT, w);
+		}
 		return font.deriveFont(attributes);
 	}
 
@@ -200,10 +215,6 @@ public class SVGFont extends AbstractSVGConverter {
 	 * @return description of attribute values that describe the font
 	 */
 	public SVGFontDescriptor toSVG(Font font, FontRenderContext frc) {
-		// Remove affine from FRC otherwise it will be applied twice.
-		FontRenderContext localFRC;
-		localFRC = new FontRenderContext(new AffineTransform(), frc.isAntiAliased(), frc.usesFractionalMetrics());
-
 		String fontSize = doubleString(font.getSize2D()) + "px";
 		String fontWeight = weightToSVG(font);
 		String fontStyle = styleToSVG(font);
@@ -219,6 +230,10 @@ public class SVGFont extends AbstractSVGConverter {
 			// so don't create an SVG Font element for it
 			return new SVGFontDescriptor(fontSize, fontWeight, fontStyle, fontFamilyStr, null);
 		}
+
+		// Remove affine from FRC otherwise it will be applied twice.
+		FontRenderContext localFRC;
+		localFRC = new FontRenderContext(new AffineTransform(), frc.isAntiAliased(), frc.usesFractionalMetrics());
 
 		Document domFactory = getGeneratorContext().getDOMFactory();
 
@@ -466,7 +481,7 @@ public class SVGFont extends AbstractSVGConverter {
 		 * this keeps all added characters in order. It can be cleared from toSVG() when
 		 * glyphs are created for some characters.
 		 */
-		private StringBuffer freshChars = new StringBuffer(40);
+		private StringBuilder freshChars = new StringBuilder(40);
 
 		CharListHelper() {
 
@@ -486,7 +501,7 @@ public class SVGFont extends AbstractSVGConverter {
 		 * created for them.
 		 */
 		void clearNewChars() {
-			freshChars = new StringBuffer(40);
+			freshChars = new StringBuilder(40);
 		}
 
 		/**
@@ -513,14 +528,14 @@ public class SVGFont extends AbstractSVGConverter {
 			pos = -pos - 1;
 			System.arraycopy(charList, pos, charList, pos + 1, nUsed - pos);
 			charList[pos] = c;
-			freshChars.append((char) c); // todo if necessary split surrogates here
+			freshChars.appendCodePoint(c);
 			nUsed++;
 
 			return true;
 		}
 
 		/**
-		 * unfortunatly, Arrays.binarySearch() does not support search in a part of the
+		 * Unfortunately, Arrays.binarySearch() does not support search in a part of the
 		 * array (not in jdk1.3 and jdk1.4). - so we have do provide our own
 		 * implementation.
 		 * 

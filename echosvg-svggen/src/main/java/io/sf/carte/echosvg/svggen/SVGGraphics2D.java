@@ -1274,9 +1274,13 @@ public class SVGGraphics2D extends AbstractGraphics2D implements SVGSyntax, Erro
 	 */
 	private boolean setTextFontAttributes(AttributedCharacterIterator ati, Font baseFont) {
 		boolean resetTransform = false;
-		if ((ati.getAttribute(TextAttribute.FONT) != null) || (ati.getAttribute(TextAttribute.FAMILY) != null)
-				|| (ati.getAttribute(TextAttribute.WEIGHT) != null) || (ati.getAttribute(TextAttribute.POSTURE) != null)
-				|| (ati.getAttribute(TextAttribute.SIZE) != null)) {
+		if (ati.getAttribute(TextAttribute.FONT) != null
+			|| ati.getAttribute(TextAttribute.FAMILY) != null
+			|| ati.getAttribute(TextAttribute.WEIGHT) != null
+			|| ati.getAttribute(TextAttribute.POSTURE) != null
+			|| ati.getAttribute(TextAttribute.SIZE) != null
+			|| ati.getAttribute(TextAttribute.UNDERLINE) != null
+			|| ati.getAttribute(TextAttribute.STRIKETHROUGH) != null) {
 			Map<Attribute, Object> m = ati.getAttributes();
 			Font f = baseFont.deriveFont(m);
 			setFont(f);
