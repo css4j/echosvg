@@ -32,7 +32,7 @@ jobs:
 
     strategy:
       matrix:
-        java: [ '11', '21', '24' ]
+        java: [ '11', '21', '25' ]
 
     name: Java ${{ matrix.java }} build
 
