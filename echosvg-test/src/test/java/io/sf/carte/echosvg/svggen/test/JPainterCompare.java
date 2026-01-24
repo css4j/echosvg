@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -139,7 +140,7 @@ public class JPainterCompare extends JPanel implements SVGConstants {
 		//
 		File tmpFile = null;
 		try {
-			tmpFile = File.createTempFile(CONFIG_TMP_FILE_PREFIX, ".svg");
+			tmpFile = Files.createTempFile(CONFIG_TMP_FILE_PREFIX, ".svg").toFile();
 
 			OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(tmpFile),
 					StandardCharsets.UTF_8);

@@ -28,6 +28,7 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URL;
+import java.nio.file.Files;
 
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
@@ -57,8 +58,8 @@ public class SerializationTest {
 		URL url = getClass().getClassLoader().getResource(testFileName);
 		Document doc = df.createDocument(null, rootTag, url.toString(), url.openStream());
 
-		File ser1 = File.createTempFile("doc1", "ser");
-		File ser2 = File.createTempFile("doc2", "ser");
+		File ser1 = Files.createTempFile("doc1", "ser").toFile();
+		File ser2 = Files.createTempFile("doc2", "ser").toFile();
 		ser1.deleteOnExit();
 		ser2.deleteOnExit();
 
