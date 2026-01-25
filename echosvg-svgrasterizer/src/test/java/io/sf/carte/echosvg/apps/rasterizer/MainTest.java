@@ -40,6 +40,8 @@ import java.util.StringTokenizer;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledForJreRange;
+import org.junit.jupiter.api.condition.JRE;
 
 /**
  * Validates the operation of the <code>Main</code> class.
@@ -49,6 +51,7 @@ import org.junit.jupiter.api.Test;
  * @version $Id$
  */
 @Tag("SecMan")
+@EnabledForJreRange(min = JRE.JAVA_8, max = JRE.JAVA_23)
 @SuppressWarnings({ "deprecation", "removal" })
 public class MainTest {
 
@@ -58,8 +61,11 @@ public class MainTest {
 			AccessController.doPrivileged(new PrivilegedExceptionAction<Void>() {
 				@Override
 				public Void run() throws Exception {
-					System.setSecurityManager(null);
-					System.setProperty("java.security.policy", "");
+					try {
+						System.setSecurityManager(null);
+						System.setProperty("java.security.policy", "");
+					} catch (UnsupportedOperationException e) {
+					}
 					return null;
 				}
 			});

@@ -147,6 +147,16 @@ tasks.withType(JavaCompile) {
 	options.encoding = 'UTF-8'
 }
 
+tasks.withType(Test) {
+	if (JavaVersion.current() >= JavaVersion.VERSION_24) {
+		systemProperties += [
+			"jdk.xml.maxParameterEntitySizeLimit": 0x10000,
+			"jdk.xml.totalEntitySizeLimit": 0x100000,
+			"jdk.xml.maxGeneralEntitySizeLimit": 0x100000
+		]
+	}
+}
+
 tasks.withType(Javadoc) {
 	options.addStringOption('Xdoclint:none', '-quiet')
 	options.addStringOption('encoding', 'UTF-8')

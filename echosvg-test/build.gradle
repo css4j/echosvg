@@ -85,7 +85,8 @@ test {
 }
 
 tasks.withType(Test) {
-	if (JavaVersion.current() > JavaVersion.VERSION_11) {
+	def curJavaVer = JavaVersion.current()
+	if (curJavaVer > JavaVersion.VERSION_11 && curJavaVer < JavaVersion.VERSION_24) {
 		systemProperty('java.security.manager', 'allow')
 	}
 }
