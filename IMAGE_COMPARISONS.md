@@ -64,11 +64,11 @@ variant. To deal with the usual, small random variations in rendering we want to
 use the range variant, while to account for —generally large— systematic platform
 differences one shall use platform variants. As of this writing, a couple of
 platform variants are accepted: one for the Xfce desktop environment, and another
-for the light theme of Windows 10. They use the `xfce` and `win10Light` suffixes.
+for Windows Server 2025. They use the [`xfce` and `windows-2025` suffixes](https://github.com/css4j/echosvg/blob/1-stable/echosvg-test/src/test/java/io/sf/carte/echosvg/test/svg/PreconfiguredRenderingTest.java#L49).
 
 The following is an example of a platform variation image:
 
-![Variant example](https://raw.githubusercontent.com/css4j/echosvg/v2.3/test-references/samples/tests/spec/color/accepted-variation/systemColors_xfce.png)
+![Variant example](https://raw.githubusercontent.com/css4j/echosvg/v2.4/test-references/samples/tests/spec/color/accepted-variation/systemColors_xfce.png)
 
 To enable a range variant, move the variant to the `accepted-variation` directory.
 If a range variant was already there, just overwrite it (the new range variant
@@ -94,9 +94,12 @@ please open an issue for it.
 When a generated image does not match the reference, a side-by-side and a diff
 image are saved into the project's `build/reports/tests/test/images` directory.
 
-For example:
+This is an example of a side-by-side comparison:
+<img width="900" height="500" alt="gradientLimit side-by-side" src="https://github.com/user-attachments/assets/1c7e1009-d085-42f0-b6b6-ddcc1af3e448" />
 
-![side-by-side](https://private-user-images.githubusercontent.com/38894633/523483814-01c5561f-2976-484e-a15b-8857d7230060.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjUyMDM4OTAsIm5iZiI6MTc2NTIwMzU5MCwicGF0aCI6Ii8zODg5NDYzMy81MjM0ODM4MTQtMDFjNTU2MWYtMjk3Ni00ODRlLWExNWItODg1N2Q3MjMwMDYwLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTEyMDglMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUxMjA4VDE0MTk1MFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWRkMDAzMDBmODNjMjhmMzFkYWE0Y2M3ZDUxN2JiYzNhMjkxM2QxNzEzNmQ0MGQ2ZWU2MDM0Nzk0N2ZiMTBkOTQmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.c9TaXVv92L0LRk9Jmi-0guPr7V39MwNYbZDZqPDXNhM)
+and here is the corresponding diff:
+
+<img width="450" height="500" alt="gradientLimit diff" src="https://github.com/user-attachments/assets/313c1741-4c39-4572-ab24-ecf196d388d4" />
 
 <br/>
 
@@ -106,6 +109,8 @@ The SVG2 tests can be run with different Media Query-matching configurations
 like the `print` medium or the dark mode (`prefers-color-scheme: dark`); in that
 case the reference and variant images carry the appropriate suffix(es).
 
-For example, the `css3.html` test has three reference images: `css3.png` (light
-mode and `screen` medium which is the default), `css3-print.png` (`print`
-medium) and `css3-dark.png` (default medium and dark mode).
+For example, the [`css3.html`](https://raw.githubusercontent.com/css4j/echosvg/v2.4/samples/tests/spec2/styling/css3.html)
+test has three reference images: [`css3.png`](https://raw.githubusercontent.com/css4j/echosvg/v2.4/test-references/samples/tests/spec2/styling/css3.png)
+(light mode and `screen` medium which is the default), [`css3-print.png`](https://raw.githubusercontent.com/css4j/echosvg/v2.4/test-references/samples/tests/spec2/styling/css3-print.png)
+(`print` medium) and [`css3-dark.png`](https://raw.githubusercontent.com/css4j/echosvg/v2.4/test-references/samples/tests/spec2/styling/css3-dark.png)
+(default medium and dark mode).
