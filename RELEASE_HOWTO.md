@@ -48,19 +48,19 @@ cd /path/to/echosvg
 
 5) For convenience, now copy all the produced _jar_ files into a new `jar`
 directory and create a Zip archive of them. For example if you are releasing
-`1.2.5`:
+`1.2.6`:
 
 ```shell
 ./gradlew copyJars
-mv jar echosvg-1.2.5-bin
-7z a -mx9 echosvg-1.2.5-binaries.zip echosvg-1.2.5-bin
+mv jar echosvg-1.2.6-bin
+7z a -mx9 echosvg-1.2.6-binaries.zip echosvg-1.2.6-bin
 ```
 
 6) Use `changes.sh <new-version>` to create a `CHANGES.txt` file for the new
 version, with the changes from the latest tag:
 
 ```shell
-./changes.sh 1.2.5
+./changes.sh 1.2.6
 ```
 
 Edit the resulting `CHANGES.txt` as convenient, to use it as the basis for the
@@ -100,9 +100,9 @@ archiver):
 cd /path/to/echosvg
 ./gradlew modularJavadoc
 cd echosvg-all/build/docs
-mv modular echosvg-1.2.5-modular-javadocs
-7z a echosvg-1.2.5-modular-javadocs.7z echosvg-1.2.5-modular-javadocs
-7z a -mx9 echosvg-1.2.5-modular-javadocs.zip echosvg-1.2.5-modular-javadocs
+mv modular echosvg-1.2.6-modular-javadocs
+7z a echosvg-1.2.6-modular-javadocs.7z echosvg-1.2.6-modular-javadocs
+7z a -mx9 echosvg-1.2.6-modular-javadocs.zip echosvg-1.2.6-modular-javadocs
 ```
 
 The compressed archives will be part of the published release. Notice that the
@@ -115,8 +115,8 @@ Provided that you have the required credentials, you could update it via_ `rsync
 
 ```shell
 cd /path/to/echosvg
-git tag -s v1.2.5 -m "Release 1.2.5"
-git push origin v1.2.5
+git tag -s v1.2.6 -m "Release 1.2.6"
+git push origin v1.2.6
 ```
 
 or `git tag -a` instead of `-s` if you do not plan to sign the tag. But it is
@@ -131,33 +131,27 @@ Summarize the most important changes in the release description, then create a
 `## Detail of changes` section and paste the contents of the `CHANGES.txt` file
 under it.
 
-Add to the Github release the `echosvg-1.2.5-bin.zip` archive that you created,
-the modular javadoc archives (`echosvg-1.2.5-modular-javadocs.7z` and
-`echosvg-1.2.5-modular-javadocs.zip`), and the result of executing:
+Add to the Github release the `echosvg-1.2.6-bin.zip` archive that you created,
+the modular javadoc archives (`echosvg-1.2.6-modular-javadocs.7z` and
+`echosvg-1.2.6-modular-javadocs.zip`), and the result of executing:
 
 ```shell
 ./gradlew uberjar
 ```
-to be found at the `echosvg-all/build/libs/echosvg-all-1.2.5-alldeps.jar`. Then execute:
+to be found at the `echosvg-all/build/libs/echosvg-all-1.2.6-alldeps.jar`. Then execute:
 
 ```shell
 ./gradlew echosvg-codec-jar-with-deps
 ./gradlew echosvg-svggen-jar-with-deps
 ./gradlew echosvg-transcoder-jar-with-deps
-./gradlew echosvg-transcoder-svg-jar-with-deps
-./gradlew echosvg-transcoder-tosvg-jar-with-deps
-./gradlew echosvg-transcoder-svg2svg-jar-with-deps
 ```
 
 and add to the release the archives at
 
 ```
-echosvg-codec/build/libs/echosvg-codec-1.2.5-with-deps.jar
-echosvg-svggen/build/libs/echosvg-svggen-1.2.5-with-deps.jar
-echosvg-transcoder/build/libs/echosvg-transcoder-1.2.5-with-deps.jar
-echosvg-transcoder-svg/build/libs/echosvg-transcoder-svg-1.2.5-with-deps.jar
-echosvg-transcoder-tosvg/build/libs/echosvg-transcoder-tosvg-1.2.5-with-deps.jar
-echosvg-transcoder-svg2svg/build/libs/echosvg-transcoder-svg2svg-1.2.5-with-deps.jar
+echosvg-codec/build/libs/echosvg-codec-1.2.6-with-deps.jar
+echosvg-svggen/build/libs/echosvg-svggen-1.2.6-with-deps.jar
+echosvg-transcoder/build/libs/echosvg-transcoder-1.2.6-with-deps.jar
 ```
 Remember to not set it as the latest release, as it is a 1.x maintenance one.
 
