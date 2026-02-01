@@ -26,7 +26,7 @@ checkLegacyJava.enabled = false
 
 // Produce a Javadoc of all packages
 tasks.register('mergedJavadoc', Javadoc) {
-	description 'Produces a merged Javadoc of all packages'
+	description = 'Produces a merged Javadoc of all packages'
 	destinationDir = file("$buildDir/docs/javadoc")
 	title = "$rootProject.name $version API"
 	dependsOn configurations.compileClasspath

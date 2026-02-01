@@ -13,7 +13,7 @@ repositories {
 		url = uri('https://repo.maven.apache.org/maven2/')
 	}
 	maven {
-		url "https://css4j.github.io/maven/"
+		url = "https://css4j.github.io/maven/"
 		mavenContent {
 			releasesOnly()
 		}
@@ -165,7 +165,7 @@ tasks.withType(Javadoc) {
 }
 
 tasks.register('lineEndingConvCopy', CRLFConvertCopy) {
-	description 'Convert LICENSE and NOTICE to Windows line endings'
+	description = 'Convert LICENSE and NOTICE to Windows line endings'
 	from "$rootDir/LICENSE"
 	from "$rootDir/NOTICE"
 }
