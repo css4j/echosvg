@@ -914,7 +914,7 @@ public class SamplesSpecRenderingTest extends AbstractSamplesRendering {
 
 	@Test
 	public void testTextOnPath() throws TranscoderException, IOException {
-		test("samples/tests/spec/text/textOnPath.svg");
+		testNV("samples/tests/spec/text/textOnPath.svg");
 	}
 
 	@Test
@@ -930,6 +930,26 @@ public class SamplesSpecRenderingTest extends AbstractSamplesRendering {
 	@Test
 	public void testTextOnPathSpaces() throws TranscoderException, IOException {
 		test("samples/tests/spec/text/textOnPathSpaces.svg");
+	}
+
+	@Test
+	public void testTextOnPathPathAttr() throws TranscoderException, IOException {
+		testNV("samples/tests/spec/text/textOnPathPathAttr.svg");
+	}
+
+	@Test
+	public void testTextOnPathPathAttr2() throws TranscoderException, IOException {
+		testNV("samples/tests/spec/text/textOnPathPathAttr2.svg");
+	}
+
+	@Test
+	public void testTextOnPathPathAttr3() throws TranscoderException, IOException {
+		testNV("samples/tests/spec/text/textOnPathPathAttr3.svg");
+	}
+
+	@Test
+	public void testTextOnPathPathAttrSpaces() throws TranscoderException, IOException {
+		testNV("samples/tests/spec/text/textOnPathPathAttrSpaces.svg");
 	}
 
 	@Test
@@ -960,6 +980,11 @@ public class SamplesSpecRenderingTest extends AbstractSamplesRendering {
 	@Test
 	public void testVerticalTextOnPath() throws TranscoderException, IOException {
 		test("samples/tests/spec/text/verticalTextOnPath.svg");
+	}
+
+	@Test
+	public void testVerticalTextOnPathPathAttr() throws TranscoderException, IOException {
+		testNV("samples/tests/spec/text/verticalTextOnPathPathAttr.svg");
 	}
 
 	@Test
