@@ -945,7 +945,7 @@ public class StyleBypassRenderingTest extends AbstractBypassRenderingCheck {
 
 	@Test
 	public void testTextOnPath() throws TranscoderException, IOException {
-		test("samples/tests/spec/text/textOnPath.svg");
+		testNV("samples/tests/spec/text/textOnPath.svg");
 	}
 
 	@Test

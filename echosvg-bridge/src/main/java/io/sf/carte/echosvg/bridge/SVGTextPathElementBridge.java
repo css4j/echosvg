@@ -68,42 +68,58 @@ public class SVGTextPathElementBridge extends AnimatableGenericSVGBridge impleme
 	 * @return The new TextPath.
 	 */
 	public TextPath createTextPath(BridgeContext ctx, Element textPathElement) {
+		Element pathElement;
+		// Check whether the textPath has a 'path' attribute
+		String path = textPathElement.getAttributeNS(null, SVG_PATH_ATTRIBUTE).trim();
 
-		// get the referenced element
-		String uri = XLinkSupport.getXLinkHref(textPathElement);
-		Element pathElement = ctx.getReferencedElement(textPathElement, uri);
+		if (path.isEmpty()) {
+			// get the referenced element
+			String uri = XLinkSupport.getXLinkHref(textPathElement);
+			pathElement = ctx.getReferencedElement(textPathElement, uri);
 
-		if ((pathElement == null) || (!SVG_NAMESPACE_URI.equals(pathElement.getNamespaceURI()))
-				|| (!pathElement.getLocalName().equals(SVG_PATH_TAG))) {
-			// couldn't find the referenced element
-			// or the referenced element was not a path
-			throw new BridgeException(ctx, textPathElement, ERR_URI_BAD_TARGET, new Object[] { uri });
-		}
+			if (pathElement == null || !SVG_NAMESPACE_URI.equals(pathElement.getNamespaceURI())
+					|| !pathElement.getLocalName().equals(SVG_PATH_TAG)) {
+				// couldn't find the referenced element
+				// or the referenced element was not a path
+				throw new BridgeException(ctx, textPathElement, ERR_URI_BAD_TARGET,
+						new Object[] { uri });
+			}
 
-		// construct a shape for the referenced path element
-		String s = pathElement.getAttributeNS(null, SVG_D_ATTRIBUTE);
-		Shape pathShape = null;
-		if (s.length() != 0) {
-			AWTPathProducer app = new AWTPathProducer();
-			app.setWindingRule(CSSUtilities.convertFillRule(pathElement));
-			try {
-				PathParser pathParser = new PathParser(app);
-				pathParser.parse(s);
-			} catch (ParseException pEx) {
-				throw new BridgeException(ctx, pathElement, pEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
+			// construct a shape for the referenced path element
+			path = pathElement.getAttributeNS(null, SVG_D_ATTRIBUTE);
+			if (path.isEmpty()) {
+				throw new BridgeException(ctx, pathElement, ERR_ATTRIBUTE_MISSING,
 						new Object[] { SVG_D_ATTRIBUTE });
-			} finally {
-				pathShape = app.getShape();
 			}
 		} else {
-			throw new BridgeException(ctx, pathElement, ERR_ATTRIBUTE_MISSING, new Object[] { SVG_D_ATTRIBUTE });
+			pathElement = textPathElement;
+		}
+
+		Shape pathShape = null;
+		AWTPathProducer app = new AWTPathProducer();
+		app.setWindingRule(CSSUtilities.convertFillRule(pathElement));
+		try {
+			PathParser pathParser = new PathParser(app);
+			pathParser.parse(path);
+		} catch (ParseException pEx) {
+			final String attrName;
+			if (pathElement != textPathElement) {
+				attrName = SVG_D_ATTRIBUTE;
+			} else {
+				attrName = SVG_PATH_ATTRIBUTE;
+			}
+			throw new BridgeException(ctx, pathElement, pEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
+					new Object[] { attrName });
+		} finally {
+			pathShape = app.getShape();
 		}
 
 		// if the reference path element has a transform apply the transform
 		// to the path shape
-		s = pathElement.getAttributeNS(null, SVG_TRANSFORM_ATTRIBUTE);
-		if (s.length() != 0) {
-			AffineTransform tr = SVGUtilities.convertTransform(pathElement, SVG_TRANSFORM_ATTRIBUTE, s, ctx);
+		String s = pathElement.getAttributeNS(null, SVG_TRANSFORM_ATTRIBUTE);
+		if (!s.isEmpty()) {
+			AffineTransform tr = SVGUtilities.convertTransform(pathElement, SVG_TRANSFORM_ATTRIBUTE,
+					s, ctx);
 			pathShape = tr.createTransformedShape(pathShape);
 		}
 
@@ -112,7 +128,7 @@ public class SVGTextPathElementBridge extends AnimatableGenericSVGBridge impleme
 
 		// set the start offset if specified
 		s = textPathElement.getAttributeNS(null, SVG_START_OFFSET_ATTRIBUTE);
-		if (s.length() > 0) {
+		if (!s.isEmpty()) {
 			float startOffset = 0;
 			int percentIndex = s.indexOf('%');
 			if (percentIndex != -1) {
