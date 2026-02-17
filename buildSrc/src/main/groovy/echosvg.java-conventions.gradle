@@ -25,7 +25,7 @@ repositories {
 }
 
 group = 'io.sf.carte'
-version = '2.5-SNAPSHOT'
+version = '3.0-SNAPSHOT'
 
 java {
 	withSourcesJar()
@@ -33,63 +33,35 @@ java {
 	targetCompatibility = JavaVersion.VERSION_11
 }
 
-tasks.register('jvmVersionAttribute') {
-	description = "Set the correct 'org.gradle.jvm.version' attribute"
-	def jvmVersionAttribute = Attribute.of('org.gradle.jvm.version', Integer)
-	configurations.each {
-		if (it.canBeConsumed) {
-			def categoryAttr = it.attributes.getAttribute(Category.CATEGORY_ATTRIBUTE)
-			if (categoryAttr != null && categoryAttr.name == Category.LIBRARY) {
-				def usageAttr = it.attributes.getAttribute(Usage.USAGE_ATTRIBUTE)
-				if (usageAttr != null && (usageAttr.name == Usage.JAVA_API
-						|| usageAttr.name == Usage.JAVA_RUNTIME)) {
-					it.attributes.attribute(jvmVersionAttribute, 8)
-				}
-			}
-		}
-	}
-}
-
-tasks.register('compileLegacyJava', JavaCompile) {
-	description = 'Compile to Java 8 bytecode, except module-info'
-	sourceCompatibility = JavaVersion.VERSION_1_8
-	targetCompatibility = JavaVersion.VERSION_1_8
-	source = sourceSets.main.java
+compileJava {
 	dependsOn configurations.compileClasspath
+	source = sourceSets.main.java
 	classpath = sourceSets.main.compileClasspath
 	destinationDirectory = sourceSets.main.java.destinationDirectory
-	modularity.inferModulePath = false
-	excludes = ['module-info.java']
-}
-
-compileJava {
-	includes = ['module-info.java']
-	dependsOn compileLegacyJava
-	classpath = sourceSets.main.compileClasspath
 }
 
 // Check bytecode version, in case some other task screws it
-tasks.register('checkLegacyJava') {
-	description = 'Check that classes are Java 8 bytecode (except module-info)'
+tasks.register('checkBytecodeVersion') {
+	description = 'Check that classes are Java 11 bytecode'
 	enabled = enabled && !project.getPluginManager().hasPlugin('eclipse')
 	def classdir = sourceSets.main.output.classesDirs.files.stream().findAny().get()
-	def classfiles = fileTree(classdir).matching({it.exclude('module-info.class')}).files
+	def classfiles = fileTree(classdir).files
 	doFirst() {
 		classfiles.each {
 			classfile ->
 			def classbytes = classfile.bytes
 			def bcversion = classbytes[6] * 128 + classbytes[7]
-			if (bcversion != 52) {
+			if (bcversion != 55) {
 				throw new GradleException("Bytecode on " + classfile.name +
-					" is not valid Java 8. Version should be 52, instead is " + bcversion)
+					" is not valid Java 11. Version should be 55, instead is " + bcversion)
 			}
 		}
 	}
 }
 
-classes.dependsOn jvmVersionAttribute, checkLicense
-classes.finalizedBy checkLegacyJava
-jar.dependsOn checkLegacyJava
+classes.dependsOn checkLicense
+classes.finalizedBy checkBytecodeVersion
+jar.dependsOn checkBytecodeVersion
 
 //create a project Jar with all dependencies
 tasks.register("${project.name}-jar-with-deps", Jar) {
@@ -159,7 +131,7 @@ tasks.withType(Javadoc) {
 	options.addStringOption('charset', 'UTF-8')
 	options.links 'https://docs.oracle.com/en/java/javase/11/docs/api/'
 	options.links 'https://css4j.github.io/api/latest/'
-	options.links 'https://javadoc.io/doc/org.mozilla/rhino/1.9.0/'
+	options.links "https://javadoc.io/doc/org.mozilla/rhino/${rhinoVersion}/"
 }
 
 tasks.withType(Test) {
@@ -285,7 +257,7 @@ publishing {
 }
 
 tasks.withType(PublishToMavenRepository) { task ->
-	dependsOn checkLegacyJava
+	dependsOn checkBytecodeVersion
 	doFirst {
 		if (repository == publishing.repositories.getByName('mavenRepo')) {
 			logger.lifecycle "Deploying artifacts to \"${it.repository.url}\""
