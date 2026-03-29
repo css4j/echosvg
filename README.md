@@ -4,7 +4,8 @@
 handle images in the Scalable Vector Graphics (SVG) format for various purposes,
 such as viewing, generation or manipulation.
 
- EchoSVG supports most of modern CSS, and is partly compatible with SVG2.
+ EchoSVG supports most of modern CSS and is partly compatible with SVG2. Runs on
+Java 8 or later (forthcoming Version 3.0 shall require Java 11).
 
 This document mostly contains information of interest to developers, like how to
 build from source or run tests. If you want general information (like how to use
@@ -27,7 +28,7 @@ To build EchoSVG you need the following software installed:
 - The [Git version control system](https://git-scm.com/downloads) is required to
 obtain the sources. Any recent version should suffice.
 
-- A Java compiler, version 11 to 24. You can install it from your favourite
+- A Java compiler, version 11 to 25. You can install it from your favourite
 package manager or by downloading from [Adoptium](https://adoptium.net/).
 
 <br/>
