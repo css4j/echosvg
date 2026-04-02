@@ -5,6 +5,7 @@ plugins {
 dependencies {
 	api project(':echosvg-bridge')
 	api project(':echosvg-gui-util')
+	compileOnly "xml-apis:xml-apis:$xmlApisVersion" // Required by Java 8 compat
 }
 
 description = 'io.sf.carte:echosvg-swing'
