@@ -4,6 +4,7 @@ plugins {
 
 dependencies {
 	implementation project(':echosvg-bridge')
+	compileOnly "xml-apis:xml-apis:$xmlApisVersion" // Required by Java 8 compat
 }
 
 description = 'io.sf.carte:echosvg-test-scripts'
@@ -12,9 +13,15 @@ publishing.publications.maven(MavenPublication).pom {
 	description = 'EchoSVG Test non-js Scripts'
 }
 
-compileJava.dependsOn ':echosvg-bridge:checkBytecodeVersion'
+java {
+	sourceCompatibility = JavaVersion.VERSION_1_8
+	targetCompatibility = JavaVersion.VERSION_1_8
+}
 
-checkBytecodeVersion.enabled = false
+compileLegacyJava.dependsOn ':echosvg-bridge:checkLegacyJava'
+
+compileJava.enabled = false
+checkLegacyJava.enabled = false
 
 jar.enabled = false
 sourcesJar.enabled = false
