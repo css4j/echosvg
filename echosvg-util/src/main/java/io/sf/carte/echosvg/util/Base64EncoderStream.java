@@ -57,7 +57,7 @@ public class Base64EncoderStream extends OutputStream {
 	int lineLen = 0;
 
 	PrintStream out;
-	boolean closeOutOnClose;
+	private final boolean closeOutOnClose;
 
 	public Base64EncoderStream(OutputStream out) {
 		this.out = new PrintStream(out);
@@ -161,10 +161,6 @@ public class Base64EncoderStream extends OutputStream {
 		if (len == 0)
 			return;
 
-		// System.out.println("atomLen: " + atomLen +
-		// " len: " + len +
-		// " offset: " + offset);
-
 		if (atomLen != 0) {
 			switch (atomLen) {
 			case 1:
@@ -184,6 +180,7 @@ public class Base64EncoderStream extends OutputStream {
 				break;
 			default:
 			}
+
 			encodeAtom();
 		}
 
@@ -217,6 +214,7 @@ public class Base64EncoderStream extends OutputStream {
 			break;
 		default:
 		}
+
 		atomLen = len;
 	}
 
