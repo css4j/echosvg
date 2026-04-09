@@ -160,9 +160,11 @@ public class JPEGTranscoder extends ImageTranscoder {
 		}
 
 		@Override
-		public void close() throws IOException {
-			if (os == null)
+		public void close() {
+			if (os == null) {
 				return;
+			}
+
 			try {
 				os.close();
 			} catch (IOException ioe) {
@@ -171,9 +173,11 @@ public class JPEGTranscoder extends ImageTranscoder {
 		}
 
 		@Override
-		public void flush() throws IOException {
-			if (os == null)
+		public void flush() {
+			if (os == null) {
 				return;
+			}
+
 			try {
 				os.flush();
 			} catch (IOException ioe) {
@@ -182,9 +186,11 @@ public class JPEGTranscoder extends ImageTranscoder {
 		}
 
 		@Override
-		public void write(byte[] b) throws IOException {
-			if (os == null)
+		public void write(byte[] b) {
+			if (os == null) {
 				return;
+			}
+
 			try {
 				os.write(b);
 			} catch (IOException ioe) {
@@ -193,9 +199,11 @@ public class JPEGTranscoder extends ImageTranscoder {
 		}
 
 		@Override
-		public void write(byte[] b, int off, int len) throws IOException {
-			if (os == null)
+		public void write(byte[] b, int off, int len) {
+			if (os == null) {
 				return;
+			}
+
 			try {
 				os.write(b, off, len);
 			} catch (IOException ioe) {
@@ -204,14 +212,18 @@ public class JPEGTranscoder extends ImageTranscoder {
 		}
 
 		@Override
-		public void write(int b) throws IOException {
-			if (os == null)
+		public void write(int b) {
+			if (os == null) {
 				return;
+			}
+
 			try {
 				os.write(b);
 			} catch (IOException ioe) {
 				os = null;
 			}
 		}
+
 	}
+
 }
