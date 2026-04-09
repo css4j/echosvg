@@ -279,8 +279,18 @@ class IDATOutputStream extends FilterOutputStream {
 
 	@Override
 	public void write(byte[] b, int off, int len) throws IOException {
+		if (b == null) {
+			throw new NullPointerException();
+		}
+
+		// Defer the `off` positive-or-zero check to `System.arraycopy`
+		if (len < 0 || off + len > b.length) {
+			throw new IndexOutOfBoundsException();
+		}
+
 		while (len > 0) {
 			int bytes = Math.min(segmentLength - bytesWritten, len);
+			// If `off` is negative, throws an IndexOutOfBoundsException
 			System.arraycopy(b, off, buffer, bytesWritten, bytes);
 			off += bytes;
 			len -= bytes;

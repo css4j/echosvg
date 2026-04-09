@@ -99,11 +99,23 @@ public class Base64EncoderStream extends OutputStream {
 
 	@Override
 	public void write(byte[] data) throws IOException {
+		if (data == null) {
+			throw new NullPointerException();
+		}
+
 		encodeFromArray(data, 0, data.length);
 	}
 
 	@Override
 	public void write(byte[] data, int off, int len) throws IOException {
+		if (data == null) {
+			throw new NullPointerException();
+		}
+
+		if (off < 0 || len < 0 || off + len > data.length) {
+			throw new IndexOutOfBoundsException();
+		}
+
 		encodeFromArray(data, off, len);
 	}
 
@@ -155,6 +167,11 @@ public class Base64EncoderStream extends OutputStream {
 	 * enocodeAtom - Take three bytes of input and encode it as 4 printable
 	 * characters. Note that if the length in len is less than three is encodes
 	 * either one or two '=' signs to indicate padding characters.
+	 * 
+	 * @param data   the data to encode. Cannot be {@code null}.
+	 * @param offset the start offset in the data. Must be positive or zero.
+	 * @param len    the number of bytes to encode. Must be positive or zero.
+	 * @throws IOException if an I/O error occurs.
 	 */
 	void encodeFromArray(byte[] data, int offset, int len) throws IOException {
 		byte a, b, c;
