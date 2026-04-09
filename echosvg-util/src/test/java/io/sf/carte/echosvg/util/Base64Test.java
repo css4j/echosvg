@@ -19,8 +19,10 @@
 package io.sf.carte.echosvg.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -39,6 +41,18 @@ import org.junit.jupiter.api.Test;
  * @version $Id$
  */
 public class Base64Test {
+
+	@Test
+	public void testWriteArguments() throws Exception {
+		ByteArrayOutputStream bos = new ByteArrayOutputStream(16);
+		OutputStream os = new Base64EncoderStream(bos);
+		assertThrows(NullPointerException.class, () -> os.write(null, 0, 0));
+		byte[] b = new byte[16];
+		assertThrows(IndexOutOfBoundsException .class, () -> os.write(b, -1, 14));
+		assertThrows(IndexOutOfBoundsException .class, () -> os.write(b, 0, 20));
+		os.close();
+		assertEquals(0, bos.size());
+	}
 
 	@Test
 	public void testB64_1() throws Exception {
@@ -200,7 +214,7 @@ public class Base64Test {
 		InputStream refIS = ref.openStream();
 
 		if (action.equals("ENCODE") || action.equals("ROUND")) {
-			// We need to encode the incomming data
+			// We need to encode the incoming data
 			PipedOutputStream pos = new PipedOutputStream();
 			OutputStream os = new Base64EncoderStream(pos);
 
