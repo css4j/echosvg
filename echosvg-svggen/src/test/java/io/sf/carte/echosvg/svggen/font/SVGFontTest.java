@@ -27,6 +27,20 @@ import org.junit.jupiter.api.Test;
 
 public class SVGFontTest {
 
+	private static final String[] testIn = { "id1", "abcdefghijklm", "abcde&", "ab>cdefg", "abcdefg<hijk",
+			"abc''''def", "a\"\"bcdef\"", "\"\"\"\"\"\"\"\"z" };
+
+	private static final String[] testOut = { "id1", "abcdefghijklm", "abcde&amp;", "ab&gt;cdefg",
+			"abcdefg&lt;hijk", "abc&apos;&apos;&apos;&apos;def", "a&quot;&quot;bcdef&quot;",
+			"&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;z" };
+
+	@Test
+	public void testEncodeEntities() {
+		for (int j = 0; j < testIn.length; j++) {
+			assertEquals(testOut[j], SVGFont.encodeEntities(testIn[j]));
+		}
+	}
+
 	@Test
 	public void testWriteFontAsSVGFragment() throws Exception {
 		Font font = new Font();

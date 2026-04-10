@@ -89,24 +89,44 @@ public class SVGFont implements SVGConstants, ScriptTags, FeatureTags {
 	 */
 	private static String CONFIG_SVG_TEST_CARD_END = "SVGFont.config.svg.test.card.end";
 
-	protected static String encodeEntities(String s) {
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < s.length(); i++) {
-			if (s.charAt(i) == XML_CHAR_LT) {
-				sb.append(XML_ENTITY_LT);
-			} else if (s.charAt(i) == XML_CHAR_GT) {
-				sb.append(XML_ENTITY_GT);
-			} else if (s.charAt(i) == XML_CHAR_AMP) {
-				sb.append(XML_ENTITY_AMP);
-			} else if (s.charAt(i) == XML_CHAR_APOS) {
-				sb.append(XML_ENTITY_APOS);
-			} else if (s.charAt(i) == XML_CHAR_QUOT) {
-				sb.append(XML_ENTITY_QUOT);
-			} else {
-				sb.append(s.charAt(i));
+	static String encodeEntities(String s) {
+		StringBuilder sb = null;
+		int len = s.length();
+		for (int i = 0; i < len; i = s.offsetByCodePoints(i, 1)) {
+			int cp = s.codePointAt(i);
+			switch (cp) {
+			case XML_CHAR_LT:
+				sb = appendEntityToBuffer(sb, XML_ENTITY_LT, s, i, len);
+				break;
+			case XML_CHAR_GT:
+				sb = appendEntityToBuffer(sb, XML_ENTITY_GT, s, i, len);
+				break;
+			case XML_CHAR_AMP:
+				sb = appendEntityToBuffer(sb, XML_ENTITY_AMP, s, i, len);
+				break;
+			case XML_CHAR_APOS:
+				sb = appendEntityToBuffer(sb, XML_ENTITY_APOS, s, i, len);
+				break;
+			case XML_CHAR_QUOT:
+				sb = appendEntityToBuffer(sb, XML_ENTITY_QUOT, s, i, len);
+				break;
+			default:
+				if (sb != null) {
+					sb.appendCodePoint(cp);
+				}
 			}
 		}
-		return sb.toString();
+		return sb == null ? s : sb.toString();
+	}
+
+	private static StringBuilder appendEntityToBuffer(StringBuilder buf, String string, String text,
+			int index, int inilen) {
+		if (buf == null) {
+			buf = new StringBuilder(inilen + string.length() + 2);
+			buf.append(text.subSequence(0, index));
+		}
+		buf.append(string);
+		return buf;
 	}
 
 	protected static String getContourAsSVGPathData(Glyph glyph, int startIndex, int count) {
