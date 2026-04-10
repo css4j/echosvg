@@ -217,7 +217,7 @@ public class SVGFont implements SVGConstants, ScriptTags, FeatureTags {
 		// overline-thickness %Number; #IMPLIED >
 
 		sb.append(XML_OPEN_TAG_START).append(SVG_FONT_FACE_TAG).append(EOL).append(XML_TAB)
-				.append(SVG_FONT_FAMILY_ATTRIBUTE).append(XML_EQUAL_QUOT).append(fontFamily).append(QUOT_EOL)
+				.append(SVG_FONT_FAMILY_ATTRIBUTE).append(XML_EQUAL_QUOT).append(encodeEntities(fontFamily)).append(QUOT_EOL)
 				// .append(" font-family=\"").append(fontFamily).append("\"\r\n")
 				.append(XML_TAB).append(SVG_UNITS_PER_EM_ATTRIBUTE).append(XML_EQUAL_QUOT).append(unitsPerEm)
 				.append(QUOT_EOL)
@@ -260,7 +260,7 @@ public class SVGFont implements SVGConstants, ScriptTags, FeatureTags {
 			ps.print(SVG_ID_ATTRIBUTE);
 			ps.print(XML_EQUAL_QUOT);
 			// ps.print("id=\"");
-			ps.print(id);
+			ps.print(encodeEntities(id));
 			ps.print(XML_CHAR_QUOT);
 			ps.print(XML_SPACE);
 			// ps.print("\" ");
@@ -409,7 +409,7 @@ public class SVGFont implements SVGConstants, ScriptTags, FeatureTags {
 			if (glyphName != null) {
 				sb.append(XML_SPACE).append(SVG_GLYPH_NAME_ATTRIBUTE).append(XML_EQUAL_QUOT)
 						// sb.append(" glyph-name=\"")
-						.append(glyphName)
+						.append(encodeEntities(glyphName))
 						// .append("\"");
 						.append(XML_CHAR_QUOT);
 			}
@@ -525,7 +525,7 @@ public class SVGFont implements SVGConstants, ScriptTags, FeatureTags {
 			// sb.append("g1=\"");
 			sb.append(SVG_G1_ATTRIBUTE).append(XML_EQUAL_QUOT);
 
-			sb.append(leftGlyphName);
+			sb.append(encodeEntities(leftGlyphName));
 		}
 
 		// sb.append("\" ");
@@ -540,7 +540,7 @@ public class SVGFont implements SVGConstants, ScriptTags, FeatureTags {
 			// sb.append("g2=\"");
 			sb.append(SVG_G2_ATTRIBUTE).append(XML_EQUAL_QUOT);
 
-			sb.append(rightGlyphName);
+			sb.append(encodeEntities(rightGlyphName));
 		}
 
 		// sb.append("\" k=\"");
@@ -598,7 +598,7 @@ public class SVGFont implements SVGConstants, ScriptTags, FeatureTags {
 
 	protected static void writeSvgTestCard(PrintStream ps, String fontFamily) {
 		ps.println(Messages.formatMessage(CONFIG_SVG_TEST_CARD_START, null));
-		ps.println(fontFamily);
+		ps.println(encodeEntities(fontFamily));
 		ps.println(Messages.formatMessage(CONFIG_SVG_TEST_CARD_END, null));
 
 		/*
