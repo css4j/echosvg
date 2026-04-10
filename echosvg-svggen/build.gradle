@@ -6,6 +6,12 @@ dependencies {
 	api project(':echosvg-awt-util')
 	implementation project(':echosvg-i18n')
 	runtimeOnly project(':echosvg-codec')
+	testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+	useJUnitPlatform()
 }
 
 description = 'io.sf.carte:echosvg-svggen'
