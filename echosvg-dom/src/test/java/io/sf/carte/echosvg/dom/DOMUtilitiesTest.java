@@ -63,6 +63,20 @@ public class DOMUtilitiesTest {
 
 	@Test
 	public void testContentToString() throws IOException {
+		String data = "abcdef";
+		String result = DOMUtilities.contentToString(data, false);
+		assertEquals(data, result);
+	}
+
+	@Test
+	public void testContentToStringEscaped() throws IOException {
+		String data = "<>\"'&";
+		String result = DOMUtilities.contentToString(data, false);
+		assertEquals("&lt;&gt;&quot;&apos;&amp;", result);
+	}
+
+	@Test
+	public void testContentToStringSurrogate() throws IOException {
 		String data = "\ud83d\udc49";
 		String result = DOMUtilities.contentToString(data, false);
 		assertEquals(data, result);
