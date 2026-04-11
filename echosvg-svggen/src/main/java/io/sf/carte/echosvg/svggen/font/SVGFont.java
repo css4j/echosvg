@@ -95,14 +95,14 @@ public class SVGFont implements SVGConstants, ScriptTags, FeatureTags {
 		for (int i = 0; i < len; i = s.offsetByCodePoints(i, 1)) {
 			int cp = s.codePointAt(i);
 			switch (cp) {
+			case XML_CHAR_AMP:
+				sb = appendEntityToBuffer(sb, XML_ENTITY_AMP, s, i, len);
+				break;
 			case XML_CHAR_LT:
 				sb = appendEntityToBuffer(sb, XML_ENTITY_LT, s, i, len);
 				break;
 			case XML_CHAR_GT:
 				sb = appendEntityToBuffer(sb, XML_ENTITY_GT, s, i, len);
-				break;
-			case XML_CHAR_AMP:
-				sb = appendEntityToBuffer(sb, XML_ENTITY_AMP, s, i, len);
 				break;
 			case XML_CHAR_APOS:
 				sb = appendEntityToBuffer(sb, XML_ENTITY_APOS, s, i, len);
@@ -119,13 +119,14 @@ public class SVGFont implements SVGConstants, ScriptTags, FeatureTags {
 		return sb == null ? s : sb.toString();
 	}
 
-	private static StringBuilder appendEntityToBuffer(StringBuilder buf, String string, String text,
+	private static StringBuilder appendEntityToBuffer(StringBuilder buf, String entity, String text,
 			int index, int inilen) {
 		if (buf == null) {
-			buf = new StringBuilder(inilen + string.length() + 2);
+			// Make room for a few entities in the buffer
+			buf = new StringBuilder(inilen + 16);
 			buf.append(text.subSequence(0, index));
 		}
-		buf.append(string);
+		buf.append(entity);
 		return buf;
 	}
 

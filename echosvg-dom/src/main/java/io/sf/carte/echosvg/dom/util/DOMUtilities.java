@@ -416,40 +416,53 @@ public class DOMUtilities extends XMLUtilities implements XMLConstants {
 	 */
 	public static String contentToString(String s, boolean isXML11) throws IOException {
 
-		StringBuilder result = new StringBuilder(s.length());
+		StringBuilder buf = null;
 
 		final int len = s.length();
 		int i = 0;
 		while (i < len) {
-			int c = s.codePointAt(i);
-			if (!isXML11 && !isXMLCharacter(c) || isXML11 && !isXML11Character(c)) {
+			int cp = s.codePointAt(i);
+			if (!isXML11 && !isXMLCharacter(cp) || isXML11 && !isXML11Character(cp)) {
 				throw new IOException("Invalid character");
 			}
 
-			switch (c) {
-			case '<':
-				result.append("&lt;");
+			switch (cp) {
+			case XML_CHAR_AMP:
+				buf = appendEntityToBuffer(buf, XML_ENTITY_AMP, s, i, len);
 				break;
-			case '>':
-				result.append("&gt;");
+			case XML_CHAR_LT:
+				buf = appendEntityToBuffer(buf, XML_ENTITY_LT, s, i, len);
 				break;
-			case '&':
-				result.append("&amp;");
+			case XML_CHAR_GT:
+				buf = appendEntityToBuffer(buf, XML_ENTITY_GT, s, i, len);
 				break;
-			case '"':
-				result.append("&quot;");
+			case XML_CHAR_APOS:
+				buf = appendEntityToBuffer(buf, XML_ENTITY_APOS, s, i, len);
 				break;
-			case '\'':
-				result.append("&apos;");
+			case XML_CHAR_QUOT:
+				buf = appendEntityToBuffer(buf, XML_ENTITY_QUOT, s, i, len);
 				break;
 			default:
-				result.appendCodePoint(c);
+				if (buf != null) {
+					buf.appendCodePoint(cp);
+				}
 			}
 
 			i = s.offsetByCodePoints(i, 1);
 		}
 
-		return result.toString();
+		return buf == null ? s : buf.toString();
+	}
+
+	private static StringBuilder appendEntityToBuffer(StringBuilder buf, String entity, String text,
+			int index, int inilen) {
+		if (buf == null) {
+			// Make room for a few entities in the buffer
+			buf = new StringBuilder(inilen + 16);
+			buf.append(text.subSequence(0, index));
+		}
+		buf.append(entity);
+		return buf;
 	}
 
 	/**

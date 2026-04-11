@@ -108,7 +108,8 @@ public class AttributeEscapeMark {
 	private static StringBuilder appendEntityToBuffer(StringBuilder buf, String string, String text,
 			int index, int inilen) {
 		if (buf == null) {
-			buf = new StringBuilder(inilen + string.length() + 2);
+			// Make room for a few entities in the buffer
+			buf = new StringBuilder(inilen + 16);
 			buf.append(text.subSequence(0, index));
 		}
 		buf.append(string);
