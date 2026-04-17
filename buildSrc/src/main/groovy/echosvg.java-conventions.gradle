@@ -30,7 +30,6 @@ version = '3.0-SNAPSHOT'
 java {
 	withSourcesJar()
 	sourceCompatibility = JavaVersion.VERSION_11
-	targetCompatibility = JavaVersion.VERSION_11
 }
 
 compileJava {
@@ -38,6 +37,7 @@ compileJava {
 	source = sourceSets.main.java
 	classpath = sourceSets.main.compileClasspath
 	destinationDirectory = sourceSets.main.java.destinationDirectory
+	options.release = 11
 }
 
 // Check bytecode version, in case some other task screws it
