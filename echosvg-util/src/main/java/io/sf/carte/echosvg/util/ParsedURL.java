@@ -323,7 +323,7 @@ public class ParsedURL implements Serializable {
 	 * or it doesn't make sense for the protocol.
 	 */
 	public String getHost() {
-		return data.host;
+		return data.getHost();
 	}
 
 	/**

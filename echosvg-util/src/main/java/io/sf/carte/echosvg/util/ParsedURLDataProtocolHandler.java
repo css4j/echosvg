@@ -89,12 +89,13 @@ public class ParsedURLDataProtocolHandler extends AbstractParsedURLProtocolHandl
 		}
 
 		idx = urlStr.indexOf(',', pidx);
-		if ((idx != -1) && (idx != pidx)) {
+		if (idx != -1 && idx != pidx) {
+			// Use 'host' as a work field, to avoid having to define another
 			ret.host = urlStr.substring(pidx, idx);
 			pidx = idx + 1;
 
 			int aidx = ret.host.lastIndexOf(';');
-			if ((aidx == -1) || (aidx == ret.host.length())) {
+			if (aidx == -1 || aidx == ret.host.length()) {
 				ret.contentType = ret.host;
 			} else {
 				String enc = ret.host.substring(aidx + 1);
@@ -113,12 +114,14 @@ public class ParsedURLDataProtocolHandler extends AbstractParsedURLProtocolHandl
 					aidx = idx + 1;
 					while (aidx < ret.contentType.length()) {
 						idx = ret.contentType.indexOf(';', aidx);
-						if (idx == -1)
+						if (idx == -1) {
 							idx = ret.contentType.length();
+						}
 						String param = ret.contentType.substring(aidx, idx);
 						int eqIdx = param.indexOf('=');
-						if ((eqIdx != -1) && (CHARSET.equals(param.substring(0, eqIdx))))
+						if (eqIdx != -1 && CHARSET.equals(param.substring(0, eqIdx))) {
 							ret.charset = param.substring(eqIdx + 1);
+						}
 						aidx = idx + 1;
 					}
 				}
@@ -147,8 +150,18 @@ public class ParsedURLDataProtocolHandler extends AbstractParsedURLProtocolHandl
 		}
 
 		@Override
+		public String getHost() {
+			return null;
+		}
+
+		@Override
+		public void setHost(String host) {
+		}
+
+		@Override
 		public String getPortStr() {
 			String portStr = "data:";
+			// 'host' is used as a work field for the content-type string
 			if (host != null) {
 				portStr += host;
 			}
