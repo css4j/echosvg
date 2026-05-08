@@ -128,7 +128,7 @@ public class ParsedURLDataProtocolHandler extends AbstractParsedURLProtocolHandl
 			}
 		}
 
-		if (pidx < urlStr.length()) {
+		if (pidx < len) {
 			ret.path = urlStr.substring(pidx);
 		}
 
