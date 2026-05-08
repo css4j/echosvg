@@ -35,6 +35,10 @@ import java.util.zip.ZipException;
 
 /**
  * Holds the data for more URLs.
+ * <p>
+ * WARNING: Beware that several of the public fields will be made
+ * package-visible in the future. Please use the getters and setters instead.
+ * </p>
  *
  * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
  * @author For later modifications, see Git history.
@@ -114,17 +118,49 @@ public class ParsedURLData implements Serializable {
 	private static int connectTimeout = 10000;
 	private static int readTimeout = 240000;
 
-	/**
-	 * Since the Data instance is 'hidden' in the ParsedURL instance we make all our
+	/*
+	 * Since the Data instance is 'hidden' in the ParsedURL instance we make many
 	 * methods public. This makes it easy for the various Protocol Handlers to
 	 * update an instance as parsing proceeds.
 	 */
+
+	/*
+	 * The public fields will be made package-visible in the future.
+	 */
+
+	/**
+	 * See {@link #getProtocol()}.
+	 */
 	public String protocol = null;
+
+	/**
+	 * See {@link #getHost()}.
+	 */
 	public String host = null;
+
+	/**
+	 * See {@link #getPort()}.
+	 */
 	public int port = -1;
+
+	/**
+	 * See {@link #getPath()}.
+	 */
 	public String path = null;
+
+	/**
+	 * See {@link #getRef()}.
+	 */
 	public String ref = null;
+
+	/**
+	 * See {@link #getContentType(String)}.
+	 */
 	public String contentType = null;
+
+	/**
+	 * See {@link #getContentEncoding(String)}.
+	 */
 	public String contentEncoding = null;
 
 	public transient InputStream stream = null;
@@ -507,8 +543,69 @@ public class ParsedURLData implements Serializable {
 	}
 
 	/**
+	 * Get the host part of the URL.
+	 * 
+	 * @return the host, or {@code null} if there is no host.
+	 */
+	public String getHost() {
+		return host;
+	}
+
+	public void setHost(String host) {
+		this.host = host;
+	}
+
+	/**
+	 * Get the port.
+	 * 
+	 * @return the port number, or {@code -1} if the default port.
+	 */
+	public int getPort() {
+		return port;
+	}
+
+	/**
+	 * Set the port number.
+	 * 
+	 * @param port the port number, or {@code -1} for the default.
+	 */
+	public void setPort(int port) {
+		this.port = port;
+	}
+
+	public String getProtocol() {
+		return protocol;
+	}
+
+	/**
+	 * Get the path of this URL.
+	 * 
+	 * @return the path, or {@code null} if there is no path.
+	 */
+	public String getPath() {
+		return path;
+	}
+
+	/**
+	 * Sets the path of this URL.
+	 * 
+	 * @param path the path, or {@code null} for no path.
+	 */
+	public void setPath(String path) {
+		this.path = path;
+	}
+
+	public String getRef() {
+		return ref;
+	}
+
+	public void setRef(String ref) {
+		this.ref = ref;
+	}
+
+	/**
 	 * Returns true if the URL looks well formed and complete. This does not
-	 * garuntee that the stream can be opened but is a good indication that things
+	 * guarantee that the stream can be opened but is a good indication that things
 	 * aren't totally messed up.
 	 */
 	public boolean complete() {

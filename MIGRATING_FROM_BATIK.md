@@ -106,3 +106,6 @@ Batik:
    `createSVG12BridgeContext()` instead. The former creates a `BridgeContext`
    which is intended for the current SVG specification, not just 1.1 as in Batik,
    while the latter produces one for the deprecated 1.2 version.
+
+19) If you use the public fields in `ParsedURLData`, please use the getters and
+   setters instead, as their visibility could be reduced in the future.
