@@ -67,7 +67,7 @@ Batik:
 10) `SVGAnimationElementBridge.initializeAnimation()` gained a `BridgeContext`
    argument and now returns a `boolean`.
 
-### Upgrading to EchoSVG 2.0
+### Upgrading to EchoSVG 2.x
 
 11) The old and deprecated `CSSValue` API was replaced by an API close to W3C's
    Typed OM. One of the consequences is that if your scripts call `getPresentationAttribute`
@@ -98,7 +98,8 @@ Batik:
 17) Methods that took an `ICCColorSpaceWithIntent` (from xmlgraphics-commons),
    like `ImageTagRegistry.readStream(stream, space)`, now take a `ColorSpace`.
    The legacy ICC color stuff was removed, as it did not produce actual colors
-   outside of the sRGB gamut, is not supported by browsers and was just adding bloat.
+   outside of the sRGB gamut, is not supported by browsers and was just adding
+   bloat.
 
 18) Protected method `SVGAbstractTranscoder.createBridgeContext(String)` was
    deprecated, due to the `version` attribute being dropped from SVG. If you
@@ -109,3 +110,7 @@ Batik:
 
 19) If you use the public fields in `ParsedURLData`, please use the getters and
    setters instead, as their visibility could be reduced in the future.
+
+### Upgrading to EchoSVG 3.0
+
+20) For performance, `ParsedURL.getPortStr()` now returns a `StringBuilder`.

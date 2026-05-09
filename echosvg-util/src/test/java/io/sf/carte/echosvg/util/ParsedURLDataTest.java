@@ -20,6 +20,7 @@ package io.sf.carte.echosvg.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -117,6 +118,7 @@ public class ParsedURLDataTest {
 		assertEquals(contentType, purl.getContentType());
 		assertEquals(data, dataStr);
 		assertEquals(url, purl.toString());
+		assertTrue(purl.complete());
 		assertNull(purl.getHost());
 	}
 

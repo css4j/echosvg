@@ -315,7 +315,7 @@ public class ParsedURL implements Serializable {
 	 * ':'.
 	 */
 	public String getProtocol() {
-		return data.protocol;
+		return data.getProtocol();
 	}
 
 	/**
@@ -331,7 +331,7 @@ public class ParsedURL implements Serializable {
 	 * that was parsed, otherwise returns -1.
 	 */
 	public int getPort() {
-		return data.port;
+		return data.getPort();
 	}
 
 	/**
@@ -340,21 +340,21 @@ public class ParsedURL implements Serializable {
 	 * in JDK 1.3 as a synonym for getFile from JDK 1.2.
 	 */
 	public String getPath() {
-		return data.path;
+		return data.getPath();
 	}
 
 	/**
 	 * Returns the 'fragment' reference in the URL.
 	 */
 	public String getRef() {
-		return data.ref;
+		return data.getRef();
 	}
 
 	/**
 	 * Returns the URL up to and include the port number on the host. Does not
 	 * include the path or fragment pieces.
 	 */
-	public String getPortStr() {
+	public StringBuilder getPortStr() {
 		return data.getPortStr();
 	}
 

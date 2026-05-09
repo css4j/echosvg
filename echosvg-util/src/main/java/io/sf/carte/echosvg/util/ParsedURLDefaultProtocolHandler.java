@@ -327,10 +327,12 @@ public class ParsedURLDefaultProtocolHandler extends AbstractParsedURLProtocolHa
 		}
 
 		if (urlStr.startsWith("#")) {
-			String base = baseURL.getPortStr();
-			if (baseURL.getPath() != null)
-				base += baseURL.getPath();
-			return parseURL(base + urlStr);
+			StringBuilder base = baseURL.getPortStr();
+			if (baseURL.getPath() != null) {
+				base.append(baseURL.getPath());
+			}
+			base.append(urlStr);
+			return parseURL(base.toString());
 		}
 
 		String path = baseURL.getPath();

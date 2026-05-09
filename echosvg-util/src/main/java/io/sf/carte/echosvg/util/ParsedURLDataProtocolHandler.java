@@ -159,26 +159,14 @@ public class ParsedURLDataProtocolHandler extends AbstractParsedURLProtocolHandl
 		}
 
 		@Override
-		public String getPortStr() {
-			String portStr = "data:";
+		public StringBuilder getPortStr() {
+			StringBuilder portStr = new StringBuilder("data:");
 			// 'host' is used as a work field for the content-type string
 			if (host != null) {
-				portStr += host;
+				portStr.append(host);
 			}
-			portStr += ",";
+			portStr.append(',');
 			return portStr;
-		}
-
-		@Override
-		public String toString() {
-			String ret = getPortStr();
-			if (path != null) {
-				ret += path;
-			}
-			if (ref != null) {
-				ret += '#' + ref;
-			}
-			return ret;
 		}
 
 		/**

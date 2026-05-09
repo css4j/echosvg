@@ -725,17 +725,20 @@ public class ParsedURLData implements Serializable {
 	 * Returns the URL up to and include the port number on the host. Does not
 	 * include the path or fragment pieces.
 	 */
-	public String getPortStr() {
-		String portStr = "";
-		if (protocol != null)
-			portStr += protocol + ":";
+	public StringBuilder getPortStr() {
+		StringBuilder portStr = new StringBuilder();
+		if (protocol != null) {
+			portStr.append(protocol).append(':');
+		}
 
-		if ((host != null) || (port != -1)) {
-			portStr += "//";
-			if (host != null)
-				portStr += host;
-			if (port != -1)
-				portStr += ":" + port;
+		if (host != null || port != -1) {
+			portStr.append("//");
+			if (host != null) {
+				portStr.append(host);
+			}
+			if (port != -1) {
+				portStr.append(':').append(port);
+			}
 		}
 
 		return portStr;
@@ -745,7 +748,7 @@ public class ParsedURLData implements Serializable {
 		if (this == other)
 			return true;
 
-		// Check if the rest of the two PURLs matche other than
+		// Check if the rest of the two PURLs match other than
 		// the 'ref'
 		if ((port == other.port) && ((path == other.path) || ((path != null) && path.equals(other.path)))
 				&& ((host == other.host) || ((host != null) && host.equals(other.host)))
@@ -760,14 +763,14 @@ public class ParsedURLData implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		String ret = getPortStr();
-		if (path != null)
-			ret += path;
-
-		if (ref != null)
-			ret += "#" + ref;
-
-		return ret;
+		StringBuilder ret = getPortStr();
+		if (path != null) {
+			ret.append(path);
+		}
+		if (ref != null) {
+			ret.append('#').append(ref);
+		}
+		return ret.toString();
 	}
 
 	/**
