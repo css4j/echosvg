@@ -2,10 +2,10 @@ name: "CodeQL"
 
 on:
   push:
-    branches: [ master, 1-stable ]
+    branches: [ 1-stable ]
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: [ master, 1-stable ]
+    branches: [ 1-stable ]
   schedule:
     - cron: '22 6 8 * *'
 
@@ -26,6 +26,8 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v6
+        with:
+          ref: '1-stable'
 
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v4
