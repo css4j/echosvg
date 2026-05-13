@@ -26,8 +26,8 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v6
-        with:
-          ref: '1-stable'
+      with:
+        ref: '1-stable'
 
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v4
