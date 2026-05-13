@@ -48,6 +48,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.zip.DataFormatException;
 import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
 
@@ -1179,22 +1180,44 @@ class PNGImage extends SimpleRenderedImage {
 		}
 
 		// Color Profile data
-		byte[] iccArray;
 		int pdataLen = chunk.getLength() - textIndex;
 		if (pdataLen > 0) {
-			ByteArrayInputStream deflatedStream = new ByteArrayInputStream(chunk.data, textIndex,
-					pdataLen);
-			try (InputStream infStream = new InflaterInputStream(deflatedStream, new Inflater(),
-					pdataLen + 64)) {
-				iccArray = infStream.readAllBytes();
-			} catch (IOException e) {
-				throw new RuntimeException(PropertyUtil.getString("PNGImage.error.decomp.icc.profile."), e);
+			ByteArrayOutputStream out = new ByteArrayOutputStream(pdataLen + 128);
+			Inflater infl = new Inflater();
+			infl.setInput(chunk.data, textIndex, pdataLen);
+			try {
+				do {
+					byte[] buffer = new byte[128];
+					int deflLen = infl.inflate(buffer);
+					if (deflLen > 0) {
+						out.write(buffer, 0, deflLen);
+					} else if (infl.finished()) {
+						break;
+					} else {
+						throw errorICCPDecomp(null);
+					}
+				} while (true);
+			} catch (DataFormatException e) {
+				throw errorICCPDecomp(e);
+			} finally {
+				infl.end();
 			}
+			byte[] iccArray = out.toByteArray();
 			setICCProfileData(profileName.toString(), iccArray);
 		} else {
 			// Batik won't crash if there is no profile data, neither we.
-			iccArray = null;
 		}
+	}
+
+	private static RuntimeException errorICCPDecomp(DataFormatException e) {
+		String msg = PropertyUtil.getString("PNGImage.error.decomp.icc.profile.");
+		RuntimeException ex;
+		if (e != null) {
+			ex = new RuntimeException(msg, e);
+		} else {
+			ex = new RuntimeException(msg);
+		}
+		return ex;
 	}
 
 	private void parse_pHYs_chunk(PNGChunk chunk) {
