@@ -4,9 +4,9 @@ name: CI
 
 on:
   push:
-    branches: [ master, release-2x ]
+    branches: [ release-2x ]
   pull_request:
-    branches: [ master, release-2x ]
+    branches: [ release-2x ]
 
   # Allows to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -23,6 +23,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
+        with:
+          ref: 'release-2x'
+
       - uses: gradle/actions/wrapper-validation@v6
 
   build:
@@ -38,6 +41,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
+        with:
+          ref: 'release-2x'
 
       # Set JDK
       - name: Set up JDK
