@@ -10,9 +10,8 @@ plugins {
 }
 
 repositories {
-	maven {
-		url = uri('https://repo.maven.apache.org/maven2/')
-	}
+	mavenCentral()
+
 	maven {
 		url = "https://css4j.github.io/maven/"
 		mavenContent {
