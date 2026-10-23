@@ -11,7 +11,7 @@ obtain the sources. Any recent version should suffice.
 by downloading from [Adoptium](https://adoptium.net/). Generally, Java 21 is
 used for compiling releases.
 
-- The [`generate_directory_index_caddystyle.py`](https://gist.github.com/carlosame/bd5b68c4eb8e0817d9beb1dcfb4de43d)
+- The [`genindex.py`](https://github.com/carlosame/index-html-generator/blob/main/genindex.py)
 script and a recent version of [Python](https://www.python.org/) (required to
 run it). The script is necessary to create the index files in the bare-bones
 Maven repository currently used by EchoSVG.
@@ -79,11 +79,11 @@ cd /path/to/echosvg
 ```
 
 9) Produce the necessary directory indexes in the local copy of the bare-bones
-Maven repository using [`generate_directory_index_caddystyle.py`](https://gist.github.com/carlosame/bd5b68c4eb8e0817d9beb1dcfb4de43d):
+Maven repository using [`genindex.py`](https://raw.githubusercontent.com/carlosame/index-html-generator/refs/heads/main/genindex.py):
 
 ```shell
 cd /path/to/css4j.github.io/maven/io/sf
-generate_directory_index_caddystyle.py -r carte
+genindex.py -t -r carte
 ```
 
 If the changes to the `css4j.github.io` repository look correct, commit them.
