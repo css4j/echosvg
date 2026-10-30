@@ -42,7 +42,11 @@ public class TestCSSContext implements CSSContext {
 	private CSSEngine engine;
 
 	public TestCSSContext(Document doc, ParsedURL purl, Parser cssParser) {
-		this.engine = new SVGCSSEngine(doc, purl, cssParser, this) {
+		this.engine = createCSSEngine(doc, purl, cssParser);
+	}
+
+	protected CSSEngine createCSSEngine(Document doc, ParsedURL purl, Parser cssParser) {
+		return new SVGCSSEngine(doc, purl, cssParser, this) {
 
 			@Override
 			public ParsedURL getCSSBaseURI() {
@@ -149,8 +153,7 @@ public class TestCSSContext implements CSSContext {
 		Document doc = builder.newDocument();
 		doc.setDocumentURI(purl.toString());
 		CSSContext ctx = new TestCSSContext(doc, purl, cssParser);
-		CSSEngine engine = ctx.getCSSEngineForElement(null);
-		return engine;
+		return ctx.getCSSEngineForElement(null);
 	}
 
 }
