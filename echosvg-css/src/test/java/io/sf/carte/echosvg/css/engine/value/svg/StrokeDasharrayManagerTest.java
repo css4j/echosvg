@@ -31,6 +31,7 @@ import io.sf.carte.doc.style.css.CSSValue.CssType;
 import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
+import io.sf.carte.echosvg.css.engine.TestCSSContext;
 import io.sf.carte.echosvg.css.engine.value.AbstractManagerTestSetup;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
@@ -132,7 +133,7 @@ public class StrokeDasharrayManagerTest extends AbstractManagerTestSetup {
 	public void testVar() throws Exception {
 		LexicalUnit lu = parsePropertyValue(
 				"var(--x) ,2");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		Value v = manager.createValue(lu, engine);
 		assertEquals(Type.LEXICAL, v.getPrimitiveType());
 	}
@@ -141,7 +142,7 @@ public class StrokeDasharrayManagerTest extends AbstractManagerTestSetup {
 	public void testVarAfter() throws Exception {
 		LexicalUnit lu = parsePropertyValue(
 				"5 var(--x), 2");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		Value v = manager.createValue(lu, engine);
 		assertEquals(Type.LEXICAL, v.getPrimitiveType());
 	}
@@ -150,7 +151,7 @@ public class StrokeDasharrayManagerTest extends AbstractManagerTestSetup {
 	public void testAttr() throws Exception {
 		LexicalUnit lu = parsePropertyValue(
 				"attr(data-dash type(<length-percentage> | <integer>)), 10");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		Value v = manager.createValue(lu, engine);
 		assertEquals(Type.LEXICAL, v.getPrimitiveType());
 	}
@@ -159,7 +160,7 @@ public class StrokeDasharrayManagerTest extends AbstractManagerTestSetup {
 	public void testAttrAfter() throws Exception {
 		LexicalUnit lu = parsePropertyValue(
 				"20,attr(data-dash type(<length-percentage> | <integer>))");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		Value v = manager.createValue(lu, engine);
 		assertEquals(Type.LEXICAL, v.getPrimitiveType());
 	}
@@ -167,7 +168,7 @@ public class StrokeDasharrayManagerTest extends AbstractManagerTestSetup {
 	@Test
 	public void testCalc() throws Exception {
 		LexicalUnit lu = parsePropertyValue("7 calc(3 + 2) 3 1");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		Value list = manager.createValue(lu, engine);
 		assertEquals(CssType.LIST, list.getCssValueType());
 		Value v = list.item(0);
@@ -191,21 +192,21 @@ public class StrokeDasharrayManagerTest extends AbstractManagerTestSetup {
 	@Test
 	public void testInvalid_Ident() throws Exception {
 		LexicalUnit lu = parsePropertyValue("auto");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		assertThrows(DOMException.class, () -> manager.createValue(lu, engine));
 	}
 
 	@Test
 	public void testInvalid_URL() throws Exception {
 		LexicalUnit lu = parsePropertyValue("url(foo.png)");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		assertThrows(DOMException.class, () -> manager.createValue(lu, engine));
 	}
 
 	@Test
 	public void testInvalid_Abs() throws Exception {
 		LexicalUnit lu = parsePropertyValue("6, abs(-5deg), 3");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		assertThrows(DOMException.class, () -> manager.createValue(lu, engine));
 	}
 

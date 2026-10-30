@@ -30,6 +30,7 @@ import io.sf.carte.doc.style.css.CSSValue.CssType;
 import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
+import io.sf.carte.echosvg.css.engine.TestCSSContext;
 import io.sf.carte.echosvg.css.engine.value.css.TextDecorationManager;
 
 /**
@@ -56,7 +57,7 @@ public class TextDecorationManagerTest extends AbstractManagerTestSetup {
 	@Test
 	public void testVar() throws Exception {
 		LexicalUnit lu = parsePropertyValue("var(--text-decor)");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		Value v = manager.createValue(lu, engine);
 		assertEquals(Type.LEXICAL, v.getPrimitiveType());
 	}
@@ -64,7 +65,7 @@ public class TextDecorationManagerTest extends AbstractManagerTestSetup {
 	@Test
 	public void testVar2() throws Exception {
 		LexicalUnit lu = parsePropertyValue("overline var(--text-decor)");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		Value v = manager.createValue(lu, engine);
 		assertEquals(Type.LEXICAL, v.getPrimitiveType());
 		assertEquals("overline var(--text-decor)", v.getCssText());
@@ -73,7 +74,7 @@ public class TextDecorationManagerTest extends AbstractManagerTestSetup {
 	@Test
 	public void testAttr() throws Exception {
 		LexicalUnit lu = parsePropertyValue("attr(data-text-decor type(<custom-ident>))");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		Value v = manager.createValue(lu, engine);
 		assertEquals(Type.LEXICAL, v.getPrimitiveType());
 	}
@@ -81,7 +82,7 @@ public class TextDecorationManagerTest extends AbstractManagerTestSetup {
 	@Test
 	public void testAttr2() throws Exception {
 		LexicalUnit lu = parsePropertyValue("overline attr(data-text-decor type(<custom-ident>))");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		Value v = manager.createValue(lu, engine);
 		assertEquals(Type.LEXICAL, v.getPrimitiveType());
 	}
@@ -89,7 +90,7 @@ public class TextDecorationManagerTest extends AbstractManagerTestSetup {
 	@Test
 	public void testNone() throws Exception {
 		LexicalUnit lu = parsePropertyValue("none");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		Value v = manager.createValue(lu, engine);
 		assertEquals(Type.IDENT, v.getPrimitiveType());
 		assertEquals("none", v.getStringValue());
@@ -98,7 +99,7 @@ public class TextDecorationManagerTest extends AbstractManagerTestSetup {
 	@Test
 	public void testIdent() throws Exception {
 		LexicalUnit lu = parsePropertyValue("underline");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		Value list = manager.createValue(lu, engine);
 		assertEquals(CssType.LIST, list.getCssValueType());
 		Value v = list.item(0);
@@ -110,7 +111,7 @@ public class TextDecorationManagerTest extends AbstractManagerTestSetup {
 	@Test
 	public void testList() throws Exception {
 		LexicalUnit lu = parsePropertyValue("underline line-through");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		Value list = manager.createValue(lu, engine);
 		assertEquals(CssType.LIST, list.getCssValueType());
 		Value v = list.item(0);
@@ -125,7 +126,7 @@ public class TextDecorationManagerTest extends AbstractManagerTestSetup {
 	@Test
 	public void testInvalid() throws Exception {
 		LexicalUnit lu = parsePropertyValue("nonexistent-ident");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		assertThrows(DOMException.class, () -> manager.createValue(lu, engine));
 	}
 

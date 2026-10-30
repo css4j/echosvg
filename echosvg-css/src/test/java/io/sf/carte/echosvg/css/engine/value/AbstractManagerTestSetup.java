@@ -22,27 +22,18 @@ package io.sf.carte.echosvg.css.engine.value;
 import java.io.IOException;
 import java.io.StringReader;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.junit.jupiter.api.BeforeAll;
-import org.w3c.dom.Document;
 
 import io.sf.carte.doc.style.css.nsac.CSSParseException;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
-import io.sf.carte.doc.style.css.nsac.Parser;
 import io.sf.carte.doc.style.css.parser.CSSParser;
-import io.sf.carte.echosvg.css.engine.CSSContext;
-import io.sf.carte.echosvg.css.engine.CSSEngine;
-import io.sf.carte.echosvg.util.ParsedURL;
 
 /**
  * Manager test infrastructure.
  */
 public class AbstractManagerTestSetup {
 
-	static Parser cssParser;
+	private static CSSParser cssParser;
 
 	@BeforeAll
 	public static void setupBeforeAll() {
@@ -55,22 +46,6 @@ public class AbstractManagerTestSetup {
 		} catch (IOException e) {
 			return null;
 		}
-	}
-
-	protected static CSSEngine createCSSEngine() {
-		ParsedURL purl = new ParsedURL("https://www.example.com/");
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder builder;
-		try {
-			builder = factory.newDocumentBuilder();
-		} catch (ParserConfigurationException e) {
-			throw new IllegalStateException(e);
-		}
-		Document doc = builder.newDocument();
-		doc.setDocumentURI(purl.toString());
-		CSSContext ctx = new TestCSSContext(doc, purl, cssParser);
-		CSSEngine engine = ctx.getCSSEngineForElement(null);
-		return engine;
 	}
 
 }
