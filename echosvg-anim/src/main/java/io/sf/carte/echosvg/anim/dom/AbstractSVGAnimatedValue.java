@@ -55,7 +55,7 @@ public abstract class AbstractSVGAnimatedValue implements AnimatedLiveAttributeV
 	/**
 	 * Listener list.
 	 */
-	protected LinkedList<AnimatedAttributeListener> listeners = new LinkedList<>();
+	private LinkedList<AnimatedAttributeListener> listeners = new LinkedList<>();
 
 	/**
 	 * Creates a new AbstractSVGAnimatedValue.
