@@ -101,6 +101,8 @@ public class SVGCSSEngine extends CSSEngine {
 	public SVGCSSEngine(Document doc, ParsedURL uri, Parser p, CSSContext ctx) {
 		super(doc, uri, p, SVG_VALUE_MANAGERS, SVG_SHORTHAND_MANAGERS, null, null, "style", null, "class", true, null,
 				ctx);
+		colorIndex = COLOR_INDEX;
+		fontSizeIndex = FONT_SIZE_INDEX;
 		lineHeightIndex = LINE_HEIGHT_INDEX;
 	}
 
@@ -118,6 +120,8 @@ public class SVGCSSEngine extends CSSEngine {
 			CSSContext ctx) {
 		super(doc, uri, p, mergeArrays(SVG_VALUE_MANAGERS, vms), mergeArrays(SVG_SHORTHAND_MANAGERS, sms), null, null,
 				"style", null, "class", true, null, ctx);
+		colorIndex = COLOR_INDEX;
+		fontSizeIndex = FONT_SIZE_INDEX;
 		lineHeightIndex = LINE_HEIGHT_INDEX;
 	}
 
@@ -126,6 +130,8 @@ public class SVGCSSEngine extends CSSEngine {
 			CSSContext ctx) {
 		super(doc, uri, p, mergeArrays(SVG_VALUE_MANAGERS, vms), mergeArrays(SVG_SHORTHAND_MANAGERS, sms), pe, sns, sln,
 				cns, cln, hints, hintsNS, ctx);
+		colorIndex = COLOR_INDEX;
+		fontSizeIndex = FONT_SIZE_INDEX;
 		lineHeightIndex = LINE_HEIGHT_INDEX;
 	}
 
@@ -147,6 +153,10 @@ public class SVGCSSEngine extends CSSEngine {
 		System.arraycopy(a1, 0, result, 0, a1.length);
 		System.arraycopy(a2, 0, result, a1.length, a2.length);
 		return result;
+	}
+
+	@Override
+	protected void setFastIndexes() {
 	}
 
 	/**

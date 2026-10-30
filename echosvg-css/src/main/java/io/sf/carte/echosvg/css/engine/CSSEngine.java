@@ -434,16 +434,9 @@ public abstract class CSSEngine {
 		for (int i = len - 1; i >= 0; --i) {
 			String pn = vm[i].getPropertyName();
 			indexes.put(pn, i);
-			if (fontSizeIndex == -1 && pn.equals(CSSConstants.CSS_FONT_SIZE_PROPERTY)) {
-				fontSizeIndex = i;
-			}
-			if (lineHeightIndex == -1 && pn.equals(CSSConstants.CSS_LINE_HEIGHT_PROPERTY)) {
-				lineHeightIndex = i;
-			}
-			if (colorIndex == -1 && pn.equals(CSSConstants.CSS_COLOR_PROPERTY)) {
-				colorIndex = i;
-			}
 		}
+
+		setFastIndexes();
 
 		len = sm.length;
 		shorthandIndexes = new StringIntMap(len);
@@ -480,6 +473,23 @@ public abstract class CSSEngine {
 		ALL_PROPERTIES = new int[getNumberOfProperties()];
 		for (int i = getNumberOfProperties() - 1; i >= 0; --i) {
 			ALL_PROPERTIES[i] = i;
+		}
+	}
+
+	protected void setFastIndexes() {
+		int len = valueManagers.length;
+
+		for (int i = 0; i < len; i++) {
+			String pn = valueManagers[i].getPropertyName();
+			if (fontSizeIndex == -1 && pn.equals(CSSConstants.CSS_FONT_SIZE_PROPERTY)) {
+				fontSizeIndex = i;
+			}
+			if (lineHeightIndex == -1 && pn.equals(CSSConstants.CSS_LINE_HEIGHT_PROPERTY)) {
+				lineHeightIndex = i;
+			}
+			if (colorIndex == -1 && pn.equals(CSSConstants.CSS_COLOR_PROPERTY)) {
+				colorIndex = i;
+			}
 		}
 	}
 
