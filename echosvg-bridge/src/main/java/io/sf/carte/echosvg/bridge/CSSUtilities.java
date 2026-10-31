@@ -837,19 +837,28 @@ public abstract class CSSUtilities implements CSSConstants, ErrorConstants, XMLC
 	 * @param localRefElement the referenced element in the current document
 	 */
 	public static void computeStyleAndURIs(Element refElement, Element localRefElement, String uri) {
-		// Pull fragement id off first...
-		int idx = uri.indexOf('#');
-		if (idx != -1)
-			uri = uri.substring(0, idx);
-
-		// Only set xml:base if we have a real URL.
-		if (uri.length() != 0)
-			localRefElement.setAttributeNS(XML_NAMESPACE_URI, "base", uri);
+		writeBaseUriAttr(localRefElement, uri);
 
 		CSSEngine engine = CSSUtilities.getCSSEngine(localRefElement);
 		CSSEngine refEngine = CSSUtilities.getCSSEngine(refElement);
 
 		engine.importCascadedStyleMaps(refElement, refEngine, localRefElement);
+	}
+
+	private static void writeBaseUriAttr(Element localRefElement, String uri) {
+		// Pull fragment id off first...
+		int idx = uri.indexOf('#');
+		if (idx != -1) {
+			if (idx == 0) {
+				return;
+			}
+			uri = uri.substring(0, idx);
+		} else if (uri.isEmpty()) {
+			return;
+		}
+
+		// Only set xml:base if we have a real URL.
+		localRefElement.setAttributeNS(XML_NAMESPACE_URI, "base", uri);
 	}
 
 	/////////////////////////////////////////////////////////////////////////
