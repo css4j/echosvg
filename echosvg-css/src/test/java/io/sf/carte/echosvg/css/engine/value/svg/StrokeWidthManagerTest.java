@@ -30,6 +30,7 @@ import org.w3c.dom.DOMException;
 import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
+import io.sf.carte.echosvg.css.engine.TestCSSContext;
 import io.sf.carte.echosvg.css.engine.value.AbstractManagerTestSetup;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
@@ -94,7 +95,7 @@ public class StrokeWidthManagerTest extends AbstractManagerTestSetup {
 	public void testVar() throws Exception {
 		LexicalUnit lu = parsePropertyValue(
 				"var(--w)");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		Value v = manager.createValue(lu, engine);
 		assertEquals(Type.LEXICAL, v.getPrimitiveType());
 	}
@@ -103,7 +104,7 @@ public class StrokeWidthManagerTest extends AbstractManagerTestSetup {
 	public void testAttr() throws Exception {
 		LexicalUnit lu = parsePropertyValue(
 				"attr(data-st-width type(<length-percentage> | <integer>)), 10");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		Value v = manager.createValue(lu, engine);
 		assertEquals(Type.LEXICAL, v.getPrimitiveType());
 	}
@@ -111,7 +112,7 @@ public class StrokeWidthManagerTest extends AbstractManagerTestSetup {
 	@Test
 	public void testCalc() throws Exception {
 		LexicalUnit lu = parsePropertyValue("calc(3 + 2)");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		Value v = manager.createValue(lu, engine);
 		assertEquals(Type.EXPRESSION, v.getPrimitiveType());
 		assertEquals("calc(3 + 2)", v.getCssText());
@@ -120,21 +121,21 @@ public class StrokeWidthManagerTest extends AbstractManagerTestSetup {
 	@Test
 	public void testInvalid_Ident() throws Exception {
 		LexicalUnit lu = parsePropertyValue("auto");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		assertThrows(DOMException.class, () -> manager.createValue(lu, engine));
 	}
 
 	@Test
 	public void testInvalid_URL() throws Exception {
 		LexicalUnit lu = parsePropertyValue("url(foo.png)");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		assertThrows(DOMException.class, () -> manager.createValue(lu, engine));
 	}
 
 	@Test
 	public void testInvalid_Abs() throws Exception {
 		LexicalUnit lu = parsePropertyValue("abs(-5deg)");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		assertThrows(DOMException.class, () -> manager.createValue(lu, engine));
 	}
 

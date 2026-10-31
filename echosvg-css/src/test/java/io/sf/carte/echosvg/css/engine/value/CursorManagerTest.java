@@ -30,6 +30,7 @@ import io.sf.carte.doc.style.css.CSSValue.CssType;
 import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
+import io.sf.carte.echosvg.css.engine.TestCSSContext;
 import io.sf.carte.echosvg.css.engine.value.css.CursorManager;
 
 /**
@@ -57,7 +58,7 @@ public class CursorManagerTest extends AbstractManagerTestSetup {
 	public void testVarX() throws Exception {
 		LexicalUnit lu = parsePropertyValue(
 				"url('/img/cursor.ico') var(--x) 8,url('/img/cursor.png'),pointer");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		Value v = manager.createValue(lu, engine);
 		assertEquals(Type.LEXICAL, v.getPrimitiveType());
 	}
@@ -66,7 +67,7 @@ public class CursorManagerTest extends AbstractManagerTestSetup {
 	public void testVarY() throws Exception {
 		LexicalUnit lu = parsePropertyValue(
 				"url('/img/cursor.ico') 5 var(--y),url('/img/cursor.png'),pointer");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		Value v = manager.createValue(lu, engine);
 		assertEquals(Type.LEXICAL, v.getPrimitiveType());
 	}
@@ -75,7 +76,7 @@ public class CursorManagerTest extends AbstractManagerTestSetup {
 	public void testVarIdent() throws Exception {
 		LexicalUnit lu = parsePropertyValue(
 				"url('/img/cursor.ico') 5 7,url('/img/cursor.png'),var(--pointer)");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		Value v = manager.createValue(lu, engine);
 		assertEquals(Type.LEXICAL, v.getPrimitiveType());
 	}
@@ -84,7 +85,7 @@ public class CursorManagerTest extends AbstractManagerTestSetup {
 	public void testAttrIdent() throws Exception {
 		LexicalUnit lu = parsePropertyValue(
 				"url('/img/cursor.ico') 5 7,url('/img/cursor.png'),attr(data-pointer type(<custom-ident>))");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		Value v = manager.createValue(lu, engine);
 		assertEquals(Type.LEXICAL, v.getPrimitiveType());
 	}
@@ -103,7 +104,7 @@ public class CursorManagerTest extends AbstractManagerTestSetup {
 	@Test
 	public void testURL() throws Exception {
 		LexicalUnit lu = parsePropertyValue("url('/img/cursor.ico'),default");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		Value list = manager.createValue(lu, engine);
 		assertEquals(CssType.LIST, list.getCssValueType());
 		Value v = list.item(0);
@@ -119,7 +120,7 @@ public class CursorManagerTest extends AbstractManagerTestSetup {
 	@Test
 	public void testURLx() throws Exception {
 		LexicalUnit lu = parsePropertyValue("url('/img/cursor.ico') 5,help");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		Value list = manager.createValue(lu, engine);
 		assertEquals(CssType.LIST, list.getCssValueType());
 		Value v = list.item(0);
@@ -138,7 +139,7 @@ public class CursorManagerTest extends AbstractManagerTestSetup {
 	@Test
 	public void testURLxy() throws Exception {
 		LexicalUnit lu = parsePropertyValue("url('/img/cursor.ico') 5 6,move");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		Value list = manager.createValue(lu, engine);
 		assertEquals(CssType.LIST, list.getCssValueType());
 		Value v = list.item(0);
@@ -160,7 +161,7 @@ public class CursorManagerTest extends AbstractManagerTestSetup {
 	@Test
 	public void testURL_Calc_xy() throws Exception {
 		LexicalUnit lu = parsePropertyValue("url('/img/cursor.ico') calc(3 + 2) 6,move");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		Value list = manager.createValue(lu, engine);
 		assertEquals(CssType.LIST, list.getCssValueType());
 		Value v = list.item(0);
@@ -183,7 +184,7 @@ public class CursorManagerTest extends AbstractManagerTestSetup {
 	public void testURLxyURL() throws Exception {
 		LexicalUnit lu = parsePropertyValue(
 				"url('/img/cursor.ico') 5 6,url('/img/cursor.png'),pointer");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		Value list = manager.createValue(lu, engine);
 		assertEquals(CssType.LIST, list.getCssValueType());
 		Value v = list.item(0);
@@ -209,7 +210,7 @@ public class CursorManagerTest extends AbstractManagerTestSetup {
 	public void testURLxURL() throws Exception {
 		LexicalUnit lu = parsePropertyValue(
 				"url('/img/cursor.ico') 5,url('/img/cursor.png'),pointer");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		Value list = manager.createValue(lu, engine);
 		assertEquals(CssType.LIST, list.getCssValueType());
 		Value v = list.item(0);
@@ -231,35 +232,35 @@ public class CursorManagerTest extends AbstractManagerTestSetup {
 	@Test
 	public void testURL_Invalid_NoIdent() throws Exception {
 		LexicalUnit lu = parsePropertyValue("url('/img/cursor.ico') 5 6");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		assertThrows(DOMException.class, () -> manager.createValue(lu, engine));
 	}
 
 	@Test
 	public void testURL_Invalid_x() throws Exception {
 		LexicalUnit lu = parsePropertyValue("url('/img/cursor.ico') 5deg 6,move");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		assertThrows(DOMException.class, () -> manager.createValue(lu, engine));
 	}
 
 	@Test
 	public void testURL_Invalid_y() throws Exception {
 		LexicalUnit lu = parsePropertyValue("url('/img/cursor.ico') 5 6dpi,move");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		assertThrows(DOMException.class, () -> manager.createValue(lu, engine));
 	}
 
 	@Test
 	public void testURL_Invalid_Calc_x() throws Exception {
 		LexicalUnit lu = parsePropertyValue("url('/img/cursor.ico') calc(5deg) 6,move");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		assertThrows(DOMException.class, () -> manager.createValue(lu, engine));
 	}
 
 	@Test
 	public void testURL_Invalid_Calc_y() throws Exception {
 		LexicalUnit lu = parsePropertyValue("url('/img/cursor.ico') 2 calc(3deg),move");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		assertThrows(DOMException.class, () -> manager.createValue(lu, engine));
 	}
 

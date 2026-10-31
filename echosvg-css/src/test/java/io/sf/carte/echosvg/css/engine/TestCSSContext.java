@@ -17,24 +17,36 @@
 
  */
 
-package io.sf.carte.echosvg.css.engine.value;
+package io.sf.carte.echosvg.css.engine;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import io.sf.carte.doc.style.css.nsac.Parser;
+import io.sf.carte.doc.style.css.parser.CSSParser;
 import io.sf.carte.echosvg.css.Viewport;
-import io.sf.carte.echosvg.css.engine.CSSContext;
-import io.sf.carte.echosvg.css.engine.CSSEngine;
-import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
+import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.util.ParsedURL;
 
-class TestCSSContext implements CSSContext {
+/**
+ * An implementation of {@link CSSContext} intended for tests.
+ */
+public class TestCSSContext implements CSSContext {
+
+	private static final Parser cssParser = new CSSParser();
 
 	private CSSEngine engine;
 
 	public TestCSSContext(Document doc, ParsedURL purl, Parser cssParser) {
-		this.engine = new SVGCSSEngine(doc, purl, cssParser, this) {
+		this.engine = createCSSEngine(doc, purl, cssParser);
+	}
+
+	protected CSSEngine createCSSEngine(Document doc, ParsedURL purl, Parser cssParser) {
+		return new SVGCSSEngine(doc, purl, cssParser, this) {
 
 			@Override
 			public ParsedURL getCSSBaseURI() {
@@ -123,6 +135,25 @@ class TestCSSContext implements CSSContext {
 	@Override
 	public CSSEngine getCSSEngineForElement(Element e) {
 		return engine;
+	}
+
+	public static Parser getParser() {
+		return cssParser;
+	}
+
+	public static CSSEngine createCSSEngine() {
+		ParsedURL purl = new ParsedURL("https://www.example.com/");
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder builder;
+		try {
+			builder = factory.newDocumentBuilder();
+		} catch (ParserConfigurationException e) {
+			throw new IllegalStateException(e);
+		}
+		Document doc = builder.newDocument();
+		doc.setDocumentURI(purl.toString());
+		CSSContext ctx = new TestCSSContext(doc, purl, cssParser);
+		return ctx.getCSSEngineForElement(null);
 	}
 
 }

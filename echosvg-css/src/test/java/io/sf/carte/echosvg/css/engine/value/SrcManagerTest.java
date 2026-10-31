@@ -30,6 +30,7 @@ import io.sf.carte.doc.style.css.CSSValue.CssType;
 import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
+import io.sf.carte.echosvg.css.engine.TestCSSContext;
 import io.sf.carte.echosvg.css.engine.value.css.SrcManager;
 
 /**
@@ -56,7 +57,7 @@ public class SrcManagerTest extends AbstractManagerTestSetup {
 	@Test
 	public void testVar() throws Exception {
 		LexicalUnit lu = parsePropertyValue("var(--url)");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		Value v = manager.createValue(lu, engine);
 		assertEquals(Type.LEXICAL, v.getPrimitiveType());
 	}
@@ -64,7 +65,7 @@ public class SrcManagerTest extends AbstractManagerTestSetup {
 	@Test
 	public void testVarModifier() throws Exception {
 		LexicalUnit lu = parsePropertyValue("url('/img/font.otf') var(--modif)");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		Value v = manager.createValue(lu, engine);
 		assertEquals(Type.LEXICAL, v.getPrimitiveType());
 	}
@@ -72,7 +73,7 @@ public class SrcManagerTest extends AbstractManagerTestSetup {
 	@Test
 	public void testURL() throws Exception {
 		LexicalUnit lu = parsePropertyValue("url('/fonts/font.otf')");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		Value list = manager.createValue(lu, engine);
 		assertEquals(CssType.LIST, list.getCssValueType());
 		Value v = list.item(0);
@@ -85,7 +86,7 @@ public class SrcManagerTest extends AbstractManagerTestSetup {
 	public void testURLList() throws Exception {
 		LexicalUnit lu = parsePropertyValue(
 				"url(fonts/font.woff) format(\"woff\"), url('/fonts/font.otf') format(otf)");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		Value list = manager.createValue(lu, engine);
 		assertEquals(CssType.LIST, list.getCssValueType());
 		Value v = list.item(0);
@@ -104,7 +105,7 @@ public class SrcManagerTest extends AbstractManagerTestSetup {
 		 */
 		LexicalUnit lu = parsePropertyValue(
 				"url(fonts/font-svg.otf) tech(color-SVG), url('/fonts/font.otf') tech(color-colrv1)");
-		CSSEngine engine = createCSSEngine();
+		CSSEngine engine = TestCSSContext.createCSSEngine();
 		assertThrows(DOMException.class, () -> manager.createValue(lu, engine));
 	}
 
