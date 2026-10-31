@@ -18,9 +18,14 @@
  */
 package io.sf.carte.echosvg.bridge;
 
+import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.Element;
 
+import io.sf.carte.echosvg.css.engine.CSSEngine;
+import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
+import io.sf.carte.echosvg.css.engine.value.LengthManager;
+import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.parser.ParseException;
 
 /**
@@ -320,24 +325,44 @@ public abstract class UnitProcessor extends io.sf.carte.echosvg.parser.UnitProce
 		 */
 		@Override
 		public float getFontSize() {
-			return CSSUtilities.getComputedStyle(e, SVGCSSEngine.FONT_SIZE_INDEX).getFloatValue();
+			return getFontSize(e);
+		}
+
+		private float getFontSize(Element el) {
+			return CSSUtilities.getComputedStyle(el, SVGCSSEngine.FONT_SIZE_INDEX).getFloatValue();
 		}
 
 		@Override
 		public float getLineHeight() {
-			return CSSUtilities.getComputedStyle(e, SVGCSSEngine.LINE_HEIGHT_INDEX).getFloatValue();
+			return elementLineHeightPx((CSSStylableElement) e);
+		}
+
+		private float elementLineHeightPx(CSSStylableElement se) {
+			CSSEngine engine = CSSUtilities.getCSSEngine(se);
+			if (engine == null) {
+				return LengthManager.DEFAULT_LINE_HEIGHT * ctx.getMediumFontSize();
+			}
+			Value v = engine.getComputedStyle(se, null, engine.getLineHeightIndex());
+			float fv = v.getFloatValue();
+			// Must be <number> or px
+			if (v.getUnitType() == CSSUnit.CSS_NUMBER) {
+				Value cv = engine.getComputedStyle(se, null, engine.getFontSizeIndex());
+				float fs = cv.getFloatValue();
+				fv *= fs;
+			}
+			return fv;
 		}
 
 		@Override
 		public float getRootFontSize() {
 			Element root = e.getOwnerDocument().getDocumentElement();
-			return CSSUtilities.getComputedStyle(root, SVGCSSEngine.FONT_SIZE_INDEX).getFloatValue();
+			return getFontSize(root);
 		}
 
 		@Override
 		public float getRootLineHeight() {
 			Element root = e.getOwnerDocument().getDocumentElement();
-			return CSSUtilities.getComputedStyle(root, SVGCSSEngine.LINE_HEIGHT_INDEX).getFloatValue();
+			return elementLineHeightPx((CSSStylableElement) root);
 		}
 
 		/**
