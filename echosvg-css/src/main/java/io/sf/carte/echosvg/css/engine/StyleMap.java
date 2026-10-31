@@ -85,7 +85,7 @@ public class StyleMap {
 	/**
 	 * Whether the values of this map cannot be re-cascaded.
 	 */
-	protected boolean fixedCascadedValues;
+	private boolean fixedCascadedValues;
 
 	/**
 	 * Creates a new StyleMap.
