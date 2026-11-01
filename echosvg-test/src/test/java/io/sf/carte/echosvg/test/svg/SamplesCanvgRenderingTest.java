@@ -28,7 +28,7 @@ import io.sf.carte.echosvg.test.misc.TestFonts;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 
 /**
- * This test renders a number of SVG files under the {@code samples/spec12}
+ * This test renders a number of SVG files under the {@code samples/canvg}
  * directory, and compares the result with a reference image. See issue #92.
  * <p>
  * Beware that when a test references an issue number, in principle it will be
