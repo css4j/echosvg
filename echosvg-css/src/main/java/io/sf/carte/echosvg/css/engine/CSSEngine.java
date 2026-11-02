@@ -2606,7 +2606,8 @@ public abstract class CSSEngine {
 		@Override
 		public void importStyle(String uri, String layerName, BooleanCondition supportsCondition,
 				MediaQueryList media, String defaultNamespaceURI) {
-			if (ignoredForRule > 0 || layerName != null || !supports(supportsCondition)) {
+			if (ignoredForRule > 0 || layerName != null
+					|| (supportsCondition != null && !supports(supportsCondition))) {
 				return;
 			}
 
