@@ -204,7 +204,8 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 	 * </tr>
 	 * <tr>
 	 * <th style="text-align: end; vertical-align: top">Default:</th>
-	 * <td style="vertical-align: top">The width of the topmost svg element</td>
+	 * <td style="vertical-align: top">The width of the topmost svg element,
+	 * otherwise KEY_DEFAULT_WIDTH if available.</td>
 	 * </tr>
 	 * <tr>
 	 * <th style="text-align: end; vertical-align: top">Required:</th>
@@ -212,7 +213,8 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 	 * </tr>
 	 * <tr>
 	 * <th style="text-align: end; vertical-align: top">Description:</th>
-	 * <td style="vertical-align: top">Specify the width of the image to create.</td>
+	 * <td style="vertical-align: top">Specify the width of the image to
+	 * create.</td>
 	 * </tr>
 	 * </table>
 	 */
@@ -232,7 +234,8 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 	 * </tr>
 	 * <tr>
 	 * <th style="text-align: end; vertical-align: top">Default:</th>
-	 * <td style="vertical-align: top">The height of the topmost svg element</td>
+	 * <td style="vertical-align: top">The height of the topmost svg element,
+	 * otherwise KEY_DEFAULT_HEIGHT if available.</td>
 	 * </tr>
 	 * <tr>
 	 * <th style="text-align: end; vertical-align: top">Required:</th>
@@ -245,6 +248,66 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 	 * </table>
 	 */
 	public static final TranscodingHints.Key KEY_HEIGHT = new LengthKey();
+
+	/**
+	 * The default image width key.
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption></caption>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_DEFAULT_WIDTH</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">float</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">400f</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">No</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">Specify the default width of the image to
+	 * create. It is overridden by the width of the topmost svg element and by
+	 * KEY_WIDTH if available.</td>
+	 * </tr>
+	 * </table>
+	 */
+	public static final TranscodingHints.Key KEY_DEFAULT_WIDTH = new LengthKey();
+
+	/**
+	 * The default image height key.
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption></caption>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_DEFAULT_HEIGHT</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">Float</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">400f</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">No</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">Specify the default height of the image to
+	 * create. It is overridden by the height of the topmost svg element and by
+	 * KEY_HEIGHT if available.</td>
+	 * </tr>
+	 * </table>
+	 */
+	public static final TranscodingHints.Key KEY_DEFAULT_HEIGHT = new LengthKey();
 
 	/**
 	 * The maximum width of the image key.

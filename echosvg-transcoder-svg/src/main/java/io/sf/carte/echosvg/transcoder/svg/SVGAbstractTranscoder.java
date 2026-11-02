@@ -65,6 +65,7 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
 import io.sf.carte.echosvg.transcoder.TranscoderOutput;
+import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
 import io.sf.carte.echosvg.transcoder.impl.SizingHelper;
 import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.SVGConstants;
@@ -185,10 +186,17 @@ public abstract class SVGAbstractTranscoder extends io.sf.carte.echosvg.transcod
 			throw new TranscoderException("Document contains no valid SVG element.");
 		}
 
-		if (hints.containsKey(KEY_WIDTH))
-			width = (Float) hints.get(KEY_WIDTH);
-		if (hints.containsKey(KEY_HEIGHT))
-			height = (Float) hints.get(KEY_HEIGHT);
+		// Default width and height
+		if (hints.containsKey(KEY_WIDTH)) {
+			width = initialImageSize(KEY_WIDTH, KEY_MAX_WIDTH, width);
+		} else if (hints.containsKey(KEY_DEFAULT_WIDTH)) {
+			width = initialImageSize(KEY_DEFAULT_WIDTH, KEY_MAX_WIDTH, width);
+		}
+		if (hints.containsKey(KEY_HEIGHT)) {
+			height = initialImageSize(KEY_HEIGHT, KEY_MAX_HEIGHT, height);
+		} else if (hints.containsKey(KEY_DEFAULT_HEIGHT)) {
+			height = initialImageSize(KEY_DEFAULT_HEIGHT, KEY_MAX_HEIGHT, height);
+		}
 
 		ctx = createBridgeContext(svgDoc);
 
@@ -536,6 +544,21 @@ public abstract class SVGAbstractTranscoder extends io.sf.carte.echosvg.transcod
 				}
 			}
 		}
+	}
+
+	private float initialImageSize(Key keyInitialSize, Key keyMaxSize, float size) {
+		float f = (Float) hints.get(keyInitialSize);
+		if (f > 0f) {
+			size = f;
+			// Limit image size according to the maximum size hints.
+			if (hints.containsKey(keyMaxSize)) {
+				float max = (Float) hints.get(keyMaxSize);
+				if (size > max) {
+					size = max;
+				}
+			}
+		}
+		return size;
 	}
 
 	protected CanvasGraphicsNode getCanvasGraphicsNode(GraphicsNode gn) {
