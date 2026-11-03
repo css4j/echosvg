@@ -21,13 +21,17 @@ package io.sf.carte.echosvg.ext.awt.image.spi;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.color.ColorSpace;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.awt.image.RenderedImage;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
+
+import javax.imageio.ImageIO;
 
 import io.sf.carte.echosvg.ext.awt.image.GraphicsUtil;
 import io.sf.carte.echosvg.ext.awt.image.renderable.DeferRable;
@@ -42,7 +46,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class JDKRegistryEntry extends AbstractRegistryEntry implements URLRegistryEntry {
+public class JDKRegistryEntry extends MagicNumberRegistryEntry implements URLRegistryEntry {
 
 	/**
 	 * The priority of this entry. This entry should in most cases be the last
@@ -51,8 +55,14 @@ public class JDKRegistryEntry extends AbstractRegistryEntry implements URLRegist
 	 */
 	public static final float PRIORITY = 1000 * MagicNumberRegistryEntry.PRIORITY;
 
+	/** The list of magic numbers associated with this entry */
+
+	private static final MagicNumber[] magicNumbers = {
+			new MagicNumber(0, new byte[] { (byte) 0x47, 0x49, 0x46, 0x38, 0x37, 0x61 }),
+			new MagicNumber(0, new byte[] { (byte) 0x47, 0x49, 0x46, 0x38, 0x39, 0x61 }) };
+
 	public JDKRegistryEntry() {
-		super("JDK", PRIORITY, new String[] { "gif" }, new String[] { "image/gif" });
+		super("JDK", PRIORITY, new String[] { "gif" }, new String[] { "image/gif" }, magicNumbers);
 	}
 
 	/**
@@ -122,6 +132,41 @@ public class JDKRegistryEntry extends AbstractRegistryEntry implements URLRegist
 				}
 				if (filt == null)
 					filt = ImageTagRegistry.getBrokenLinkImage(JDKRegistryEntry.this, errCode, errParam);
+
+				dr.setSource(filt);
+			}
+		};
+		t.start();
+		return dr;
+	}
+
+	@Override
+	public Filter handleStream(InputStream is, ParsedURL origURL, ColorSpace colorSpace) {
+		final DeferRable dr = new DeferRable();
+		final String errCode = ERR_STREAM_FORMAT_UNREADABLE;
+		final Object[] errParam = { "JDK" };
+
+		Thread t = new Thread() {
+
+			@Override
+			public void run() {
+				Filter filt = null;
+				try {
+					BufferedImage img = ImageIO.read(is);
+
+					if (img != null) {
+						filt = new RedRable(GraphicsUtil.wrap(img));
+					}
+				} catch (ThreadDeath td) {
+					filt = ImageTagRegistry.getBrokenLinkImage(JDKRegistryEntry.this, errCode,
+							errParam);
+					dr.setSource(filt);
+					throw td;
+				} catch (Throwable t) {
+				}
+				if (filt == null)
+					filt = ImageTagRegistry.getBrokenLinkImage(JDKRegistryEntry.this, errCode,
+							errParam);
 
 				dr.setSource(filt);
 			}

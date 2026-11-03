@@ -111,18 +111,20 @@ public class ImageTagRegistry implements ErrorConstants {
 
 		for (RegistryEntry re : entries) {
 			if (re instanceof URLRegistryEntry) {
-				if ((purl == null) || !allowOpenStream)
-					continue;
+				if (purl != null && allowOpenStream) {
+					URLRegistryEntry ure = (URLRegistryEntry) re;
+					if (ure.isCompatibleURL(purl)) {
+						ret = ure.handleURL(purl);
 
-				URLRegistryEntry ure = (URLRegistryEntry) re;
-				if (ure.isCompatibleURL(purl)) {
-					ret = ure.handleURL(purl);
-
-					// Check if we got an image.
-					if (ret != null)
-						break;
+						// Check if we got an image.
+						if (ret != null)
+							break;
+					}
 				}
-				continue;
+
+				if (!(re instanceof StreamRegistryEntry)) {
+					continue;
+				}
 			}
 
 			if (re instanceof StreamRegistryEntry) {

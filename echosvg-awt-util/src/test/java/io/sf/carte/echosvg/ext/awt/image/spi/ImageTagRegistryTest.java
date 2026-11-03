@@ -19,9 +19,17 @@
 package io.sf.carte.echosvg.ext.awt.image.spi;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+
 import org.junit.jupiter.api.Test;
+
+import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
+import io.sf.carte.echosvg.util.ParsedURL;
 
 public class ImageTagRegistryTest {
 
@@ -80,6 +88,29 @@ public class ImageTagRegistryTest {
 		ImageTagRegistry ir = ImageTagRegistry.getRegistry();
 		assertTrue(ir.getRegisteredExtensions().contains("gif"));
 		assertTrue(ir.getRegisteredMimeTypes().contains("image/gif"));
+	}
+
+	@Test
+	public void testGifReadStream() throws IOException {
+		ImageTagRegistry ir = ImageTagRegistry.getRegistry();
+		try (InputStream is = ImageTagRegistryTest.class
+				.getResourceAsStream("/io/sf/carte/echosvg/ext/awt/image/spi/GVT.gif")) {
+			assertNotNull(is);
+			Filter fi = ir.readStream(is);
+			assertNotNull(fi);
+		}
+	}
+
+	@Test
+	public void testGifReadURL() throws IOException {
+		URL url = ImageTagRegistryTest.class
+				.getResource("/io/sf/carte/echosvg/ext/awt/image/spi/GVT.gif");
+		assertNotNull(url);
+		ParsedURL purl = new ParsedURL(url);
+		ImageTagRegistry ir = ImageTagRegistry.getRegistry();
+		Filter fi = ir.readURL(null, purl, null, true, false);
+		assertNotNull(fi);
+		assertFalse(BrokenLinkProvider.hasBrokenLinkProperty(fi));
 	}
 
 }
