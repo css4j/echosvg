@@ -1824,7 +1824,7 @@ public abstract class CSSEngine {
 
 			case MediaRule.TYPE:
 			case ImportRule.TYPE:
-				MediaRule mr = (MediaRule) r;
+				MediaGroup mr = (MediaGroup) r;
 				if (mediaMatch(mr.getMedia())) {
 					findSelectorAttributes(visitor, mr);
 				}
@@ -2252,7 +2252,7 @@ public abstract class CSSEngine {
 
 			case MediaRule.TYPE:
 			case ImportRule.TYPE:
-				MediaRule mr = (MediaRule) r;
+				MediaGroup mr = (MediaGroup) r;
 				if (mediaMatch(mr.getMedia())) {
 					addMatchingRules(rules, mr, matcher, parentMatch);
 				}
