@@ -187,11 +187,15 @@ public abstract class SVGAbstractTranscoder extends io.sf.carte.echosvg.transcod
 		}
 
 		// Default width and height
-		if (hints.containsKey(KEY_DEFAULT_WIDTH)) {
-			width = defaultImageSize(KEY_DEFAULT_WIDTH, KEY_MAX_WIDTH, width);
+		if (hints.containsKey(KEY_WIDTH)) {
+			width = initialImageSize(KEY_WIDTH, KEY_MAX_WIDTH, width);
+		} else if (hints.containsKey(KEY_DEFAULT_WIDTH)) {
+			width = initialImageSize(KEY_DEFAULT_WIDTH, KEY_MAX_WIDTH, width);
 		}
-		if (hints.containsKey(KEY_DEFAULT_HEIGHT)) {
-			height = defaultImageSize(KEY_DEFAULT_HEIGHT, KEY_MAX_HEIGHT, height);
+		if (hints.containsKey(KEY_HEIGHT)) {
+			height = initialImageSize(KEY_HEIGHT, KEY_MAX_HEIGHT, height);
+		} else if (hints.containsKey(KEY_DEFAULT_HEIGHT)) {
+			height = initialImageSize(KEY_DEFAULT_HEIGHT, KEY_MAX_HEIGHT, height);
 		}
 
 		ctx = createBridgeContext(svgDoc);
@@ -542,8 +546,8 @@ public abstract class SVGAbstractTranscoder extends io.sf.carte.echosvg.transcod
 		}
 	}
 
-	private float defaultImageSize(Key keyDefaultSize, Key keyMaxSize, float size) {
-		float f = (Float) hints.get(keyDefaultSize);
+	private float initialImageSize(Key keyInitialSize, Key keyMaxSize, float size) {
+		float f = (Float) hints.get(keyInitialSize);
 		if (f > 0f) {
 			size = f;
 			// Limit image size according to the maximum size hints.
