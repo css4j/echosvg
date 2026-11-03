@@ -75,4 +75,11 @@ public class ImageTagRegistryTest {
 		assertTrue(ir.getRegisteredExtensions().contains("missing"));
 	}
 
+	@Test
+	public void testGetRegistry() {
+		ImageTagRegistry ir = ImageTagRegistry.getRegistry();
+		assertTrue(ir.getRegisteredExtensions().contains("gif"));
+		assertTrue(ir.getRegisteredMimeTypes().contains("image/gif"));
+	}
+
 }
