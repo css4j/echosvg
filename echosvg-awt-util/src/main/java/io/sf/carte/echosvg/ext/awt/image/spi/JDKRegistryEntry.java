@@ -52,7 +52,7 @@ public class JDKRegistryEntry extends AbstractRegistryEntry implements URLRegist
 	public static final float PRIORITY = 1000 * MagicNumberRegistryEntry.PRIORITY;
 
 	public JDKRegistryEntry() {
-		super("JDK", PRIORITY, new String[] { "gif" }, new String[] { "image/gif" });
+		super("JDK", PRIORITY, new String[0], new String[] { "image/gif" });
 	}
 
 	/**
