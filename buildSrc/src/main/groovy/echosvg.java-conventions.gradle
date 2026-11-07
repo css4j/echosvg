@@ -3,6 +3,7 @@
 plugins {
 	id 'java-library'
 	id 'maven-publish'
+	id 'signing'
 	id 'org.owasp.dependencycheck'
 	id 'checkstyle'
 	id 'jacoco'
@@ -25,6 +26,8 @@ repositories {
 
 group = 'io.sf.carte'
 version = '3.0-SNAPSHOT'
+
+ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
 
 java {
 	withSourcesJar()
@@ -253,6 +256,23 @@ publishing {
 			}
 		}
 	}
+}
+
+signing {
+	required = { isReleaseVersion && gradle.taskGraph.hasTask("publish") }
+	def signingKeyId = findProperty('SIGNINGKEYID')
+	def signingPassword = findProperty('signingPassword')
+	def signingKey
+	if (System.env['ORG_GRADLE_PROJECT_SIGNINGKEY'] != null) {
+		signingKey = findProperty('SIGNINGKEY')
+	} else {
+		def signingKeyFile = findProperty('signingSecretKeyFile')
+		if (signingKeyFile != null) {
+			signingKey = file(signingKeyFile).getText()
+		}
+	}
+	useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
+	sign publishing.publications.maven
 }
 
 tasks.withType(PublishToMavenRepository) { task ->
