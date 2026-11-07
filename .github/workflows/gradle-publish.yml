@@ -29,6 +29,10 @@ jobs:
       run: ./gradlew build -x test
 
     - name: Publish to GitHub Packages
+      env:
+        ORG_GRADLE_PROJECT_SIGNINGKEYID: ${{ secrets.SIGNING_KEY_ID }}
+        ORG_GRADLE_PROJECT_SIGNINGKEY: ${{ secrets.SIGNING_KEY }}
       run: >-
         ./gradlew publish -PmavenReleaseRepoUrl="https://maven.pkg.github.com/css4j/echosvg"
         -PmavenRepoUsername=${{ github.actor }} -PmavenRepoPassword=${{ secrets.GITHUB_TOKEN }}
+        -PsigningPassword=${{ secrets.SIGNING_PASSWORD }}
