@@ -16,23 +16,31 @@ jobs:
       packages: write
 
     steps:
-    - uses: actions/checkout@v7
-    - name: Set up JDK 17
-      uses: actions/setup-java@v6
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-        server-id: github
-        settings-path: ${{ github.workspace }}
+      # Check-out the repository under $GITHUB_WORKSPACE
+      - uses: actions/checkout@v7
 
-    - name: Build with Gradle
-      run: ./gradlew build -x test
+      - name: Set up JDK 17
+        uses: actions/setup-java@v6
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          server-id: github
+          settings-path: ${{ github.workspace }}
 
-    - name: Publish to GitHub Packages
-      env:
-        ORG_GRADLE_PROJECT_SIGNINGKEYID: ${{ secrets.SIGNING_KEY_ID }}
-        ORG_GRADLE_PROJECT_SIGNINGKEY: ${{ secrets.SIGNING_KEY }}
-      run: >-
-        ./gradlew publish -PmavenReleaseRepoUrl="https://maven.pkg.github.com/css4j/echosvg"
-        -PmavenRepoUsername=${{ github.actor }} -PmavenRepoPassword=${{ secrets.GITHUB_TOKEN }}
-        -PsigningPassword=${{ secrets.SIGNING_PASSWORD }}
+      # setup-gradle validates the wrapper
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v6
+        with:
+          gradle-version: '8.14.5'
+
+      - name: Build with Gradle
+        run: ./gradlew build -x test
+
+      - name: Publish to GitHub Packages
+        env:
+          ORG_GRADLE_PROJECT_SIGNINGKEYID: ${{ secrets.SIGNING_KEY_ID }}
+          ORG_GRADLE_PROJECT_SIGNINGKEY: ${{ secrets.SIGNING_KEY }}
+        run: >-
+          ./gradlew publish -PmavenReleaseRepoUrl="https://maven.pkg.github.com/css4j/echosvg"
+          -PmavenRepoUsername=${{ github.actor }} -PmavenRepoPassword=${{ secrets.GITHUB_TOKEN }}
+          -PsigningPassword=${{ secrets.SIGNING_PASSWORD }}
