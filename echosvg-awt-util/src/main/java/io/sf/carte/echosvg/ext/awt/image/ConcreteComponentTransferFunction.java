@@ -52,20 +52,21 @@ public final class ConcreteComponentTransferFunction implements ComponentTransfe
 
 	/**
 	 * Returns a table transfer function
+	 * 
+	 * @param tableValues the table values. Callers must make sure that it is not
+	 *                    null.
 	 */
 	public static ComponentTransferFunction getTableTransfer(float[] tableValues) {
-		ConcreteComponentTransferFunction f = new ConcreteComponentTransferFunction();
-		f.type = TABLE;
-
-		if (tableValues == null) {
-			throw new IllegalArgumentException();
-		}
+		assert tableValues != null;
 
 		if (tableValues.length < 2) {
-			throw new IllegalArgumentException();
+			return ConcreteComponentTransferFunction.getIdentityTransfer();
 		}
 
+		ConcreteComponentTransferFunction f = new ConcreteComponentTransferFunction();
+		f.type = TABLE;
 		f.tableValues = new float[tableValues.length];
+
 		System.arraycopy(tableValues, 0, f.tableValues, 0, tableValues.length);
 
 		return f;
@@ -73,20 +74,21 @@ public final class ConcreteComponentTransferFunction implements ComponentTransfe
 
 	/**
 	 * Returns a discrete transfer function
+	 * 
+	 * @param tableValues the table values. Callers must make sure that it is not
+	 *                    null.
 	 */
 	public static ComponentTransferFunction getDiscreteTransfer(float[] tableValues) {
-		ConcreteComponentTransferFunction f = new ConcreteComponentTransferFunction();
-		f.type = DISCRETE;
-
-		if (tableValues == null) {
-			throw new IllegalArgumentException();
-		}
+		assert tableValues != null;
 
 		if (tableValues.length < 2) {
-			throw new IllegalArgumentException();
+			return ConcreteComponentTransferFunction.getIdentityTransfer();
 		}
 
+		ConcreteComponentTransferFunction f = new ConcreteComponentTransferFunction();
+		f.type = DISCRETE;
 		f.tableValues = new float[tableValues.length];
+
 		System.arraycopy(tableValues, 0, f.tableValues, 0, tableValues.length);
 
 		return f;
