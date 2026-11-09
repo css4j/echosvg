@@ -83,13 +83,13 @@ public class SVGFeBlendElementBridge extends AbstractSVGFilterPrimitiveElementBr
 		// 'in' attribute
 		Filter in = getIn(filterElement, filteredElement, filteredNode, inputFilter, filterMap, ctx);
 		if (in == null) {
-			return null; // disable the filter
+			return inputFilter; // pass the input filter
 		}
 
 		// 'in2' attribute - required
 		Filter in2 = getIn2(filterElement, filteredElement, filteredNode, inputFilter, filterMap, ctx);
 		if (in2 == null) {
-			return null; // disable the filter
+			return inputFilter; // pass the input filter
 		}
 
 		Rectangle2D defaultRegion;
@@ -124,23 +124,24 @@ public class SVGFeBlendElementBridge extends AbstractSVGFilterPrimitiveElementBr
 	 */
 	protected static CompositeRule convertMode(Element filterElement, BridgeContext ctx) {
 		String rule = filterElement.getAttributeNS(null, SVG_MODE_ATTRIBUTE);
-		if (rule.isEmpty() || SVG_NORMAL_VALUE.equals(rule)) {
-			return CompositeRule.OVER;
+		if (!rule.isEmpty() && !SVG_NORMAL_VALUE.equals(rule)) {
+			if (SVG_MULTIPLY_VALUE.equals(rule)) {
+				return CompositeRule.MULTIPLY;
+			}
+			if (SVG_SCREEN_VALUE.equals(rule)) {
+				return CompositeRule.SCREEN;
+			}
+			if (SVG_DARKEN_VALUE.equals(rule)) {
+				return CompositeRule.DARKEN;
+			}
+			if (SVG_LIGHTEN_VALUE.equals(rule)) {
+				return CompositeRule.LIGHTEN;
+			}
+			BridgeException be = new BridgeException(ctx, filterElement,
+					ERR_ATTRIBUTE_VALUE_MALFORMED, new Object[] { SVG_MODE_ATTRIBUTE, rule });
+			AbstractSVGBridge.displayErrorOrThrow(ctx, be);
 		}
-		if (SVG_MULTIPLY_VALUE.equals(rule)) {
-			return CompositeRule.MULTIPLY;
-		}
-		if (SVG_SCREEN_VALUE.equals(rule)) {
-			return CompositeRule.SCREEN;
-		}
-		if (SVG_DARKEN_VALUE.equals(rule)) {
-			return CompositeRule.DARKEN;
-		}
-		if (SVG_LIGHTEN_VALUE.equals(rule)) {
-			return CompositeRule.LIGHTEN;
-		}
-		throw new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_VALUE_MALFORMED,
-				new Object[] { SVG_MODE_ATTRIBUTE, rule });
+		return CompositeRule.OVER;
 	}
 
 }

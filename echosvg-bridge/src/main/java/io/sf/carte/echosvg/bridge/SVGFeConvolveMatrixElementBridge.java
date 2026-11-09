@@ -84,6 +84,9 @@ public class SVGFeConvolveMatrixElementBridge extends AbstractSVGFilterPrimitive
 
 		// 'kernelMatrix' attribute - required
 		float[] kernelMatrix = convertKernelMatrix(filterElement, orderXY, ctx);
+		if (kernelMatrix == null) {
+			return inputFilter; // pass the input filter
+		}
 
 		// 'divisor' attribute - default is kernel matrix sum or 1 if sum is 0
 		float divisor = convertDivisor(filterElement, kernelMatrix, ctx);
@@ -106,7 +109,7 @@ public class SVGFeConvolveMatrixElementBridge extends AbstractSVGFilterPrimitive
 		// 'in' attribute
 		Filter in = getIn(filterElement, filteredElement, filteredNode, inputFilter, filterMap, ctx);
 		if (in == null) {
-			return null; // disable the filter
+			return inputFilter; // pass the input filter
 		}
 
 		// Default region is the size of in (if in is SourceGraphic or
@@ -150,27 +153,34 @@ public class SVGFeConvolveMatrixElementBridge extends AbstractSVGFilterPrimitive
 	 */
 	protected static int[] convertOrder(Element filterElement, BridgeContext ctx) {
 		String s = filterElement.getAttributeNS(null, SVG_ORDER_ATTRIBUTE);
-		if (s.isEmpty()) {
-			return new int[] { 3, 3 };
-		}
-		int[] orderXY = new int[2];
-		StringTokenizer tokens = new StringTokenizer(s, " ,");
-		try {
-			orderXY[0] = SVGUtilities.convertSVGInteger(tokens.nextToken());
-			if (tokens.hasMoreTokens()) {
-				orderXY[1] = SVGUtilities.convertSVGInteger(tokens.nextToken());
-			} else {
-				orderXY[1] = orderXY[0];
+		if (!s.isEmpty()) {
+			BridgeException bex;
+
+			int[] orderXY = new int[2];
+			StringTokenizer tokens = new StringTokenizer(s, " ,");
+			try {
+				orderXY[0] = SVGUtilities.convertSVGInteger(tokens.nextToken());
+				if (tokens.hasMoreTokens()) {
+					orderXY[1] = SVGUtilities.convertSVGInteger(tokens.nextToken());
+				} else {
+					orderXY[1] = orderXY[0];
+				}
+
+				if (tokens.hasMoreTokens() || orderXY[0] <= 0 || orderXY[1] <= 0) {
+					bex = new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_VALUE_MALFORMED,
+							new Object[] { SVG_ORDER_ATTRIBUTE, s });
+				} else {
+					return orderXY;
+				}
+			} catch (NumberFormatException nfEx) {
+				bex = new BridgeException(ctx, filterElement, nfEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
+						new Object[] { SVG_ORDER_ATTRIBUTE, s, nfEx });
 			}
-		} catch (NumberFormatException nfEx) {
-			throw new BridgeException(ctx, filterElement, nfEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
-					new Object[] { SVG_ORDER_ATTRIBUTE, s, nfEx });
+
+			AbstractSVGBridge.displayErrorOrThrow(ctx, bex);
 		}
-		if (tokens.hasMoreTokens() || orderXY[0] <= 0 || orderXY[1] <= 0) {
-			throw new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_VALUE_MALFORMED,
-					new Object[] { SVG_ORDER_ATTRIBUTE, s });
-		}
-		return orderXY;
+
+		return new int[] { 3, 3 };
 	}
 
 	/**
@@ -181,30 +191,38 @@ public class SVGFeConvolveMatrixElementBridge extends AbstractSVGFilterPrimitive
 	 * @param orderXY       the value of the 'order' attribute
 	 * @param ctx           the BridgeContext to use for error information
 	 */
-	protected static float[] convertKernelMatrix(Element filterElement, int[] orderXY, BridgeContext ctx) {
-
+	protected static float[] convertKernelMatrix(Element filterElement, int[] orderXY,
+			BridgeContext ctx) {
+		BridgeException bex;
 		String s = filterElement.getAttributeNS(null, SVG_KERNEL_MATRIX_ATTRIBUTE);
-		if (s.isEmpty()) {
-			throw new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_MISSING,
+		if (!s.isEmpty()) {
+			int size = orderXY[0] * orderXY[1];
+			float[] kernelMatrix = new float[size];
+
+			StringTokenizer tokens = new StringTokenizer(s, " ,");
+			int i = 0;
+			try {
+				while (tokens.hasMoreTokens() && i < size) {
+					kernelMatrix[i++] = SVGUtilities.convertSVGNumber(tokens.nextToken());
+				}
+				if (i != size || tokens.hasMoreTokens()) {
+					bex = new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_VALUE_MALFORMED,
+							new Object[] { SVG_KERNEL_MATRIX_ATTRIBUTE, s });
+				} else {
+					return kernelMatrix;
+				}
+			} catch (NumberFormatException nfEx) {
+				bex = new BridgeException(ctx, filterElement, nfEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
+						new Object[] { SVG_KERNEL_MATRIX_ATTRIBUTE, s, nfEx });
+			}
+		} else {
+			bex = new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_MISSING,
 					new Object[] { SVG_KERNEL_MATRIX_ATTRIBUTE });
 		}
-		int size = orderXY[0] * orderXY[1];
-		float[] kernelMatrix = new float[size];
-		StringTokenizer tokens = new StringTokenizer(s, " ,");
-		int i = 0;
-		try {
-			while (tokens.hasMoreTokens() && i < size) {
-				kernelMatrix[i++] = SVGUtilities.convertSVGNumber(tokens.nextToken());
-			}
-		} catch (NumberFormatException nfEx) {
-			throw new BridgeException(ctx, filterElement, nfEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
-					new Object[] { SVG_KERNEL_MATRIX_ATTRIBUTE, s, nfEx });
-		}
-		if (i != size) {
-			throw new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_VALUE_MALFORMED,
-					new Object[] { SVG_KERNEL_MATRIX_ATTRIBUTE, s });
-		}
-		return kernelMatrix;
+
+		AbstractSVGBridge.displayErrorOrThrow(ctx, bex);
+
+		return null;
 	}
 
 	/**
@@ -215,24 +233,26 @@ public class SVGFeConvolveMatrixElementBridge extends AbstractSVGFilterPrimitive
 	 * @param kernelMatrix  the value of the 'kernelMatrix' attribute
 	 * @param ctx           the BridgeContext to use for error information
 	 */
-	protected static float convertDivisor(Element filterElement, float[] kernelMatrix, BridgeContext ctx) {
-
+	protected static float convertDivisor(Element filterElement, float[] kernelMatrix,
+			BridgeContext ctx) {
 		String s = filterElement.getAttributeNS(null, SVG_DIVISOR_ATTRIBUTE);
-		if (s.isEmpty()) {
-			// default is sum of kernel values (if sum is zero then 1.0)
-			float sum = 0;
-			for (float aKernelMatrix : kernelMatrix) {
-				sum += aKernelMatrix;
-			}
-			return (sum == 0) ? 1.0f : sum;
-		} else {
+		if (!s.isEmpty()) {
 			try {
 				return SVGUtilities.convertSVGNumber(s);
 			} catch (NumberFormatException nfEx) {
-				throw new BridgeException(ctx, filterElement, nfEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
+				BridgeException be = new BridgeException(ctx, filterElement, nfEx,
+						ERR_ATTRIBUTE_VALUE_MALFORMED,
 						new Object[] { SVG_DIVISOR_ATTRIBUTE, s, nfEx });
+				AbstractSVGBridge.displayErrorOrThrow(ctx, be);
 			}
 		}
+
+		// default is sum of kernel values (if sum is zero then 1.0)
+		float sum = 0f;
+		for (float aKernelMatrix : kernelMatrix) {
+			sum += aKernelMatrix;
+		}
+		return (sum == 0f) ? 1f : sum;
 	}
 
 	/**
@@ -244,8 +264,9 @@ public class SVGFeConvolveMatrixElementBridge extends AbstractSVGFilterPrimitive
 	 * @param ctx           the BridgeContext to use for error information
 	 */
 	protected static int[] convertTarget(Element filterElement, int[] orderXY, BridgeContext ctx) {
-
+		BridgeException bex = null;
 		int[] targetXY = new int[2];
+
 		// 'targetX' attribute - default is floor(orderX / 2)
 		String s = filterElement.getAttributeNS(null, SVG_TARGET_X_ATTRIBUTE);
 		if (s.isEmpty()) {
@@ -254,15 +275,19 @@ public class SVGFeConvolveMatrixElementBridge extends AbstractSVGFilterPrimitive
 			try {
 				int v = SVGUtilities.convertSVGInteger(s);
 				if (v < 0 || v >= orderXY[0]) {
-					throw new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_VALUE_MALFORMED,
+					targetXY[0] = orderXY[0] / 2;
+					bex = new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_VALUE_MALFORMED,
 							new Object[] { SVG_TARGET_X_ATTRIBUTE, s });
+				} else {
+					targetXY[0] = v;
 				}
-				targetXY[0] = v;
 			} catch (NumberFormatException nfEx) {
-				throw new BridgeException(ctx, filterElement, nfEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
+				bex = new BridgeException(ctx, filterElement, nfEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
 						new Object[] { SVG_TARGET_X_ATTRIBUTE, s, nfEx });
+				targetXY[0] = orderXY[0] / 2;
 			}
 		}
+
 		// 'targetY' attribute - default is floor(orderY / 2)
 		s = filterElement.getAttributeNS(null, SVG_TARGET_Y_ATTRIBUTE);
 		if (s.isEmpty()) {
@@ -271,15 +296,27 @@ public class SVGFeConvolveMatrixElementBridge extends AbstractSVGFilterPrimitive
 			try {
 				int v = SVGUtilities.convertSVGInteger(s);
 				if (v < 0 || v >= orderXY[1]) {
-					throw new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_VALUE_MALFORMED,
+					targetXY[1] = orderXY[1] / 2;
+					if (bex != null) {
+						AbstractSVGBridge.displayErrorOrThrow(ctx, bex);
+					}
+					bex = new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_VALUE_MALFORMED,
 							new Object[] { SVG_TARGET_Y_ATTRIBUTE, s });
+					AbstractSVGBridge.displayErrorOrThrow(ctx, bex);
+				} else {
+					targetXY[1] = v;
 				}
-				targetXY[1] = v;
 			} catch (NumberFormatException nfEx) {
-				throw new BridgeException(ctx, filterElement, nfEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
+				if (bex != null) {
+					AbstractSVGBridge.displayErrorOrThrow(ctx, bex);
+				}
+				bex = new BridgeException(ctx, filterElement, nfEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
 						new Object[] { SVG_TARGET_Y_ATTRIBUTE, s, nfEx });
+				AbstractSVGBridge.displayErrorOrThrow(ctx, bex);
+				targetXY[1] = orderXY[1] / 2;
 			}
 		}
+
 		return targetXY;
 	}
 
@@ -289,31 +326,35 @@ public class SVGFeConvolveMatrixElementBridge extends AbstractSVGFilterPrimitive
 	 *
 	 * @param filterElement the feConvolveMatrix filter primitive element
 	 * @param ctx           the BridgeContext to use for error information
+	 * @return the kernel unit length or {@code null}.
 	 */
 	protected static double[] convertKernelUnitLength(Element filterElement, BridgeContext ctx) {
 		String s = filterElement.getAttributeNS(null, SVG_KERNEL_UNIT_LENGTH_ATTRIBUTE);
-		if (s.isEmpty()) {
-			return null;
-		}
-		double[] units = new double[2];
-		StringTokenizer tokens = new StringTokenizer(s, " ,");
-		try {
-			units[0] = SVGUtilities.convertSVGNumber(tokens.nextToken());
-			if (tokens.hasMoreTokens()) {
-				units[1] = SVGUtilities.convertSVGNumber(tokens.nextToken());
-			} else {
-				units[1] = units[0];
+		if (!s.isEmpty()) {
+			BridgeException bex;
+			double[] units = new double[2];
+			StringTokenizer tokens = new StringTokenizer(s, " ,");
+			try {
+				units[0] = SVGUtilities.convertSVGNumber(tokens.nextToken());
+				if (tokens.hasMoreTokens()) {
+					units[1] = SVGUtilities.convertSVGNumber(tokens.nextToken());
+				} else {
+					units[1] = units[0];
+				}
+				if (tokens.hasMoreTokens() || units[0] <= 0 || units[1] <= 0) {
+					bex = new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_VALUE_MALFORMED,
+							new Object[] { SVG_KERNEL_UNIT_LENGTH_ATTRIBUTE, s });
+				} else {
+					return units;
+				}
+			} catch (NumberFormatException nfEx) {
+				bex = new BridgeException(ctx, filterElement, nfEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
+						new Object[] { SVG_KERNEL_UNIT_LENGTH_ATTRIBUTE, s });
 			}
-		} catch (NumberFormatException nfEx) {
-			throw new BridgeException(ctx, filterElement, nfEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
-					new Object[] { SVG_KERNEL_UNIT_LENGTH_ATTRIBUTE, s });
 
+			AbstractSVGBridge.displayErrorOrThrow(ctx, bex);
 		}
-		if (tokens.hasMoreTokens() || units[0] <= 0 || units[1] <= 0) {
-			throw new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_VALUE_MALFORMED,
-					new Object[] { SVG_KERNEL_UNIT_LENGTH_ATTRIBUTE, s });
-		}
-		return units;
+		return null;
 	}
 
 	/**
@@ -334,8 +375,10 @@ public class SVGFeConvolveMatrixElementBridge extends AbstractSVGFilterPrimitive
 		if (SVG_NONE_VALUE.equals(s)) {
 			return PadMode.ZERO_PAD;
 		}
-		throw new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_VALUE_MALFORMED,
+		BridgeException be = new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_VALUE_MALFORMED,
 				new Object[] { SVG_EDGE_MODE_ATTRIBUTE, s });
+		AbstractSVGBridge.displayErrorOrThrow(ctx, be);
+		return PadMode.REPLICATE;
 	}
 
 	/**
@@ -353,11 +396,13 @@ public class SVGFeConvolveMatrixElementBridge extends AbstractSVGFilterPrimitive
 		if (SVG_TRUE_VALUE.equals(s)) {
 			return true;
 		}
-		if (SVG_FALSE_VALUE.equals(s)) {
-			return false;
+		if (!SVG_FALSE_VALUE.equals(s)) {
+			BridgeException be = new BridgeException(ctx, filterElement,
+					ERR_ATTRIBUTE_VALUE_MALFORMED,
+					new Object[] { SVG_PRESERVE_ALPHA_ATTRIBUTE, s });
+			AbstractSVGBridge.displayErrorOrThrow(ctx, be);
 		}
-		throw new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_VALUE_MALFORMED,
-				new Object[] { SVG_PRESERVE_ALPHA_ATTRIBUTE, s });
+		return false;
 	}
 
 }

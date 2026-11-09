@@ -91,7 +91,7 @@ public class SVGFeSpecularLightingElementBridge extends AbstractSVGLightingEleme
 		// 'in' attribute
 		Filter in = getIn(filterElement, filteredElement, filteredNode, inputFilter, filterMap, ctx);
 		if (in == null) {
-			return null; // disable the filter
+			return inputFilter; // pass the input filter
 		}
 
 		// Default region is the size of in (if in is SourceGraphic or
@@ -100,6 +100,11 @@ public class SVGFeSpecularLightingElementBridge extends AbstractSVGLightingEleme
 		Rectangle2D defaultRegion = in.getBounds2D();
 		Rectangle2D primitiveRegion = SVGUtilities.convertFilterPrimitiveRegion(filterElement, filteredElement,
 				filteredNode, defaultRegion, filterRegion, ctx);
+
+		if (light == null) {
+			// There must be light
+			return createDarkLightFilter(ctx, filterElement, primitiveRegion, filterMap);
+		}
 
 		Filter filter = new SpecularLightingRable8Bit(in, primitiveRegion, light, specularConstant, specularExponent,
 				surfaceScale, kernelUnitLength);
@@ -122,21 +127,26 @@ public class SVGFeSpecularLightingElementBridge extends AbstractSVGLightingEleme
 	 */
 	protected static float convertSpecularExponent(Element filterElement, BridgeContext ctx) {
 		String s = filterElement.getAttributeNS(null, SVG_SPECULAR_EXPONENT_ATTRIBUTE);
-		if (s.length() == 0) {
-			return 1; // default is 1
-		} else {
+		if (!s.isEmpty()) {
+			BridgeException be;
 			try {
 				float v = SVGUtilities.convertSVGNumber(s);
-				if (v < 1 || v > 128) {
-					throw new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_VALUE_MALFORMED,
+				if (v >= 1f) {
+					if (v > 128f) {
+						v = 128f;
+					}
+					return v;
+				} else {
+					be = new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_VALUE_MALFORMED,
 							new Object[] { SVG_SPECULAR_CONSTANT_ATTRIBUTE, s });
 				}
-				return v;
 			} catch (NumberFormatException nfEx) {
-				throw new BridgeException(ctx, filterElement, nfEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
+				be = new BridgeException(ctx, filterElement, nfEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
 						new Object[] { SVG_SPECULAR_CONSTANT_ATTRIBUTE, s, nfEx });
 			}
+			AbstractSVGBridge.displayErrorOrThrow(ctx, be);
 		}
+		return 1; // default is 1
 	}
 
 }

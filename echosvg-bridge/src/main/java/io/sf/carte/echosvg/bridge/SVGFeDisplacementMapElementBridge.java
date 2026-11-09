@@ -92,13 +92,13 @@ public class SVGFeDisplacementMapElementBridge extends AbstractSVGFilterPrimitiv
 		// 'in' attribute
 		Filter in = getIn(filterElement, filteredElement, filteredNode, inputFilter, filterMap, ctx);
 		if (in == null) {
-			return null; // disable the filter
+			return inputFilter; // pass the input filter
 		}
 
 		// 'in2' attribute - required
 		Filter in2 = getIn2(filterElement, filteredElement, filteredNode, inputFilter, filterMap, ctx);
 		if (in2 == null) {
-			return null; // disable the filter
+			return inputFilter; // pass the input filter
 		}
 
 		Rectangle2D defaultRegion;

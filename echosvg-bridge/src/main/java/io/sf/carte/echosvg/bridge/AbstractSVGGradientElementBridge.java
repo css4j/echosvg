@@ -134,19 +134,21 @@ public abstract class AbstractSVGGradientElementBridge extends AnimatableGeneric
 	 * @param s            the spread method
 	 * @param ctx          the BridgeContext to use for error information
 	 */
-	protected static MultipleGradientPaint.CycleMethodEnum convertSpreadMethod(Element paintElement, String s,
-			BridgeContext ctx) {
+	protected static MultipleGradientPaint.CycleMethodEnum convertSpreadMethod(Element paintElement,
+			String s, BridgeContext ctx) {
 		if (SVG_REPEAT_VALUE.equals(s)) {
 			return MultipleGradientPaint.REPEAT;
 		}
 		if (SVG_REFLECT_VALUE.equals(s)) {
 			return MultipleGradientPaint.REFLECT;
 		}
-		if (SVG_PAD_VALUE.equals(s)) {
-			return MultipleGradientPaint.NO_CYCLE;
+		if (!SVG_PAD_VALUE.equals(s)) {
+			BridgeException be = new BridgeException(ctx, paintElement,
+					ERR_ATTRIBUTE_VALUE_MALFORMED, new Object[] { SVG_SPREAD_METHOD_ATTRIBUTE, s });
+			AbstractSVGBridge.displayErrorOrThrow(ctx, be);
 		}
-		throw new BridgeException(ctx, paintElement, ERR_ATTRIBUTE_VALUE_MALFORMED,
-				new Object[] { SVG_SPREAD_METHOD_ATTRIBUTE, s });
+		// pad is default
+		return MultipleGradientPaint.NO_CYCLE;
 	}
 
 	/**
@@ -279,16 +281,20 @@ public abstract class AbstractSVGGradientElementBridge extends AnimatableGeneric
 		 * @param stopElement     the stop element
 		 * @param opacity         an additional opacity of the stop color
 		 */
-		public Stop createStop(BridgeContext ctx, Element gradientElement, Element stopElement, float opacity) {
+		public Stop createStop(BridgeContext ctx, Element gradientElement, Element stopElement,
+				float opacity) {
 
 			float offset;
 			String s = stopElement.getAttributeNS(null, SVG_OFFSET_ATTRIBUTE);
-			if (s.length() != 0) {
+			if (!s.isEmpty()) {
 				try {
 					offset = SVGUtilities.convertRatio(s);
 				} catch (NumberFormatException nfEx) {
-					throw new BridgeException(ctx, stopElement, nfEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
+					BridgeException be = new BridgeException(ctx, stopElement, nfEx,
+							ERR_ATTRIBUTE_VALUE_MALFORMED,
 							new Object[] { SVG_OFFSET_ATTRIBUTE, s, nfEx });
+					AbstractSVGBridge.displayErrorOrThrow(ctx, be);
+					offset = 0f;
 				}
 			} else {
 				// use default value
@@ -298,8 +304,11 @@ public abstract class AbstractSVGGradientElementBridge extends AnimatableGeneric
 			try {
 				color = CSSUtilities.convertStopColor(stopElement, opacity, ctx);
 			} catch (Exception ex) {
-				throw new BridgeException(ctx, stopElement, ex, ERR_CSS_VALUE_ERROR,
+				BridgeException be = new BridgeException(ctx, stopElement, ex, ERR_CSS_VALUE_ERROR,
 						new Object[] { ex });
+				AbstractSVGBridge.displayErrorOrThrow(ctx, be);
+				// Default is black
+				color = Color.black;
 			}
 
 			return new Stop(color, offset);

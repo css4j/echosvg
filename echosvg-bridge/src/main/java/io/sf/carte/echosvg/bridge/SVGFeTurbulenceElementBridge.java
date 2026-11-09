@@ -77,7 +77,7 @@ public class SVGFeTurbulenceElementBridge extends AbstractSVGFilterPrimitiveElem
 		// 'in' attribute
 		Filter in = getIn(filterElement, filteredElement, filteredNode, inputFilter, filterMap, ctx);
 		if (in == null) {
-			return null; // disable the filter
+			return inputFilter; // pass the input filter
 		}
 
 		// default region is the filter chain region
@@ -92,7 +92,7 @@ public class SVGFeTurbulenceElementBridge extends AbstractSVGFilterPrimitiveElem
 		int numOctaves = convertInteger(filterElement, SVG_NUM_OCTAVES_ATTRIBUTE, 1, ctx);
 
 		// 'seed' attribute - default is 0
-		int seed = convertInteger(filterElement, SVG_SEED_ATTRIBUTE, 0, ctx);
+		int seed = convertNumberToInteger(filterElement, SVG_SEED_ATTRIBUTE, 0, ctx);
 
 		// 'stitchTiles' attribute - default is 'noStitch'
 		boolean stitchTiles = convertStitchTiles(filterElement, ctx);
@@ -130,6 +130,7 @@ public class SVGFeTurbulenceElementBridge extends AbstractSVGFilterPrimitiveElem
 		if (s.length() == 0) {
 			return new float[] { 0.001f, 0.001f };
 		}
+		BridgeException bex = null;
 		float[] v = new float[2];
 		StringTokenizer tokens = new StringTokenizer(s, " ,");
 		try {
@@ -140,16 +141,21 @@ public class SVGFeTurbulenceElementBridge extends AbstractSVGFilterPrimitiveElem
 				v[1] = v[0];
 			}
 			if (tokens.hasMoreTokens()) {
-				throw new BridgeException(ctx, e, ERR_ATTRIBUTE_VALUE_MALFORMED,
+				bex = new BridgeException(ctx, e, ERR_ATTRIBUTE_VALUE_MALFORMED,
 						new Object[] { SVG_BASE_FREQUENCY_ATTRIBUTE, s });
 			}
 		} catch (NumberFormatException nfEx) {
-			throw new BridgeException(ctx, e, nfEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
+			bex = new BridgeException(ctx, e, nfEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
 					new Object[] { SVG_BASE_FREQUENCY_ATTRIBUTE, s });
 		}
 		if (v[0] < 0 || v[1] < 0) {
-			throw new BridgeException(ctx, e, ERR_ATTRIBUTE_VALUE_MALFORMED,
+			bex = new BridgeException(ctx, e, ERR_ATTRIBUTE_VALUE_MALFORMED,
 					new Object[] { SVG_BASE_FREQUENCY_ATTRIBUTE, s });
+		}
+		if (bex != null) {
+			AbstractSVGBridge.displayErrorOrThrow(ctx, bex);
+			v[0] = 0.001f;
+			v[1] = 0.001f;
 		}
 		return v;
 	}
@@ -169,11 +175,12 @@ public class SVGFeTurbulenceElementBridge extends AbstractSVGFilterPrimitiveElem
 		if (SVG_STITCH_VALUE.equals(s)) {
 			return true;
 		}
-		if (SVG_NO_STITCH_VALUE.equals(s)) {
-			return false;
+		if (!SVG_NO_STITCH_VALUE.equals(s)) {
+			BridgeException be = new BridgeException(ctx, e, ERR_ATTRIBUTE_VALUE_MALFORMED,
+					new Object[] { SVG_STITCH_TILES_ATTRIBUTE, s });
+			AbstractSVGBridge.displayErrorOrThrow(ctx, be);
 		}
-		throw new BridgeException(ctx, e, ERR_ATTRIBUTE_VALUE_MALFORMED,
-				new Object[] { SVG_STITCH_TILES_ATTRIBUTE, s });
+		return false;
 	}
 
 	/**
@@ -194,7 +201,10 @@ public class SVGFeTurbulenceElementBridge extends AbstractSVGFilterPrimitiveElem
 		if (SVG_TURBULENCE_VALUE.equals(s)) {
 			return false;
 		}
-		throw new BridgeException(ctx, e, ERR_ATTRIBUTE_VALUE_MALFORMED, new Object[] { SVG_TYPE_ATTRIBUTE, s });
+		BridgeException be = new BridgeException(ctx, e, ERR_ATTRIBUTE_VALUE_MALFORMED,
+				new Object[] { SVG_TYPE_ATTRIBUTE, s });
+		AbstractSVGBridge.displayErrorOrThrow(ctx, be);
+		return false;
 	}
 
 }

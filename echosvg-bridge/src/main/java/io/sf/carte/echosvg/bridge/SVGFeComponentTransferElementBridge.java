@@ -81,7 +81,7 @@ public class SVGFeComponentTransferElementBridge extends AbstractSVGFilterPrimit
 		// 'in' attribute
 		Filter in = getIn(filterElement, filteredElement, filteredNode, inputFilter, filterMap, ctx);
 		if (in == null) {
-			return null; // disable the filter
+			return inputFilter; // pass the input filter
 		}
 
 		// Default region is the size of in (if in is SourceGraphic or
@@ -294,20 +294,22 @@ public class SVGFeComponentTransferElementBridge extends AbstractSVGFilterPrimit
 		 */
 		protected static float[] convertTableValues(Element e, BridgeContext ctx) {
 			String s = e.getAttributeNS(null, SVG_TABLE_VALUES_ATTRIBUTE);
-			if (s.length() == 0) {
-				return null;
-			}
-			StringTokenizer tokens = new StringTokenizer(s, " ,");
-			float[] v = new float[tokens.countTokens()];
-			try {
-				for (int i = 0; tokens.hasMoreTokens(); ++i) {
-					v[i] = SVGUtilities.convertSVGNumber(tokens.nextToken());
+			if (!s.isEmpty()) {
+				StringTokenizer tokens = new StringTokenizer(s, " ,");
+				float[] v = new float[tokens.countTokens()];
+				try {
+					for (int i = 0; tokens.hasMoreTokens(); ++i) {
+						v[i] = SVGUtilities.convertSVGNumber(tokens.nextToken());
+					}
+					return v;
+				} catch (NumberFormatException nfEx) {
+					BridgeException be = new BridgeException(ctx, e, nfEx,
+							ERR_ATTRIBUTE_VALUE_MALFORMED,
+							new Object[] { SVG_TABLE_VALUES_ATTRIBUTE, s });
+					AbstractSVGBridge.displayErrorOrThrow(ctx, be);
 				}
-			} catch (NumberFormatException nfEx) {
-				throw new BridgeException(ctx, e, nfEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
-						new Object[] { SVG_TABLE_VALUES_ATTRIBUTE, s });
 			}
-			return v;
+			return null;
 		}
 
 		/**
@@ -318,25 +320,25 @@ public class SVGFeComponentTransferElementBridge extends AbstractSVGFilterPrimit
 		 */
 		protected static int convertType(Element e, BridgeContext ctx) {
 			String s = e.getAttributeNS(null, SVG_TYPE_ATTRIBUTE);
-			if (s.length() == 0) {
-				throw new BridgeException(ctx, e, ERR_ATTRIBUTE_MISSING, new Object[] { SVG_TYPE_ATTRIBUTE });
+			if (!s.isEmpty() && !SVG_IDENTITY_VALUE.equals(s)) {
+				if (SVG_DISCRETE_VALUE.equals(s)) {
+					return ComponentTransferFunction.DISCRETE;
+				}
+				if (SVG_GAMMA_VALUE.equals(s)) {
+					return ComponentTransferFunction.GAMMA;
+				}
+				if (SVG_LINEAR_VALUE.equals(s)) {
+					return ComponentTransferFunction.LINEAR;
+				}
+				if (SVG_TABLE_VALUE.equals(s)) {
+					return ComponentTransferFunction.TABLE;
+				}
+				BridgeException be = new BridgeException(ctx, e, ERR_ATTRIBUTE_VALUE_MALFORMED,
+						new Object[] { SVG_TYPE_ATTRIBUTE, s });
+				AbstractSVGBridge.displayErrorOrThrow(ctx, be);
 			}
-			if (SVG_DISCRETE_VALUE.equals(s)) {
-				return ComponentTransferFunction.DISCRETE;
-			}
-			if (SVG_IDENTITY_VALUE.equals(s)) {
-				return ComponentTransferFunction.IDENTITY;
-			}
-			if (SVG_GAMMA_VALUE.equals(s)) {
-				return ComponentTransferFunction.GAMMA;
-			}
-			if (SVG_LINEAR_VALUE.equals(s)) {
-				return ComponentTransferFunction.LINEAR;
-			}
-			if (SVG_TABLE_VALUE.equals(s)) {
-				return ComponentTransferFunction.TABLE;
-			}
-			throw new BridgeException(ctx, e, ERR_ATTRIBUTE_VALUE_MALFORMED, new Object[] { SVG_TYPE_ATTRIBUTE, s });
+			// identity is default
+			return ComponentTransferFunction.IDENTITY;
 		}
 
 	}

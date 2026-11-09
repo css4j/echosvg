@@ -83,13 +83,13 @@ public class SVGFeCompositeElementBridge extends AbstractSVGFilterPrimitiveEleme
 		// 'in' attribute
 		Filter in = getIn(filterElement, filteredElement, filteredNode, inputFilter, filterMap, ctx);
 		if (in == null) {
-			return null; // disable the filter
+			return inputFilter; // pass the input filter
 		}
 
 		// 'in2' attribute - required
 		Filter in2 = getIn2(filterElement, filteredElement, filteredNode, inputFilter, filterMap, ctx);
 		if (in2 == null) {
-			return null; // disable the filter
+			return inputFilter; // pass the input filter
 		}
 
 		Rectangle2D defaultRegion;
@@ -125,33 +125,34 @@ public class SVGFeCompositeElementBridge extends AbstractSVGFilterPrimitiveEleme
 	 */
 	protected static CompositeRule convertOperator(Element filterElement, BridgeContext ctx) {
 		String s = filterElement.getAttributeNS(null, SVG_OPERATOR_ATTRIBUTE);
-		if (s.length() == 0) {
-			return CompositeRule.OVER; // default is over
+		if (!s.isEmpty()) {
+			if (SVG_ATOP_VALUE.equals(s)) {
+				return CompositeRule.ATOP;
+			}
+			if (SVG_IN_VALUE.equals(s)) {
+				return CompositeRule.IN;
+			}
+			if (SVG_OVER_VALUE.equals(s)) {
+				return CompositeRule.OVER;
+			}
+			if (SVG_OUT_VALUE.equals(s)) {
+				return CompositeRule.OUT;
+			}
+			if (SVG_XOR_VALUE.equals(s)) {
+				return CompositeRule.XOR;
+			}
+			if (SVG_ARITHMETIC_VALUE.equals(s)) {
+				float k1 = convertNumber(filterElement, SVG_K1_ATTRIBUTE, 0, ctx);
+				float k2 = convertNumber(filterElement, SVG_K2_ATTRIBUTE, 0, ctx);
+				float k3 = convertNumber(filterElement, SVG_K3_ATTRIBUTE, 0, ctx);
+				float k4 = convertNumber(filterElement, SVG_K4_ATTRIBUTE, 0, ctx);
+				return CompositeRule.ARITHMETIC(k1, k2, k3, k4);
+			}
+			BridgeException be = new BridgeException(ctx, filterElement,
+					ERR_ATTRIBUTE_VALUE_MALFORMED, new Object[] { SVG_OPERATOR_ATTRIBUTE, s });
+			AbstractSVGBridge.displayErrorOrThrow(ctx, be);
 		}
-		if (SVG_ATOP_VALUE.equals(s)) {
-			return CompositeRule.ATOP;
-		}
-		if (SVG_IN_VALUE.equals(s)) {
-			return CompositeRule.IN;
-		}
-		if (SVG_OVER_VALUE.equals(s)) {
-			return CompositeRule.OVER;
-		}
-		if (SVG_OUT_VALUE.equals(s)) {
-			return CompositeRule.OUT;
-		}
-		if (SVG_XOR_VALUE.equals(s)) {
-			return CompositeRule.XOR;
-		}
-		if (SVG_ARITHMETIC_VALUE.equals(s)) {
-			float k1 = convertNumber(filterElement, SVG_K1_ATTRIBUTE, 0, ctx);
-			float k2 = convertNumber(filterElement, SVG_K2_ATTRIBUTE, 0, ctx);
-			float k3 = convertNumber(filterElement, SVG_K3_ATTRIBUTE, 0, ctx);
-			float k4 = convertNumber(filterElement, SVG_K4_ATTRIBUTE, 0, ctx);
-			return CompositeRule.ARITHMETIC(k1, k2, k3, k4);
-		}
-		throw new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_VALUE_MALFORMED,
-				new Object[] { SVG_OPERATOR_ATTRIBUTE, s });
+		return CompositeRule.OVER; // default is over
 	}
 
 }

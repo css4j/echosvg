@@ -244,11 +244,12 @@ public abstract class UnitProcessor extends io.sf.carte.echosvg.parser.UnitProce
 	 * @param d    the direction of the length
 	 * @param ctx  the context used to resolve relative value
 	 */
-	public static float svgLengthToUserSpace(String s, String attr, short d, Context ctx) {
+	public static float svgLengthToUserSpace(String s, String attr, short d, Context ctx)
+			throws BridgeException {
 		float v = svgToUserSpace(s, attr, d, ctx);
 		if (v < 0) {
-			throw new BridgeException(getBridgeContext(ctx), ctx.getElement(), ErrorConstants.ERR_LENGTH_NEGATIVE,
-					new Object[] { attr, s });
+			throw new BridgeException(getBridgeContext(ctx), ctx.getElement(),
+					ErrorConstants.ERR_LENGTH_NEGATIVE, new Object[] { attr, s });
 		} else {
 			return v;
 		}
@@ -262,7 +263,8 @@ public abstract class UnitProcessor extends io.sf.carte.echosvg.parser.UnitProce
 	 * @param d    the direction of the coordinate
 	 * @param ctx  the context used to resolve relative value
 	 */
-	public static float svgToUserSpace(String s, String attr, short d, Context ctx) {
+	public static float svgToUserSpace(String s, String attr, short d, Context ctx)
+			throws BridgeException {
 		try {
 			return io.sf.carte.echosvg.parser.UnitProcessor.cssToUserSpace(s, attr, d, ctx);
 		} catch (ParseException pEx) {

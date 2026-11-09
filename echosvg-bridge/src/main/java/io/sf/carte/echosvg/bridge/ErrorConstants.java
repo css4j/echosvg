@@ -56,6 +56,15 @@ public interface ErrorConstants {
 	String ERR_LENGTH_NEGATIVE = "length.negative";
 
 	/**
+	 * The error code when a length, which must be positive, is negative.
+	 * 
+	 * <pre>
+	 * {0} = the name of the attribute
+	 * </pre>
+	 */
+	String ERR_LIGHT_SOURCE_MISSING = "light.source.missing";
+
+	/**
 	 * The error code when a CSS length is negative.
 	 * 
 	 * <pre>

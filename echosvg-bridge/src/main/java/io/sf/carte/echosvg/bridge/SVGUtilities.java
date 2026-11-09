@@ -100,7 +100,7 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 	 * 
 	 * @param s the float representation to convert
 	 */
-	public static float convertSVGNumber(String s) {
+	public static float convertSVGNumber(String s) throws NumberFormatException {
 		return Float.parseFloat(s);
 	}
 
@@ -109,7 +109,7 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 	 * 
 	 * @param s the integer representation to convert
 	 */
-	public static int convertSVGInteger(String s) {
+	public static int convertSVGInteger(String s) throws NumberFormatException {
 		return Integer.parseInt(s);
 	}
 
@@ -117,10 +117,10 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 	 * Converts the specified ratio to float number.
 	 * 
 	 * @param v the ratio value to convert
-	 * @exception NumberFormatException if the ratio is not a valid number or
+	 * @throws NumberFormatException if the ratio is not a valid number or
 	 *                                  percentage
 	 */
-	public static float convertRatio(String v) {
+	public static float convertRatio(String v) throws NumberFormatException {
 		float d = 1;
 		if (v.endsWith("%")) {
 			v = v.substring(0, v.length() - 1);
@@ -269,14 +269,13 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 			} catch (FileNotFoundException ioEx) {
 				BridgeException ex = new BridgeException(ctx, e, ioEx, ERR_URI_IO,
 						new Object[] { uriStr });
-				UserAgent userAgent = ctx.getUserAgent();
-				if (userAgent == null) {
-					throw ex;
-				}
-				userAgent.displayError(ex);
+				AbstractSVGBridge.displayErrorOrThrow(ctx, ex);
 				return "";
 			} catch (IOException ioEx) {
-				throw new BridgeException(ctx, e, ioEx, ERR_URI_IO, new Object[] { uriStr });
+				BridgeException ex = new BridgeException(ctx, e, ioEx, ERR_URI_IO,
+						new Object[] { uriStr });
+				AbstractSVGBridge.displayErrorOrThrow(ctx, ex);
+				return "";
 			} catch (SecurityException secEx) {
 				throw new BridgeException(ctx, e, secEx, ERR_URI_UNSECURE, new Object[] { uriStr });
 			}
@@ -895,14 +894,16 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 	 * @param ctx              the BridgeContext to use for error information
 	 * @return OBJECT_BOUNDING_BOX | USER_SPACE_ON_USE
 	 */
-	public static short parseCoordinateSystem(Element e, String attr, String coordinateSystem, BridgeContext ctx) {
+	public static short parseCoordinateSystem(Element e, String attr, String coordinateSystem,
+			BridgeContext ctx) {
 		if (SVG_USER_SPACE_ON_USE_VALUE.equals(coordinateSystem)) {
 			return USER_SPACE_ON_USE;
-		} else if (SVG_OBJECT_BOUNDING_BOX_VALUE.equals(coordinateSystem)) {
-			return OBJECT_BOUNDING_BOX;
-		} else {
-			throw new BridgeException(ctx, e, ERR_ATTRIBUTE_VALUE_MALFORMED, new Object[] { attr, coordinateSystem });
+		} else if (!SVG_OBJECT_BOUNDING_BOX_VALUE.equals(coordinateSystem)) {
+			BridgeException be = new BridgeException(ctx, e, ERR_ATTRIBUTE_VALUE_MALFORMED,
+					new Object[] { attr, coordinateSystem });
+			AbstractSVGBridge.displayErrorOrThrow(ctx, be);
 		}
+		return OBJECT_BOUNDING_BOX;
 	}
 
 	/**
@@ -919,11 +920,12 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 			BridgeContext ctx) {
 		if (SVG_USER_SPACE_ON_USE_VALUE.equals(coordinateSystem)) {
 			return USER_SPACE_ON_USE;
-		} else if (SVG_STROKE_WIDTH_VALUE.equals(coordinateSystem)) {
-			return STROKE_WIDTH;
-		} else {
-			throw new BridgeException(ctx, e, ERR_ATTRIBUTE_VALUE_MALFORMED, new Object[] { attr, coordinateSystem });
+		} else if (!SVG_STROKE_WIDTH_VALUE.equals(coordinateSystem)) {
+			BridgeException be = new BridgeException(ctx, e, ERR_ATTRIBUTE_VALUE_MALFORMED,
+					new Object[] { attr, coordinateSystem });
+			AbstractSVGBridge.displayErrorOrThrow(ctx, be);
 		}
+		return STROKE_WIDTH;
 	}
 
 	/**
@@ -983,13 +985,18 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 	 * @param transform the transform to parse
 	 * @param ctx       the BridgeContext to use for error information
 	 */
-	public static AffineTransform convertTransform(Element e, String attr, String transform, BridgeContext ctx) {
+	public static AffineTransform convertTransform(Element e, String attr, String transform,
+			BridgeContext ctx) {
+		AffineTransform tra;
 		try {
-			return AWTTransformProducer.createAffineTransform(transform);
+			tra = AWTTransformProducer.createAffineTransform(transform);
 		} catch (ParseException pEx) {
-			throw new BridgeException(ctx, e, pEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
+			BridgeException be = new BridgeException(ctx, e, pEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
 					new Object[] { attr, transform, pEx });
+			AbstractSVGBridge.displayErrorOrThrow(ctx, be);
+			tra = new AffineTransform();
 		}
+		return tra;
 	}
 
 	/**

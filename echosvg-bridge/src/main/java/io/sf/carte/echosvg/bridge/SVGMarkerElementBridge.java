@@ -127,8 +127,10 @@ public class SVGMarkerElementBridge extends AnimatableGenericSVGBridge implement
 			try {
 				orient = SVGUtilities.convertSVGNumber(s);
 			} catch (NumberFormatException nfEx) {
-				throw new BridgeException(ctx, markerElement, nfEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
-						new Object[] { SVG_ORIENT_ATTRIBUTE, s });
+				BridgeException be = new BridgeException(ctx, markerElement, nfEx,
+						ERR_ATTRIBUTE_VALUE_MALFORMED, new Object[] { SVG_ORIENT_ATTRIBUTE, s });
+				AbstractSVGBridge.displayErrorOrThrow(ctx, be);
+				orient = 0;
 			}
 		}
 

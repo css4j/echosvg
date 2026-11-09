@@ -79,7 +79,7 @@ public class SVGFeOffsetElementBridge extends AbstractSVGFilterPrimitiveElementB
 		// 'in' attribute
 		Filter in = getIn(filterElement, filteredElement, filteredNode, inputFilter, filterMap, ctx);
 		if (in == null) {
-			return null; // disable the filter
+			return inputFilter; // pass the input filter
 		}
 
 		// Default region is the size of in (if in is SourceGraphic or

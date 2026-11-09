@@ -84,12 +84,16 @@ public abstract class AbstractSVGFilterPrimitiveElementBridge extends Animatable
 	 * @param filterMap       the map that containes the named filter primitives
 	 * @param ctx             the bridge context
 	 */
-	protected static Filter getIn2(Element filterElement, Element filteredElement, GraphicsNode filteredNode,
-			Filter inputFilter, Map<String, Filter> filterMap, BridgeContext ctx) {
+	protected static Filter getIn2(Element filterElement, Element filteredElement,
+			GraphicsNode filteredNode, Filter inputFilter, Map<String, Filter> filterMap,
+			BridgeContext ctx) {
 
 		String s = filterElement.getAttributeNS(null, SVG_IN2_ATTRIBUTE);
-		if (s.length() == 0) {
-			throw new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_MISSING, new Object[] { SVG_IN2_ATTRIBUTE });
+		if (s.isEmpty()) {
+			BridgeException be = new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_MISSING,
+					new Object[] { SVG_IN2_ATTRIBUTE });
+			AbstractSVGBridge.displayErrorOrThrow(ctx, be);
+			return inputFilter;
 		}
 		return getFilterSource(filterElement, s, filteredElement, filteredNode, filterMap, ctx);
 	}
@@ -212,18 +216,19 @@ public abstract class AbstractSVGFilterPrimitiveElementBridge extends Animatable
 	 * @param defaultValue  the default value of the attribute
 	 * @param ctx           the BridgeContext to use for error information
 	 */
-	protected static int convertInteger(Element filterElement, String attrName, int defaultValue, BridgeContext ctx) {
+	protected static int convertInteger(Element filterElement, String attrName, int defaultValue,
+			BridgeContext ctx) {
 		String s = filterElement.getAttributeNS(null, attrName);
-		if (s.length() == 0) {
-			return defaultValue;
-		} else {
+		if (!s.isEmpty()) {
 			try {
 				return SVGUtilities.convertSVGInteger(s);
 			} catch (NumberFormatException nfEx) {
-				throw new BridgeException(ctx, filterElement, nfEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
-						new Object[] { attrName, s });
+				BridgeException be = new BridgeException(ctx, filterElement, nfEx,
+						ERR_ATTRIBUTE_VALUE_MALFORMED, new Object[] { attrName, s });
+				AbstractSVGBridge.displayErrorOrThrow(ctx, be);
 			}
 		}
+		return defaultValue;
 	}
 
 	/**
@@ -239,16 +244,42 @@ public abstract class AbstractSVGFilterPrimitiveElementBridge extends Animatable
 			BridgeContext ctx) {
 
 		String s = filterElement.getAttributeNS(null, attrName);
-		if (s.length() == 0) {
-			return defaultValue;
-		} else {
+		if (!s.isEmpty()) {
 			try {
 				return SVGUtilities.convertSVGNumber(s);
 			} catch (NumberFormatException nfEx) {
-				throw new BridgeException(ctx, filterElement, nfEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
-						new Object[] { attrName, s, nfEx });
+				BridgeException be = new BridgeException(ctx, filterElement, nfEx,
+						ERR_ATTRIBUTE_VALUE_MALFORMED, new Object[] { attrName, s, nfEx });
+				AbstractSVGBridge.displayErrorOrThrow(ctx, be);
 			}
 		}
+		return defaultValue;
+	}
+
+	/**
+	 * Converts on the specified filter primitive element, the specified attribute
+	 * that represents a number to be truncated to integer and with the specified
+	 * default value.
+	 *
+	 * @param filterElement the filter primitive element
+	 * @param attrName      the name of the attribute
+	 * @param defaultValue  the default value of the attribute
+	 * @param ctx           the BridgeContext to use for error information
+	 */
+	protected static int convertNumberToInteger(Element filterElement, String attrName,
+			int defaultValue, BridgeContext ctx) {
+
+		String s = filterElement.getAttributeNS(null, attrName);
+		if (!s.isEmpty()) {
+			try {
+				return (int) SVGUtilities.convertSVGNumber(s);
+			} catch (NumberFormatException nfEx) {
+				BridgeException be = new BridgeException(ctx, filterElement, nfEx,
+						ERR_ATTRIBUTE_VALUE_MALFORMED, new Object[] { attrName, s, nfEx });
+				AbstractSVGBridge.displayErrorOrThrow(ctx, be);
+			}
+		}
+		return defaultValue;
 	}
 
 }

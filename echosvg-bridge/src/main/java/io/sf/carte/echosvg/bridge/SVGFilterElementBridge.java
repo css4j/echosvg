@@ -18,7 +18,6 @@
  */
 package io.sf.carte.echosvg.bridge;
 
-import java.awt.Color;
 import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -34,7 +33,6 @@ import io.sf.carte.echosvg.ext.awt.image.PadMode;
 import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
 import io.sf.carte.echosvg.ext.awt.image.renderable.FilterChainRable;
 import io.sf.carte.echosvg.ext.awt.image.renderable.FilterChainRable8Bit;
-import io.sf.carte.echosvg.ext.awt.image.renderable.FloodRable8Bit;
 import io.sf.carte.echosvg.ext.awt.image.renderable.PadRable8Bit;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
 import io.sf.carte.echosvg.util.ParsedURL;
@@ -47,11 +45,6 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * @version $Id$
  */
 public class SVGFilterElementBridge extends AnimatableGenericSVGBridge implements FilterBridge, ErrorConstants {
-
-	/**
-	 * Transparent black color.
-	 */
-	protected static final Color TRANSPARENT_BLACK = new Color(0, true);
 
 	/**
 	 * Constructs a new bridge for the &lt;filter&gt; element.
@@ -106,27 +99,11 @@ public class SVGFilterElementBridge extends AnimatableGenericSVGBridge implement
 
 		Filter in = buildFilterPrimitives(filterElement, filterRegion, filteredElement, filteredNode, sourceGraphic,
 				filterNodeMap, ctx);
-		if (in == null) {
-			// error in one of the primitives, disable the filter
-			return null;
-		} else if (in == sourceGraphic) {
-			// no filter primitive found, so output transparent black
-			in = createEmptyFilter(filterElement, filterRegion, filteredElement, filteredNode, ctx);
+		if (in == null || in == sourceGraphic) {
+			return null; // disable the filter
 		}
 		filterChain.setSource(in);
 		return filterChain;
-	}
-
-	/**
-	 * Creates a new returns a new filter that fills its output with transparent
-	 * black. This is used when a &lt;filter&gt; element has no filter primitive
-	 * children.
-	 */
-	protected static Filter createEmptyFilter(Element filterElement, Rectangle2D filterRegion, Element filteredElement,
-			GraphicsNode filteredNode, BridgeContext ctx) {
-		Rectangle2D primitiveRegion = SVGUtilities.convertFilterPrimitiveRegion(null, filterElement, filteredElement,
-				filteredNode, filterRegion, filterRegion, ctx);
-		return new FloodRable8Bit(primitiveRegion, TRANSPARENT_BLACK);
 	}
 
 	/**

@@ -206,9 +206,9 @@ public abstract class AbstractGraphicsNodeBridge extends AnimatableSVGBridge
 	 */
 	protected AffineTransform computeTransform(SVGTransformable te, BridgeContext ctx)
 			throws BridgeException {
-		try {
-			AffineTransform at = new AffineTransform();
+		AffineTransform at = new AffineTransform();
 
+		try {
 			// 'transform'
 			SVGOMAnimatedTransformList atl = (SVGOMAnimatedTransformList) te.getTransform();
 			if (atl.isSpecified()) {
@@ -226,10 +226,12 @@ public abstract class AbstractGraphicsNodeBridge extends AnimatableSVGBridge
 				}
 			}
 
-			return at;
 		} catch (LiveAttributeException ex) {
-			throw new BridgeException(ctx, ex);
+			BridgeException bex = new BridgeException(ctx, ex);
+			AbstractSVGBridge.displayErrorOrThrow(ctx, bex);
 		}
+
+		return at;
 	}
 
 	/**

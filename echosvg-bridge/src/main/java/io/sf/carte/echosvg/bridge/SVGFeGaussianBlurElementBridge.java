@@ -79,14 +79,18 @@ public class SVGFeGaussianBlurElementBridge extends AbstractSVGFilterPrimitiveEl
 		// 'stdDeviation' attribute - default is [0, 0]
 		float[] stdDeviationXY = convertStdDeviation(filterElement, ctx);
 		if (stdDeviationXY[0] < 0 || stdDeviationXY[1] < 0) {
-			throw new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_VALUE_MALFORMED, new Object[] {
-					SVG_STD_DEVIATION_ATTRIBUTE, String.valueOf(stdDeviationXY[0]) + stdDeviationXY[1] });
+			BridgeException be = new BridgeException(ctx, filterElement,
+					ERR_ATTRIBUTE_VALUE_MALFORMED, new Object[] { SVG_STD_DEVIATION_ATTRIBUTE,
+							String.valueOf(stdDeviationXY[0]) + stdDeviationXY[1] });
+			AbstractSVGBridge.displayErrorOrThrow(ctx, be);
+			stdDeviationXY[0] = 0f;
+			stdDeviationXY[1] = 0f;
 		}
 
 		// 'in' attribute
 		Filter in = getIn(filterElement, filteredElement, filteredNode, inputFilter, filterMap, ctx);
 		if (in == null) {
-			return null; // disable the filter
+			return inputFilter; // pass the input filter
 		}
 
 		// Default region is the size of in (if in is SourceGraphic or
@@ -123,27 +127,31 @@ public class SVGFeGaussianBlurElementBridge extends AbstractSVGFilterPrimitiveEl
 	 */
 	protected static float[] convertStdDeviation(Element filterElement, BridgeContext ctx) {
 		String s = filterElement.getAttributeNS(null, SVG_STD_DEVIATION_ATTRIBUTE);
-		if (s.length() == 0) {
-			return new float[] { 0, 0 };
-		}
-		float[] stdDevs = new float[2];
-		StringTokenizer tokens = new StringTokenizer(s, " ,");
-		try {
-			stdDevs[0] = SVGUtilities.convertSVGNumber(tokens.nextToken());
-			if (tokens.hasMoreTokens()) {
-				stdDevs[1] = SVGUtilities.convertSVGNumber(tokens.nextToken());
-			} else {
-				stdDevs[1] = stdDevs[0];
+		if (!s.isEmpty()) {
+			BridgeException bex;
+			float[] stdDevs = new float[2];
+			StringTokenizer tokens = new StringTokenizer(s, " ,");
+			try {
+				stdDevs[0] = SVGUtilities.convertSVGNumber(tokens.nextToken());
+				if (tokens.hasMoreTokens()) {
+					stdDevs[1] = SVGUtilities.convertSVGNumber(tokens.nextToken());
+				} else {
+					stdDevs[1] = stdDevs[0];
+				}
+				if (tokens.hasMoreTokens()) {
+					bex = new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_VALUE_MALFORMED,
+							new Object[] { SVG_STD_DEVIATION_ATTRIBUTE, s });
+				} else {
+					return stdDevs;
+				}
+			} catch (NumberFormatException nfEx) {
+				bex = new BridgeException(ctx, filterElement, nfEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
+						new Object[] { SVG_STD_DEVIATION_ATTRIBUTE, s, nfEx });
 			}
-		} catch (NumberFormatException nfEx) {
-			throw new BridgeException(ctx, filterElement, nfEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
-					new Object[] { SVG_STD_DEVIATION_ATTRIBUTE, s, nfEx });
+			AbstractSVGBridge.displayErrorOrThrow(ctx, bex);
 		}
-		if (tokens.hasMoreTokens()) {
-			throw new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_VALUE_MALFORMED,
-					new Object[] { SVG_STD_DEVIATION_ATTRIBUTE, s });
-		}
-		return stdDevs;
+
+		return new float[] { 0f, 0f };
 	}
 
 }

@@ -170,10 +170,11 @@ public class LoadPermissionsTest {
 			"ANY", false, false, "io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
+	// Valid in SVG2
 	@Test
-	public void testBridgeExceptionMissingComponentTransfertType() throws Exception {
-		runTest("application/java-archive", "bridge/test/error/feComponentTransfert-type-missing",
-			"ANY", false, false, "io.sf.carte.echosvg.bridge.BridgeException");
+	public void testMissingComponentTransfertType() throws Exception {
+		runTest("text/ecmascript", "bridge/test/feComponentTransfert-type-missing",
+			"ANY", false, false, null);
 	}
 
 	@Test

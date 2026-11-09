@@ -79,7 +79,7 @@ public class SVGFeMorphologyElementBridge extends AbstractSVGFilterPrimitiveElem
 		// 'radius' attribute - default is [0, 0]
 		float[] radii = convertRadius(filterElement, ctx);
 		if (radii[0] == 0 || radii[1] == 0) {
-			return null; // disable the filter
+			return inputFilter; // pass the input filter
 		}
 
 		// 'operator' attribute - default is 'erode'
@@ -88,7 +88,7 @@ public class SVGFeMorphologyElementBridge extends AbstractSVGFilterPrimitiveElem
 		// 'in' attribute
 		Filter in = getIn(filterElement, filteredElement, filteredNode, inputFilter, filterMap, ctx);
 		if (in == null) {
-			return null; // disable the filter
+			return inputFilter; // pass the input filter
 		}
 
 		// Default region is the size of in (if in is SourceGraphic or
@@ -128,6 +128,7 @@ public class SVGFeMorphologyElementBridge extends AbstractSVGFilterPrimitiveElem
 			return new float[] { 0, 0 };
 		}
 		float[] radii = new float[2];
+		BridgeException bex = null;
 		StringTokenizer tokens = new StringTokenizer(s, " ,");
 		try {
 			radii[0] = SVGUtilities.convertSVGNumber(tokens.nextToken());
@@ -136,13 +137,18 @@ public class SVGFeMorphologyElementBridge extends AbstractSVGFilterPrimitiveElem
 			} else {
 				radii[1] = radii[0];
 			}
+			if (tokens.hasMoreTokens() || radii[0] < 0 || radii[1] < 0) {
+				bex = new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_VALUE_MALFORMED,
+						new Object[] { SVG_RADIUS_ATTRIBUTE, s });
+			}
 		} catch (NumberFormatException nfEx) {
-			throw new BridgeException(ctx, filterElement, nfEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
+			bex = new BridgeException(ctx, filterElement, nfEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
 					new Object[] { SVG_RADIUS_ATTRIBUTE, s, nfEx });
 		}
-		if (tokens.hasMoreTokens() || radii[0] < 0 || radii[1] < 0) {
-			throw new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_VALUE_MALFORMED,
-					new Object[] { SVG_RADIUS_ATTRIBUTE, s });
+		if (bex != null) {
+			AbstractSVGBridge.displayErrorOrThrow(ctx, bex);
+			radii[0] = 0f;
+			radii[1] = 0f;
 		}
 		return radii;
 	}
@@ -155,14 +161,15 @@ public class SVGFeMorphologyElementBridge extends AbstractSVGFilterPrimitiveElem
 	 */
 	protected static boolean convertOperator(Element filterElement, BridgeContext ctx) {
 		String s = filterElement.getAttributeNS(null, SVG_OPERATOR_ATTRIBUTE);
-		if (s.isEmpty() || SVG_ERODE_VALUE.equals(s)) {
-			return false;
+		if (!s.isEmpty() && !SVG_ERODE_VALUE.equals(s)) {
+			if (SVG_DILATE_VALUE.equals(s)) {
+				return true;
+			}
+			BridgeException be = new BridgeException(ctx, filterElement,
+					ERR_ATTRIBUTE_VALUE_MALFORMED, new Object[] { SVG_OPERATOR_ATTRIBUTE, s });
+			AbstractSVGBridge.displayErrorOrThrow(ctx, be);
 		}
-		if (SVG_DILATE_VALUE.equals(s)) {
-			return true;
-		}
-		throw new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_VALUE_MALFORMED,
-				new Object[] { SVG_OPERATOR_ATTRIBUTE, s });
+		return false;
 	}
 
 }

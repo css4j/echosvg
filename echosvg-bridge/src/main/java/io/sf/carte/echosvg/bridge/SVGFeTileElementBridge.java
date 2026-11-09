@@ -81,7 +81,7 @@ public class SVGFeTileElementBridge extends AbstractSVGFilterPrimitiveElementBri
 		// 'in' attribute
 		Filter in = getIn(filterElement, filteredElement, filteredNode, inputFilter, filterMap, ctx);
 		if (in == null) {
-			return null; // disable the filter
+			return inputFilter; // pass the input filter
 		}
 
 		Filter filter = new TileRable8Bit(in, primitiveRegion, in.getBounds2D(), false);

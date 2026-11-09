@@ -149,16 +149,16 @@ public class SVGSVGElementBridge extends SVGGElementBridge implements SVGSVGCont
 
 			float actualWidth = w;
 			float actualHeight = h;
-			try {
-				if (viewingTransform == null) {
-					// disable the rendering of the element
-					return null;
-				} else {
+			if (viewingTransform == null) {
+				// disable the rendering of the element
+				return null;
+			} else {
+				try {
 					AffineTransform vtInv = viewingTransform.createInverse();
 					actualWidth = (float) (w * vtInv.getScaleX());
 					actualHeight = (float) (h * vtInv.getScaleY());
+				} catch (NoninvertibleTransformException ex) {
 				}
-			} catch (NoninvertibleTransformException ex) {
 			}
 
 			AffineTransform positionTransform = AffineTransform.getTranslateInstance(x, y);
@@ -227,8 +227,9 @@ public class SVGSVGElementBridge extends SVGGElementBridge implements SVGSVGCont
 			}
 			RenderingHints hints = null;
 			hints = CSSUtilities.convertColorRendering(e, hints);
-			if (hints != null)
+			if (hints != null) {
 				cgn.setRenderingHints(hints);
+			}
 
 			// 'enable-background'
 			Rectangle2D r = CSSUtilities.convertEnableBackground(e);

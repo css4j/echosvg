@@ -91,7 +91,7 @@ public class SVGFeDiffuseLightingElementBridge extends AbstractSVGLightingElemen
 		// 'in' attribute
 		Filter in = getIn(filterElement, filteredElement, filteredNode, inputFilter, filterMap, ctx);
 		if (in == null) {
-			return null; // disable the filter
+			return inputFilter; // pass the input filter
 		}
 
 		// Default region is the size of in (if in is SourceGraphic or
@@ -100,6 +100,12 @@ public class SVGFeDiffuseLightingElementBridge extends AbstractSVGLightingElemen
 		Rectangle2D defaultRegion = in.getBounds2D();
 		Rectangle2D primitiveRegion = SVGUtilities.convertFilterPrimitiveRegion(filterElement, filteredElement,
 				filteredNode, defaultRegion, filterRegion, ctx);
+
+		if (light == null) {
+			// There must be light
+			return createDarkLightFilter(ctx, filterElement, primitiveRegion, filterMap);
+		}
+
 		Filter filter = new DiffuseLightingRable8Bit(in, primitiveRegion, light, diffuseConstant, surfaceScale,
 				kernelUnitLength);
 

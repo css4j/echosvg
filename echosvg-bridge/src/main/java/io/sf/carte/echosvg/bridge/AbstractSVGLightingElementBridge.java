@@ -19,6 +19,8 @@
 package io.sf.carte.echosvg.bridge;
 
 import java.awt.Color;
+import java.awt.geom.Rectangle2D;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 import org.w3c.dom.Element;
@@ -28,6 +30,8 @@ import io.sf.carte.echosvg.ext.awt.image.DistantLight;
 import io.sf.carte.echosvg.ext.awt.image.Light;
 import io.sf.carte.echosvg.ext.awt.image.PointLight;
 import io.sf.carte.echosvg.ext.awt.image.SpotLight;
+import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
+import io.sf.carte.echosvg.ext.awt.image.renderable.FloodRable8Bit;
 
 /**
  * Bridge class for the &lt;feDiffuseLighting&gt; element.
@@ -80,28 +84,41 @@ public abstract class AbstractSVGLightingElementBridge extends AbstractSVGFilter
 	 */
 	protected static double[] convertKernelUnitLength(Element filterElement, BridgeContext ctx) {
 		String s = filterElement.getAttributeNS(null, SVG_KERNEL_UNIT_LENGTH_ATTRIBUTE);
-		if (s.length() == 0) {
-			return null;
-		}
-		double[] units = new double[2];
-		StringTokenizer tokens = new StringTokenizer(s, " ,");
-		try {
-			units[0] = SVGUtilities.convertSVGNumber(tokens.nextToken());
-			if (tokens.hasMoreTokens()) {
-				units[1] = SVGUtilities.convertSVGNumber(tokens.nextToken());
-			} else {
-				units[1] = units[0];
+		if (!s.isEmpty()) {
+			BridgeException bex;
+			double[] units = new double[2];
+			StringTokenizer tokens = new StringTokenizer(s, " ,");
+			try {
+				units[0] = SVGUtilities.convertSVGNumber(tokens.nextToken());
+				if (tokens.hasMoreTokens()) {
+					units[1] = SVGUtilities.convertSVGNumber(tokens.nextToken());
+				} else {
+					units[1] = units[0];
+				}
+				if (tokens.hasMoreTokens() || units[0] <= 0 || units[1] <= 0) {
+					bex = new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_VALUE_MALFORMED,
+							new Object[] { SVG_KERNEL_UNIT_LENGTH_ATTRIBUTE, s });
+				} else {
+					return units;
+				}
+			} catch (NumberFormatException nfEx) {
+				bex = new BridgeException(ctx, filterElement, nfEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
+						new Object[] { SVG_KERNEL_UNIT_LENGTH_ATTRIBUTE, s });
 			}
-		} catch (NumberFormatException nfEx) {
-			throw new BridgeException(ctx, filterElement, nfEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
-					new Object[] { SVG_KERNEL_UNIT_LENGTH_ATTRIBUTE, s });
 
+			AbstractSVGBridge.displayErrorOrThrow(ctx, bex);
 		}
-		if (tokens.hasMoreTokens() || units[0] <= 0 || units[1] <= 0) {
-			throw new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_VALUE_MALFORMED,
-					new Object[] { SVG_KERNEL_UNIT_LENGTH_ATTRIBUTE, s });
-		}
-		return units;
+		return null;
+	}
+
+	static Filter createDarkLightFilter(BridgeContext ctx, Element filterElement,
+			Rectangle2D primitiveRegion, Map<String, Filter> filterMap) {
+		BridgeException be = new BridgeException(ctx, filterElement, ERR_LIGHT_SOURCE_MISSING);
+		AbstractSVGBridge.displayErrorOrThrow(ctx, be);
+		Filter dark = new FloodRable8Bit(primitiveRegion, new Color(0, true));
+		// update the filter Map
+		updateFilterMap(filterElement, dark, filterMap);
+		return dark;
 	}
 
 	/**

@@ -71,26 +71,31 @@ public class SVGAnimateElementBridge extends SVGAnimationElementBridge {
 	protected int parseCalcMode() {
 		// If the attribute being animated has only non-additive values, take
 		// the animation as having calcMode="discrete".
-		if (animationType == AnimationEngine.ANIM_TYPE_CSS && !targetElement.isPropertyAdditive(attributeLocalName)
-				|| animationType == AnimationEngine.ANIM_TYPE_XML
-						&& !targetElement.isAttributeAdditive(attributeNamespaceURI, attributeLocalName)) {
+		if (animationType == AnimationEngine.ANIM_TYPE_CSS
+				&& !targetElement.isPropertyAdditive(attributeLocalName)
+				|| animationType == AnimationEngine.ANIM_TYPE_XML && !targetElement
+						.isAttributeAdditive(attributeNamespaceURI, attributeLocalName)) {
 			return AbstractAnimation.CALC_MODE_DISCRETE;
 		}
 
 		String calcModeString = element.getAttributeNS(null, SVG_CALC_MODE_ATTRIBUTE);
-		if (calcModeString.length() == 0) {
-			return getDefaultCalcMode();
-		} else if (calcModeString.equals(SMILConstants.SMIL_LINEAR_VALUE)) {
-			return AbstractAnimation.CALC_MODE_LINEAR;
-		} else if (calcModeString.equals(SMILConstants.SMIL_DISCRETE_VALUE)) {
-			return AbstractAnimation.CALC_MODE_DISCRETE;
-		} else if (calcModeString.equals(SMILConstants.SMIL_PACED_VALUE)) {
-			return AbstractAnimation.CALC_MODE_PACED;
-		} else if (calcModeString.equals(SMILConstants.SMIL_SPLINE_VALUE)) {
-			return AbstractAnimation.CALC_MODE_SPLINE;
+		if (!calcModeString.isEmpty()) {
+			if (calcModeString.equals(SMILConstants.SMIL_LINEAR_VALUE)) {
+				return AbstractAnimation.CALC_MODE_LINEAR;
+			} else if (calcModeString.equals(SMILConstants.SMIL_DISCRETE_VALUE)) {
+				return AbstractAnimation.CALC_MODE_DISCRETE;
+			} else if (calcModeString.equals(SMILConstants.SMIL_PACED_VALUE)) {
+				return AbstractAnimation.CALC_MODE_PACED;
+			} else if (calcModeString.equals(SMILConstants.SMIL_SPLINE_VALUE)) {
+				return AbstractAnimation.CALC_MODE_SPLINE;
+			}
+			BridgeException be = new BridgeException(ctx, element,
+					ErrorConstants.ERR_ATTRIBUTE_VALUE_MALFORMED,
+					new Object[] { SVG_CALC_MODE_ATTRIBUTE, calcModeString });
+			AbstractSVGBridge.displayErrorOrThrow(ctx, be);
 		}
-		throw new BridgeException(ctx, element, ErrorConstants.ERR_ATTRIBUTE_VALUE_MALFORMED,
-				new Object[] { SVG_CALC_MODE_ATTRIBUTE, calcModeString });
+
+		return getDefaultCalcMode();
 	}
 
 	/**
@@ -98,13 +103,16 @@ public class SVGAnimateElementBridge extends SVGAnimationElementBridge {
 	 */
 	protected boolean parseAdditive() {
 		String additiveString = element.getAttributeNS(null, SVG_ADDITIVE_ATTRIBUTE);
-		if (additiveString.length() == 0 || additiveString.equals(SMILConstants.SMIL_REPLACE_VALUE)) {
-			return false;
-		} else if (additiveString.equals(SMILConstants.SMIL_SUM_VALUE)) {
-			return true;
+		if (!additiveString.isEmpty() && !additiveString.equals(SMILConstants.SMIL_REPLACE_VALUE)) {
+			if (additiveString.equals(SMILConstants.SMIL_SUM_VALUE)) {
+				return true;
+			}
+			BridgeException be = new BridgeException(ctx, element,
+					ErrorConstants.ERR_ATTRIBUTE_VALUE_MALFORMED,
+					new Object[] { SVG_ADDITIVE_ATTRIBUTE, additiveString });
+			AbstractSVGBridge.displayErrorOrThrow(ctx, be);
 		}
-		throw new BridgeException(ctx, element, ErrorConstants.ERR_ATTRIBUTE_VALUE_MALFORMED,
-				new Object[] { SVG_ADDITIVE_ATTRIBUTE, additiveString });
+		return false;
 	}
 
 	/**
@@ -112,13 +120,17 @@ public class SVGAnimateElementBridge extends SVGAnimationElementBridge {
 	 */
 	protected boolean parseAccumulate() {
 		String accumulateString = element.getAttributeNS(null, SVG_ACCUMULATE_ATTRIBUTE);
-		if (accumulateString.length() == 0 || accumulateString.equals(SMILConstants.SMIL_NONE_VALUE)) {
-			return false;
-		} else if (accumulateString.equals(SMILConstants.SMIL_SUM_VALUE)) {
-			return true;
+		if (!accumulateString.isEmpty()
+				&& !accumulateString.equals(SMILConstants.SMIL_NONE_VALUE)) {
+			if (accumulateString.equals(SMILConstants.SMIL_SUM_VALUE)) {
+				return true;
+			}
+			BridgeException be = new BridgeException(ctx, element,
+					ErrorConstants.ERR_ATTRIBUTE_VALUE_MALFORMED,
+					new Object[] { SVG_ACCUMULATE_ATTRIBUTE, accumulateString });
+			AbstractSVGBridge.displayErrorOrThrow(ctx, be);
 		}
-		throw new BridgeException(ctx, element, ErrorConstants.ERR_ATTRIBUTE_VALUE_MALFORMED,
-				new Object[] { SVG_ACCUMULATE_ATTRIBUTE, accumulateString });
+		return false;
 	}
 
 	/**

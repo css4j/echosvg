@@ -66,10 +66,11 @@ public abstract class AbstractSVGBridge implements Bridge, SVGConstants {
 	}
 
 	static void displayErrorOrThrow(BridgeContext ctx, RuntimeException ex) throws RuntimeException {
-		if (ctx.userAgent != null) {
-			ctx.userAgent.displayError(ex);
-		} else {
+		UserAgent userAgent = ctx.getUserAgent();
+		if (userAgent == null) {
 			throw ex;
+		} else {
+			userAgent.displayError(ex);
 		}
 	}
 
