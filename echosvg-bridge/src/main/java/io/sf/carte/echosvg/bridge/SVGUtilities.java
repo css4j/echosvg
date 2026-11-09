@@ -265,6 +265,9 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 				SVGDocument svgDoc = (SVGDocument) e.getOwnerDocument();
 				URIResolver resolver = ctx.createURIResolver(svgDoc, loader);
 				e = resolver.getElement(purl.toString(), e);
+				if (e == null) {
+					return "";
+				}
 				refs.add(purl);
 			} catch (FileNotFoundException ioEx) {
 				BridgeException ex = new BridgeException(ctx, e, ioEx, ERR_URI_IO,
