@@ -47,6 +47,13 @@ import io.sf.carte.echosvg.ext.awt.image.rendered.RenderedImageCachableRed;
  * @version $Id$
  */
 public class MorphologyRable8Bit extends AbstractRable implements MorphologyRable {
+
+	// Reasonable value for maximum radX
+	private static final int MAX_RAD_X = 4096;
+
+	// Reasonable value for maximum radX
+	private static final int MAX_RAD_Y = 4096;
+
 	/**
 	 * Morphology radius
 	 */
@@ -184,8 +191,29 @@ public class MorphologyRable8Bit extends AbstractRable implements MorphologyRabl
 		AffineTransform srcAt;
 		srcAt = AffineTransform.getScaleInstance(scaleX, scaleY);
 
-		int radX = (int) Math.round(radiusX * scaleX);
+		// Obtain reasonable dimensions for radX, radY
+		int radX_spec = (int) Math.round(radiusX * scaleX);
 		int radY = (int) Math.round(radiusY * scaleY);
+		int radX;
+		if (radX_spec > MAX_RAD_X) {
+			float ratio = radY / (float) radX_spec;
+			radX = MAX_RAD_X;
+			if (ratio > 1e-3f) {
+				radY = Math.round(MAX_RAD_X * ratio);
+			}
+		} else {
+			radX = radX_spec;
+		}
+		if (radY > MAX_RAD_Y) {
+			float ratio = radX_spec / (float) radY;
+			radY = MAX_RAD_Y;
+			if (ratio > 1e-3f) {
+				int rx = Math.round(MAX_RAD_Y * ratio);
+				if (rx < MAX_RAD_X) {
+					radX = rx;
+				}
+			}
+		}
 
 		MorphologyOp op = null;
 		if (radX > 0 && radY > 0) {
