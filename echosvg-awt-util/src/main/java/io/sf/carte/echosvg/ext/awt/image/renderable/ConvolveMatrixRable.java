@@ -96,6 +96,8 @@ public interface ConvolveMatrixRable extends FilterColorInterpolation {
 	/**
 	 * Sets the [x,y] distance in user space between kernel values If set to zero
 	 * then one pixel in device space will be used.
+	 * 
+	 * @param kernelUnitLength the kernel unit length, or {@code null}.
 	 */
 	void setKernelUnitLength(double[] kernelUnitLength);
 
