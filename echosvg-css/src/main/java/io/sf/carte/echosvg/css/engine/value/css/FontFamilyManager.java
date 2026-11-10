@@ -23,7 +23,6 @@ import java.util.Locale;
 import org.w3c.dom.DOMException;
 
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
-import io.sf.carte.doc.style.css.nsac.LexicalUnit.LexicalType;
 import io.sf.carte.echosvg.css.engine.CSSContext;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
@@ -165,8 +164,8 @@ public class FontFamilyManager extends AbstractValueManager {
 			case IDENT:
 				StringBuilder sb = new StringBuilder(lu.getStringValue());
 				lu = lu.getNextLexicalUnit();
-				if (lu != null && isIdentOrNumber(lu)) {
-					do {
+				if (lu != null) {
+					identLoop: do {
 						sb.append(' ');
 						switch (lu.getLexicalUnitType()) {
 						case IDENT:
@@ -176,11 +175,24 @@ public class FontFamilyManager extends AbstractValueManager {
 							// Some font names contain integer values but are not quoted!
 							// Example: "Univers 45 Light"
 							sb.append(Integer.toString(lu.getIntegerValue()));
-						default:
 							break;
+						case DIMENSION:
+							// Some font names contain dimension-like values but are not quoted!
+							// Examples: "Mplus 1p", "Slabo 13px"
+							float floatValue = lu.getFloatValue();
+							if (floatValue % 1 == 0) {
+								sb.append(lu.getCssText());
+								break;
+							}
+						default:
+							break identLoop;
 						}
 						lu = lu.getNextLexicalUnit();
-					} while (lu != null && isIdentOrNumber(lu));
+					} while (lu != null);
+					if (lu != null) {
+						int len = sb.length();
+						sb.setLength(len - 1);
+					}
 					result.append(new StringValue(sb.toString()));
 				} else {
 					String id = sb.toString();
@@ -209,11 +221,6 @@ public class FontFamilyManager extends AbstractValueManager {
 			if (lu == null)
 				throw createMalformedLexicalUnitDOMException();
 		}
-	}
-
-	private boolean isIdentOrNumber(LexicalUnit lu) {
-		LexicalType type = lu.getLexicalUnitType();
-		return type == LexicalType.IDENT || type == LexicalType.INTEGER;
 	}
 
 	/**
