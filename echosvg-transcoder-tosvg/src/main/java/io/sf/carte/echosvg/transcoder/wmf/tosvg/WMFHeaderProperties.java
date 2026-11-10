@@ -32,6 +32,7 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import io.sf.carte.echosvg.ext.awt.geom.Polygon2D;
 import io.sf.carte.echosvg.ext.awt.geom.Polyline2D;
@@ -341,7 +342,9 @@ public class WMFHeaderProperties extends AbstractWMFReader {
 				// because it will always be completely used
 				int len = (2 * (recSize - 9));
 				byte[] lfFaceName = readBytes(is, len);
-				String face = new String(lfFaceName);
+
+				// ISO-8859-1 is close enough to cp1252
+				String face = new String(lfFaceName, StandardCharsets.ISO_8859_1);
 
 				// FIXED : management of font names
 				int d = 0;
