@@ -21,6 +21,7 @@ package io.sf.carte.echosvg.transcoder.wmf.tosvg;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -220,7 +221,8 @@ public class WMFRecordStore extends AbstractWMFReader {
 				int len = (2 * (recSize - 9));
 				byte[] lfFaceName = readBytes(is, len);
 
-				String str = new String(lfFaceName); // what locale ?? ascii ?? platform ??
+				// ISO-8859-1 is close enough to cp1252
+				String str = new String(lfFaceName, StandardCharsets.ISO_8859_1);
 
 				mr = new MetaRecord.StringRecord(str);
 				mr.numPoints = recSize;

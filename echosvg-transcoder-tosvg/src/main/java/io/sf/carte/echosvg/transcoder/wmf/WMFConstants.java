@@ -254,14 +254,16 @@ public interface WMFConstants {
 	// new constants for charset names, useful for decoding and encoding text.
 
 	/**
-	 * ANSI charset Java name, ie "ISO-8859-1" charset.
+	 * Java name for Windows "ANSI" charset which is cp-1252, not actually
+	 * standardized by ANSI. Use "ISO-8859-1" which is very close to cp-1252.
 	 */
 	String CHARSET_ANSI = "ISO-8859-1";
 
 	/**
-	 * DEFAULT charset Java name, by default taken as "US-ASCII" charset.
+	 * DEFAULT charset Java name, by default taken as "ISO-8859-1" charset (cp-1252
+	 * is the default Windows charset).
 	 */
-	String CHARSET_DEFAULT = "US-ASCII";
+	String CHARSET_DEFAULT = CHARSET_ANSI;
 
 	/**
 	 * SHIFTJIS charset Java name, ie "Shift_JIS" charset.

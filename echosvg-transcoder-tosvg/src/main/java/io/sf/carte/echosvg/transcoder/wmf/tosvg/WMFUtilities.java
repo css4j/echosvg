@@ -47,6 +47,19 @@ public class WMFUtilities {
 			case WMFConstants.META_CHARSET_ANSI:
 				return new String(bstr, WMFConstants.CHARSET_ANSI);
 			case WMFConstants.META_CHARSET_DEFAULT:
+				/*@formatter:off
+				 * 
+				 * From section 2.1.1.5 'CharacterSet Enumeration':
+				 * 
+				 * DEFAULT_CHARSET: Specifies a character set based on the current system
+				 * locale; for example, when the system locale is United States English, the
+				 * default character set is CHARSET_ANSI.
+				 * 
+				 * A single-argument constructor should be used, but for reproducibility and
+				 * some backwards compatibility use CHARSET_ANSI
+				 * 
+				 * @formatter:on
+				 */
 				return new String(bstr, WMFConstants.CHARSET_DEFAULT);
 			case WMFConstants.META_CHARSET_SHIFTJIS:
 				return new String(bstr, WMFConstants.CHARSET_SHIFTJIS);
