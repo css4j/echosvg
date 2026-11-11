@@ -745,8 +745,7 @@ public abstract class SVGOMElement extends AbstractElement implements SVGElement
 	 * Converts the given SVG length into user units.
 	 * 
 	 * @param v        the SVG length value
-	 * @param type     the CSS unit (one of the
-	 *                 {@link CSSUnit}.CSS_* constants)
+	 * @param type     the CSS unit (one of the {@link CSSUnit}.CSS_* constants)
 	 * @param pcInterp how to interpretet percentage values (one of the
 	 *                 {@link SVGContext}.PERCENTAGE_* constants)
 	 * @return the SVG value in user units
@@ -756,12 +755,14 @@ public abstract class SVGOMElement extends AbstractElement implements SVGElement
 		if (unitContext == null) {
 			unitContext = new UnitContext();
 		}
-		if (pcInterp == PERCENTAGE_FONT_SIZE && type == CSSUnit.CSS_PERCENTAGE) {
-			// XXX
-			return 0f;
-		} else {
-			return UnitProcessor.cssToUserSpace(v, type, (short) (3 - pcInterp), unitContext);
+		if (pcInterp != PERCENTAGE_FONT_SIZE || type != CSSUnit.CSS_PERCENTAGE) {
+			try {
+				return UnitProcessor.cssToUserSpace(v, type, (short) (3 - pcInterp), unitContext);
+			} catch (IllegalArgumentException e) {
+			}
 		}
+		// XXX
+		return 0f;
 	}
 
 	/**

@@ -300,17 +300,18 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 	 *                  USER_SPACE_ON_USE)
 	 * @param uctx      the unit processor context
 	 */
-	public static Point2D convertPoint(String xStr, String xAttr, String yStr, String yAttr, short unitsType,
-			UnitProcessor.Context uctx) {
+	public static Point2D convertPoint(String xStr, String xAttr, String yStr, String yAttr,
+			short unitsType, String defX, String defY, UnitProcessor.Context uctx)
+			throws BridgeException {
 		float x, y;
 		switch (unitsType) {
 		case OBJECT_BOUNDING_BOX:
-			x = UnitProcessor.svgHorizontalCoordinateToObjectBoundingBox(xStr, xAttr, uctx);
-			y = UnitProcessor.svgVerticalCoordinateToObjectBoundingBox(yStr, yAttr, uctx);
+			x = UnitProcessor.svgHorizontalCoordinateToObjectBoundingBox(xStr, xAttr, defX, 0f, uctx);
+			y = UnitProcessor.svgVerticalCoordinateToObjectBoundingBox(yStr, yAttr, defY, 0f, uctx);
 			break;
 		case USER_SPACE_ON_USE:
-			x = UnitProcessor.svgHorizontalCoordinateToUserSpace(xStr, xAttr, uctx);
-			y = UnitProcessor.svgVerticalCoordinateToUserSpace(yStr, yAttr, uctx);
+			x = UnitProcessor.svgHorizontalCoordinateToUserSpace(xStr, xAttr, defX, 0f, uctx);
+			y = UnitProcessor.svgVerticalCoordinateToUserSpace(yStr, yAttr, defY, 0f, uctx);
 			break;
 		default:
 			throw new IllegalArgumentException("Invalid unit type");
@@ -325,14 +326,18 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 	 * @param attr      the name of the attribute that represents the length
 	 * @param unitsType the coordinate system (OBJECT_BOUNDING_BOX |
 	 *                  USER_SPACE_ON_USE)
+	 * @param defStr    a non-null string representing the default value.
 	 * @param uctx      the unit processor context
 	 */
-	public static float convertLength(String length, String attr, short unitsType, UnitProcessor.Context uctx) {
+	public static float convertLength(String length, String attr, short unitsType, String defStr,
+			UnitProcessor.Context uctx) {
+		assert defStr != null;
+
 		switch (unitsType) {
 		case OBJECT_BOUNDING_BOX:
-			return UnitProcessor.svgOtherLengthToObjectBoundingBox(length, attr, uctx);
+			return UnitProcessor.svgOtherLengthToObjectBoundingBox(length, attr, defStr, 0f, uctx);
 		case USER_SPACE_ON_USE:
-			return UnitProcessor.svgOtherLengthToUserSpace(length, attr, uctx);
+			return UnitProcessor.svgOtherLengthToUserSpace(length, attr, defStr, 0f, uctx);
 		default:
 			throw new IllegalArgumentException("Invalid unit type");
 		}
@@ -386,7 +391,9 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 		// resolve units in the (referenced) maskedElement's coordinate system
 		UnitProcessor.Context uctx = UnitProcessor.createContext(ctx, maskedElement);
 
-		return convertRegion(xStr, yStr, wStr, hStr, unitsType, maskedNode, uctx);
+		return convertRegion(xStr, yStr, wStr, hStr, unitsType, SVG_MASK_X_DEFAULT_VALUE,
+				SVG_MASK_Y_DEFAULT_VALUE, SVG_MASK_WIDTH_DEFAULT_VALUE,
+				SVG_MASK_HEIGHT_DEFAULT_VALUE, maskedNode, uctx);
 	}
 
 	/////////////////////////////////////////////////////////////////////////
@@ -415,17 +422,17 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 		if (yStr.length() == 0) {
 			yStr = SVG_PATTERN_Y_DEFAULT_VALUE;
 		}
-		// 'width' attribute - required
+		// 'width' attribute - default is 0%
 		String wStr = getChainableAttributeNS(patternElement, null, SVG_WIDTH_ATTRIBUTE, ctx);
 		if (wStr.length() == 0) {
-			throw new BridgeException(ctx, patternElement, ERR_ATTRIBUTE_MISSING, new Object[] { SVG_WIDTH_ATTRIBUTE });
+			wStr = SVG_PATTERN_WIDTH_DEFAULT_VALUE;
 		}
-		// 'height' attribute - required
+		// 'height' attribute - default is 0%
 		String hStr = getChainableAttributeNS(patternElement, null, SVG_HEIGHT_ATTRIBUTE, ctx);
 		if (hStr.length() == 0) {
-			throw new BridgeException(ctx, patternElement, ERR_ATTRIBUTE_MISSING,
-					new Object[] { SVG_HEIGHT_ATTRIBUTE });
+			hStr = SVG_PATTERN_HEIGHT_DEFAULT_VALUE;
 		}
+
 		// 'patternUnits' attribute - default is 'objectBoundingBox'
 		short unitsType;
 		String units = getChainableAttributeNS(patternElement, null, SVG_PATTERN_UNITS_ATTRIBUTE, ctx);
@@ -438,7 +445,9 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 		// resolve units in the (referenced) paintedElement's coordinate system
 		UnitProcessor.Context uctx = UnitProcessor.createContext(ctx, paintedElement);
 
-		return convertRegion(xStr, yStr, wStr, hStr, unitsType, paintedNode, uctx);
+		return convertRegion(xStr, yStr, wStr, hStr, unitsType, SVG_PATTERN_X_DEFAULT_VALUE,
+				SVG_PATTERN_Y_DEFAULT_VALUE, SVG_PATTERN_WIDTH_DEFAULT_VALUE,
+				SVG_PATTERN_HEIGHT_DEFAULT_VALUE, paintedNode, uctx);
 	}
 
 	/////////////////////////////////////////////////////////////////////////
@@ -569,7 +578,10 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 		// coordinate system
 		UnitProcessor.Context uctx = UnitProcessor.createContext(ctx, filteredElement);
 
-		Rectangle2D region = convertRegion(xStr, yStr, wStr, hStr, unitsType, filteredNode, uctx);
+		Rectangle2D region = convertRegion(xStr, yStr, wStr, hStr, unitsType,
+				SVG_FILTER_X_DEFAULT_VALUE, SVG_FILTER_Y_DEFAULT_VALUE,
+				SVG_FILTER_WIDTH_DEFAULT_VALUE, SVG_FILTER_HEIGHT_DEFAULT_VALUE, filteredNode,
+				uctx);
 		//
 		// Account for region padding
 		//
@@ -619,36 +631,49 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 	 * @param region    the region to extend
 	 * @param uctx      the unit processor context (needed for userSpaceOnUse)
 	 */
-	protected static Rectangle2D extendRegion(String dxStr, String dyStr, String dwStr, String dhStr, short unitsType,
-			GraphicsNode filteredNode, Rectangle2D region, UnitProcessor.Context uctx) {
+	protected static Rectangle2D extendRegion(String dxStr, String dyStr, String dwStr,
+			String dhStr, short unitsType, GraphicsNode filteredNode, Rectangle2D region,
+			UnitProcessor.Context uctx) {
 
 		double dx, dy, dw, dh;
 		switch (unitsType) {
 		case USER_SPACE_ON_USE:
-			dx = UnitProcessor.svgHorizontalCoordinateToUserSpace(dxStr, SVG12Constants.SVG_MX_ATRIBUTE, uctx);
-			dy = UnitProcessor.svgVerticalCoordinateToUserSpace(dyStr, SVG12Constants.SVG_MY_ATRIBUTE, uctx);
-			dw = UnitProcessor.svgHorizontalCoordinateToUserSpace(dwStr, SVG12Constants.SVG_MW_ATRIBUTE, uctx);
-			dh = UnitProcessor.svgVerticalCoordinateToUserSpace(dhStr, SVG12Constants.SVG_MH_ATRIBUTE, uctx);
+			dx = UnitProcessor.svgHorizontalCoordinateToUserSpace(dxStr,
+					SVG12Constants.SVG_MX_ATRIBUTE, SVG12Constants.SVG_FILTER_MX_DEFAULT_VALUE, 0f,
+					uctx);
+			dy = UnitProcessor.svgVerticalCoordinateToUserSpace(dyStr,
+					SVG12Constants.SVG_MY_ATRIBUTE, SVG12Constants.SVG_FILTER_MY_DEFAULT_VALUE, 0f,
+					uctx);
+			dw = UnitProcessor.svgHorizontalCoordinateToUserSpace(dwStr,
+					SVG12Constants.SVG_MW_ATRIBUTE, SVG12Constants.SVG_FILTER_MW_DEFAULT_VALUE, 0f,
+					uctx);
+			dh = UnitProcessor.svgVerticalCoordinateToUserSpace(dhStr,
+					SVG12Constants.SVG_MH_ATRIBUTE, SVG12Constants.SVG_FILTER_MH_DEFAULT_VALUE, 0f,
+					uctx);
 			break;
 		case OBJECT_BOUNDING_BOX:
 			Rectangle2D bounds = filteredNode.getGeometryBounds();
 			if (bounds == null) {
-				dx = dy = dw = dh = 0;
+				dx = dy = dw = dh = 0d;
 			} else {
-				dx = UnitProcessor.svgHorizontalCoordinateToObjectBoundingBox(dxStr, SVG12Constants.SVG_MX_ATRIBUTE,
-						uctx);
+				dx = UnitProcessor.svgHorizontalCoordinateToObjectBoundingBox(dxStr,
+						SVG12Constants.SVG_MX_ATRIBUTE, SVG12Constants.SVG_FILTER_MX_DEFAULT_VALUE,
+						0f, uctx);
 				dx *= bounds.getWidth();
 
-				dy = UnitProcessor.svgVerticalCoordinateToObjectBoundingBox(dyStr, SVG12Constants.SVG_MY_ATRIBUTE,
-						uctx);
+				dy = UnitProcessor.svgVerticalCoordinateToObjectBoundingBox(dyStr,
+						SVG12Constants.SVG_MY_ATRIBUTE, SVG12Constants.SVG_FILTER_MY_DEFAULT_VALUE,
+						0f, uctx);
 				dy *= bounds.getHeight();
 
-				dw = UnitProcessor.svgHorizontalCoordinateToObjectBoundingBox(dwStr, SVG12Constants.SVG_MW_ATRIBUTE,
-						uctx);
+				dw = UnitProcessor.svgHorizontalCoordinateToObjectBoundingBox(dwStr,
+						SVG12Constants.SVG_MW_ATRIBUTE, SVG12Constants.SVG_FILTER_MW_DEFAULT_VALUE,
+						0f, uctx);
 				dw *= bounds.getWidth();
 
-				dh = UnitProcessor.svgVerticalCoordinateToObjectBoundingBox(dhStr, SVG12Constants.SVG_MH_ATRIBUTE,
-						uctx);
+				dh = UnitProcessor.svgVerticalCoordinateToObjectBoundingBox(dhStr,
+						SVG12Constants.SVG_MH_ATRIBUTE, SVG12Constants.SVG_FILTER_MH_DEFAULT_VALUE,
+						0f, uctx);
 				dh *= bounds.getHeight();
 			}
 			break;
@@ -656,13 +681,15 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 			throw new IllegalArgumentException("Invalid unit type");
 		}
 
-		region.setRect(region.getX() + dx, region.getY() + dy, region.getWidth() + dw, region.getHeight() + dh);
+		region.setRect(region.getX() + dx, region.getY() + dy, region.getWidth() + dw,
+				region.getHeight() + dh);
 
 		return region;
 	}
 
-	public static Rectangle2D getBaseFilterPrimitiveRegion(Element filterPrimitiveElement, Element filteredElement,
-			GraphicsNode filteredNode, Rectangle2D defaultRegion, BridgeContext ctx) {
+	public static Rectangle2D getBaseFilterPrimitiveRegion(Element filterPrimitiveElement,
+			Element filteredElement, GraphicsNode filteredNode, Rectangle2D defaultRegion,
+			BridgeContext ctx) {
 		String s;
 
 		// resolve units in the (referenced) filteredElement's
@@ -674,28 +701,32 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 		double x = defaultRegion.getX();
 		s = filterPrimitiveElement.getAttributeNS(null, SVG_X_ATTRIBUTE);
 		if (s.length() != 0) {
-			x = UnitProcessor.svgHorizontalCoordinateToUserSpace(s, SVG_X_ATTRIBUTE, uctx);
+			x = UnitProcessor.svgHorizontalCoordinateToUserSpace(s, SVG_X_ATTRIBUTE, null,
+					(float) x, uctx);
 		}
 
 		// 'y' attribute - default is defaultRegion.getY()
 		double y = defaultRegion.getY();
 		s = filterPrimitiveElement.getAttributeNS(null, SVG_Y_ATTRIBUTE);
 		if (s.length() != 0) {
-			y = UnitProcessor.svgVerticalCoordinateToUserSpace(s, SVG_Y_ATTRIBUTE, uctx);
+			y = UnitProcessor.svgVerticalCoordinateToUserSpace(s, SVG_Y_ATTRIBUTE, null, (float) y,
+					uctx);
 		}
 
 		// 'width' attribute - default is defaultRegion.getWidth()
 		double w = defaultRegion.getWidth();
 		s = filterPrimitiveElement.getAttributeNS(null, SVG_WIDTH_ATTRIBUTE);
 		if (s.length() != 0) {
-			w = UnitProcessor.svgHorizontalLengthToUserSpace(s, SVG_WIDTH_ATTRIBUTE, uctx);
+			w = UnitProcessor.svgHorizontalLengthToUserSpace(s, SVG_WIDTH_ATTRIBUTE, null,
+					(float) w, uctx);
 		}
 
 		// 'height' attribute - default is defaultRegion.getHeight()
 		double h = defaultRegion.getHeight();
 		s = filterPrimitiveElement.getAttributeNS(null, SVG_HEIGHT_ATTRIBUTE);
 		if (s.length() != 0) {
-			h = UnitProcessor.svgVerticalLengthToUserSpace(s, SVG_HEIGHT_ATTRIBUTE, uctx);
+			h = UnitProcessor.svgVerticalLengthToUserSpace(s, SVG_HEIGHT_ATTRIBUTE, null, (float) h,
+					uctx);
 		}
 
 		// NOTE: it may be that dx/dy/dw/dh should be applied here
@@ -762,35 +793,43 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 			Rectangle2D bounds = filteredNode.getGeometryBounds();
 			if (bounds != null) {
 				if (xStr.length() != 0) {
-					x = UnitProcessor.svgHorizontalCoordinateToObjectBoundingBox(xStr, SVG_X_ATTRIBUTE, uctx);
+					x = UnitProcessor.svgHorizontalCoordinateToObjectBoundingBox(xStr,
+							SVG_X_ATTRIBUTE, null, (float) x, uctx);
 					x = bounds.getX() + x * bounds.getWidth();
 				}
 				if (yStr.length() != 0) {
-					y = UnitProcessor.svgVerticalCoordinateToObjectBoundingBox(yStr, SVG_Y_ATTRIBUTE, uctx);
+					y = UnitProcessor.svgVerticalCoordinateToObjectBoundingBox(yStr,
+							SVG_Y_ATTRIBUTE, null, (float) y, uctx);
 					y = bounds.getY() + y * bounds.getHeight();
 				}
 				if (wStr.length() != 0) {
-					w = UnitProcessor.svgHorizontalLengthToObjectBoundingBox(wStr, SVG_WIDTH_ATTRIBUTE, uctx);
+					w = UnitProcessor.svgHorizontalLengthToObjectBoundingBox(wStr,
+							SVG_WIDTH_ATTRIBUTE, null, (float) w, uctx);
 					w *= bounds.getWidth();
 				}
 				if (hStr.length() != 0) {
-					h = UnitProcessor.svgVerticalLengthToObjectBoundingBox(hStr, SVG_HEIGHT_ATTRIBUTE, uctx);
+					h = UnitProcessor.svgVerticalLengthToObjectBoundingBox(hStr,
+							SVG_HEIGHT_ATTRIBUTE, null, (float) h, uctx);
 					h *= bounds.getHeight();
 				}
 			}
 			break;
 		case USER_SPACE_ON_USE:
 			if (xStr.length() != 0) {
-				x = UnitProcessor.svgHorizontalCoordinateToUserSpace(xStr, SVG_X_ATTRIBUTE, uctx);
+				x = UnitProcessor.svgHorizontalCoordinateToUserSpace(xStr, SVG_X_ATTRIBUTE, null,
+						(float) x, uctx);
 			}
 			if (yStr.length() != 0) {
-				y = UnitProcessor.svgVerticalCoordinateToUserSpace(yStr, SVG_Y_ATTRIBUTE, uctx);
+				y = UnitProcessor.svgVerticalCoordinateToUserSpace(yStr, SVG_Y_ATTRIBUTE, null,
+						(float) y, uctx);
 			}
 			if (wStr.length() != 0) {
-				w = UnitProcessor.svgHorizontalLengthToUserSpace(wStr, SVG_WIDTH_ATTRIBUTE, uctx);
+				w = UnitProcessor.svgHorizontalLengthToUserSpace(wStr, SVG_WIDTH_ATTRIBUTE, null,
+						(float) w, uctx);
 			}
 			if (hStr.length() != 0) {
-				h = UnitProcessor.svgVerticalLengthToUserSpace(hStr, SVG_HEIGHT_ATTRIBUTE, uctx);
+				h = UnitProcessor.svgVerticalLengthToUserSpace(hStr, SVG_HEIGHT_ATTRIBUTE, null,
+						(float) h, uctx);
 			}
 			break;
 		default:
@@ -939,20 +978,33 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 	 * @param yStr       the y coordinate of the region
 	 * @param wStr       the width of the region
 	 * @param hStr       the height of the region
+	 * @param xDefStr    the default x coordinate of the region
+	 * @param yDefStr    the default y coordinate of the region
+	 * @param wDefStr    the default width of the region
+	 * @param hDefStr    the default height of the region
 	 * @param targetNode the graphics node (needed for objectBoundingBox)
 	 * @param uctx       the unit processor context (needed for userSpaceOnUse)
 	 */
-	protected static Rectangle2D convertRegion(String xStr, String yStr, String wStr, String hStr, short unitsType,
-			GraphicsNode targetNode, UnitProcessor.Context uctx) {
+	protected static Rectangle2D convertRegion(String xStr, String yStr, String wStr, String hStr,
+			short unitsType, String defXStr, String defYStr, String defWidthStr,
+			String defHeightStr, GraphicsNode targetNode, UnitProcessor.Context uctx) {
+		assert defXStr != null;
+		assert defYStr != null;
+		assert defWidthStr != null;
+		assert defHeightStr != null;
 
 		// construct the mask region in the appropriate coordinate system
 		double x, y, w, h;
 		switch (unitsType) {
 		case OBJECT_BOUNDING_BOX:
-			x = UnitProcessor.svgHorizontalCoordinateToObjectBoundingBox(xStr, SVG_X_ATTRIBUTE, uctx);
-			y = UnitProcessor.svgVerticalCoordinateToObjectBoundingBox(yStr, SVG_Y_ATTRIBUTE, uctx);
-			w = UnitProcessor.svgHorizontalLengthToObjectBoundingBox(wStr, SVG_WIDTH_ATTRIBUTE, uctx);
-			h = UnitProcessor.svgVerticalLengthToObjectBoundingBox(hStr, SVG_HEIGHT_ATTRIBUTE, uctx);
+			x = UnitProcessor.svgHorizontalCoordinateToObjectBoundingBox(xStr, SVG_X_ATTRIBUTE,
+					defXStr, 0f, uctx);
+			y = UnitProcessor.svgVerticalCoordinateToObjectBoundingBox(yStr, SVG_Y_ATTRIBUTE,
+					defYStr, 0f, uctx);
+			w = UnitProcessor.svgHorizontalLengthToObjectBoundingBox(wStr, SVG_WIDTH_ATTRIBUTE,
+					defWidthStr, 0f, uctx);
+			h = UnitProcessor.svgVerticalLengthToObjectBoundingBox(hStr, SVG_HEIGHT_ATTRIBUTE,
+					defHeightStr, 0f, uctx);
 
 			Rectangle2D bounds = targetNode.getGeometryBounds();
 			if (bounds != null) {
@@ -965,10 +1017,14 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 			}
 			break;
 		case USER_SPACE_ON_USE:
-			x = UnitProcessor.svgHorizontalCoordinateToUserSpace(xStr, SVG_X_ATTRIBUTE, uctx);
-			y = UnitProcessor.svgVerticalCoordinateToUserSpace(yStr, SVG_Y_ATTRIBUTE, uctx);
-			w = UnitProcessor.svgHorizontalLengthToUserSpace(wStr, SVG_WIDTH_ATTRIBUTE, uctx);
-			h = UnitProcessor.svgVerticalLengthToUserSpace(hStr, SVG_HEIGHT_ATTRIBUTE, uctx);
+			x = UnitProcessor.svgHorizontalCoordinateToUserSpace(xStr, SVG_X_ATTRIBUTE, defXStr, 0f,
+					uctx);
+			y = UnitProcessor.svgVerticalCoordinateToUserSpace(yStr, SVG_Y_ATTRIBUTE, defYStr, 0f,
+					uctx);
+			w = UnitProcessor.svgHorizontalLengthToUserSpace(wStr, SVG_WIDTH_ATTRIBUTE, defWidthStr,
+					0f, uctx);
+			h = UnitProcessor.svgVerticalLengthToUserSpace(hStr, SVG_HEIGHT_ATTRIBUTE, defHeightStr,
+					0f, uctx);
 			break;
 		default:
 			throw new RuntimeException("invalid unitsType:" + unitsType); // can't be reached

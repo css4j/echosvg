@@ -130,21 +130,28 @@ public class SVGRadialGradientElementBridge extends AbstractSVGGradientElementBr
 		}
 		UnitProcessor.Context uctx = UnitProcessor.createContext(ctx, paintElement);
 
-		float r = SVGUtilities.convertLength(rStr, SVG_R_ATTRIBUTE, coordSystemType, uctx);
+		float r = SVGUtilities.convertLength(rStr, SVG_R_ATTRIBUTE, coordSystemType,
+				SVG_RADIAL_GRADIENT_R_DEFAULT_VALUE, uctx);
 		// A value of zero will cause the area to be painted as a single color
 		// using the color and opacity of the last gradient stop.
-		if (r == 0) {
+		if (r == 0f) {
 			return colors[colors.length - 1];
 		} else {
-			Point2D c = SVGUtilities.convertPoint(cxStr, SVG_CX_ATTRIBUTE, cyStr, SVG_CY_ATTRIBUTE, coordSystemType,
-					uctx);
+			Point2D c = SVGUtilities.convertPoint(cxStr, SVG_CX_ATTRIBUTE, cyStr, SVG_CY_ATTRIBUTE,
+					coordSystemType, SVG_RADIAL_GRADIENT_CX_DEFAULT_VALUE,
+					SVG_RADIAL_GRADIENT_CY_DEFAULT_VALUE, uctx);
 
-			Point2D f = SVGUtilities.convertPoint(fxStr, SVG_FX_ATTRIBUTE, fyStr, SVG_FY_ATTRIBUTE, coordSystemType,
-					uctx);
+			Point2D f;
+			try {
+			f = SVGUtilities.convertPoint(fxStr, SVG_FX_ATTRIBUTE, fyStr, SVG_FY_ATTRIBUTE,
+					coordSystemType, "", "", uctx);
+			} catch (BridgeException e) {
+				f = new Point2D.Double(c.getX(), c.getY());
+			}
 
 			// <!> FIXME: colorSpace ignored for radial gradient at this time
-			return new RadialGradientPaint(c, r, f, offsets, colors, spreadMethod, MultipleGradientPaint.SRGB,
-					transform);
+			return new RadialGradientPaint(c, r, f, offsets, colors, spreadMethod,
+					MultipleGradientPaint.SRGB, transform);
 		}
 	}
 

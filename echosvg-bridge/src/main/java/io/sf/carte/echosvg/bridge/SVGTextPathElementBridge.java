@@ -139,15 +139,19 @@ public class SVGTextPathElementBridge extends AnimatableGenericSVGBridge impleme
 				try {
 					startOffsetPercent = SVGUtilities.convertSVGNumber(percentString);
 				} catch (NumberFormatException e) {
-					throw new BridgeException(ctx, textPathElement, ERR_ATTRIBUTE_VALUE_MALFORMED,
+					BridgeException be = new BridgeException(ctx, textPathElement,
+							ERR_ATTRIBUTE_VALUE_MALFORMED,
 							new Object[] { SVG_START_OFFSET_ATTRIBUTE, s });
+					AbstractSVGBridge.displayErrorOrThrow(ctx, be);
+					// Default is 0
 				}
 				startOffset = startOffsetPercent * pathLength / 100f;
 
 			} else {
 				// its an absolute length
 				UnitProcessor.Context uctx = UnitProcessor.createContext(ctx, textPathElement);
-				startOffset = UnitProcessor.svgOtherLengthToUserSpace(s, SVG_START_OFFSET_ATTRIBUTE, uctx);
+				startOffset = UnitProcessor.svgOtherLengthToUserSpace(s, SVG_START_OFFSET_ATTRIBUTE,
+						null, 0f, uctx);
 			}
 			textPath.setStartOffset(startOffset);
 		}

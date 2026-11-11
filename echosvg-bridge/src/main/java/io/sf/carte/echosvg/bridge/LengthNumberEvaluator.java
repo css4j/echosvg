@@ -51,8 +51,13 @@ class LengthNumberEvaluator extends Evaluator {
 		if (typed.getPrimitiveType() == Type.NUMERIC) {
 			short unitType = typed.getUnitType();
 			if (CSSUnit.isRelativeLengthUnitType(unitType)) {
-				float f = UnitProcessor.cssToUserSpace(typed.getFloatValue(), unitType,
-						percentageInterpretation, uctx);
+				float f;
+				try {
+					f = UnitProcessor.cssToUserSpace(typed.getFloatValue(), unitType,
+							percentageInterpretation, uctx);
+				} catch (IllegalArgumentException e) {
+					throw new DOMInvalidAccessException("Unexpected value: " + typed.getCssText());
+				}
 				return NumberValue.createCSSNumberValue(CSSUnit.CSS_PX, f);
 			}
 			return (CSSNumberValue) typed;
@@ -62,8 +67,13 @@ class LengthNumberEvaluator extends Evaluator {
 
 	@Override
 	protected float percentage(CSSNumberValue typed, short resultType) throws DOMException {
-		float f = UnitProcessor.cssToUserSpace(typed.getFloatValue(CSSUnit.CSS_PERCENTAGE),
-				CSSUnit.CSS_PERCENTAGE, percentageInterpretation, uctx);
+		float f;
+		try {
+			f = UnitProcessor.cssToUserSpace(typed.getFloatValue(CSSUnit.CSS_PERCENTAGE),
+					CSSUnit.CSS_PERCENTAGE, percentageInterpretation, uctx);
+		} catch (IllegalArgumentException e) {
+			throw new DOMInvalidAccessException("Unexpected value: " + typed.getCssText());
+		}
 		return NumberValue.floatValueConversion(f, CSSUnit.CSS_PX, resultType);
 	}
 

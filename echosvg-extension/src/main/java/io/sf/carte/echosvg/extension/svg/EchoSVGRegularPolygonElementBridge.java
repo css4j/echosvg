@@ -86,21 +86,23 @@ public class EchoSVGRegularPolygonElementBridge extends SVGDecoratedShapeElement
 		s = e.getAttributeNS(null, SVG_CX_ATTRIBUTE);
 		float cx = 0;
 		if (s.length() != 0) {
-			cx = UnitProcessor.svgHorizontalCoordinateToUserSpace(s, SVG_CX_ATTRIBUTE, uctx);
+			cx = UnitProcessor.svgHorizontalCoordinateToUserSpace(s, SVG_CX_ATTRIBUTE, null, 0f,
+					uctx);
 		}
 
 		// 'cy' attribute - default is 0
 		s = e.getAttributeNS(null, SVG_CY_ATTRIBUTE);
 		float cy = 0;
 		if (s.length() != 0) {
-			cy = UnitProcessor.svgVerticalCoordinateToUserSpace(s, SVG_CY_ATTRIBUTE, uctx);
+			cy = UnitProcessor.svgVerticalCoordinateToUserSpace(s, SVG_CY_ATTRIBUTE, null, 0f,
+					uctx);
 		}
 
 		// 'r' attribute - required
 		s = e.getAttributeNS(null, SVG_R_ATTRIBUTE);
 		float r;
 		if (s.length() != 0) {
-			r = UnitProcessor.svgOtherLengthToUserSpace(s, SVG_R_ATTRIBUTE, uctx);
+			r = UnitProcessor.svgOtherLengthToUserSpace(s, SVG_R_ATTRIBUTE, "", 0f, uctx);
 		} else {
 			throw new BridgeException(ctx, e, ERR_ATTRIBUTE_MISSING, new Object[] { SVG_R_ATTRIBUTE, s });
 		}

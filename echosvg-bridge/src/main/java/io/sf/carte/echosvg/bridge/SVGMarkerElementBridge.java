@@ -98,7 +98,8 @@ public class SVGMarkerElementBridge extends AnimatableGenericSVGBridge implement
 		float markerWidth = 3;
 		s = markerElement.getAttributeNS(null, SVG_MARKER_WIDTH_ATTRIBUTE);
 		if (s.length() != 0) {
-			markerWidth = UnitProcessor.svgHorizontalLengthToUserSpace(s, SVG_MARKER_WIDTH_ATTRIBUTE, uctx);
+			markerWidth = UnitProcessor.svgHorizontalLengthToUserSpace(s,
+					SVG_MARKER_WIDTH_ATTRIBUTE, null, markerWidth, uctx);
 		}
 		if (markerWidth == 0) {
 			// A value of zero disables rendering of the element.
@@ -109,7 +110,8 @@ public class SVGMarkerElementBridge extends AnimatableGenericSVGBridge implement
 		float markerHeight = 3;
 		s = markerElement.getAttributeNS(null, SVG_MARKER_HEIGHT_ATTRIBUTE);
 		if (s.length() != 0) {
-			markerHeight = UnitProcessor.svgVerticalLengthToUserSpace(s, SVG_MARKER_HEIGHT_ATTRIBUTE, uctx);
+			markerHeight = UnitProcessor.svgVerticalLengthToUserSpace(s,
+					SVG_MARKER_HEIGHT_ATTRIBUTE, null, markerHeight, uctx);
 		}
 		if (markerHeight == 0) {
 			// A value of zero disables rendering of the element.
@@ -200,14 +202,16 @@ public class SVGMarkerElementBridge extends AnimatableGenericSVGBridge implement
 		float refX = 0;
 		s = markerElement.getAttributeNS(null, SVG_REF_X_ATTRIBUTE);
 		if (s.length() != 0) {
-			refX = UnitProcessor.svgHorizontalCoordinateToUserSpace(s, SVG_REF_X_ATTRIBUTE, uctx);
+			refX = UnitProcessor.svgHorizontalCoordinateToUserSpace(s, SVG_REF_X_ATTRIBUTE, null,
+					refX, uctx);
 		}
 
 		// 'refY' attribute - default is 0
 		float refY = 0;
 		s = markerElement.getAttributeNS(null, SVG_REF_Y_ATTRIBUTE);
 		if (s.length() != 0) {
-			refY = UnitProcessor.svgVerticalCoordinateToUserSpace(s, SVG_REF_Y_ATTRIBUTE, uctx);
+			refY = UnitProcessor.svgVerticalCoordinateToUserSpace(s, SVG_REF_Y_ATTRIBUTE, null,
+					refY, uctx);
 		}
 
 		// TK: Warning at this time, refX and refY are relative to the

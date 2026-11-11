@@ -58,88 +58,145 @@ public abstract class UnitProcessor extends io.sf.carte.echosvg.parser.UnitProce
 	 * Returns the specified horizontal coordinate in object bounding box coordinate
 	 * system.
 	 *
-	 * @param s    the horizontal coordinate
-	 * @param attr the attribute name that represents the coordinate
-	 * @param ctx  the context used to resolve relative value
+	 * @param s        the horizontal coordinate
+	 * @param attr     the attribute name that represents the coordinate
+	 * @param defStr   a string representing the default value, or {@code null} if
+	 *                 the float default should be used. The empty string throws an
+	 *                 exception.
+	 * @param defValue the default value.
+	 * @param ctx      the context used to resolve relative value
+	 * @throws BridgeException if the attribute value is invalid.
 	 */
-	public static float svgHorizontalCoordinateToObjectBoundingBox(String s, String attr, Context ctx) {
-		return svgToObjectBoundingBox(s, attr, HORIZONTAL_LENGTH, ctx);
+	public static float svgHorizontalCoordinateToObjectBoundingBox(String s, String attr,
+			String defStr, float defValue, Context ctx) throws BridgeException {
+		return svgToObjectBoundingBox(s, attr, HORIZONTAL_LENGTH, defStr, defValue, ctx);
 	}
 
 	/**
 	 * Returns the specified vertical coordinate in object bounding box coordinate
 	 * system.
 	 *
-	 * @param s    the vertical coordinate
-	 * @param attr the attribute name that represents the coordinate
-	 * @param ctx  the context used to resolve relative value
+	 * @param s        the vertical coordinate
+	 * @param attr     the attribute name that represents the coordinate
+	 * @param defStr   a string representing the default value, or {@code null} if
+	 *                 the float default should be used. The empty string throws an
+	 *                 exception.
+	 * @param defValue the default value.
+	 * @param ctx      the context used to resolve relative value
+	 * @throws BridgeException if the attribute value is invalid.
 	 */
-	public static float svgVerticalCoordinateToObjectBoundingBox(String s, String attr, Context ctx) {
-		return svgToObjectBoundingBox(s, attr, VERTICAL_LENGTH, ctx);
+	public static float svgVerticalCoordinateToObjectBoundingBox(String s, String attr,
+			String defStr, float defValue, Context ctx) throws BridgeException {
+		return svgToObjectBoundingBox(s, attr, VERTICAL_LENGTH, defStr, defValue, ctx);
 	}
 
 	/**
 	 * Returns the specified 'other' coordinate in object bounding box coordinate
 	 * system.
 	 *
-	 * @param s    the 'other' coordinate
-	 * @param attr the attribute name that represents the coordinate
-	 * @param ctx  the context used to resolve relative value
+	 * @param s        the 'other' coordinate
+	 * @param attr     the attribute name that represents the coordinate
+	 * @param defStr   a string representing the default value, or {@code null} if
+	 *                 the float default should be used. The empty string throws an
+	 *                 exception.
+	 * @param defValue the default value.
+	 * @param ctx      the context used to resolve relative value
+	 * @throws BridgeException if the attribute value is invalid.
 	 */
-	public static float svgOtherCoordinateToObjectBoundingBox(String s, String attr, Context ctx) {
-		return svgToObjectBoundingBox(s, attr, OTHER_LENGTH, ctx);
+	public static float svgOtherCoordinateToObjectBoundingBox(String s, String attr, String defStr,
+			float defValue, Context ctx) throws BridgeException {
+		return svgToObjectBoundingBox(s, attr, OTHER_LENGTH, defStr, defValue, ctx);
 	}
 
 	/**
 	 * Returns the specified horizontal length in object bounding box coordinate
 	 * system. A length must be greater than 0.
 	 *
-	 * @param s    the 'other' length
-	 * @param attr the attribute name that represents the length
-	 * @param ctx  the context used to resolve relative value
+	 * @param s        the 'other' length
+	 * @param attr     the attribute name that represents the length
+	 * @param defStr   a string representing the default value, or {@code null} if
+	 *                 the float default should be used. The empty string throws an
+	 *                 exception.
+	 * @param defValue the default value.
+	 * @param ctx      the context used to resolve relative value
+	 * @throws BridgeException if the attribute value is invalid.
 	 */
-	public static float svgHorizontalLengthToObjectBoundingBox(String s, String attr, Context ctx) {
-		return svgLengthToObjectBoundingBox(s, attr, HORIZONTAL_LENGTH, ctx);
+	public static float svgHorizontalLengthToObjectBoundingBox(String s, String attr, String defStr,
+			float defValue, Context ctx) throws BridgeException {
+		return svgLengthToObjectBoundingBox(s, attr, HORIZONTAL_LENGTH, defStr, defValue, ctx);
 	}
 
 	/**
 	 * Returns the specified vertical length in object bounding box coordinate
 	 * system. A length must be greater than 0.
 	 *
-	 * @param s    the vertical length
-	 * @param attr the attribute name that represents the length
-	 * @param ctx  the context used to resolve relative value
+	 * @param s        the vertical length
+	 * @param attr     the attribute name that represents the length
+	 * @param defStr   a string representing the default value, or {@code null} if
+	 *                 the float default should be used. The empty string throws an
+	 *                 exception.
+	 * @param defValue the default value.
+	 * @param ctx      the context used to resolve relative value
+	 * @throws BridgeException if the attribute value is invalid.
 	 */
-	public static float svgVerticalLengthToObjectBoundingBox(String s, String attr, Context ctx) {
-		return svgLengthToObjectBoundingBox(s, attr, VERTICAL_LENGTH, ctx);
+	public static float svgVerticalLengthToObjectBoundingBox(String s, String attr, String defStr,
+			float defValue, Context ctx) throws BridgeException {
+		return svgLengthToObjectBoundingBox(s, attr, VERTICAL_LENGTH, defStr, defValue, ctx);
 	}
 
 	/**
 	 * Returns the specified 'other' length in object bounding box coordinate
 	 * system. A length must be greater than 0.
 	 *
-	 * @param s    the 'other' length
-	 * @param attr the attribute name that represents the length
-	 * @param ctx  the context used to resolve relative value
+	 * @param s        the 'other' length
+	 * @param attr     the attribute name that represents the length
+	 * @param defStr   a string representing the default value, or {@code null} if
+	 *                 the float default should be used. The empty string throws an
+	 *                 exception.
+	 * @param defValue the default value.
+	 * @param ctx      the context used to resolve relative value
+	 * @throws BridgeException if the attribute value is invalid.
 	 */
-	public static float svgOtherLengthToObjectBoundingBox(String s, String attr, Context ctx) {
-		return svgLengthToObjectBoundingBox(s, attr, OTHER_LENGTH, ctx);
+	public static float svgOtherLengthToObjectBoundingBox(String s, String attr, String defStr,
+			float defValue, Context ctx) throws BridgeException {
+		return svgLengthToObjectBoundingBox(s, attr, OTHER_LENGTH, defStr, defValue, ctx);
 	}
 
 	/**
 	 * Returns the specified length with the specified direction in user units. A
 	 * length must be greater than 0.
 	 *
-	 * @param s    the length
-	 * @param attr the attribute name that represents the length
-	 * @param d    the direction of the length
-	 * @param ctx  the context used to resolve relative value
+	 * @param s        the length
+	 * @param attr     the attribute name that represents the length
+	 * @param d        the direction of the length
+	 * @param defStr   a string representing the default value, or {@code null} if
+	 *                 the float default should be used. The empty string throws an
+	 *                 exception.
+	 * @param defValue the default value.
+	 * @param ctx      the context used to resolve relative value
+	 * @throws BridgeException if the attribute value is invalid.
 	 */
-	public static float svgLengthToObjectBoundingBox(String s, String attr, short d, Context ctx) {
-		float v = svgToObjectBoundingBox(s, attr, d, ctx);
-		if (v < 0) {
-			throw new BridgeException(getBridgeContext(ctx), ctx.getElement(), ErrorConstants.ERR_LENGTH_NEGATIVE,
-					new Object[] { attr, s });
+	public static float svgLengthToObjectBoundingBox(String s, String attr, short d, String defStr,
+			float defValue, Context ctx) throws BridgeException {
+		float v = svgToObjectBoundingBox(s, attr, d, defStr, defValue, ctx);
+		if (v < 0f) {
+			BridgeContext context = getBridgeContext(ctx);
+			BridgeException be = new BridgeException(context, ctx.getElement(),
+					ErrorConstants.ERR_LENGTH_NEGATIVE, new Object[] { attr, s });
+			UserAgent ua;
+			if (context == null || (ua = context.getUserAgent()) == null) {
+				throw be;
+			}
+			ua.displayError(be);
+			if (defStr != null) {
+				if (defStr.isEmpty()) {
+					throw be;
+				}
+				v = io.sf.carte.echosvg.parser.UnitProcessor.cssToObjectBoundingBox(defStr, attr, d,
+						ctx);
+			} else {
+				v = defValue;
+			}
 		}
 		return v;
 	}
@@ -148,17 +205,37 @@ public abstract class UnitProcessor extends io.sf.carte.echosvg.parser.UnitProce
 	 * Returns the specified value with the specified direction in objectBoundingBox
 	 * units.
 	 *
-	 * @param s    the value
-	 * @param attr the attribute name that represents the value
-	 * @param d    the direction of the value
-	 * @param ctx  the context used to resolve relative value
+	 * @param s        the value
+	 * @param attr     the attribute name that represents the value
+	 * @param d        the direction of the value
+	 * @param defStr   a string representing the default value, or {@code null} if
+	 *                 the float default should be used. The empty string throws an
+	 *                 exception.
+	 * @param defValue the default value.
+	 * @param ctx      the context used to resolve relative value
+	 * @throws BridgeException if the attribute value is invalid.
 	 */
-	public static float svgToObjectBoundingBox(String s, String attr, short d, Context ctx) {
+	public static float svgToObjectBoundingBox(String s, String attr, short d, String defStr,
+			float defValue, Context ctx) throws BridgeException {
 		try {
 			return io.sf.carte.echosvg.parser.UnitProcessor.cssToObjectBoundingBox(s, attr, d, ctx);
 		} catch (ParseException pEx) {
-			throw new BridgeException(getBridgeContext(ctx), ctx.getElement(), pEx,
+			BridgeContext context = getBridgeContext(ctx);
+			BridgeException be = new BridgeException(context, ctx.getElement(), pEx,
 					ErrorConstants.ERR_ATTRIBUTE_VALUE_MALFORMED, new Object[] { attr, s, pEx });
+			UserAgent ua;
+			if (context == null || (ua = context.getUserAgent()) == null) {
+				throw be;
+			}
+			ua.displayError(be);
+			if (defStr != null) {
+				if (defStr.isEmpty()) {
+					throw be;
+				}
+				defValue = io.sf.carte.echosvg.parser.UnitProcessor.cssToObjectBoundingBox(defStr,
+						attr, d, ctx);
+			}
+			return defValue;
 		}
 	}
 
@@ -170,106 +247,171 @@ public abstract class UnitProcessor extends io.sf.carte.echosvg.parser.UnitProce
 	 * Returns the specified horizontal length in user units. A length must be
 	 * greater than 0.
 	 *
-	 * @param s    the horizontal length
-	 * @param attr the attribute name that represents the length
-	 * @param ctx  the context used to resolve relative value
+	 * @param s        the horizontal length
+	 * @param attr     the attribute name that represents the length
+	 * @param defStr   a string representing the default value, or {@code null} if
+	 *                 the float default should be used. The empty string throws an
+	 *                 exception.
+	 * @param defValue the default value.
+	 * @param ctx      the context used to resolve relative value
 	 */
-	public static float svgHorizontalLengthToUserSpace(String s, String attr, Context ctx) {
-		return svgLengthToUserSpace(s, attr, HORIZONTAL_LENGTH, ctx);
+	public static float svgHorizontalLengthToUserSpace(String s, String attr, String defStr,
+			float defValue, Context ctx) throws BridgeException {
+		return svgLengthToUserSpace(s, attr, HORIZONTAL_LENGTH, defStr, defValue, ctx);
 	}
 
 	/**
 	 * Returns the specified vertical length in user units. A length must be greater
 	 * than 0.
 	 *
-	 * @param s    the vertical length
-	 * @param attr the attribute name that represents the length
-	 * @param ctx  the context used to resolve relative value
+	 * @param s        the vertical length
+	 * @param attr     the attribute name that represents the length
+	 * @param defStr   a string representing the default value, or {@code null} if
+	 *                 the float default should be used. The empty string throws an
+	 *                 exception.
+	 * @param defValue the default value.
+	 * @param ctx      the context used to resolve relative value
 	 */
-	public static float svgVerticalLengthToUserSpace(String s, String attr, Context ctx) {
-		return svgLengthToUserSpace(s, attr, VERTICAL_LENGTH, ctx);
+	public static float svgVerticalLengthToUserSpace(String s, String attr, String defStr,
+			float defValue, Context ctx) throws BridgeException {
+		return svgLengthToUserSpace(s, attr, VERTICAL_LENGTH, defStr, defValue, ctx);
 	}
 
 	/**
 	 * Returns the specified 'other' length in user units. A length must be greater
 	 * than 0.
 	 *
-	 * @param s    the 'other' length
-	 * @param attr the attribute name that represents the length
-	 * @param ctx  the context used to resolve relative value
+	 * @param s        the 'other' length
+	 * @param attr     the attribute name that represents the length
+	 * @param defStr   a string representing the default value, or {@code null} if
+	 *                 the float default should be used. The empty string throws an
+	 *                 exception.
+	 * @param defValue the default value.
+	 * @param ctx      the context used to resolve relative value
 	 */
-	public static float svgOtherLengthToUserSpace(String s, String attr, Context ctx) {
-		return svgLengthToUserSpace(s, attr, OTHER_LENGTH, ctx);
+	public static float svgOtherLengthToUserSpace(String s, String attr, String defStr,
+			float defValue, Context ctx) throws BridgeException {
+		return svgLengthToUserSpace(s, attr, OTHER_LENGTH, defStr, defValue, ctx);
 	}
 
 	/**
 	 * Returns the specified horizontal coordinate in user units.
 	 *
-	 * @param s    the horizontal coordinate
-	 * @param attr the attribute name that represents the length
-	 * @param ctx  the context used to resolve relative value
+	 * @param s        the horizontal coordinate
+	 * @param attr     the attribute name that represents the length
+	 * @param defStr   a string representing the default value, or {@code null} if
+	 *                 the float default should be used. The empty string throws an
+	 *                 exception.
+	 * @param defValue the default value.
+	 * @param ctx      the context used to resolve relative value
 	 */
-	public static float svgHorizontalCoordinateToUserSpace(String s, String attr, Context ctx) {
-		return svgToUserSpace(s, attr, HORIZONTAL_LENGTH, ctx);
+	public static float svgHorizontalCoordinateToUserSpace(String s, String attr, String defStr,
+			float defValue, Context ctx) throws BridgeException {
+		return svgToUserSpace(s, attr, HORIZONTAL_LENGTH, defStr, defValue, ctx);
 	}
 
 	/**
 	 * Returns the specified vertical coordinate in user units.
 	 *
-	 * @param s    the vertical coordinate
-	 * @param attr the attribute name that represents the length
-	 * @param ctx  the context used to resolve relative value
+	 * @param s        the vertical coordinate
+	 * @param attr     the attribute name that represents the length
+	 * @param defStr   a string representing the default value, or {@code null} if
+	 *                 the float default should be used. The empty string throws an
+	 *                 exception.
+	 * @param defValue the default value.
+	 * @param ctx      the context used to resolve relative value
 	 */
-	public static float svgVerticalCoordinateToUserSpace(String s, String attr, Context ctx) {
-		return svgToUserSpace(s, attr, VERTICAL_LENGTH, ctx);
+	public static float svgVerticalCoordinateToUserSpace(String s, String attr, String defStr,
+			float defValue, Context ctx) throws BridgeException {
+		return svgToUserSpace(s, attr, VERTICAL_LENGTH, defStr, defValue, ctx);
 	}
 
 	/**
 	 * Returns the specified 'other' coordinate in user units.
 	 *
-	 * @param s    the 'other' coordinate
-	 * @param attr the attribute name that represents the length
-	 * @param ctx  the context used to resolve relative value
+	 * @param s        the 'other' coordinate
+	 * @param attr     the attribute name that represents the length
+	 * @param defStr   a string representing the default value, or {@code null} if
+	 *                 the float default should be used. The empty string throws an
+	 *                 exception.
+	 * @param defValue the default value.
+	 * @param ctx      the context used to resolve relative value
 	 */
-	public static float svgOtherCoordinateToUserSpace(String s, String attr, Context ctx) {
-		return svgToUserSpace(s, attr, OTHER_LENGTH, ctx);
+	public static float svgOtherCoordinateToUserSpace(String s, String attr, String defStr,
+			float defValue, Context ctx) throws BridgeException {
+		return svgToUserSpace(s, attr, OTHER_LENGTH, defStr, defValue, ctx);
 	}
 
 	/**
 	 * Returns the specified length with the specified direction in user units. A
 	 * length must be greater than 0.
 	 *
-	 * @param s    the 'other' coordinate
-	 * @param attr the attribute name that represents the length
-	 * @param d    the direction of the length
-	 * @param ctx  the context used to resolve relative value
+	 * @param s        the 'other' coordinate
+	 * @param attr     the attribute name that represents the length
+	 * @param d        the direction of the length
+	 * @param defStr   a string representing the default value, or {@code null} if
+	 *                 the float default should be used. The empty string throws an
+	 *                 exception.
+	 * @param defValue the default value.
+	 * @param ctx      the context used to resolve relative value
 	 */
-	public static float svgLengthToUserSpace(String s, String attr, short d, Context ctx)
-			throws BridgeException {
-		float v = svgToUserSpace(s, attr, d, ctx);
-		if (v < 0) {
-			throw new BridgeException(getBridgeContext(ctx), ctx.getElement(),
+	public static float svgLengthToUserSpace(String s, String attr, short d, String defStr,
+			float defValue, Context ctx) throws BridgeException {
+		float v = svgToUserSpace(s, attr, d, defStr, defValue, ctx);
+		if (v < 0f) {
+			BridgeContext context = getBridgeContext(ctx);
+			BridgeException be = new BridgeException(context, ctx.getElement(),
 					ErrorConstants.ERR_LENGTH_NEGATIVE, new Object[] { attr, s });
-		} else {
-			return v;
+			UserAgent ua;
+			if (context == null || (ua = context.getUserAgent()) == null) {
+				throw be;
+			}
+			ua.displayError(be);
+			if (defStr != null) {
+				if (defStr.isEmpty()) {
+					throw be;
+				}
+				v = svgToUserSpace(defStr, attr, d, null, defValue, ctx);
+			} else {
+				v = defValue;
+			}
 		}
+		return v;
 	}
 
 	/**
 	 * Returns the specified coordinate with the specified direction in user units.
 	 *
-	 * @param s    the 'other' coordinate
-	 * @param attr the attribute name that represents the length
-	 * @param d    the direction of the coordinate
-	 * @param ctx  the context used to resolve relative value
+	 * @param s        the 'other' coordinate
+	 * @param attr     the attribute name that represents the length
+	 * @param d        the direction of the coordinate
+	 * @param defStr   a string representing the default value, or {@code null} if
+	 *                 the float default should be used. The empty string throws an
+	 *                 exception.
+	 * @param defValue the default value.
+	 * @param ctx      the context used to resolve relative value
 	 */
-	public static float svgToUserSpace(String s, String attr, short d, Context ctx)
-			throws BridgeException {
+	public static float svgToUserSpace(String s, String attr, short d, String defStr,
+			float defValue, Context ctx) throws BridgeException {
 		try {
 			return io.sf.carte.echosvg.parser.UnitProcessor.cssToUserSpace(s, attr, d, ctx);
 		} catch (ParseException pEx) {
-			throw new BridgeException(getBridgeContext(ctx), ctx.getElement(), pEx,
-					ErrorConstants.ERR_ATTRIBUTE_VALUE_MALFORMED, new Object[] { attr, s, pEx, });
+			BridgeContext context = getBridgeContext(ctx);
+			BridgeException be = new BridgeException(context, ctx.getElement(), pEx,
+					ErrorConstants.ERR_ATTRIBUTE_VALUE_MALFORMED, new Object[] { attr, s, pEx });
+			UserAgent ua;
+			if (context == null || (ua = context.getUserAgent()) == null) {
+				throw be;
+			}
+			ua.displayError(be);
+			if (defStr != null) {
+				if (defStr.isEmpty()) {
+					throw be;
+				}
+				defValue = io.sf.carte.echosvg.parser.UnitProcessor.cssToUserSpace(defStr, attr, d,
+						ctx);
+			}
+			return defValue;
 		}
 	}
 

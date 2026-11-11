@@ -262,32 +262,35 @@ public class SVGMultiImageElementBridge extends SVGImageElementBridge {
 		String s = element.getAttributeNS(null, SVG_X_ATTRIBUTE);
 		float x = 0;
 		if (s.length() != 0) {
-			x = UnitProcessor.svgHorizontalCoordinateToUserSpace(s, SVG_X_ATTRIBUTE, uctx);
+			x = UnitProcessor.svgHorizontalCoordinateToUserSpace(s, SVG_X_ATTRIBUTE, null, 0f,
+					uctx);
 		}
 
 		// 'y' attribute - default is 0
 		s = element.getAttributeNS(null, SVG_Y_ATTRIBUTE);
 		float y = 0;
 		if (s.length() != 0) {
-			y = UnitProcessor.svgVerticalCoordinateToUserSpace(s, SVG_Y_ATTRIBUTE, uctx);
+			y = UnitProcessor.svgVerticalCoordinateToUserSpace(s, SVG_Y_ATTRIBUTE, null, 0f, uctx);
 		}
 
 		// 'width' attribute - required
 		s = element.getAttributeNS(null, SVG_WIDTH_ATTRIBUTE);
 		float w;
 		if (s.length() == 0) {
-			throw new BridgeException(ctx, element, ERR_ATTRIBUTE_MISSING, new Object[] { SVG_WIDTH_ATTRIBUTE });
+			throw new BridgeException(ctx, element, ERR_ATTRIBUTE_MISSING,
+					new Object[] { SVG_WIDTH_ATTRIBUTE });
 		} else {
-			w = UnitProcessor.svgHorizontalLengthToUserSpace(s, SVG_WIDTH_ATTRIBUTE, uctx);
+			w = UnitProcessor.svgHorizontalLengthToUserSpace(s, SVG_WIDTH_ATTRIBUTE, "", 0f, uctx);
 		}
 
 		// 'height' attribute - required
 		s = element.getAttributeNS(null, SVG_HEIGHT_ATTRIBUTE);
 		float h;
 		if (s.length() == 0) {
-			throw new BridgeException(ctx, element, ERR_ATTRIBUTE_MISSING, new Object[] { SVG_HEIGHT_ATTRIBUTE });
+			throw new BridgeException(ctx, element, ERR_ATTRIBUTE_MISSING,
+					new Object[] { SVG_HEIGHT_ATTRIBUTE });
 		} else {
-			h = UnitProcessor.svgVerticalLengthToUserSpace(s, SVG_HEIGHT_ATTRIBUTE, uctx);
+			h = UnitProcessor.svgVerticalLengthToUserSpace(s, SVG_HEIGHT_ATTRIBUTE, "", 0f, uctx);
 		}
 
 		return new Rectangle2D.Float(x, y, w, h);

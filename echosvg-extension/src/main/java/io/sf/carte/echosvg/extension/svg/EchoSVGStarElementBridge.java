@@ -86,30 +86,34 @@ public class EchoSVGStarElementBridge extends SVGDecoratedShapeElementBridge imp
 		s = e.getAttributeNS(null, SVG_CX_ATTRIBUTE);
 		float cx = 0;
 		if (s.length() != 0) {
-			cx = UnitProcessor.svgHorizontalCoordinateToUserSpace(s, SVG_CX_ATTRIBUTE, uctx);
+			cx = UnitProcessor.svgHorizontalCoordinateToUserSpace(s, SVG_CX_ATTRIBUTE, null, 0f,
+					uctx);
 		}
 
 		// 'cy' attribute - default is 0
 		s = e.getAttributeNS(null, SVG_CY_ATTRIBUTE);
 		float cy = 0;
 		if (s.length() != 0) {
-			cy = UnitProcessor.svgVerticalCoordinateToUserSpace(s, SVG_CY_ATTRIBUTE, uctx);
+			cy = UnitProcessor.svgVerticalCoordinateToUserSpace(s, SVG_CY_ATTRIBUTE, null, 0f,
+					uctx);
 		}
 
 		// 'r' attribute - required
 		s = e.getAttributeNS(null, SVG_R_ATTRIBUTE);
 		float r;
 		if (s.length() == 0)
-			throw new BridgeException(ctx, e, ERR_ATTRIBUTE_MISSING, new Object[] { SVG_R_ATTRIBUTE, s });
-		r = UnitProcessor.svgOtherLengthToUserSpace(s, SVG_R_ATTRIBUTE, uctx);
+			throw new BridgeException(ctx, e, ERR_ATTRIBUTE_MISSING,
+					new Object[] { SVG_R_ATTRIBUTE, s });
+		r = UnitProcessor.svgOtherLengthToUserSpace(s, SVG_R_ATTRIBUTE, "", 0f, uctx);
 
 		// 'ir' attribute - required
 		s = e.getAttributeNS(null, EXT_IR_ATTRIBUTE);
 		float ir;
 		if (s.length() == 0)
-			throw new BridgeException(ctx, e, ERR_ATTRIBUTE_MISSING, new Object[] { EXT_IR_ATTRIBUTE, s });
+			throw new BridgeException(ctx, e, ERR_ATTRIBUTE_MISSING,
+					new Object[] { EXT_IR_ATTRIBUTE, s });
 
-		ir = UnitProcessor.svgOtherLengthToUserSpace(s, EXT_IR_ATTRIBUTE, uctx);
+		ir = UnitProcessor.svgOtherLengthToUserSpace(s, EXT_IR_ATTRIBUTE, "", 0f, uctx);
 
 		// 'sides' attribute - default is 3
 		int sides = convertSides(e, EXT_SIDES_ATTRIBUTE, 3, ctx);

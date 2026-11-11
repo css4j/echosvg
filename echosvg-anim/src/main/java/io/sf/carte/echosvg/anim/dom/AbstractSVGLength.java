@@ -311,7 +311,7 @@ public abstract class AbstractSVGLength implements SVGLength {
 			lengthParser.parse(s);
 			unitType = ur.unit;
 			value = ur.value;
-		} catch (ParseException e) {
+		} catch (ParseException | IllegalArgumentException e) {
 			unitType = CSSUnit.CSS_INVALID;
 			value = 0;
 		}

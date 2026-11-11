@@ -502,13 +502,14 @@ public class CursorManager implements SVGConstants, ErrorConstants {
 		String s = cursorElement.getAttributeNS(null, SVG_X_ATTRIBUTE);
 		float x = 0;
 		if (s.length() != 0) {
-			x = UnitProcessor.svgHorizontalCoordinateToUserSpace(s, SVG_X_ATTRIBUTE, uctx);
+			x = UnitProcessor.svgHorizontalCoordinateToUserSpace(s, SVG_X_ATTRIBUTE, null, 0f,
+					uctx);
 		}
 
 		s = cursorElement.getAttributeNS(null, SVG_Y_ATTRIBUTE);
 		float y = 0;
 		if (s.length() != 0) {
-			y = UnitProcessor.svgVerticalCoordinateToUserSpace(s, SVG_Y_ATTRIBUTE, uctx);
+			y = UnitProcessor.svgVerticalCoordinateToUserSpace(s, SVG_Y_ATTRIBUTE, null, 0f, uctx);
 		}
 
 		CursorDescriptor desc = new CursorDescriptor(purl, x, y);
@@ -610,13 +611,15 @@ public class CursorManager implements SVGConstants, ErrorConstants {
 			UnitProcessor.Context uctx = UnitProcessor.createContext(ctx, rootElement);
 
 			String s = rootElement.getAttribute(SVG_WIDTH_ATTRIBUTE);
-			if (s.length() != 0) {
-				width = UnitProcessor.svgHorizontalLengthToUserSpace(s, SVG_WIDTH_ATTRIBUTE, uctx);
+			if (!s.isEmpty()) {
+				width = UnitProcessor.svgHorizontalLengthToUserSpace(s, SVG_WIDTH_ATTRIBUTE, null,
+						width, uctx);
 			}
 
 			s = rootElement.getAttribute(SVG_HEIGHT_ATTRIBUTE);
-			if (s.length() != 0) {
-				height = UnitProcessor.svgVerticalLengthToUserSpace(s, SVG_HEIGHT_ATTRIBUTE, uctx);
+			if (!s.isEmpty()) {
+				height = UnitProcessor.svgVerticalLengthToUserSpace(s, SVG_HEIGHT_ATTRIBUTE, null,
+						height, uctx);
 			}
 
 			cursorSize = Toolkit.getDefaultToolkit().getBestCursorSize(Math.round(width), Math.round(height));

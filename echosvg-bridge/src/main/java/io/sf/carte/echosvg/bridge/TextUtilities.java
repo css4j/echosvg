@@ -67,14 +67,17 @@ public abstract class TextUtilities implements CSSConstants, ErrorConstants {
 	 * @param valueStr the delimited string containing values of the coordinate
 	 * @param ctx      the bridge context
 	 */
-	public static ArrayList<Float> svgHorizontalCoordinateArrayToUserSpace(Element element, String attrName,
-			String valueStr, BridgeContext ctx) {
-
+	public static ArrayList<Float> svgHorizontalCoordinateArrayToUserSpace(Element element,
+			String attrName, String valueStr, BridgeContext ctx) throws BridgeException {
+		/*
+		 * Apparently nothing uses this
+		 */
 		UnitProcessor.Context uctx = UnitProcessor.createContext(ctx, element);
 		ArrayList<Float> values = new ArrayList<>();
 		StringTokenizer st = new StringTokenizer(valueStr, ", ", false);
 		while (st.hasMoreTokens()) {
-			values.add(UnitProcessor.svgHorizontalCoordinateToUserSpace(st.nextToken(), attrName, uctx));
+			values.add(UnitProcessor.svgHorizontalCoordinateToUserSpace(st.nextToken(), attrName,
+					"", 0f, uctx));
 		}
 		return values;
 	}
@@ -88,14 +91,17 @@ public abstract class TextUtilities implements CSSConstants, ErrorConstants {
 	 * @param valueStr the delimited string containing values of the coordinate
 	 * @param ctx      the bridge context
 	 */
-	public static ArrayList<Float> svgVerticalCoordinateArrayToUserSpace(Element element, String attrName,
-			String valueStr, BridgeContext ctx) {
-
+	public static ArrayList<Float> svgVerticalCoordinateArrayToUserSpace(Element element,
+			String attrName, String valueStr, BridgeContext ctx) throws BridgeException {
+		/*
+		 * Apparently nothing uses this
+		 */
 		UnitProcessor.Context uctx = UnitProcessor.createContext(ctx, element);
 		ArrayList<Float> values = new ArrayList<>();
 		StringTokenizer st = new StringTokenizer(valueStr, ", ", false);
 		while (st.hasMoreTokens()) {
-			values.add(UnitProcessor.svgVerticalCoordinateToUserSpace(st.nextToken(), attrName, uctx));
+			values.add(UnitProcessor.svgVerticalCoordinateToUserSpace(st.nextToken(), attrName,
+					null, 0f, uctx));
 		}
 		return values;
 	}

@@ -37,7 +37,6 @@ import org.w3c.dom.Node;
 import io.sf.carte.echosvg.anim.dom.SVGOMElement;
 import io.sf.carte.echosvg.bridge.Bridge;
 import io.sf.carte.echosvg.bridge.BridgeContext;
-import io.sf.carte.echosvg.bridge.BridgeException;
 import io.sf.carte.echosvg.bridge.CSSUtilities;
 import io.sf.carte.echosvg.bridge.CursorManager;
 import io.sf.carte.echosvg.bridge.SVGAElementBridge;
@@ -424,46 +423,49 @@ public class EchoSVGFlowTextElementBridge extends SVGTextElementBridge implement
 		}
 	}
 
-	protected RegionInfo buildRegion(UnitProcessor.Context uctx, Element e, float verticalAlignment) {
+	protected RegionInfo buildRegion(UnitProcessor.Context uctx, Element e,
+			float verticalAlignment) {
 		String s;
 
 		// 'x' attribute - default is 0
 		s = e.getAttribute(EXT_X_ATTRIBUTE);
 		float x = 0;
 		if (s.length() != 0) {
-			x = UnitProcessor.svgHorizontalCoordinateToUserSpace(s, EXT_X_ATTRIBUTE, uctx);
+			x = UnitProcessor.svgHorizontalCoordinateToUserSpace(s, EXT_X_ATTRIBUTE, null, 0f,
+					uctx);
 		}
 
 		// 'y' attribute - default is 0
 		s = e.getAttribute(EXT_Y_ATTRIBUTE);
 		float y = 0;
 		if (s.length() != 0) {
-			y = UnitProcessor.svgVerticalCoordinateToUserSpace(s, EXT_Y_ATTRIBUTE, uctx);
+			y = UnitProcessor.svgVerticalCoordinateToUserSpace(s, EXT_Y_ATTRIBUTE, null, 0f, uctx);
 		}
 
-		// 'width' attribute - required
+		// 'width' attribute
 		s = e.getAttribute(EXT_WIDTH_ATTRIBUTE);
 		float w;
 		if (s.length() != 0) {
-			w = UnitProcessor.svgHorizontalLengthToUserSpace(s, EXT_WIDTH_ATTRIBUTE, uctx);
+			w = UnitProcessor.svgHorizontalLengthToUserSpace(s, EXT_WIDTH_ATTRIBUTE, null, 0f,
+					uctx);
 		} else {
-			throw new BridgeException(ctx, e, ERR_ATTRIBUTE_MISSING, new Object[] { EXT_WIDTH_ATTRIBUTE, s });
+			w = 0f;
 		}
 		// A value of zero disables rendering of the element
-		if (w == 0) {
+		if (w == 0f) {
 			return null;
 		}
 
-		// 'height' attribute - required
+		// 'height' attribute
 		s = e.getAttribute(EXT_HEIGHT_ATTRIBUTE);
 		float h;
 		if (s.length() != 0) {
-			h = UnitProcessor.svgVerticalLengthToUserSpace(s, EXT_HEIGHT_ATTRIBUTE, uctx);
+			h = UnitProcessor.svgVerticalLengthToUserSpace(s, EXT_HEIGHT_ATTRIBUTE, null, 0f, uctx);
 		} else {
-			throw new BridgeException(ctx, e, ERR_ATTRIBUTE_MISSING, new Object[] { EXT_HEIGHT_ATTRIBUTE, s });
+			h = 0f;
 		}
 		// A value of zero disables rendering of the element
-		if (h == 0) {
+		if (h == 0f) {
 			return null;
 		}
 

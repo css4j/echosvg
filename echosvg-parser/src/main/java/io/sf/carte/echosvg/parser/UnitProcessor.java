@@ -67,19 +67,26 @@ public abstract class UnitProcessor {
 	 * @param d    the direction of the value
 	 * @param ctx  the context used to resolve relative value
 	 */
-	public static float cssToObjectBoundingBox(String s, String attr, short d, Context ctx) throws ParseException {
+	public static float cssToObjectBoundingBox(String s, String attr, short d, Context ctx)
+			throws ParseException {
 		UnitResolver ur = new UnitResolver() {
 
 			@Override
-			protected float unitToPixels(short unitType, float floatValue, short percentageInterpretation) {
+			protected float unitToPixels(short unitType, float floatValue,
+					short percentageInterpretation) throws IllegalArgumentException {
 				// Ignore the supplied percentage interpretation
 				return cssToObjectBoundingBox(floatValue, unitType, d, ctx);
 			}
 
 		};
+
 		LengthParser lengthParser = new LengthParser(ur);
-		lengthParser.parse(s);
-		return cssToObjectBoundingBox(ur.value, ur.unit, d, ctx);
+		try {
+			lengthParser.parse(s); // Could throw IllegalArgumentException
+			return cssToObjectBoundingBox(ur.value, ur.unit, d, ctx);
+		} catch (IllegalArgumentException e) {
+			throw new ParseException(e);
+		}
 	}
 
 	/**
@@ -90,8 +97,10 @@ public abstract class UnitProcessor {
 	 * @param type  the type of the value according to CSSUnit
 	 * @param d     the direction of the value
 	 * @param ctx   the context used to resolve relative value
+	 * @throws IllegalArgumentException if the type is unknown.
 	 */
-	public static float cssToObjectBoundingBox(float value, short type, short d, Context ctx) {
+	public static float cssToObjectBoundingBox(float value, short type, short d, Context ctx)
+			throws IllegalArgumentException {
 		switch (type) {
 		case CSSUnit.CSS_NUMBER:
 			// as is
@@ -119,19 +128,26 @@ public abstract class UnitProcessor {
 	 * @param d    the direction of the coordinate
 	 * @param ctx  the context used to resolve relative value
 	 */
-	public static float cssToUserSpace(String s, String attr, short d, Context ctx) throws ParseException {
+	public static float cssToUserSpace(String s, String attr, short d, Context ctx)
+			throws ParseException {
 		UnitResolver ur = new UnitResolver() {
 
 			@Override
-			protected float unitToPixels(short unitType, float floatValue, short percentageInterpretation) {
+			protected float unitToPixels(short unitType, float floatValue,
+					short percentageInterpretation) throws IllegalArgumentException {
 				// Ignore the supplied percentage interpretation
 				return cssToUserSpace(floatValue, unitType, d, ctx);
 			}
 
 		};
+
 		LengthParser lengthParser = new LengthParser(ur);
-		lengthParser.parse(s);
-		return cssToUserSpace(ur.value, ur.unit, d, ctx);
+		try {
+			lengthParser.parse(s); // Could throw IllegalArgumentException
+			return cssToUserSpace(ur.value, ur.unit, d, ctx);
+		} catch (IllegalArgumentException e) {
+			throw new ParseException(e);
+		}
 	}
 
 	/**

@@ -113,7 +113,7 @@ public class SVGLinearGradientElementBridge extends AbstractSVGGradientElementBr
 			// XXX Make this work for non-AbstractGraphicsNodeBridges, like
 			// the various text child bridges.
 			Rectangle2D bbox = bridge.getBBox();
-			if (bbox != null && (bbox.getWidth() == 0 || bbox.getHeight() == 0)) {
+			if (bbox != null && (bbox.getWidth() == 0d || bbox.getHeight() == 0d)) {
 				return null;
 			}
 		}
@@ -124,9 +124,13 @@ public class SVGLinearGradientElementBridge extends AbstractSVGGradientElementBr
 		}
 		UnitProcessor.Context uctx = UnitProcessor.createContext(ctx, paintElement);
 
-		Point2D p1 = SVGUtilities.convertPoint(x1Str, SVG_X1_ATTRIBUTE, y1Str, SVG_Y1_ATTRIBUTE, coordSystemType, uctx);
+		Point2D p1 = SVGUtilities.convertPoint(x1Str, SVG_X1_ATTRIBUTE, y1Str, SVG_Y1_ATTRIBUTE,
+				coordSystemType, SVG_LINEAR_GRADIENT_X1_DEFAULT_VALUE,
+				SVG_LINEAR_GRADIENT_Y1_DEFAULT_VALUE, uctx);
 
-		Point2D p2 = SVGUtilities.convertPoint(x2Str, SVG_X2_ATTRIBUTE, y2Str, SVG_Y2_ATTRIBUTE, coordSystemType, uctx);
+		Point2D p2 = SVGUtilities.convertPoint(x2Str, SVG_X2_ATTRIBUTE, y2Str, SVG_Y2_ATTRIBUTE,
+				coordSystemType, SVG_LINEAR_GRADIENT_X2_DEFAULT_VALUE,
+				SVG_LINEAR_GRADIENT_Y2_DEFAULT_VALUE, uctx);
 
 		// If x1 = x2 and y1 = y2, then the area to be painted will be painted
 		// as a single color using the color and opacity of the last gradient
