@@ -99,6 +99,9 @@ public final class SVGGVTFont implements GVTFont, SVGConstants {
 			String[] glyphLangs, String[] glyphOrientations, String[] glyphForms, BridgeContext ctx,
 			Element[] glyphElements, Element missingGlyphElement, Element[] hkernElements, Element[] vkernElements,
 			Element textElement) {
+		if (fontSize < 0f) {
+			fontSize = 48f; // default
+		}
 		this.fontFace = fontFace;
 		this.fontSize = fontSize;
 		this.glyphUnicodes = glyphUnicodes;
