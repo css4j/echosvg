@@ -168,14 +168,14 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
 			t = element.getParentNode();
 		} else {
 			t = ctx.getReferencedElement(element, uri);
-			if (t == null || t.getOwnerDocument() != element.getOwnerDocument()) {
+			if (t == null) {
+				// Error was reported
+				return false;
+			}
+			if (t.getOwnerDocument() != element.getOwnerDocument()) {
 				BridgeException ex = new BridgeException(ctx, element,
 						ErrorConstants.ERR_URI_BAD_TARGET, new Object[] { uri });
-				UserAgent userAgent = ctx.getUserAgent();
-				if (userAgent == null) {
-					throw ex;
-				}
-				userAgent.displayError(ex);
+				AbstractSVGBridge.displayErrorOrThrow(ctx, ex);
 				return false;
 			}
 		}
@@ -187,11 +187,7 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
 		if (animationTarget == null) {
 			BridgeException ex = new BridgeException(ctx, element,
 					ErrorConstants.ERR_URI_BAD_TARGET, new Object[] { uri });
-			UserAgent userAgent = ctx.getUserAgent();
-			if (userAgent == null) {
-				throw ex;
-			}
-			userAgent.displayError(ex);
+			AbstractSVGBridge.displayErrorOrThrow(ctx, ex);
 			return false;
 		}
 
@@ -217,11 +213,7 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
 						&& !targetElement.isAttributeAnimatable(attributeNamespaceURI, attributeLocalName)) {
 			BridgeException ex = new BridgeException(ctx, element, "attribute.not.animatable",
 					new Object[] { targetElement.getNodeName(), an });
-			UserAgent userAgent = ctx.getUserAgent();
-			if (userAgent == null) {
-				throw ex;
-			}
-			userAgent.displayError(ex);
+			AbstractSVGBridge.displayErrorOrThrow(ctx, ex);
 			return false;
 		}
 
@@ -236,11 +228,7 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
 		if (!canAnimateType(type)) {
 			BridgeException ex = new BridgeException(ctx, element, "type.not.animatable",
 					new Object[] { targetElement.getNodeName(), an, element.getNodeName() });
-			UserAgent userAgent = ctx.getUserAgent();
-			if (userAgent == null) {
-				throw ex;
-			}
-			userAgent.displayError(ex);
+			AbstractSVGBridge.displayErrorOrThrow(ctx, ex);
 			return false;
 		}
 

@@ -1240,15 +1240,35 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 
 		try {
 			SVGOMAnimatedLengthList _x = (SVGOMAnimatedLengthList) te.getX();
-			_x.check();
+			try {
+				_x.check();
+			} catch (LiveAttributeException ex) {
+				reportLiveAttributeException(ctx, ex);
+			}
 			SVGOMAnimatedLengthList _y = (SVGOMAnimatedLengthList) te.getY();
-			_y.check();
+			try {
+				_y.check();
+			} catch (LiveAttributeException ex) {
+				reportLiveAttributeException(ctx, ex);
+			}
 			SVGOMAnimatedLengthList _dx = (SVGOMAnimatedLengthList) te.getDx();
-			_dx.check();
+			try {
+				_dx.check();
+			} catch (LiveAttributeException ex) {
+				reportLiveAttributeException(ctx, ex);
+			}
 			SVGOMAnimatedLengthList _dy = (SVGOMAnimatedLengthList) te.getDy();
-			_dy.check();
+			try {
+				_dy.check();
+			} catch (LiveAttributeException ex) {
+				reportLiveAttributeException(ctx, ex);
+			}
 			SVGOMAnimatedNumberList _rotate = (SVGOMAnimatedNumberList) te.getRotate();
-			_rotate.check();
+			try {
+				_rotate.check();
+			} catch (LiveAttributeException ex) {
+				reportLiveAttributeException(ctx, ex);
+			}
 
 			SVGLengthList xs = _x.getAnimVal();
 			SVGLengthList ys = _y.getAnimVal();
@@ -1642,36 +1662,45 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 			return inheritMap;
 		}
 
-		try {
-			// textLength
-			AbstractSVGAnimatedLength textLength = (AbstractSVGAnimatedLength) tce.getTextLength();
-			if (textLength.isSpecified()) {
-				if (inheritMap == null) {
-					inheritMap = new HashMap<>();
-				}
+		// textLength
+		AbstractSVGAnimatedLength textLength = (AbstractSVGAnimatedLength) tce.getTextLength();
+		if (textLength.isSpecified()) {
+			if (inheritMap == null) {
+				inheritMap = new HashMap<>();
+			}
 
-				Object value = textLength.getCheckedValue();
+			try {
+				Float value = textLength.getCheckedValue();
 				result.put(GVTAttributedCharacterIterator.TextAttribute.BBOX_WIDTH, value);
 				inheritMap.put(GVTAttributedCharacterIterator.TextAttribute.BBOX_WIDTH, value);
-
-				// lengthAdjust
-				SVGOMAnimatedEnumeration _lengthAdjust = (SVGOMAnimatedEnumeration) tce.getLengthAdjust();
-				if (_lengthAdjust.getCheckedVal() == SVGTextContentElement.LENGTHADJUST_SPACINGANDGLYPHS) {
-					result.put(GVTAttributedCharacterIterator.TextAttribute.LENGTH_ADJUST,
-							GVTAttributedCharacterIterator.TextAttribute.ADJUST_ALL);
-					inheritMap.put(GVTAttributedCharacterIterator.TextAttribute.LENGTH_ADJUST,
-							GVTAttributedCharacterIterator.TextAttribute.ADJUST_ALL);
-				} else {
-					result.put(GVTAttributedCharacterIterator.TextAttribute.LENGTH_ADJUST,
-							GVTAttributedCharacterIterator.TextAttribute.ADJUST_SPACING);
-					inheritMap.put(GVTAttributedCharacterIterator.TextAttribute.LENGTH_ADJUST,
-							GVTAttributedCharacterIterator.TextAttribute.ADJUST_SPACING);
-					result.put(GVTAttributedCharacterIterator.TextAttribute.CUSTOM_SPACING, Boolean.TRUE);
-					inheritMap.put(GVTAttributedCharacterIterator.TextAttribute.CUSTOM_SPACING, Boolean.TRUE);
-				}
+			} catch (LiveAttributeException ex) {
+				// Default is None
+				reportLiveAttributeException(ctx, ex);
 			}
-		} catch (LiveAttributeException ex) {
-			throw new BridgeException(ctx, ex);
+
+			// lengthAdjust
+			SVGOMAnimatedEnumeration _lengthAdjust = (SVGOMAnimatedEnumeration) tce.getLengthAdjust();
+			short lengthAdjust;
+			try {
+				lengthAdjust = _lengthAdjust.getCheckedVal();
+			} catch (LiveAttributeException ex) {
+				reportLiveAttributeException(ctx, ex);
+				// Default is spacing
+				lengthAdjust = SVGTextContentElement.LENGTHADJUST_SPACING;
+			}
+			if (lengthAdjust == SVGTextContentElement.LENGTHADJUST_SPACINGANDGLYPHS) {
+				result.put(GVTAttributedCharacterIterator.TextAttribute.LENGTH_ADJUST,
+						GVTAttributedCharacterIterator.TextAttribute.ADJUST_ALL);
+				inheritMap.put(GVTAttributedCharacterIterator.TextAttribute.LENGTH_ADJUST,
+						GVTAttributedCharacterIterator.TextAttribute.ADJUST_ALL);
+			} else {
+				result.put(GVTAttributedCharacterIterator.TextAttribute.LENGTH_ADJUST,
+						GVTAttributedCharacterIterator.TextAttribute.ADJUST_SPACING);
+				inheritMap.put(GVTAttributedCharacterIterator.TextAttribute.LENGTH_ADJUST,
+						GVTAttributedCharacterIterator.TextAttribute.ADJUST_SPACING);
+				result.put(GVTAttributedCharacterIterator.TextAttribute.CUSTOM_SPACING, Boolean.TRUE);
+				inheritMap.put(GVTAttributedCharacterIterator.TextAttribute.CUSTOM_SPACING, Boolean.TRUE);
+			}
 		}
 
 		return inheritMap;

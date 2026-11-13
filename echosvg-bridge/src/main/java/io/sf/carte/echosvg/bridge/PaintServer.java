@@ -132,12 +132,9 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 				return null;
 			}
 			if (!(bridge instanceof MarkerBridge)) {
-				BridgeException ex = new BridgeException(ctx, e, ERR_CSS_URI_BAD_TARGET, new Object[] { uri });
-				UserAgent userAgent = ctx.getUserAgent();
-				if (userAgent == null) {
-					throw ex;
-				}
-				userAgent.displayError(ex);
+				BridgeException ex = new BridgeException(ctx, e, ERR_CSS_URI_BAD_TARGET,
+						new Object[] { uri });
+				AbstractSVGBridge.displayErrorOrThrow(ctx, ex);
 				return null;
 			}
 			return ((MarkerBridge) bridge).createMarker(ctx, markerElement, e);
@@ -352,11 +349,7 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 		if (!(bridge instanceof PaintBridge)) {
 			BridgeException ex = new BridgeException(ctx, paintedElement, ERR_CSS_URI_BAD_TARGET,
 					new Object[] { uri });
-			UserAgent userAgent = ctx.getUserAgent();
-			if (userAgent == null) {
-				throw ex;
-			}
-			userAgent.displayError(ex);
+			AbstractSVGBridge.displayErrorOrThrow(ctx, ex);
 			return null;
 		}
 		return ((PaintBridge) bridge).createPaint(ctx, paintElement, paintedElement, paintedNode,

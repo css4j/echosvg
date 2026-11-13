@@ -435,7 +435,11 @@ public class GlyphLayout implements TextSpanLayout {
 		syncLayout();
 		Rectangle2D gvB, decB;
 		gvB = gv.getGeometricBounds();
-		decB = getDecorationOutline(DECORATION_ALL).getBounds2D();
+		try {
+			decB = getDecorationOutline(DECORATION_ALL).getBounds2D();
+		} catch (RuntimeException e) {
+			return gvB;
+		}
 		return gvB.createUnion(decB);
 	}
 

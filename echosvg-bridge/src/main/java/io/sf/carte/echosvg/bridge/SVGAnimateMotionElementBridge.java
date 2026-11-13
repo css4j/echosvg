@@ -160,10 +160,16 @@ public class SVGAnimateMotionElementBridge extends SVGAnimateElementBridge {
 					&& SVG_MPATH_TAG.equals(n.getLocalName())) {
 				String uri = XLinkSupport.getXLinkHref((Element) n);
 				Element path = ctx.getReferencedElement(element, uri);
-				if (path == null || !SVG_NAMESPACE_URI.equals(path.getNamespaceURI())
+				if (path == null) {
+					// Error already reported
+					return null;
+				}
+				if (!SVG_NAMESPACE_URI.equals(path.getNamespaceURI())
 						|| !SVG_PATH_TAG.equals(path.getLocalName())) {
-					throw new BridgeException(ctx, element, ErrorConstants.ERR_URI_BAD_TARGET,
-							new Object[] { uri });
+					BridgeException be = new BridgeException(ctx, element,
+							ErrorConstants.ERR_URI_BAD_TARGET, new Object[] { uri });
+					AbstractSVGBridge.displayErrorOrThrow(ctx, be);
+					return null;
 				}
 				SVGOMPathElement pathElt = (SVGOMPathElement) path;
 				AWTPathProducer app = new AWTPathProducer();
@@ -173,18 +179,20 @@ public class SVGAnimateMotionElementBridge extends SVGAnimateElementBridge {
 			n = n.getNextSibling();
 		}
 		String pathString = element.getAttributeNS(null, SVG_PATH_ATTRIBUTE);
-		if (pathString.length() == 0) {
-			return null;
+		if (!pathString.isEmpty()) {
+			try {
+				AWTPathProducer app = new AWTPathProducer();
+				PathParser pp = new PathParser(app);
+				pp.parse(pathString);
+				return (ExtendedGeneralPath) app.getShape();
+			} catch (ParseException pEx) {
+				BridgeException be = new BridgeException(ctx, element, pEx,
+						ErrorConstants.ERR_ATTRIBUTE_VALUE_MALFORMED,
+						new Object[] { SVG_PATH_ATTRIBUTE, pathString });
+				AbstractSVGBridge.displayErrorOrThrow(ctx, be);
+			}
 		}
-		try {
-			AWTPathProducer app = new AWTPathProducer();
-			PathParser pp = new PathParser(app);
-			pp.parse(pathString);
-			return (ExtendedGeneralPath) app.getShape();
-		} catch (ParseException pEx) {
-			throw new BridgeException(ctx, element, pEx, ErrorConstants.ERR_ATTRIBUTE_VALUE_MALFORMED,
-					new Object[] { SVG_PATH_ATTRIBUTE, pathString });
-		}
+		return null;
 	}
 
 	/**
@@ -331,14 +339,14 @@ public class SVGAnimateMotionElementBridge extends SVGAnimateElementBridge {
 			t = element.getParentNode();
 		} else {
 			t = ctx.getReferencedElement(element, uri);
-			if (t == null || t.getOwnerDocument() != element.getOwnerDocument()) {
+			if (t == null) {
+				// Error already reported
+				return false;
+			}
+			if (t.getOwnerDocument() != element.getOwnerDocument()) {
 				BridgeException ex = new BridgeException(ctx, element,
 						ErrorConstants.ERR_URI_BAD_TARGET, new Object[] { uri });
-				UserAgent userAgent = ctx.getUserAgent();
-				if (userAgent == null) {
-					throw ex;
-				}
-				userAgent.displayError(ex);
+				AbstractSVGBridge.displayErrorOrThrow(ctx, ex);
 				return false;
 			}
 		}
@@ -350,11 +358,7 @@ public class SVGAnimateMotionElementBridge extends SVGAnimateElementBridge {
 		if (animationTarget == null) {
 			BridgeException ex = new BridgeException(ctx, element,
 					ErrorConstants.ERR_URI_BAD_TARGET, new Object[] { uri });
-			UserAgent userAgent = ctx.getUserAgent();
-			if (userAgent == null) {
-				throw ex;
-			}
-			userAgent.displayError(ex);
+			AbstractSVGBridge.displayErrorOrThrow(ctx, ex);
 			return false;
 		}
 

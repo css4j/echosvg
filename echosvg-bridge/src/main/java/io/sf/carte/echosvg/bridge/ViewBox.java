@@ -320,11 +320,7 @@ public abstract class ViewBox implements SVGConstants, ErrorConstants {
 		try {
 			vb = ((SVGOMRect) rectVB.getAnimVal()).toArray();
 		} catch (LiveAttributeException ex) {
-			if (ctx.userAgent != null) {
-				ctx.userAgent.displayError(ex);
-			} else {
-				throw new BridgeException(ctx, ex);
-			}
+			AbstractSVGBridge.displayErrorOrThrow(ctx, ex);
 			return new AffineTransform();
 		}
 

@@ -362,11 +362,7 @@ public abstract class UnitProcessor extends io.sf.carte.echosvg.parser.UnitProce
 			BridgeContext context = getBridgeContext(ctx);
 			BridgeException be = new BridgeException(context, ctx.getElement(),
 					ErrorConstants.ERR_LENGTH_NEGATIVE, new Object[] { attr, s });
-			UserAgent ua;
-			if (context == null || (ua = context.getUserAgent()) == null) {
-				throw be;
-			}
-			ua.displayError(be);
+			AbstractSVGBridge.displayErrorOrThrow(context, be);
 			if (defStr != null) {
 				if (defStr.isEmpty()) {
 					throw be;

@@ -780,7 +780,7 @@ public class BridgeContext implements ErrorConstants, CSSContext, ColorContext, 
 	 * @param e   the element referencing
 	 * @param uri the uri of the referenced node
 	 */
-	public Node getReferencedNode(Element e, String uri) {
+	public Node getReferencedNode(Element e, String uri) throws BridgeException {
 		try {
 			SVGDocument document = (SVGDocument) e.getOwnerDocument();
 			URIResolver ur = createURIResolver(document, documentLoader);
@@ -808,7 +808,14 @@ public class BridgeContext implements ErrorConstants, CSSContext, ColorContext, 
 			}
 			return ref;
 		} catch (MalformedURLException ex) {
-			throw new BridgeException(this, e, ex, ERR_URI_MALFORMED, new Object[] { uri });
+			BridgeException be = new BridgeException(this, e, ex, ERR_URI_MALFORMED,
+					new Object[] { uri });
+			if (userAgent != null) {
+				userAgent.displayError(be);
+			} else {
+				throw be;
+			}
+			return null;
 		} catch (InterruptedIOException ex) {
 			throw new InterruptedBridgeException();
 		} catch (IOException ex) {
@@ -825,10 +832,13 @@ public class BridgeContext implements ErrorConstants, CSSContext, ColorContext, 
 	 * @param e   the element referencing
 	 * @param uri the uri of the referenced element
 	 */
-	public Element getReferencedElement(Element e, String uri) {
+	public Element getReferencedElement(Element e, String uri) throws BridgeException {
 		Node ref = getReferencedNode(e, uri);
 		if (ref != null && ref.getNodeType() != Node.ELEMENT_NODE) {
-			throw new BridgeException(this, e, ERR_URI_REFERENCE_A_DOCUMENT, new Object[] { uri });
+			BridgeException be = new BridgeException(this, e, ERR_URI_REFERENCE_A_DOCUMENT,
+					new Object[] { uri });
+			AbstractSVGBridge.displayErrorOrThrow(this, be);
+			ref = null;
 		}
 		return (Element) ref;
 	}

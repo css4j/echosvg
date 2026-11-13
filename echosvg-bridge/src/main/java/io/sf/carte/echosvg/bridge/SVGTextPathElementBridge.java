@@ -77,19 +77,26 @@ public class SVGTextPathElementBridge extends AnimatableGenericSVGBridge impleme
 			String uri = XLinkSupport.getXLinkHref(textPathElement);
 			pathElement = ctx.getReferencedElement(textPathElement, uri);
 
-			if (pathElement == null || !SVG_NAMESPACE_URI.equals(pathElement.getNamespaceURI())
+			if (pathElement == null) {
+				return null;
+			}
+			if (!SVG_NAMESPACE_URI.equals(pathElement.getNamespaceURI())
 					|| !pathElement.getLocalName().equals(SVG_PATH_TAG)) {
 				// couldn't find the referenced element
 				// or the referenced element was not a path
-				throw new BridgeException(ctx, textPathElement, ERR_URI_BAD_TARGET,
+				BridgeException be = new BridgeException(ctx, textPathElement, ERR_URI_BAD_TARGET,
 						new Object[] { uri });
+				AbstractSVGBridge.displayErrorOrThrow(ctx, be);
+				return null;
 			}
 
 			// construct a shape for the referenced path element
 			path = pathElement.getAttributeNS(null, SVG_D_ATTRIBUTE);
 			if (path.isEmpty()) {
-				throw new BridgeException(ctx, pathElement, ERR_ATTRIBUTE_MISSING,
+				BridgeException be = new BridgeException(ctx, pathElement, ERR_ATTRIBUTE_MISSING,
 						new Object[] { SVG_D_ATTRIBUTE });
+				AbstractSVGBridge.displayErrorOrThrow(ctx, be);
+				return null;
 			}
 		} else {
 			pathElement = textPathElement;
@@ -108,8 +115,9 @@ public class SVGTextPathElementBridge extends AnimatableGenericSVGBridge impleme
 			} else {
 				attrName = SVG_PATH_ATTRIBUTE;
 			}
-			throw new BridgeException(ctx, pathElement, pEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
-					new Object[] { attrName });
+			BridgeException be = new BridgeException(ctx, pathElement, pEx,
+					ERR_ATTRIBUTE_VALUE_MALFORMED, new Object[] { attrName });
+			AbstractSVGBridge.displayErrorOrThrow(ctx, be);
 		} finally {
 			pathShape = app.getShape();
 		}

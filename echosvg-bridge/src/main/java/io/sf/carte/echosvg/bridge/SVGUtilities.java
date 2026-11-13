@@ -422,15 +422,21 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 		if (yStr.length() == 0) {
 			yStr = SVG_PATTERN_Y_DEFAULT_VALUE;
 		}
-		// 'width' attribute - default is 0%
+		// 'width' attribute - required
 		String wStr = getChainableAttributeNS(patternElement, null, SVG_WIDTH_ATTRIBUTE, ctx);
-		if (wStr.length() == 0) {
-			wStr = SVG_PATTERN_WIDTH_DEFAULT_VALUE;
+		if (wStr.isEmpty()) {
+			BridgeException be = new BridgeException(ctx, patternElement, ERR_ATTRIBUTE_MISSING,
+					new Object[] { SVG_WIDTH_ATTRIBUTE });
+			AbstractSVGBridge.displayErrorOrThrow(ctx, be);
+			return null;
 		}
-		// 'height' attribute - default is 0%
+		// 'height' attribute - required
 		String hStr = getChainableAttributeNS(patternElement, null, SVG_HEIGHT_ATTRIBUTE, ctx);
-		if (hStr.length() == 0) {
-			hStr = SVG_PATTERN_HEIGHT_DEFAULT_VALUE;
+		if (hStr.isEmpty()) {
+			BridgeException be = new BridgeException(ctx, patternElement, ERR_ATTRIBUTE_MISSING,
+					new Object[] { SVG_HEIGHT_ATTRIBUTE });
+			AbstractSVGBridge.displayErrorOrThrow(ctx, be);
+			return null;
 		}
 
 		// 'patternUnits' attribute - default is 'objectBoundingBox'

@@ -642,11 +642,7 @@ public abstract class CSSUtilities implements CSSConstants, ErrorConstants, XMLC
 			if (!(bridge instanceof FilterBridge)) {
 				BridgeException ex = new BridgeException(ctx, filteredElement,
 						ERR_CSS_URI_BAD_TARGET, new Object[] { uri });
-				UserAgent userAgent = ctx.getUserAgent();
-				if (userAgent == null) {
-					throw ex;
-				}
-				userAgent.displayError(ex);
+				AbstractSVGBridge.displayErrorOrThrow(ctx, ex);
 				return null;
 			}
 			return ((FilterBridge) bridge).createFilter(ctx, filter, filteredElement, filteredNode);
@@ -689,11 +685,7 @@ public abstract class CSSUtilities implements CSSConstants, ErrorConstants, XMLC
 			if (!(bridge instanceof ClipBridge)) {
 				BridgeException ex = new BridgeException(ctx, clippedElement,
 						ERR_CSS_URI_BAD_TARGET, new Object[] { uri });
-				UserAgent userAgent = ctx.getUserAgent();
-				if (userAgent == null) {
-					throw ex;
-				}
-				userAgent.displayError(ex);
+				AbstractSVGBridge.displayErrorOrThrow(ctx, ex);
 				return null;
 			}
 			return ((ClipBridge) bridge).createClip(ctx, cp, clippedElement, clippedNode);
@@ -746,11 +738,7 @@ public abstract class CSSUtilities implements CSSConstants, ErrorConstants, XMLC
 			if (!(bridge instanceof MaskBridge)) {
 				BridgeException ex = new BridgeException(ctx, maskedElement, ERR_CSS_URI_BAD_TARGET,
 						new Object[] { uri });
-				UserAgent userAgent = ctx.getUserAgent();
-				if (userAgent == null) {
-					throw ex;
-				}
-				userAgent.displayError(ex);
+				AbstractSVGBridge.displayErrorOrThrow(ctx, ex);
 				return null;
 			}
 			return ((MaskBridge) bridge).createMask(ctx, m, maskedElement, maskedNode);

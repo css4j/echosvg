@@ -90,7 +90,11 @@ public class SVGPatternElementBridge extends AnimatableGenericSVGBridge implemen
 
 		// get pattern region using 'patternUnits'. Pattern region is
 		// in tile pace.
-		Rectangle2D patternRegion = SVGUtilities.convertPatternRegion(patternElement, paintedElement, paintedNode, ctx);
+		Rectangle2D patternRegion = SVGUtilities.convertPatternRegion(patternElement,
+				paintedElement, paintedNode, ctx);
+		if (patternRegion == null) {
+			return null;
+		}
 
 		String s;
 
