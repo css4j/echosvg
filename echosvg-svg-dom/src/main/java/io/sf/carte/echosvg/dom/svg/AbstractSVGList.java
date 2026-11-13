@@ -202,9 +202,12 @@ public abstract class AbstractSVGList {
 	protected SVGItem getItemImpl(int index) throws DOMException {
 		revalidate();
 
-		if (index < 0 || itemList == null || index >= itemList.size()) {
+		if (index < 0 || itemList == null) {
 			throw createDOMException(DOMException.INDEX_SIZE_ERR, "index.out.of.bounds",
 					new Object[] { index });
+		}
+		if (index >= itemList.size()) {
+			index = itemList.size() - 1;
 		}
 
 		return itemList.get(index);
@@ -325,18 +328,24 @@ public abstract class AbstractSVGList {
 	protected SVGItem removeItemImpl(int index) throws DOMException {
 		revalidate();
 
-		if (index < 0 || index >= itemList.size()) {
+		if (index < 0) {
 			throw createDOMException(DOMException.INDEX_SIZE_ERR, "index.out.of.bounds",
 					new Object[] { index });
 		}
 
-		SVGItem item = itemList.remove(index);
+		SVGItem item;
 
-		// Set the item to have no parent list.
-		item.setParent(null);
+		if (index < itemList.size()) {
+			item = itemList.remove(index);
 
-		// Reset the DOM attribute.
-		resetAttribute();
+			// Set the item to have no parent list.
+			item.setParent(null);
+
+			// Reset the DOM attribute.
+			resetAttribute();
+		} else {
+			item = null;
+		}
 
 		return item;
 	}
@@ -418,11 +427,24 @@ public abstract class AbstractSVGList {
 		}
 
 		ListBuilder builder = new ListBuilder(this);
+		List<SVGItem> parsedList = null;
 		try {
 			doParse(s, builder);
+
+			parsedList = builder.getList();
 		} catch (ParseException e) {
+			parsedList = builder.getList();
+			int sz = parsedList.size();
+			if (sz == 0) {
+				parsedList = null;
+			} else {
+				SVGItem removed = parsedList.remove(sz - 1);
+				removed.setParent(null);
+				if (sz == 1) {
+					parsedList = null;
+				}
+			}
 		} finally {
-			List<SVGItem> parsedList = builder.getList();
 			clear(itemList);
 			if (parsedList != null) {
 				itemList = parsedList;

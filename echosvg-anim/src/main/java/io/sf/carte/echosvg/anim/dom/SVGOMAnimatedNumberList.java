@@ -20,6 +20,7 @@ package io.sf.carte.echosvg.anim.dom;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
@@ -295,22 +296,37 @@ public class SVGOMAnimatedNumberList extends AbstractSVGAnimatedValue implements
 				missing = true;
 				return;
 			}
+
 			if (isEmpty) {
 				itemList = new ArrayList<>(1);
 			} else {
+				ListBuilder builder = new ListBuilder(this);
+				List<SVGItem> parsedList = null;
 				try {
-					ListBuilder builder = new ListBuilder(this);
-
 					doParse(s, builder);
 
-					if (builder.getList() != null) {
-						clear(itemList);
-					}
-					itemList = builder.getList();
+					parsedList = builder.getList();
 				} catch (ParseException e) {
-					itemList = new ArrayList<>(1);
+					parsedList = builder.getList();
+					int sz = parsedList.size();
+					if (sz == 0) {
+						parsedList = null;
+					} else {
+						SVGItem removed = parsedList.remove(sz - 1);
+						removed.setParent(null);
+						if (sz == 1) {
+							parsedList = null;
+						}
+					}
 					valid = true;
 					malformed = true;
+				} finally {
+					clear(itemList);
+					if (parsedList != null) {
+						itemList = parsedList;
+					} else {
+						itemList = new ArrayList<>(1);
+					}
 				}
 			}
 		}
