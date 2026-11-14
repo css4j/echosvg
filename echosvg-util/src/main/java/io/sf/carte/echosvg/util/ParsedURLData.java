@@ -211,6 +211,29 @@ public class ParsedURLData implements Serializable {
 	}
 
 	/**
+	 * Build from an existing URL.
+	 */
+	public ParsedURLData(java.net.URI url) {
+		protocol = url.getScheme();
+		if ((protocol != null) && (protocol.length() == 0))
+			protocol = null;
+
+		host = url.getHost();
+		if ((host != null) && (host.length() == 0))
+			host = null;
+
+		port = url.getPort();
+
+		path = url.getPath();
+		if ((path != null) && (path.length() == 0))
+			path = null;
+
+		ref = url.getFragment();
+		if ((ref != null) && (ref.length() == 0))
+			ref = null;
+	}
+
+	/**
 	 * Attempts to build a normal java.net.URL instance from this URL.
 	 */
 	protected URL buildURL() throws MalformedURLException {
