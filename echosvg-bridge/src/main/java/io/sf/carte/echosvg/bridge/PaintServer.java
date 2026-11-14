@@ -298,8 +298,8 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 	}
 
 	/**
-	 * Converts a Paint specified by URI without sending any error. if a problem
-	 * occured while processing the URI, it just returns null (same effect as
+	 * Converts a Paint specified by URI catching any error. if a problem occurred
+	 * while processing the URI, warns about it and returns null (same effect as
 	 * 'none')
 	 *
 	 * @param paintedElement the element interested in a Paint
@@ -311,10 +311,12 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 	 */
 	public static Paint silentConvertURIPaint(Element paintedElement, GraphicsNode paintedNode,
 			Value paintDef, float opacity, BridgeContext ctx) {
-		Paint paint = null;
+		Paint paint;
 		try {
 			paint = convertURIPaint(paintedElement, paintedNode, paintDef, opacity, ctx);
 		} catch (BridgeException ex) {
+			AbstractSVGBridge.displayWarning(ctx, ex);
+			paint = null;
 		}
 		return paint;
 	}
