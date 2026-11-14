@@ -428,6 +428,7 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 			BridgeException be = new BridgeException(ctx, patternElement, ERR_ATTRIBUTE_MISSING,
 					new Object[] { SVG_WIDTH_ATTRIBUTE });
 			AbstractSVGBridge.displayErrorOrThrow(ctx, be);
+			// "A value of zero disables rendering of the element (i.e., no paint is applied)."
 			return null;
 		}
 		// 'height' attribute - required
@@ -436,24 +437,41 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 			BridgeException be = new BridgeException(ctx, patternElement, ERR_ATTRIBUTE_MISSING,
 					new Object[] { SVG_HEIGHT_ATTRIBUTE });
 			AbstractSVGBridge.displayErrorOrThrow(ctx, be);
+			// "A value of zero disables rendering of the element (i.e., no paint is applied)."
 			return null;
 		}
 
 		// 'patternUnits' attribute - default is 'objectBoundingBox'
 		short unitsType;
-		String units = getChainableAttributeNS(patternElement, null, SVG_PATTERN_UNITS_ATTRIBUTE, ctx);
+		String units = getChainableAttributeNS(patternElement, null, SVG_PATTERN_UNITS_ATTRIBUTE,
+				ctx);
 		if (units.length() == 0) {
 			unitsType = OBJECT_BOUNDING_BOX;
 		} else {
-			unitsType = parseCoordinateSystem(patternElement, SVG_PATTERN_UNITS_ATTRIBUTE, units, ctx);
+			unitsType = parseCoordinateSystem(patternElement, SVG_PATTERN_UNITS_ATTRIBUTE, units,
+					ctx);
 		}
 
 		// resolve units in the (referenced) paintedElement's coordinate system
 		UnitProcessor.Context uctx = UnitProcessor.createContext(ctx, paintedElement);
 
-		return convertRegion(xStr, yStr, wStr, hStr, unitsType, SVG_PATTERN_X_DEFAULT_VALUE,
-				SVG_PATTERN_Y_DEFAULT_VALUE, SVG_PATTERN_WIDTH_DEFAULT_VALUE,
-				SVG_PATTERN_HEIGHT_DEFAULT_VALUE, paintedNode, uctx);
+		Rectangle2D region = convertRegion(xStr, yStr, wStr, hStr, unitsType,
+				SVG_PATTERN_X_DEFAULT_VALUE, SVG_PATTERN_Y_DEFAULT_VALUE,
+				SVG_PATTERN_WIDTH_DEFAULT_VALUE, SVG_PATTERN_HEIGHT_DEFAULT_VALUE, paintedNode,
+				uctx);
+
+		// Check the value of width and height.
+		//
+		// The values were converted from float to double and could come from a
+		// calc() expression or a function, so allow some tolerance.
+		final double TOL = 1e-4d; // Effective zero
+		if (region.getWidth() < TOL || region.getHeight() < TOL) {
+			// "A value of zero disables rendering of the element (i.e., no
+			// paint is applied)."
+			region = null;
+		}
+
+		return region;
 	}
 
 	/////////////////////////////////////////////////////////////////////////
