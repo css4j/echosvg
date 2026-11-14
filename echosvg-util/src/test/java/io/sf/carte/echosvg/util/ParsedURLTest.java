@@ -19,6 +19,10 @@
 package io.sf.carte.echosvg.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import org.junit.jupiter.api.Test;
 
@@ -33,8 +37,32 @@ import org.junit.jupiter.api.Test;
 public class ParsedURLTest {
 
 	@Test
+	public void testURI() {
+		runUriTest("just.a.path", "file:just.a.path");
+		runUriTest("file://C:/path/to/file.ext", "file:/C:/path/to/file.ext");
+		runUriTest("fooz:/home/deweese/.cshrc", "fooz:/home/deweese/.cshrc");
+		runUriTest("fazz:///home/deweese/.cshrc", "fazz:/home/deweese/.cshrc");
+		runUriTest("fooz://www.com:1234/home/deweese/.cshrc#abcd", "fooz://www.com:1234/home/deweese/.cshrc#abcd");
+		runUriTest("http://xml.apache.org/", "~deweese", "http://xml.apache.org/~deweese");
+		runUriTest("file:///xml.apache.org", "~deweese", "file:/~deweese");
+		runUriTest("fooz://www.com:1234/home/deweese/.cshrc#abcd", "xyz.html#efgh",
+				"fooz://www.com:1234/home/deweese/xyz.html#efgh");
+		runUriTest("fooz://www.com:1234/home/deweese/xyz.html#efgh", "/xyz.svg#ijkl", "fooz://www.com:1234/xyz.svg#ijkl");
+		runUriTest("file:/home/deweese/test.txt", "file:junk.html", "file:/home/deweese/junk.html");
+		runUriTest("http://xml.apache.org/batik/", "//jakarta.apache.org/ant/", "http://jakarta.apache.org/ant/");
+		runUriTest("http://xml.apache.org/batik/#test", "", "http://xml.apache.org/batik/#test");
+		runUriTest("http://xml.apache.org/batik/", "/", "http://xml.apache.org/");
+		runUriTest("http://xml.apache.org/batik/", "/fop/", "http://xml.apache.org/fop/");
+		runUriTest("file:helloWorld.svg", "file:test.svg#Foo", "file:test.svg#Foo");
+		runUriTest("file:", "file:junk.svg#Bar", "file:junk.svg#Bar");
+		runUriTest("#data:1", "#data:1");
+		runUriTest("http://foo.bar.com/path/test.svg", "#data:1", "http://foo.bar.com/path/test.svg#data:1");
+	}
+
+	@Test
 	public void testURL() {
 		runTest("just.a.path", "file:just.a.path");
+		runTest("file://C:/path/to/file.ext", "file:/C:/path/to/file.ext");
 		runTest("fooz:/home/deweese/.cshrc", "fooz:/home/deweese/.cshrc");
 		runTest("fazz:///home/deweese/.cshrc", "fazz:/home/deweese/.cshrc");
 		runTest("fooz://www.com:1234/home/deweese/.cshrc#abcd", "fooz://www.com:1234/home/deweese/.cshrc#abcd");
@@ -97,6 +125,43 @@ public class ParsedURLTest {
 				"ct: text/plain;charset=iso-8859-7 CE: null DATA: be fb be URL: data:text/plain;charset=iso-8859-7,%be%fb%be");
 		runTest("data:,A%20brief%20note", "ct: null CE: null DATA: 2c 41 20 62 72 URL: data:,,A%20brief%20note");
 		runTest("data:;=;,A%20brief%20note", "ct: ;= CE:  DATA: 41 20 62 72 69 URL: data:;=;,A%20brief%20note");
+	}
+
+	/**
+	 * Run URI test
+	 * 
+	 * @param base The uri to parse
+	 * @param ref  The expected result.
+	 */
+	private void runUriTest(String base, String ref) {
+		runUriTest(base, ref, ref);
+	}
+
+	/**
+	 * Run URI test
+	 * 
+	 * @param base The base uri to parse
+	 * @param sub  The sub uri (relative to base).
+	 * @param ref  The expected result.
+	 */
+	private void runUriTest(String base, String sub, String ref) {
+		URI uri;
+		try {
+			uri = new URI(base);
+		} catch (URISyntaxException e) {
+			try {
+				uri = new URI("file", base, null);
+			} catch (URISyntaxException e1) {
+				fail(e1);
+				return;
+			}
+		}
+		ParsedURL url = new ParsedURL(uri);
+		if (sub != null) {
+			url = new ParsedURL(url, sub);
+		}
+
+		assertEquals(ref, url.toString(), "Bad URL: ");
 	}
 
 	/**

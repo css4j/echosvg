@@ -21,6 +21,7 @@ package io.sf.carte.echosvg.util;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -194,6 +195,19 @@ public class ParsedURL implements Serializable {
 	public ParsedURL(URL url) {
 		userAgent = getGlobalUserAgent();
 		data = new ParsedURLData(url);
+	}
+
+	/**
+	 * Construct a ParsedURL from the given java.net.URI instance. This is useful if
+	 * you already have a valid java.net.URI instance. This bypasses most of the
+	 * parsing and hence is quicker and less prone to reinterpretation than
+	 * converting the URI to a string before construction.
+	 *
+	 * @param uri The URI to "mimic".
+	 */
+	public ParsedURL(URI uri) {
+		userAgent = getGlobalUserAgent();
+		data = new ParsedURLData(uri);
 	}
 
 	/**
