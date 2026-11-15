@@ -21,7 +21,6 @@ package io.sf.carte.echosvg.bridge;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
@@ -269,11 +268,6 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 					return "";
 				}
 				refs.add(purl);
-			} catch (FileNotFoundException ioEx) {
-				BridgeException ex = new BridgeException(ctx, e, ioEx, ERR_URI_IO,
-						new Object[] { uriStr });
-				AbstractSVGBridge.displayErrorOrThrow(ctx, ex);
-				return "";
 			} catch (IOException ioEx) {
 				BridgeException ex = new BridgeException(ctx, e, ioEx, ERR_URI_IO,
 						new Object[] { uriStr });

@@ -165,20 +165,14 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
 		if (uriStr.isEmpty()) {
 			BridgeException be = new BridgeException(ctx, e, ERR_ATTRIBUTE_MISSING,
 					new Object[] { "href" });
-			if (ctx.userAgent != null) {
-				ctx.userAgent.displayError(be);
-				return null;
-			}
-			throw be;
+			displayErrorOrThrow(ctx, be);
+			return null;
 		}
 		if (uriStr.indexOf('#') != -1) {
 			BridgeException be = new BridgeException(ctx, e, ERR_ATTRIBUTE_VALUE_MALFORMED,
 					new Object[] { "xlink:href", uriStr });
-			if (ctx.userAgent != null) {
-				ctx.userAgent.displayError(be);
-				return null;
-			}
-			throw be;
+			displayErrorOrThrow(ctx, be);
+			return null;
 		}
 
 		// Build the URL.
