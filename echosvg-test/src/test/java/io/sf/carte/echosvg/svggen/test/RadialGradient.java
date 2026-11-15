@@ -27,7 +27,7 @@ import java.awt.RenderingHints;
 import java.awt.geom.GeneralPath;
 
 /**
- * This test validates the convertion of Java 2D GradientPaints into SVG
+ * This test validates the conversion of Java 2D GradientPaints into SVG
  * linearGradient definition and reference.
  *
  * @author <a href="mailto:schegge42@gmail.com">Jens Kaiser</a>

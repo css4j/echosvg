@@ -26,7 +26,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.RoundRectangle2D;
 
 /**
- * This test validates the convertion of Java 2D negative length values:<br>
+ * This test validates the conversion of Java 2D negative length values:<br>
  * - On rectangles: a negative width or height makes the rectangle
  * invisible.<br>
  * - On rounded rectangles: a negative width or height makes the rectangle
