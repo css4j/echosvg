@@ -22,12 +22,14 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.awt.GraphicsEnvironment;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
@@ -60,11 +62,11 @@ import io.sf.carte.echosvg.transcoder.wmf.tosvg.WMFTranscoder;
  */
 public class WMFAccuracyTest {
 
-	private static final String PROJECT_ROOT_URL = TestUtil.getRootProjectURL(WMFAccuracyTest.class,
+	private static final URI PROJECT_ROOT_URL = TestUtil.getRootProjectURI(WMFAccuracyTest.class,
 			"echosvg-transcoder-tosvg");
 
-	private static final String GENERATOR_REFERENCE_BASE = PROJECT_ROOT_URL
-			+ "test-references/io/sf/carte/echosvg/transcoder/wmf";
+	private static final URI GENERATOR_REFERENCE_BASE = PROJECT_ROOT_URL.resolve(
+			"test-references/io/sf/carte/echosvg/transcoder/wmf");
 
 	private static final String CANDIDATE_REF_DIR = "candidate";
 
@@ -92,7 +94,7 @@ public class WMFAccuracyTest {
 	/**
 	 * File where the generated SVG might be saved
 	 */
-	private File saveSVG;
+	private Path saveSVG;
 
 	@Test
 	public void testBlackShapes() throws IOException, TranscoderException {
@@ -165,11 +167,10 @@ public class WMFAccuracyTest {
 
 		String[] dirNfile = breakWMFFile(wmfFile);
 
-		wmfURL = new URL(PROJECT_ROOT_URL + dirNfile[0] + dirNfile[1] + dirNfile[2]);
-		refURL = new URL(GENERATOR_REFERENCE_BASE + '/' + dirNfile[1] + SVG_EXTENSION);
-		String saveURL = new URL(GENERATOR_REFERENCE_BASE + '/' + CANDIDATE_REF_DIR + "/" + dirNfile[1]
-				+ SVG_EXTENSION).getFile();
-		saveSVG = new File(saveURL);
+		wmfURL = PROJECT_ROOT_URL.resolve(dirNfile[0] + dirNfile[1] + dirNfile[2]).toURL();
+		refURL = GENERATOR_REFERENCE_BASE.resolve(dirNfile[1] + SVG_EXTENSION).toURL();
+		saveSVG = Paths.get(GENERATOR_REFERENCE_BASE.resolve(CANDIDATE_REF_DIR)
+				.resolve(dirNfile[1] + SVG_EXTENSION));
 	}
 
 	private String[] breakWMFFile(String wmfFile) {

@@ -27,12 +27,12 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 
 import javax.imageio.ImageIO;
@@ -180,9 +180,10 @@ public abstract class AbstractImageWriterCheck<D> {
 			if (isRef == null) {
 				// No reference
 				ImageFileBuilder tmpUtil = new TempImageFiles(
-						TestUtil.getProjectBuildURL(getClass(), TestLocations.TEST_DIRNAME));
+						TestUtil.getProjectBuildPath(getClass(), TestLocations.TEST_DIRNAME));
 				bytesToFile(cand, tmpUtil, baseName, "_candidate");
-				throw new FileNotFoundException("Cannot find reference resource at " + resourcePath(baseName));
+				throw new FileNotFoundException(
+						"Cannot find reference resource at " + resourcePath(baseName));
 			}
 
 			int count;
@@ -214,11 +215,11 @@ public abstract class AbstractImageWriterCheck<D> {
 			throws IOException {
 		// We are in error (images are different). Save candidate.
 		ImageFileBuilder tmpUtil = new TempImageFiles(
-				TestUtil.getProjectBuildURL(getClass(), TestLocations.TEST_DIRNAME));
+				TestUtil.getProjectBuildPath(getClass(), TestLocations.TEST_DIRNAME));
 	
-		File file = bytesToFile(cand, tmpUtil, baseName, "_candidate");
+		Path file = bytesToFile(cand, tmpUtil, baseName, "_candidate");
 
-		System.err.println("Candidate file is available at " + file.getAbsolutePath());
+		System.err.println("Candidate file is available at " + file.toAbsolutePath());
 
 		// Now produce an image with the two images side by side
 		// as well as a diff image.
@@ -244,12 +245,12 @@ public abstract class AbstractImageWriterCheck<D> {
 	/**
 	 * Creates a temporary File into which the bytes are saved.
 	 */
-	File bytesToFile(byte[] cand, ImageFileBuilder fileBuilder, String name, String imageQualifier)
+	Path bytesToFile(byte[] cand, ImageFileBuilder fileBuilder, String name, String imageQualifier)
 			throws IOException {
 
-		File imageFile = obtainImageFilename(fileBuilder, name, imageQualifier);
+		Path imageFile = obtainImageFilename(fileBuilder, name, imageQualifier);
 
-		try (OutputStream out = new FileOutputStream(imageFile)) {
+		try (OutputStream out = Files.newOutputStream(imageFile)) {
 			out.write(cand);
 		}
 
@@ -260,14 +261,14 @@ public abstract class AbstractImageWriterCheck<D> {
 	/**
 	 * Creates a temporary File into which the input image is saved.
 	 */
-	private File imageToFile(BufferedImage img, ImageFileBuilder fileBuilder, String name, String imageQualifier)
+	private Path imageToFile(BufferedImage img, ImageFileBuilder fileBuilder, String name, String imageQualifier)
 			throws IOException {
 
-		File imageFile = obtainImageFilename(fileBuilder, name, imageQualifier);
+		Path imageFile = obtainImageFilename(fileBuilder, name, imageQualifier);
 
 		ImageWriter writer = ImageWriterRegistry.getInstance().getWriterFor(getMIMEType());
 
-		try (OutputStream out = new FileOutputStream(imageFile)) {
+		try (OutputStream out = Files.newOutputStream(imageFile)) {
 			writer.writeImage(img, out);
 		}
 
@@ -278,7 +279,7 @@ public abstract class AbstractImageWriterCheck<D> {
 	/**
 	 * Creates a temporary File into which the input image is saved.
 	 */
-	private File obtainImageFilename(ImageFileBuilder fileBuilder, String name, String imageQualifier)
+	private Path obtainImageFilename(ImageFileBuilder fileBuilder, String name, String imageQualifier)
 			throws IOException {
 		return fileBuilder.createImageFile(name + getImageSuffix() + imageQualifier + getDotExtension());
 	}

@@ -23,12 +23,12 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 
 import org.junit.jupiter.api.Test;
 
@@ -57,8 +57,8 @@ import io.sf.carte.echosvg.transcoder.wmf.tosvg.WMFTranscoder;
  */
 public class WMFAccuracyTest {
 
-	private static final String GENERATOR_REFERENCE_BASE = TestLocations.PROJECT_ROOT_URL
-			+ "test-references/io/sf/carte/echosvg/transcoder/wmf";
+	private static final Path GENERATOR_REFERENCE_BASE = TestLocations.PROJECT_ROOT_DIR
+			.resolve("test-references/io/sf/carte/echosvg/transcoder/wmf");
 
 	private static final String CANDIDATE_REF_DIR = "candidate";
 
@@ -83,7 +83,7 @@ public class WMFAccuracyTest {
 	/**
 	 * File where the generated SVG might be saved
 	 */
-	private File saveSVG;
+	private Path saveSVG;
 
 	@Test
 	public void testBlackShapes() throws IOException, TranscoderException {
@@ -157,11 +157,11 @@ public class WMFAccuracyTest {
 
 		String[] dirNfile = breakWMFFile(wmfFile);
 
-		wmfURL = new URL(TestLocations.PROJECT_ROOT_URL + dirNfile[0] + dirNfile[1] + dirNfile[2]);
-		refURL = new URL(GENERATOR_REFERENCE_BASE + '/' + dirNfile[1] + SVG_EXTENSION);
-		String saveURL = new URL(GENERATOR_REFERENCE_BASE + '/' + CANDIDATE_REF_DIR + "/" + dirNfile[1] + SVG_EXTENSION)
-				.getFile();
-		saveSVG = new File(saveURL);
+		wmfURL = TestLocations.PROJECT_ROOT_URI.resolve(dirNfile[0] + dirNfile[1] + dirNfile[2])
+				.toURL();
+		refURL = GENERATOR_REFERENCE_BASE.resolve(dirNfile[1] + SVG_EXTENSION).toUri().toURL();
+		saveSVG = GENERATOR_REFERENCE_BASE.resolve(CANDIDATE_REF_DIR)
+				.resolve(dirNfile[1] + SVG_EXTENSION);
 	}
 
 	private String[] breakWMFFile(String wmfFile) {

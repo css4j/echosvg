@@ -22,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
+import java.nio.file.Path;
 
 import org.junit.jupiter.api.Test;
 
@@ -32,16 +33,16 @@ public class TestLocationsTest {
 
 	@Test
 	public void testProjectRoot() throws IOException {
-		assertNotNull(TestLocations.PROJECT_ROOT_URL);
-		assertTrue(TestLocations.PROJECT_ROOT_URL.length() > 2);
+		assertNotNull(TestLocations.PROJECT_ROOT_URI);
+		assertTrue(TestLocations.PROJECT_ROOT_URI.toString().length() > 2);
 	}
 
 	@Test
 	public void testGetTestProjectBuildPath() throws IOException {
-		String path = TestLocations.getTestProjectBuildURL();
+		Path path = TestLocations.getTestProjectBuildPath();
 		assertNotNull(path);
-		assertTrue(path.contains(TestLocations.TEST_DIRNAME), "Path must contain "
-				+ TestLocations.TEST_DIRNAME);
+		assertTrue(path.toString().contains(TestLocations.TEST_DIRNAME),
+				"Path must contain " + TestLocations.TEST_DIRNAME);
 	}
 
 }

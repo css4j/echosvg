@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.security.AccessController;
 import java.security.PrivilegedActionException;
@@ -148,18 +148,15 @@ public class SelfContainedSVGOnLoadTest {
 	}
 
 	/**
-	 * Resolves the input string as a URL. If it is an invalid
-	 * URL, an IllegalArgumentException is thrown.
+	 * Resolves the input string as a URL. If it is an invalid URL, an
+	 * IllegalArgumentException is thrown.
 	 */
 	protected String resolveURL(String url) {
-		final String resName = TestLocations.PROJECT_ROOT_URL + url;
-		URL urlRes;
 		try {
-			urlRes = new URL(resName);
-		} catch (MalformedURLException e) {
-			throw new IllegalArgumentException(url);
+			return TestLocations.resolveURI(url).toString();
+		} catch (URISyntaxException e) {
+			throw new IllegalArgumentException(e);
 		}
-		return urlRes.toExternalForm();
 	}
 
 	/**

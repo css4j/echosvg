@@ -20,9 +20,7 @@ package io.sf.carte.echosvg.test.xml;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -30,6 +28,7 @@ import java.io.Reader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -46,6 +45,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import io.sf.carte.doc.xml.dtd.DefaultEntityResolver;
+import io.sf.carte.echosvg.test.TestUtil;
 import io.sf.carte.util.agent.AgentUtil;
 import io.sf.jclf.text.TokenParser;
 
@@ -71,7 +71,7 @@ public class XmlUtil {
 	 * @return a failure message, or {@code null} if the comparison matched.
 	 * @throws IOException if a I/O error happened while comparing.
 	 */
-	public static String xmlDiff(URL refURL, byte[] data, File candidateFile) throws IOException {
+	public static String xmlDiff(URL refURL, byte[] data, Path candidateFile) throws IOException {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		try {
 			dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
@@ -106,16 +106,16 @@ public class XmlUtil {
 	 * @return a failure message, or {@code null} if the comparison matched.
 	 * @throws IOException if a I/O error happened while comparing.
 	 */
-	public static String xmlDiff(URL refURL, byte[] data, File candidateFile, DocumentBuilder builder)
-			throws IOException {
+	public static String xmlDiff(URL refURL, byte[] data, Path candidateFile,
+			DocumentBuilder builder) throws IOException {
 		BufferedReader refReader;
 		try {
 			refReader = urlToReader(refURL);
 		} catch (FileNotFoundException e) {
-			save(data, candidateFile);
+			TestUtil.save(data, candidateFile);
 			return e.getMessage();
 		} catch (IOException e) {
-			save(data, candidateFile);
+			TestUtil.save(data, candidateFile);
 			throw e;
 		}
 
@@ -141,7 +141,7 @@ public class XmlUtil {
 				line++;
 			}
 		} catch (IOException e) {
-			save(data, candidateFile);
+			TestUtil.save(data, candidateFile);
 			return "Error while comparing images: " + e.getMessage();
 		} finally {
 			try {
@@ -161,7 +161,7 @@ public class XmlUtil {
 				return null;
 			}
 
-			save(data, candidateFile);
+			TestUtil.save(data, candidateFile);
 
 			String expectedChar = "<eol>";
 			if ((cn >= 0) && (refStr != null) && (refStr.length() > cn))
@@ -176,10 +176,10 @@ public class XmlUtil {
 			if (foundChar.equals(" "))
 				foundChar = "' '";
 
-			return "Expected " + expectedChar + ", found " + foundChar + " at line/column " + line + '/' + (cn + 1)
-					+ ":\n" + refStr + '\n' + dataStr;
+			return "Expected " + expectedChar + ", found " + foundChar + " at line/column " + line
+					+ '/' + (cn + 1) + ":\n" + refStr + '\n' + dataStr;
 		} catch (Exception e) {
-			save(data, candidateFile);
+			TestUtil.save(data, candidateFile);
 			return "Error while comparing images: " + e.getMessage();
 		}
 	}
@@ -207,7 +207,7 @@ public class XmlUtil {
 	/**
 	 * Find the character index at which two lines differ.
 	 * 
-	 * @param refLine the reference line.
+	 * @param refLine   the reference line.
 	 * @param checkLine the line to be checked.
 	 * @return the character index, or -1 if the lines are equal.
 	 */
@@ -260,7 +260,8 @@ public class XmlUtil {
 		return i;
 	}
 
-	private static boolean compareDOM(URL refURL, byte[] data, DocumentBuilder builder) throws IOException {
+	private static boolean compareDOM(URL refURL, byte[] data, DocumentBuilder builder)
+			throws IOException {
 		String uri = refURL.toExternalForm();
 
 		BufferedReader refReader = urlToReader(refURL);
@@ -371,30 +372,6 @@ public class XmlUtil {
 		}
 
 		return true;
-	}
-
-	/**
-	 * Save {@code data} to the candidateFile.
-	 * 
-	 * @param data          the data to save.
-	 * @param candidateFile the file where data has to be stored.
-	 * @throws IOException
-	 */
-	private static void save(byte[] data, File candidateFile) throws IOException {
-		if (candidateFile == null) {
-			return;
-		}
-
-		File parentDir = candidateFile.getParentFile();
-		if (!parentDir.exists()) {
-			if (!parentDir.mkdir()) {
-				return;
-			}
-		}
-
-		try (FileOutputStream os = new FileOutputStream(candidateFile)) {
-			os.write(data);
-		}
 	}
 
 }

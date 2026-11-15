@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
@@ -218,25 +219,27 @@ public class AbstractBypassRenderingCheck {
 	 * reference image.
 	 * </p>
 	 * 
-	 * @param file                 the SVG file to test.
-	 * @param medium               the target medium ({@code screen}, {@code print},
-	 *                             etc).
-	 * @param darkMode             if true, dark mode is enabled in CSS.
-	 * @param backgroundColor      the background color.
-	 * @param selector             the selector to find the SVG element.
-	 * @param validating           if true, the SVG is validated.
-	 * @param expectedErrorCount   the expected number of errors.
+	 * @param file               the SVG file to test.
+	 * @param medium             the target medium ({@code screen}, {@code print},
+	 *                           etc).
+	 * @param darkMode           if true, dark mode is enabled in CSS.
+	 * @param backgroundColor    the background color.
+	 * @param selector           the selector to find the SVG element.
+	 * @param validating         if true, the SVG is validated.
+	 * @param expectedErrorCount the expected number of errors.
 	 * @throws TranscoderException
 	 * @throws IOException
 	 */
 	void test(String file, String medium, boolean darkMode, Color backgroundColor, String selector,
-			boolean validating, int expectedErrorCount) throws TranscoderException, IOException {
+			boolean validating, int expectedErrorCount)
+			throws TranscoderException, IOException {
 		BypassRenderingTest runner = new BypassRenderingTest(medium, expectedErrorCount);
 		configureAndRun(runner, file, darkMode, backgroundColor, selector, validating);
 	}
 
-	void configureAndRun(BypassRenderingTest runner, String file, boolean darkMode, Color backgroundColor,
-			String selector, boolean validating) throws TranscoderException, IOException {
+	void configureAndRun(BypassRenderingTest runner, String file, boolean darkMode,
+			Color backgroundColor, String selector, boolean validating)
+			throws TranscoderException, IOException {
 		runner.setDarkMode(darkMode);
 		runner.setBackgroundColor(backgroundColor);
 		runner.setSelector(selector);
@@ -370,7 +373,7 @@ public class AbstractBypassRenderingCheck {
 		}
 
 		@Override
-		protected void encode(URL srcURL, FileOutputStream fos)
+		protected void encode(URI srcURL, FileOutputStream fos)
 				throws TranscoderException, IOException {
 			ImageTranscoder transcoder = getTestImageTranscoder();
 			DummyErrorHandler errorHandler = new DummyErrorHandler();
@@ -402,14 +405,14 @@ public class AbstractBypassRenderingCheck {
 
 		void encode(CSSTranscodingHelper helper, TranscoderOutput dst)
 				throws TranscoderException, IOException {
-			String uri = getURI();
-			URL url = new URL(uri);
+			URI uri = getURI();
+			URL url = uri.toURL();
 			URLConnection con = url.openConnection();
 			con.setConnectTimeout(5000);
 			con.connect();
 			InputStream is = con.getInputStream();
 			try (Reader re = new InputStreamReader(is, StandardCharsets.UTF_8)) {
-				helper.transcode(re, uri, dst, selector);
+				helper.transcode(re, uri.toString(), dst, selector);
 			}
 
 			renderDocument = dst.getDocument();
@@ -489,15 +492,15 @@ public class AbstractBypassRenderingCheck {
 		@Override
 		void encode(CSSTranscodingHelper helper, TranscoderOutput dst)
 				throws TranscoderException, IOException {
-			String uri = getURI();
-			URL url = new URL(uri);
+			URI uri = getURI();
+			URL url = uri.toURL();
 			URLConnection con = url.openConnection();
 			con.setConnectTimeout(5000);
 			con.connect();
 			try (InputStream is = con.getInputStream();
 					Reader re = new InputStreamReader(is, StandardCharsets.UTF_8)) {
 				TranscoderInput input = new TranscoderInput(re);
-				input.setURI(uri);
+				input.setURI(uri.toString());
 				helper.transcode(input, dst);
 			}
 		}
@@ -513,15 +516,15 @@ public class AbstractBypassRenderingCheck {
 		@Override
 		void encode(CSSTranscodingHelper helper, TranscoderOutput dst)
 				throws TranscoderException, IOException {
-			String uri = getURI();
-			URL url = new URL(uri);
+			URI uri = getURI();
+			URL url = uri.toURL();
 			URLConnection con = url.openConnection();
 			con.setConnectTimeout(5000);
 			con.connect();
 			try (InputStream is = con.getInputStream()) {
 				TranscoderInput input = new TranscoderInput(is);
 				input.setEncoding("utf-8");
-				input.setURI(uri);
+				input.setURI(uri.toString());
 				helper.transcode(input, dst);
 			}
 		}
@@ -537,7 +540,7 @@ public class AbstractBypassRenderingCheck {
 		@Override
 		void encode(CSSTranscodingHelper helper, TranscoderOutput dst)
 				throws TranscoderException, IOException {
-			String uri = getURI();
+			String uri = getURI().toString();
 			TranscoderInput input = new TranscoderInput(uri);
 			helper.transcode(input, dst);
 		}

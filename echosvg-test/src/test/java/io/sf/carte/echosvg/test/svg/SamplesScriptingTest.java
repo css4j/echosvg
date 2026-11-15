@@ -246,12 +246,12 @@ public class SamplesScriptingTest extends AbstractSamplesRendering {
 
 	@Test
 	public void testScriptSetAttributeECR() throws TranscoderException, IOException {
-		testNVErrIgnore("samples/tests/spec/scripting/setAttributeECR.svg", BROWSER_MEDIA, 3);
+		testNVErrIgnore("samples/tests/spec/scripting/setAttributeECR.svg", 3);
 	}
 
 	@Test
 	public void testScriptSetAttributePathPoly() throws TranscoderException, IOException {
-		testNVErrIgnore("samples/tests/spec/scripting/setAttributePathPoly.svg", BROWSER_MEDIA, 6);
+		testNVErrIgnore("samples/tests/spec/scripting/setAttributePathPoly.svg", 6);
 	}
 
 	@Test

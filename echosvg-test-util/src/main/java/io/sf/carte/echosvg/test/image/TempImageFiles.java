@@ -18,19 +18,19 @@
  */
 package io.sf.carte.echosvg.test.image;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
+import java.net.URI;
 import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
  * Produce image-based filenames.
  */
 public class TempImageFiles implements ImageFileBuilder {
 
-	private static final String TEST_IMAGES_PATH = "/reports/tests/test/images";
+	private static final String TEST_IMAGES_PATH = "reports/tests/test/images";
 
-	private final String projectBuildURL;
+	private final Path projectBuildPath;
 
 	private final String imageSubpath;
 
@@ -39,12 +39,12 @@ public class TempImageFiles implements ImageFileBuilder {
 	 * 
 	 * @param projectBuildURL the url to the project's build directory. You
 	 *                        generally have to call
-	 *                        {@link io.sf.carte.echosvg.test.TestUtil#getProjectBuildURL(Class, String)
+	 *                        {@link io.sf.carte.echosvg.test.TestUtil#getProjectBuildPath(Class, String)
 	 *                        TestUtil.getProjectBuildURL(Class, String)} to obtain
 	 *                        that. If {@code null}, then OS-supplied temporary
 	 *                        files will be used.
 	 */
-	public TempImageFiles(String projectBuildURL) {
+	public TempImageFiles(Path projectBuildURL) {
 		this(projectBuildURL, TEST_IMAGES_PATH);
 	}
 
@@ -53,21 +53,21 @@ public class TempImageFiles implements ImageFileBuilder {
 	 * 
 	 * @param projectBuildURL the url to the project's build directory. You
 	 *                        generally have to call
-	 *                        {@link io.sf.carte.echosvg.test.TestUtil#getProjectBuildURL(Class, String)
+	 *                        {@link io.sf.carte.echosvg.test.TestUtil#getProjectBuildPath(Class, String)
 	 *                        TestUtil.getProjectBuildURL(Class, String)} to obtain
 	 *                        that. If {@code null}, then OS-supplied temporary
 	 *                        files will be used.
 	 * @param imageSubpath    the subpath to images (for example in Gradle layout it
 	 *                        would be <code>/reports/tests/test/images</code>).
 	 */
-	public TempImageFiles(String projectBuildURL, String imageSubpath) {
+	public TempImageFiles(Path projectBuildURL, String imageSubpath) {
 		super();
-		this.projectBuildURL = projectBuildURL;
+		this.projectBuildPath = projectBuildURL;
 		this.imageSubpath = imageSubpath;
 	}
 
 	@Override
-	public File createImageFile(URL imageUrl, CharSequence fileSuffix, CharSequence dotExtension)
+	public Path createImageFile(URI imageUrl, CharSequence fileSuffix, CharSequence dotExtension)
 			throws IOException {
 		String path = imageUrl.getPath();
 		int idx = path.lastIndexOf('/');
@@ -86,22 +86,22 @@ public class TempImageFiles implements ImageFileBuilder {
 		StringBuilder buf = new StringBuilder(path.length() + fileSuffix.length() + dotExtension.length());
 		buf.append(path).append(fileSuffix).append(dotExtension);
 
-		return Files.createTempFile("TempImageFiles", buf.toString()).toFile();
+		return Files.createTempFile("TempImageFiles", buf.toString());
 	}
 
 	@Override
-	public File createImageFile(String imageNameWithExtension) throws IOException {
-		if (projectBuildURL != null) {
-			File buildDir = new File(projectBuildURL);
-			if (buildDir.exists()) {
-				File imgDir = new File(buildDir + imageSubpath);
-				if (imgDir.exists() || imgDir.mkdirs()) {
-					return new File(imgDir, imageNameWithExtension);
+	public Path createImageFile(String imageNameWithExtension) throws IOException {
+		if (projectBuildPath != null) {
+			if (Files.exists(projectBuildPath)) {
+				Path imgDir = projectBuildPath.resolve(imageSubpath);
+				if (!Files.exists(imgDir)) {
+					Files.createDirectories(imgDir);
 				}
+				return imgDir.resolve(imageNameWithExtension);
 			}
 		}
 
-		return Files.createTempFile("TempImageFiles", imageNameWithExtension).toFile();
+		return Files.createTempFile("TempImageFiles", imageNameWithExtension);
 	}
 
 }

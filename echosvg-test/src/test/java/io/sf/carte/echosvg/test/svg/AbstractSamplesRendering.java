@@ -20,7 +20,9 @@ package io.sf.carte.echosvg.test.svg;
 
 import java.io.IOException;
 
+import io.sf.carte.echosvg.bridge.UserAgent;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
+import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
 
 /**
  * Abstract base class to render SVG files, generally under the {@code samples}
@@ -96,14 +98,77 @@ public class AbstractSamplesRendering {
 	 * reference image.
 	 * </p>
 	 * 
+	 * @param file       the SVG file to test.
+	 * @param lang       the language.
+	 * @param validating if true, the SVG is validated.
+	 * @throws TranscoderException
+	 * @throws IOException         if an I/O error occurs.
+	 */
+	void testLang(String file, String lang, boolean validating) throws TranscoderException, IOException {
+		RenderingTest runner = new RenderingTest();
+		runner.setUserLanguage(lang);
+		runner.setValidating(validating);
+		runner.setFile(file);
+		runner.runTest(getBelowThresholdAllowed(), getOverThresholdAllowed());
+	}
+
+	/**
+	 * Test the rendering of a file with the given user language.
+	 * 
+	 * <p>
+	 * A small percentage of different pixels is allowed during the comparison to a
+	 * reference image.
+	 * </p>
+	 * 
 	 * @param file the SVG file to test.
 	 * @param lang the language.
 	 * @throws TranscoderException
 	 * @throws IOException         if an I/O error occurs.
 	 */
-	void test(String file, String lang) throws TranscoderException, IOException {
-		RenderingTest runner = new RenderingTest();
-		runner.setUserLanguage(lang);
+	void testLang(String file, String lang) throws TranscoderException, IOException {
+		testLang(file, lang, true);
+	}
+
+	/**
+	 * Test the rendering of a SVG file.
+	 * 
+	 * <p>
+	 * A small percentage of different pixels is allowed during the comparison to a
+	 * reference image.
+	 * </p>
+	 * 
+	 * @param file                 the SVG file to test.
+	 * @param media                the media, or {@code null} for {@code screen}.
+	 * @throws TranscoderException
+	 * @throws IOException         if an I/O error occurs.
+	 */
+	void testMedia(String file, String media)
+			throws TranscoderException, IOException {
+		testMedia(file, media, true);
+	}
+
+	/**
+	 * Test the rendering of a SVG file.
+	 * 
+	 * <p>
+	 * A small percentage of different pixels is allowed during the comparison to a
+	 * reference image.
+	 * </p>
+	 * 
+	 * @param file                 the SVG file to test.
+	 * @param media                the media, or {@code null} for {@code screen}.
+	 * @param validating           if true, the SVG is validated.
+	 * @throws TranscoderException
+	 * @throws IOException         if an I/O error occurs.
+	 */
+	void testMedia(String file, String media, boolean validating)
+			throws TranscoderException, IOException {
+		if (media == null) {
+			media = SVGRenderingAccuracyTest.DEFAULT_MEDIUM;
+		}
+		RenderingTest runner = createRenderingTest();
+		runner.setValidating(validating);
+		runner.setMedia(media);
 		runner.setFile(file);
 		runner.runTest(getBelowThresholdAllowed(), getOverThresholdAllowed());
 	}
@@ -123,11 +188,83 @@ public class AbstractSamplesRendering {
 	 */
 	void test(String file, boolean validating)
 			throws TranscoderException, IOException {
-		RenderingTest runner = new RenderingTest();
+		RenderingTest runner = createRenderingTest();
 		runner.setValidating(validating);
 		runner.setMedia(SVGRenderingAccuracyTest.DEFAULT_MEDIUM);
 		runner.setFile(file);
 		runner.runTest(getBelowThresholdAllowed(), getOverThresholdAllowed());
+	}
+
+	protected RenderingTest createRenderingTest() {
+		return new RenderingTest();
+	}
+
+	/**
+	 * Test the rendering of a SVG file.
+	 * 
+	 * <p>
+	 * A small percentage of different pixels is allowed during the comparison to a
+	 * reference image.
+	 * </p>
+	 * 
+	 * @param file                 the SVG file to test.
+	 * @param validating           if true, the SVG is validated.
+	 * @throws TranscoderException
+	 * @throws IOException         if an I/O error occurs.
+	 */
+	void testAllowExternal(String file, boolean validating)
+			throws TranscoderException, IOException {
+		RenderingTest runner = createAllowExternalRenderingTest();
+		runner.setValidating(validating);
+		runner.setMedia(SVGRenderingAccuracyTest.DEFAULT_MEDIUM);
+		runner.setFile(file);
+		runner.runTest(getBelowThresholdAllowed(), getOverThresholdAllowed());
+	}
+
+	protected RenderingTest createAllowExternalRenderingTest() {
+		return new AllowExternalRenderingTest();
+	}
+
+	static class AllowExternalRenderingTest extends RenderingTest {
+
+		@Override
+		ImageTranscoder createTestImageTranscoder() {
+			return new InternalPNGTranscoder() {
+
+				@Override
+				protected UserAgent createUserAgent() {
+					return new FailOnErrorTranscoderUserAgent() {
+
+						@Override
+						public boolean isAllowExternalResources() {
+							return true;
+						}
+
+					};
+				}
+
+			};
+		}
+
+	}
+
+	/**
+	 * Test the non-validating rendering of an SVG image in the default media,
+	 * ignoring reported errors.
+	 * 
+	 * <p>
+	 * A small percentage of different pixels is allowed during the comparison to a
+	 * reference image.
+	 * </p>
+	 * 
+	 * @param file               the SVG file to test.
+	 * @param expectedErrorCount the expected error count.
+	 * @throws TranscoderException
+	 * @throws IOException         if an I/O error occurs.
+	 */
+	void testNVErrIgnore(String file, int expectedErrorCount)
+			throws TranscoderException, IOException {
+		testErrIgnore(file, null, false, expectedErrorCount);
 	}
 
 	/**
@@ -168,11 +305,15 @@ public class AbstractSamplesRendering {
 	 */
 	void testErrIgnore(String file, String media, boolean validate, int expectedErrorCount)
 			throws TranscoderException, IOException {
-		RenderingTest runner = new ErrIgnoreTest(expectedErrorCount);
+		RenderingTest runner = createErrIgnoreRenderingTest(expectedErrorCount);
 		runner.setValidating(validate);
 		runner.setMedia(media);
 		runner.setFile(file);
 		runner.runTest(getBelowThresholdAllowed(), getOverThresholdAllowed());
+	}
+
+	protected RenderingTest createErrIgnoreRenderingTest(int expectedErrorCount) {
+		return new ErrIgnoreTest(expectedErrorCount);
 	}
 
 	void testAlternateSheet(String file, String alt, boolean validating)

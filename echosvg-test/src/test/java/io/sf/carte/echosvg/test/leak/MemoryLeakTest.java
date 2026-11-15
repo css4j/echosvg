@@ -19,6 +19,7 @@
 package io.sf.carte.echosvg.test.leak;
 
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -257,10 +258,12 @@ public abstract class MemoryLeakTest {
 			Arrays.toString(entries.toArray(new String[entries.size()]));
 	}
 
-	private static String resolveURI(String uri) throws MalformedURLException {
-		final String resName = TestLocations.PROJECT_ROOT_URL + uri;
-		URL url = new URL(resName);
-		return url.toExternalForm();
+	private static String resolveURI(String uri) {
+		try {
+			return TestLocations.resolveURI(uri).toString();
+		} catch (URISyntaxException e) {
+			throw new IllegalArgumentException(e);
+		}
 	}
 
 	public abstract String doSomething() throws Exception;

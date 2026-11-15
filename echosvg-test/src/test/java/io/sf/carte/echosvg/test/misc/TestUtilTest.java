@@ -22,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
+import java.nio.file.Path;
 
 import org.junit.jupiter.api.Test;
 
@@ -33,28 +34,29 @@ import io.sf.carte.echosvg.test.TestUtil;
 public class TestUtilTest {
 
 	@Test
-	public void testGetRootProjectURL() throws IOException {
-		String path = TestUtil.getRootProjectURL(getClass(), TestLocations.TEST_DIRNAME);
+	public void testGetRootProjectDir() throws IOException {
+		String path = TestUtil.getRootProjectPath(getClass(), TestLocations.TEST_DIRNAME)
+				.toString();
 		assertNotNull(path);
 		assertTrue(path.contains("echosvg"));
 	}
 
 	@Test
-	public void testGetRootProjectURLWrongClass() throws IOException {
+	public void testGetRootProjectDirWrongClass() throws IOException {
 		/*
 		 * We pass a class that isn't provided by EchoSVG so it must use CWD
 		 */
-		String path = TestUtil.getRootProjectURL(String.class, TestLocations.TEST_DIRNAME);
+		Path path = TestUtil.getRootProjectPath(String.class, TestLocations.TEST_DIRNAME);
 		assertNotNull(path);
-		assertTrue(path.contains("echosvg"));
+		assertTrue(path.toString().contains("echosvg"));
 	}
 
 	@Test
 	public void testGetProjectBuildURL() throws IOException {
-		String path = TestUtil.getProjectBuildURL(getClass(), TestLocations.TEST_DIRNAME);
+		Path path = TestUtil.getProjectBuildPath(getClass(), TestLocations.TEST_DIRNAME);
 		assertNotNull(path);
-		assertTrue(path.contains(TestLocations.TEST_DIRNAME), "Path must contain "
-				+ TestLocations.TEST_DIRNAME);
+		assertTrue(path.toString().contains(TestLocations.TEST_DIRNAME),
+				"Path must contain " + TestLocations.TEST_DIRNAME);
 	}
 
 	@Test
@@ -62,10 +64,10 @@ public class TestUtilTest {
 		/*
 		 * We pass a class that isn't provided by EchoSVG so it must use CWD
 		 */
-		String path = TestUtil.getProjectBuildURL(String.class, TestLocations.TEST_DIRNAME);
+		Path path = TestUtil.getProjectBuildPath(String.class, TestLocations.TEST_DIRNAME);
 		assertNotNull(path);
-		assertTrue(path.contains(TestLocations.TEST_DIRNAME), "Path must contain "
-				+ TestLocations.TEST_DIRNAME);
+		assertTrue(path.toString().contains(TestLocations.TEST_DIRNAME),
+				"Path must contain " + TestLocations.TEST_DIRNAME);
 	}
 
 }

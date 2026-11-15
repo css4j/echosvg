@@ -23,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.ByteArrayOutputStream;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -111,19 +112,21 @@ class TranscoderSecurityTest {
 		 * @throws MalformedURLException
 		 */
 		URL resolveURI(String fileName) throws MalformedURLException {
-			String uri;
+			URL url;
 			if (fileName.startsWith("io/sf")) {
-				URL url = getClass().getClassLoader().getResource(fileName);
+				url = getClass().getClassLoader().getResource(fileName);
 
 				if (url == null) {
 					fail("Failed to load: " + fileName);
 				}
-
-				uri = url.toExternalForm();
 			} else {
-				uri = TestLocations.PROJECT_ROOT_URL + fileName;
+				try {
+					url = TestLocations.resolveURI(fileName).toURL();
+				} catch (MalformedURLException | URISyntaxException e) {
+					throw new IllegalArgumentException(e);
+				}
 			}
-			return new URL(uri);
+			return url;
 		}
 
 	}

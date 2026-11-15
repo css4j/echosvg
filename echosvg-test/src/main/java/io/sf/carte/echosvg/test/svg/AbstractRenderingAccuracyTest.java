@@ -32,8 +32,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -105,20 +107,20 @@ public abstract class AbstractRenderingAccuracyTest {
 		configuration = ResourceBundle.getBundle(CONFIGURATION_RESOURCES, Locale.getDefault());
 	}
 
-	private final String PROJECT_ROOT_URL = TestUtil.getRootProjectURL(getClass(), getProjectName());
+	private final Path PROJECT_ROOT_DIR = TestUtil.getRootProjectPath(getClass(), getProjectName());
 
 	private final TempImageFiles tmpUtil = new TempImageFiles(
-			TestUtil.getProjectBuildURL(getClass(), getProjectName()));
+			TestUtil.getProjectBuildPath(getClass(), getProjectName()));
 
 	/**
-	 * The URL where the SVG can be found.
+	 * The URI where the SVG can be found.
 	 */
-	private URL svgURL;
+	private URI svgURL;
 
 	/**
-	 * The URL for the reference image
+	 * The URI for the reference image
 	 */
-	protected URL refImgURL;
+	protected URI refImgURL;
 
 	/**
 	 * Threshold to apply when comparing different pixels with
@@ -127,10 +129,10 @@ public abstract class AbstractRenderingAccuracyTest {
 	private final int pixelThreshold;
 
 	/**
-	 * A list of {@link URL}s of files containing an 'accepted' variation from the
-	 * reference image.
+	 * A list of of files containing an 'accepted' variation from the reference
+	 * image.
 	 */
-	protected List<URL> variationURLs;
+	protected List<Path> variationPaths;
 
 	/**
 	 * The file where the newly computed range variation should be saved.
@@ -143,10 +145,10 @@ public abstract class AbstractRenderingAccuracyTest {
 	private String savePlatformVariation;
 
 	/**
-	 * The File where the candidate reference should be saved if there is not
+	 * The Path where the candidate reference should be saved if there is not
 	 * candidate reference or if it cannot be opened.
 	 */
-	private File candidateReference;
+	private Path candidateReference;
 
 	/**
 	 * Temporary directory
@@ -178,19 +180,6 @@ public abstract class AbstractRenderingAccuracyTest {
 	}
 
 	/**
-	 * Constructor.
-	 * 
-	 * @param svgURL    the URL String for the SVG document being tested.
-	 * @param refImgURL the URL for the reference image.
-	 * @throws MalformedURLException 
-	 */
-	public AbstractRenderingAccuracyTest(int pixelThreshold, String svgURL, String refImgURL)
-			throws MalformedURLException {
-		this.pixelThreshold = pixelThreshold;
-		setInputAndRefURL(svgURL, refImgURL);
-	}
-
-	/**
 	 * For subclasses
 	 */
 	protected AbstractRenderingAccuracyTest(int pixelThreshold) {
@@ -200,9 +189,9 @@ public abstract class AbstractRenderingAccuracyTest {
 	/**
 	 * Sets the URLs for the input file and the reference image.
 	 * 
-	 * @throws MalformedURLException if any of the URLs are malformed.
+	 * @throws IllegalArgumentException if any of the URLs are malformed.
 	 */
-	public void setInputAndRefURL(String svgURL, String refImgURL) throws MalformedURLException {
+	public void setInputAndRefURL(URI svgURL, URI refImgURL) throws IllegalArgumentException {
 		if (svgURL == null) {
 			throw new IllegalArgumentException();
 		}
@@ -211,20 +200,19 @@ public abstract class AbstractRenderingAccuracyTest {
 			throw new IllegalArgumentException();
 		}
 
-		this.svgURL = resolveURL(svgURL);
-		this.refImgURL = resolveURL(refImgURL);
+		this.svgURL = svgURL;
+		this.refImgURL = refImgURL;
 	}
 
 	/**
 	 * Resolves the input string as a URL.
-	 * 
-	 * @throws MalformedURLException if the argument is not recognized as a URL.
 	 */
-	public URL resolveURL(String url) throws MalformedURLException {
-		if (url.startsWith("file:")) {
-			return new URL(url);
-		}
-		return new URL(PROJECT_ROOT_URL + url);
+	public URI resolveURI(String url) throws IllegalArgumentException {
+		return PROJECT_ROOT_DIR.resolve(url).toUri();
+	}
+
+	protected Path resolvePath(String relPath) throws IllegalArgumentException {
+		return PROJECT_ROOT_DIR.resolve(relPath);
 	}
 
 	/**
@@ -256,35 +244,24 @@ public abstract class AbstractRenderingAccuracyTest {
 		return savePlatformVariation;
 	}
 
-	public String[] getVariationURLs() {
-		if (variationURLs != null) {
-			return variationURLs.toArray(new String[0]);
-		}
-		return null;
-	}
-
 	/**
-	 * Adds a URL for an acceptable variation from the reference image.
+	 * Adds a path for an acceptable variation from the reference image.
 	 */
-	public void addVariationURL(String variationURL) {
-		if (this.variationURLs == null) {
-			this.variationURLs = new LinkedList<>();
+	public void addVariationPath(String variationPath) {
+		if (this.variationPaths == null) {
+			this.variationPaths = new LinkedList<>();
 		}
-		try {
-			this.variationURLs.add(resolveURL(variationURL));
-		} catch (MalformedURLException e) {
-			// no worries
-		}
+		this.variationPaths.add(resolvePath(variationPath));
 	}
 
 	/**
 	 * See {@link #candidateReference}
 	 */
-	public void setCandidateReference(File candidateReference) {
+	public void setCandidateReference(Path candidateReference) {
 		this.candidateReference = candidateReference;
 	}
 
-	public File getCandidateReference() {
+	public Path getCandidateReference() {
 		return candidateReference;
 	}
 
@@ -300,11 +277,7 @@ public abstract class AbstractRenderingAccuracyTest {
 	/**
 	 * Returns the URL of the SVG being rendered.
 	 */
-	public String getURI() {
-		return svgURL.toString();
-	}
-
-	protected URL getURL() {
+	public URI getURI() {
 		return svgURL;
 	}
 
@@ -350,32 +323,28 @@ public abstract class AbstractRenderingAccuracyTest {
 		// First, do clean-up
 		//
 		if (candidateReference != null) {
-			if (candidateReference.exists()) {
-				candidateReference.delete();
-			}
+			Files.deleteIfExists(candidateReference);
 		}
 
 		//
 		// Render the SVG image into a raster. We call an
 		// abstract method to convert the src into a raster in
 		// a temporary file.
-		File tmpFile = null;
+		Path tmpFile = null;
 
 		if (candidateReference != null) {
 			tmpFile = candidateReference;
-			if (!tmpFile.exists()) {
-				File parentDir = tmpFile.getParentFile();
-				if (!parentDir.exists()) {
-					if (!parentDir.mkdir()) {
-						throw new IOException("Could not create directory: " + parentDir.getAbsolutePath());
-					}
+			if (!Files.exists(tmpFile)) {
+				Path parentDir = tmpFile.getParent();
+				if (!Files.exists(parentDir)) {
+					Files.createDirectories(parentDir);
 				}
 			}
 		} else {
 			tmpFile = tmpUtil.createImageFile(svgURL, getImageSuffix(), IMAGE_FILE_DOT_EXTENSION);
 		}
 
-		try (FileOutputStream tmpFileOS = new FileOutputStream(tmpFile)) {
+		try (FileOutputStream tmpFileOS = new FileOutputStream(tmpFile.toFile())) {
 
 			// Call abstract method to encode svgURL to tmpFileOS as a
 			// raster.
@@ -395,7 +364,7 @@ public abstract class AbstractRenderingAccuracyTest {
 			//
 			// Everything worked out well.
 			//
-			tmpFile.delete();
+			Files.delete(tmpFile);
 			return;
 		}
 
@@ -404,7 +373,7 @@ public abstract class AbstractRenderingAccuracyTest {
 		// computed difference.
 		//
 		Variants variants = null;
-		if (variationURLs != null) {
+		if (variationPaths != null) {
 			// Reload the images, may have been changed during alpha pre-mult
 			ref = getImage(refImgURL);
 			gen = getImage(tmpFile);
@@ -417,7 +386,7 @@ public abstract class AbstractRenderingAccuracyTest {
 					matchDecodeMetadata(tmpFile);
 				}
 				// Everything worked out well, at least with variation.
-				tmpFile.delete();
+				Files.delete(tmpFile);
 				return;
 			} else if (variantResult == ImageComparator.VARIANT_ERROR) {
 				// If there is an error in any variant file, we want to know that
@@ -457,26 +426,26 @@ public abstract class AbstractRenderingAccuracyTest {
 		// b. One with the difference between the two images and the set
 		// of different pixels.
 		BufferedImage cmp = ImageComparator.createCompareImage(ref, gen);
-		File cmpFile = imageToFile(cmp, IMAGE_TYPE_COMPARISON);
-		File diffFile = imageToFile(diff, IMAGE_TYPE_DIFF);
+		Path cmpFile = imageToFile(cmp, IMAGE_TYPE_COMPARISON);
+		Path diffFile = imageToFile(diff, IMAGE_TYPE_DIFF);
 
 		if (candidateReference == null) {
-			tmpFile.delete();
+			Files.delete(tmpFile);
 		}
 
 		failTest("Rendering not accurate [" + ImageComparator.getResultDescription(result)
-				+ "], see generated images: " + diffFile.getAbsolutePath() + ", "
-				+ cmpFile.getAbsolutePath());
+				+ "], see generated images: " + diffFile.toAbsolutePath() + ", "
+				+ cmpFile.toAbsolutePath());
 	}
 
-	private void matchDecodeMetadata(File candFile) throws IOException {
+	private void matchDecodeMetadata(Path candFile) throws IOException {
 		PNGDecodeParam refParam = new PNGDecodeParam();
 		PNGDecodeParam candParam = new PNGDecodeParam();
 		refParam.setGenerateEncodeParam(true);
 		candParam.setGenerateEncodeParam(true);
 
-		decodeNative(refImgURL, refParam);
-		decodeNative(candFile.toURI().toURL(), candParam);
+		decodeNative(refImgURL.toURL(), refParam);
+		decodeNative(candFile.toUri().toURL(), candParam);
 
 		PNGEncodeParam refEnc = refParam.getEncodeParam();
 		PNGEncodeParam candEnc = candParam.getEncodeParam();
@@ -598,21 +567,21 @@ public abstract class AbstractRenderingAccuracyTest {
 
 		@Override
 		public int getVariantCount() {
-			return variationURLs.size();
+			return variationPaths.size();
 		}
 
 		@Override
 		public BufferedImage getVariantImage(int index, ColorSpace colorSpace) {
-			URL variationURL;
+			Path variationURL;
 			try {
-				variationURL = variationURLs.get(index);
+				variationURL = variationPaths.get(index);
 			} catch (IndexOutOfBoundsException e) {
 				return null;
 			}
 
 			InputStream variationURLStream;
 			try {
-				variationURLStream = variationURL.openStream();
+				variationURLStream = Files.newInputStream(variationURL);
 			} catch (IOException e) {
 				// Could not open variationURL stream. Just trace that
 				if (trace) {
@@ -670,7 +639,7 @@ public abstract class AbstractRenderingAccuracyTest {
 				allowedPercentOverThreshold);
 	}
 
-	protected abstract void encode(URL srcURL, FileOutputStream fos) throws TranscoderException, IOException;
+	protected abstract void encode(URI srcURL, FileOutputStream fos) throws TranscoderException, IOException;
 
 	/**
 	 * Saves an image in a given File
@@ -702,14 +671,14 @@ public abstract class AbstractRenderingAccuracyTest {
 	/**
 	 * Loads an image from a File
 	 */
-	private BufferedImage getImage(File file) throws IOException {
-		return getImage(file.toURI().toURL());
+	private BufferedImage getImage(Path file) throws IOException {
+		return getImage(file.toUri());
 	}
 
 	/**
 	 * Loads an image from a URL
 	 */
-	private BufferedImage getImage(URL url) throws IOException {
+	private BufferedImage getImage(URI url) throws IOException {
 		ImageTagRegistry reg = ImageTagRegistry.getRegistry();
 		Filter filt = reg.readURL(new ParsedURL(url));
 		if (filt == null)
@@ -730,10 +699,10 @@ public abstract class AbstractRenderingAccuracyTest {
 	 * component in the SVG url, then a temporary file is created with that name and
 	 * the imageType suffix in the temp directory of the test-reports directory.
 	 */
-	private File imageToFile(BufferedImage img, String imageType) throws IOException {
-		File imageFile = tmpUtil.createImageFile(svgURL, getImageSuffix() + imageType, IMAGE_FILE_DOT_EXTENSION);
+	private Path imageToFile(BufferedImage img, String imageType) throws IOException {
+		Path imageFile = tmpUtil.createImageFile(svgURL, getImageSuffix() + imageType, IMAGE_FILE_DOT_EXTENSION);
 
-		saveImage(img, imageFile);
+		saveImage(img, imageFile.toFile());
 
 		return imageFile;
 	}

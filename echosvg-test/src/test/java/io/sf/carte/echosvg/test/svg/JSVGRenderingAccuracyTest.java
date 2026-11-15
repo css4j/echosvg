@@ -24,7 +24,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URL;
+import java.net.URI;
 import java.util.List;
 
 import io.sf.carte.echosvg.swing.JSVGCanvas;
@@ -52,7 +52,7 @@ public class JSVGRenderingAccuracyTest extends RenderingTest implements JSVGCanv
 	public JSVGRenderingAccuracyTest() {
 	}
 
-	private URL srcURL;
+	private URI srcURL;
 	private FileOutputStream fos;
 	private boolean done;
 	private JSVGCanvasHandler handler = null;
@@ -62,7 +62,7 @@ public class JSVGRenderingAccuracyTest extends RenderingTest implements JSVGCanv
 	}
 
 	@Override
-	protected void encode(URL srcURL, FileOutputStream fos) throws IOException {
+	protected void encode(URI srcURL, FileOutputStream fos) throws IOException {
 		this.srcURL = srcURL;
 		this.fos = fos;
 

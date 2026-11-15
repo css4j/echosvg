@@ -18,9 +18,13 @@
  */
 package io.sf.carte.echosvg.test;
 
-import java.io.File;
-import java.net.MalformedURLException;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class TestUtil {
@@ -36,26 +40,65 @@ public class TestUtil {
 	 *                       executed.
 	 * @return the URL.
 	 */
-	public static String getRootProjectURL(Class<?> cl, String projectDirname) {
-		String resName = cl.getName().replace(".", "/") + ".class";
-		URL url = ResourceLoader.getInstance().getResource(cl, resName);
-		if (url == null) {
-			url = cwdURL();
-		}
-		String sUrl = url.toExternalForm();
+	public static URI getRootProjectURI(Class<?> cl, String projectDirname) {
+		URI url = rootProjectURI(cl);
+		String sUrl = url.getPath();
 		int testDirIdx = sUrl.lastIndexOf(projectDirname);
 		if (testDirIdx != -1) {
 			sUrl = sUrl.substring(0, testDirIdx);
-		} // If no projectDirname, we probably got the root via CWD
-		return sUrl;
+		} else {
+			// If no projectDirname, we probably got the root via CWD
+			return url;
+		}
+
+		try {
+			return new URI(url.getScheme(), url.getHost(), sUrl, null);
+		} catch (URISyntaxException e) {
+			throw new IllegalArgumentException(e);
+		}
 	}
 
-	private static URL cwdURL() {
-		try {
-			return Paths.get(".").toAbsolutePath().normalize().toUri().toURL();
-		} catch (MalformedURLException e) {
-			return null;
+	/**
+	 * Get the root project directory.
+	 * 
+	 * @param cl             a class provided by the project.
+	 * @param projectDirname the directory name of the subproject from which this is
+	 *                       executed.
+	 * @return the directory.
+	 */
+	public static Path getRootProjectPath(Class<?> cl, String projectDirname) {
+		URI url = rootProjectURI(cl);
+		String sUrl = url.getPath();
+		int testDirIdx = sUrl.lastIndexOf(projectDirname);
+		if (testDirIdx != -1) {
+			sUrl = sUrl.substring(0, testDirIdx);
+		} else {
+			// If no projectDirname, we probably got the root via CWD
+			return Paths.get(url);
 		}
+
+		try {
+			return Paths.get(new java.net.URI(url.getScheme(), url.getHost(), sUrl, null));
+		} catch (URISyntaxException e) {
+			throw new IllegalArgumentException(e);
+		}
+	}
+
+	private static URI rootProjectURI(Class<?> cl) {
+		String resName = cl.getName().replace(".", "/") + ".class";
+		URL url = ResourceLoader.getInstance().getResource(cl, resName);
+		if (url == null) {
+			return cwdURI().toUri();
+		}
+		try {
+			return url.toURI();
+		} catch (URISyntaxException e) {
+			throw new IllegalArgumentException(e);
+		}
+	}
+
+	private static Path cwdURI() {
+		return Paths.get(".").toAbsolutePath().normalize();
 	}
 
 	/**
@@ -66,34 +109,58 @@ public class TestUtil {
 	 *                       executed.
 	 * @return the URL.
 	 */
-	public static String getProjectBuildURL(Class<?> cl, String projectDirname) {
+	public static Path getProjectBuildPath(Class<?> cl, String projectDirname) {
 		String resName = cl.getName().replace(".", "/") + ".class";
 		URL url = ResourceLoader.getInstance().getResource(cl, resName);
-		String classUrl;
+		URI uri;
 		if (url == null) {
-			url = cwdURL();
-			File f = new File(url.getFile(), projectDirname);
-			if (f.exists()) {
-				// CWD is root directory
-				try {
-					url = new URL(url.getProtocol(), url.getHost(), url.getPort(), f.getAbsolutePath());
-				} catch (MalformedURLException e) {
-					return null;
-				}
-				classUrl = url.toExternalForm();
-			} else {
+			Path cwd = cwdURI();
+			Path f = cwd.resolve(projectDirname);
+			if (!Files.exists(f)) {
 				// CWD is the project directory instead of root
-				classUrl = url.toExternalForm();
-				if (classUrl.lastIndexOf(projectDirname) == -1) {
+				if (cwd.toString().lastIndexOf(projectDirname) == -1) {
 					return null;
 				}
-			}
+			} // CWD is root directory
+			uri = f.toUri();
 		} else {
-			classUrl = url.toExternalForm();
+			try {
+				uri = url.toURI();
+			} catch (URISyntaxException e) {
+				throw new IllegalStateException(e);
+			}
 		}
-		int testDirIdx = classUrl.lastIndexOf(projectDirname);
-		String buildDir = classUrl.substring(5, testDirIdx + projectDirname.length()) + "/build/";
-		return buildDir;
+		String classPath = uri.getPath();
+		int testDirIdx = classPath.lastIndexOf(projectDirname);
+		String projectDir = classPath.substring(0, testDirIdx + projectDirname.length());
+		try {
+			uri = new URI(uri.getScheme(), projectDir + "/build", null);
+		} catch (URISyntaxException e) {
+			throw new IllegalStateException(e);
+		}
+		return Paths.get(uri);
+	}
+
+	/**
+	 * Save {@code data} to a destination file.
+	 * 
+	 * @param data            the data to save.
+	 * @param destinationFile the file where data has to be stored.
+	 * @throws IOException
+	 */
+	public static void save(byte[] data, Path destinationFile) throws IOException {
+		if (destinationFile == null) {
+			return;
+		}
+
+		Path parentDir = destinationFile.getParent();
+		if (!Files.exists(parentDir)) {
+			Files.createDirectories(parentDir);
+		}
+
+		try (OutputStream os = Files.newOutputStream(destinationFile)) {
+			os.write(data);
+		}
 	}
 
 }

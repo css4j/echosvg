@@ -18,8 +18,7 @@
  */
 package io.sf.carte.echosvg.test.svg;
 
-import java.io.File;
-import java.net.MalformedURLException;
+import java.nio.file.Paths;
 
 /**
  * Base class for tests which take an additional parameter in addition to the
@@ -43,34 +42,38 @@ public class ParameterizedRenderingAccuracyTest extends RenderingTest {
 		super();
 	}
 
-	public void runTest(String uri, String parameter) throws MalformedURLException {
+	public void setParameter(String parameter) {
+		this.parameter = parameter;
+	}
 
+	public void runTest(String uri, String parameter) {
 		String svgFile = uri;
 
 		this.parameter = parameter;
 
 		String[] dirNfile = breakSVGFile(svgFile);
 
-		setInputAndRefURL(buildSVGURL(dirNfile[0], dirNfile[1], dirNfile[2]), buildRefImgURL(dirNfile[0], dirNfile[1]));
+		setInputAndRefURL(resolveURI(buildSVGURL(dirNfile[0], dirNfile[1], dirNfile[2])),
+				resolveURI(buildRefImgPath(dirNfile[0], dirNfile[1])));
 
-		String[] variationURLs = buildVariationURLs(dirNfile[0], dirNfile[1]);
+		String[] variationURLs = buildVariationPaths(dirNfile[0], dirNfile[1]);
 		for (String variationURL : variationURLs) {
-			addVariationURL(variationURL);
+			addVariationPath(variationURL);
 		}
 		buildSaveVariationPath(dirNfile[0], dirNfile[1]);
-		setCandidateReference(new File(buildCandidateReferenceFile(dirNfile[0], dirNfile[1])));
+		setCandidateReference(Paths.get(buildCandidateReferenceFile(dirNfile[0], dirNfile[1])));
 	}
 
 	/**
 	 * Gives a chance to the subclass to control the construction of the reference
-	 * PNG file from the svgFile name The refImgURL is built as: getRefImagePrefix()
+	 * PNG file from the svgFile name The refImgPath is built as: getRefImagePrefix()
 	 * + svgDir + getRefImageSuffix() + svgFile + parameter + getImageSuffix() +
 	 * PNG_EXTENSION
 	 */
 	@Override
-	protected String buildRefImgURL(String svgDir, String svgFile) {
-		return getRefImagePrefix() + svgDir + getRefImageSuffix() + svgFile + parameter + getImageSuffix()
-				+ PNG_EXTENSION;
+	protected String buildRefImgPath(String svgDir, String svgFile) {
+		return getRefImagePrefix() + svgDir + getRefImageSuffix() + svgFile + '_' + parameter
+				+ getImageSuffix() + PNG_EXTENSION;
 	}
 
 	/**
@@ -79,7 +82,7 @@ public class ParameterizedRenderingAccuracyTest extends RenderingTest {
 	 * + svgFile + parameter + getImageSuffix() + PNG_EXTENSION
 	 */
 	@Override
-	public String[] buildVariationURLs(String svgDir, String svgFile) {
+	public String[] buildVariationPaths(String svgDir, String svgFile) {
 		String[] platforms = getVariationPlatforms();
 		String[] urls = new String[platforms.length + 1];
 		urls[0] = getVariationPrefix() + svgDir + getVariationSuffix() + svgFile + parameter + getImageSuffix()

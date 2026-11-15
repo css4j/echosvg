@@ -23,7 +23,7 @@ import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 
@@ -44,6 +44,8 @@ public class TestFonts {
 	public static final String FONT_FAMILY_SERIF1 = "Newsreader";
 
 	public static final String FONT_FAMILY_MONOSPACED1 = "Ubuntu Mono";
+
+	private static final Path FONT_ABS_PATH = TestLocations.PROJECT_ROOT_DIR.resolve(FONT_PATH);
 
 	private static boolean fontsLoaded = false;
 
@@ -209,13 +211,12 @@ public class TestFonts {
 
 	public static void registerFont(int fontFormat, String fontFilename)
 			throws FontFormatException, IOException {
-		registerFont(fontFormat, TestLocations.PROJECT_ROOT_URL + FONT_PATH, fontFilename);
+		registerFont(fontFormat, FONT_ABS_PATH, fontFilename);
 	}
 
-	public static void registerFont(int fontFormat, String fontPathUrl, String fontFile)
+	public static void registerFont(int fontFormat, Path fontPathUrl, String fontFile)
 			throws FontFormatException, IOException {
-		URL url = new URL(fontPathUrl + fontFile);
-		File f = new File(url.getPath());
+		File f = fontPathUrl.resolve(fontFile).toFile();
 		Font baseFont = Font.createFont(fontFormat, f);
 
 		GraphicsEnvironment genv = GraphicsEnvironment.getLocalGraphicsEnvironment();

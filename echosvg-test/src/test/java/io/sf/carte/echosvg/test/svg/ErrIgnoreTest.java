@@ -19,7 +19,7 @@
 package io.sf.carte.echosvg.test.svg;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Element;
@@ -107,9 +107,8 @@ public class ErrIgnoreTest extends RenderingTest {
 				// Retrieve the broken link document
 				String templateUri;
 				try {
-					templateUri = TestLocations.resolveURL("samples/ref-me.svg")
-							.toExternalForm();
-				} catch (MalformedURLException ex) {
+					templateUri = TestLocations.resolveURI("samples/ref-me.svg").toString();
+				} catch (URISyntaxException ex) {
 					templateUri = "file:samples/ref-me.svg";
 				}
 

@@ -18,10 +18,14 @@
  */
 package io.sf.carte.echosvg.test.svg;
 
-import java.io.File;
-import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 import org.junit.jupiter.api.Test;
+
+import io.sf.carte.echosvg.test.misc.TestLocations;
 
 /**
  * Base class for tests which take an additional parameter in addition to the
@@ -33,36 +37,46 @@ import org.junit.jupiter.api.Test;
  */
 public class SVGReferenceRenderingAccuracyTest extends ParameterizedRenderingAccuracyTest {
 
-	protected String alias;
+	private String alias;
+
+	private String fragment;
+
+	protected String getAlias() {
+		return alias;
+	}
+
+	protected String getFragment() {
+		return fragment;
+	}
 
 	@Test
-	public void test1() throws MalformedURLException {
+	public void test1() throws URISyntaxException {
 		runTest("samples/anne.svg", "svgView(viewBox(0,0,100,200))", "ViewBox1");
 	}
 
 	@Test
-	public void test2() throws MalformedURLException {
+	public void test2() throws URISyntaxException {
 		runTest("samples/anne.svg", "svgView(viewBox(100,50,100,200))", "ViewBox2");
 	}
 
 	@Test
-	public void test3() throws MalformedURLException {
+	public void test3() throws URISyntaxException {
 		runTest("samples/anne.svg", "svgView(transform(translate(-100,-50)))", "Transform1");
 	}
 
 	@Test
-	public void test4() throws MalformedURLException {
+	public void test4() throws URISyntaxException {
 		runTest("samples/anne.svg", "svgView(transform(translate(225,250)rotate(45)translate(-225,-250)))",
 				"Transform2");
 	}
 
 	@Test
-	public void test5() throws MalformedURLException {
+	public void test5() throws URISyntaxException {
 		runTest("samples/anne.svg", "svgView(transform(rotate(45,225,250)))", "Transform3");
 	}
 
 	@Test
-	public void testCandyScale() throws MalformedURLException {
+	public void testCandyScale() throws URISyntaxException {
 		runTest("samples/batikCandy.svg", "svgView(transform(scale(0.01)))", "BumpMap1");
 	}
 
@@ -72,28 +86,25 @@ public class SVGReferenceRenderingAccuracyTest extends ParameterizedRenderingAcc
 	 * For example: <br>
 	 * samples/anne.svg#svgView(viewBox(0,0,100,100))-viewBox1
 	 * 
-	 * @throws MalformedURLException
+	 * @throws URISyntaxException
 	 */
-	public void runTest(String uri, String parameter, String alias) throws MalformedURLException {
+	public void runTest(String uri, String fragment, String alias) throws URISyntaxException {
 
 		this.alias = alias;
+
+		this.fragment = fragment;
 
 		String svgFile = uri;
 
 		String[] dirNfile = breakSVGFile(svgFile);
 
-		setInputAndRefURL(buildSVGURL(dirNfile[0], dirNfile[1]), buildRefImgURL(dirNfile[0], dirNfile[1]));
+		setInputAndRefURL(buildSVGURL(dirNfile[0], dirNfile[1]),
+				resolveURI(buildRefImgPath(dirNfile[0], dirNfile[1])));
+	}
 
-		String[] variationURLs = buildVariationURLs(dirNfile[0], dirNfile[1]);
-		for (String variationURL : variationURLs) {
-			addVariationURL(variationURL);
-		}
-		String vPath = buildSaveVariationPath(dirNfile[0], dirNfile[1]);
-		String saveRangeVariation = vPath + PNG_EXTENSION;
-		String savePlatformVariation = vPath + PLATFORM_VARIATION_SUFFIX + PNG_EXTENSION;
-		setSaveRangeVariation(saveRangeVariation);
-		setSavePlatformVariation(savePlatformVariation);
-		setCandidateReference(new File(buildCandidateReferenceFile(dirNfile[0], dirNfile[1])));
+	@Override
+	public void setFile(String id) throws IllegalArgumentException {
+		throw new IllegalStateException("Must use runTest()");
 	}
 
 	/**
@@ -101,35 +112,46 @@ public class SVGReferenceRenderingAccuracyTest extends ParameterizedRenderingAcc
 	 * svgURL is built as: getSVGURLPrefix() + svgDir + svgFile + SVG_EXTENSION +
 	 * "#" + parameter
 	 */
-	protected String buildSVGURL(String svgDir, String svgFile) {
-		return getSVGURLPrefix() + svgDir + svgFile + SVG_EXTENSION + "#" + parameter;
+	protected URI buildSVGURL(String svgDir, String svgFile) {
+		String path = TestLocations.PROJECT_ROOT_URI.getPath() + getSVGURLPrefix() + svgDir
+				+ svgFile + SVG_EXTENSION;
+		URI uri;
+		try {
+			uri = new URI("file", null, path, getFragment());
+		} catch (URISyntaxException e) {
+			throw new IllegalArgumentException("Could not obtain URI from " + svgFile);
+		}
+		return uri;
 	}
 
 	/**
 	 * Gives a chance to the subclass to control the construction of the reference
-	 * PNG file from the svgFile name The refImgURL is built as: getRefImagePrefix()
+	 * PNG file from the svgFile name The refImgPath is built as: getRefImagePrefix()
 	 * + svgDir + getRefImageSuffix() + svgFile
 	 */
 	@Override
-	protected String buildRefImgURL(String svgDir, String svgFile) {
-		return getRefImagePrefix() + svgDir + getRefImageSuffix() + svgFile + alias + PNG_EXTENSION;
+	protected String buildRefImgPath(String svgDir, String svgFile) {
+		return getRefImagePrefix() + svgDir + getRefImageSuffix()
+				+ URLEncoder.encode(svgFile, StandardCharsets.UTF_8) + alias + PNG_EXTENSION;
 	}
 
 	/**
 	 * Gives a chance to the subclass to control the construction of the variation
-	 * URL, which is built as: getVariationPrefix() + svgDir + getVariationSuffix()
+	 * path, which is built as: getVariationPrefix() + svgDir + getVariationSuffix()
 	 * + svgFile + parameter + PNG_EXTENSION
 	 */
 	@Override
-	public String[] buildVariationURLs(String svgDir, String svgFile) {
+	public String[] buildVariationPaths(String svgDir, String svgFile) {
 		String[] platforms = getVariationPlatforms();
-		String[] urls = new String[platforms.length + 1];
-		urls[0] = getVariationPrefix() + svgDir + getVariationSuffix() + svgFile + alias + PNG_EXTENSION;
+		String[] paths = new String[platforms.length + 1];
+		paths[0] = getVariationPrefix() + svgDir + getVariationSuffix()
+				+ URLEncoder.encode(svgFile, StandardCharsets.UTF_8) + alias + PNG_EXTENSION;
 		for (int i = 0; i < platforms.length; i++) {
-			urls[i + 1] = getVariationPrefix() + svgDir + getVariationSuffix() + svgFile + alias + '_' + platforms[i]
-					+ PNG_EXTENSION;
+			paths[i + 1] = getVariationPrefix() + svgDir + getVariationSuffix()
+					+ URLEncoder.encode(svgFile, StandardCharsets.UTF_8) + alias + '_'
+					+ platforms[i] + PNG_EXTENSION;
 		}
-		return urls;
+		return paths;
 	}
 
 	/**

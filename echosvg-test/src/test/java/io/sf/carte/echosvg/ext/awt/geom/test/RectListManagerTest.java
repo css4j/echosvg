@@ -30,8 +30,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -55,8 +58,8 @@ public class RectListManagerTest {
 	/**
 	 * Directory for reference files
 	 */
-	private static final String REFERENCE_DIR = TestLocations.PROJECT_ROOT_URL
-			+ "test-references/io/sf/carte/echosvg/ext/awt/geom/";
+	private static final URI REFERENCE_DIR = TestLocations.PROJECT_ROOT_URI
+			.resolve("test-references/io/sf/carte/echosvg/ext/awt/geom/");
 
 	//private static final String VARIATION_DIR = "variation/";
 
@@ -73,15 +76,11 @@ public class RectListManagerTest {
 	private static final String PRINT_PREF = "print";
 
 	/**
-	 * Resolves the input string. If it is an invalid
-	 * URL, an IllegalArgumentException is thrown.
+	 * Resolves the input string. If it is an invalid URL, an
+	 * IllegalArgumentException is thrown.
 	 */
-	private URL resolveURI(String url) {
-		try {
-			return new URL(REFERENCE_DIR + url);
-		} catch (MalformedURLException e) {
-			throw new IllegalArgumentException(url);
-		}
+	private URI resolveURI(String filename) {
+		return REFERENCE_DIR.resolve(URLEncoder.encode(filename, StandardCharsets.UTF_8));
 	}
 
 	@Test
@@ -102,17 +101,17 @@ public class RectListManagerTest {
 	 * @throws IOException 
 	 */
 	private void testRectListManager(String rectsFilename, String refFilename) throws IOException {
-		URL rects = null;
+		URI rects = null;
 		URL ref = null;
 		//URL var = null;
 		File can = null;
 
 		rects = resolveURI(rectsFilename);
-		ref = resolveURI(refFilename);
+		ref = resolveURI(refFilename).toURL();
 		// var = resolveURI(VARIATION_DIR+ref); // no variation
 		// file(s)
 
-		File parent = new File(resolveURI(CANDIDATE_DIR).getFile());
+		File parent = Paths.get(resolveURI(CANDIDATE_DIR)).toFile();
 		if (!parent.exists()) {
 			if (!parent.mkdir()) {
 				fail("Could not create candidate directory: " + parent.getAbsolutePath());
@@ -121,7 +120,7 @@ public class RectListManagerTest {
 		can = new File(parent, refFilename);
 
 		BufferedReader reader;
-		reader = new BufferedReader(new InputStreamReader(rects.openStream()));
+		reader = new BufferedReader(new InputStreamReader(rects.toURL().openStream()));
 
 		// Now write a candidate reference/variation file...
 		if (can.exists())

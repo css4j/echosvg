@@ -19,10 +19,11 @@
 package io.sf.carte.echosvg.svggen.test;
 
 import java.awt.Font;
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -87,11 +88,10 @@ public class SVGGraphics2DDOMTest {
 		SVGAccuracyTest test = new SVGAccuracyTest(painter, SVGGeneratorTest
 				.getReferenceURL(painter, SVGGeneratorTest.PLAIN_GENERATION_PREFIX, null));
 
-		String filename = new URL(SVGGeneratorTest.GENERATOR_REFERENCE_BASE
-				+ SVGGeneratorTest.CANDIDATE_REF_DIR + '/' + cl + SVGGeneratorTest.SVG_EXTENSION)
-						.getFile();
+		Path filename = Paths.get(SVGGeneratorTest.GENERATOR_REFERENCE_BASE,
+				SVGGeneratorTest.CANDIDATE_REF_DIR, cl + SVGGeneratorTest.SVG_EXTENSION);
 
-		test.setSaveSVG(new File(filename));
+		test.setSaveSVG(filename);
 
 		return test;
 	}

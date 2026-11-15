@@ -18,8 +18,8 @@
  */
 package io.sf.carte.echosvg.test.swing;
 
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
@@ -87,10 +87,10 @@ public class SwingMemoryLeakTest {
 
 	@Test
 	public void testNullSetSVGDocument() throws Exception {
-		URL svgURL;
+		URI svgURL;
 		try {
-			svgURL = TestLocations.resolveURL("samples/anne.svg");
-		} catch (MalformedURLException e) {
+			svgURL = TestLocations.resolveURI("samples/anne.svg");
+		} catch (URISyntaxException e) {
 			throw new IllegalArgumentException(e);
 		}
 
@@ -99,10 +99,10 @@ public class SwingMemoryLeakTest {
 
 	@Test
 	public void testNullURI() throws Exception {
-		URL svgURL;
+		URI svgURL;
 		try {
-			svgURL = TestLocations.resolveURL("samples/anne.svg");
-		} catch (MalformedURLException e) {
+			svgURL = TestLocations.resolveURI("samples/anne.svg");
+		} catch (URISyntaxException e) {
 			throw new IllegalArgumentException(e);
 		}
 
