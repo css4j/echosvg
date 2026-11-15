@@ -992,16 +992,17 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 	 * Returns a rectangle that represents the region defined by the specified
 	 * coordinates.
 	 *
-	 * @param xStr       the x coordinate of the region
-	 * @param yStr       the y coordinate of the region
-	 * @param wStr       the width of the region
-	 * @param hStr       the height of the region
-	 * @param xDefStr    the default x coordinate of the region
-	 * @param yDefStr    the default y coordinate of the region
-	 * @param wDefStr    the default width of the region
-	 * @param hDefStr    the default height of the region
-	 * @param targetNode the graphics node (needed for objectBoundingBox)
-	 * @param uctx       the unit processor context (needed for userSpaceOnUse)
+	 * @param xStr         the x coordinate of the region
+	 * @param yStr         the y coordinate of the region
+	 * @param wStr         the width of the region
+	 * @param hStr         the height of the region
+	 * @param unitsType    whether the units apply to user space or bounding box.
+	 * @param defXStr      the default x coordinate of the region
+	 * @param defYStr      the default y coordinate of the region
+	 * @param defWidthStr  the default width of the region
+	 * @param defHeightStr the default height of the region
+	 * @param targetNode   the graphics node (needed for objectBoundingBox)
+	 * @param uctx         the unit processor context (needed for userSpaceOnUse)
 	 */
 	protected static Rectangle2D convertRegion(String xStr, String yStr, String wStr, String hStr,
 			short unitsType, String defXStr, String defYStr, String defWidthStr,
