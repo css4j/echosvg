@@ -254,27 +254,27 @@ public class SamplesResvgPaintingTest extends SamplesResvgRendering {
 
 	@Test
 	public void testFillHexRGBColor() throws TranscoderException, IOException {
-		test("samples/resvg/tests/painting/fill/#RGB-color.svg");
+		test("samples/resvg/tests/painting/fill/Hex-RGB-color.svg");
 	}
 
 	@Test
 	public void testFillHexRGBA() throws TranscoderException, IOException {
-		test("samples/resvg/tests/painting/fill/#RGBA.svg");
+		test("samples/resvg/tests/painting/fill/Hex-RGBA.svg");
 	}
 
 	@Test
 	public void testFillHexRRGGBBColor() throws TranscoderException, IOException {
-		test("samples/resvg/tests/painting/fill/#RRGGBB-color.svg");
+		test("samples/resvg/tests/painting/fill/Hex-RRGGBB-color.svg");
 	}
 
 	@Test
 	public void testFillHexRRGGBBUppercaseColor() throws TranscoderException, IOException {
-		test("samples/resvg/tests/painting/fill/#RRGGBB-uppercase-color.svg");
+		test("samples/resvg/tests/painting/fill/Hex-RRGGBB-uppercase-color.svg");
 	}
 
 	@Test
 	public void testFillHexRRGGBBAA() throws TranscoderException, IOException {
-		test("samples/resvg/tests/painting/fill/#RRGGBBAA.svg");
+		test("samples/resvg/tests/painting/fill/Hex-RRGGBBAA.svg");
 	}
 
 	@Test
