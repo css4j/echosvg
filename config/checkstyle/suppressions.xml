@@ -48,6 +48,9 @@
   <!-- Disable line length checks in tests -->
   <suppress files="Test\.java$" checks="LineLength"/>
 
+  <!-- Allow unusual method names in resvg tests -->
+  <suppress files="[\\/]SamplesResvg.*Test\.java$" checks="MethodName"/>
+
   <!-- Header -->
   <suppress files="[\\/]PropertyDefinition\.java$" checks="RegexpHeader"/>
   <suppress files="[\\/]NodeXBL\.java$" checks="RegexpHeader"/>
