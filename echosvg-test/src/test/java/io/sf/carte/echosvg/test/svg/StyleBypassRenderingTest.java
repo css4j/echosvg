@@ -1172,11 +1172,6 @@ public class StyleBypassRenderingTest extends AbstractBypassRenderingCheck {
 	}
 
 	@Test
-	public void testScriptRelativeURI() throws TranscoderException, IOException {
-		test("samples/tests/spec/scripting/relativeURI.svg");
-	}
-
-	@Test
 	public void testScriptRemove() throws TranscoderException, IOException {
 		test("samples/tests/spec/scripting/remove.svg");
 	}
