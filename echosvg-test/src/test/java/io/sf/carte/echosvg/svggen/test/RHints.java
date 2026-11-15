@@ -25,7 +25,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 
 /**
- * This test validates the convertion of Java 2D RenderingHints into an SVG
+ * This test validates the conversion of Java 2D RenderingHints into an SVG
  * attributes.
  *
  * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>

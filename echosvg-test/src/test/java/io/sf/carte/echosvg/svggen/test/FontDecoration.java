@@ -36,7 +36,7 @@ import io.sf.carte.echosvg.ext.awt.color.StandardColorSpaces;
 import io.sf.carte.echosvg.test.misc.TestFonts;
 
 /**
- * This test validates the convertion of Java 2D text with profiled colors into
+ * This test validates the conversion of Java 2D text with profiled colors into
  * SVG Shapes, one of the capabilities of the SVGGraphics2D.
  *
  * @author See Git history.

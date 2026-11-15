@@ -32,7 +32,7 @@ import java.awt.geom.QuadCurve2D;
 import java.awt.geom.RoundRectangle2D;
 
 /**
- * This test validates the convertion of Java 2D shapes into SVG Shapes.
+ * This test validates the conversion of Java 2D shapes into SVG Shapes.
  *
  * @author <a href="mailto:vhardy@eng.sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
