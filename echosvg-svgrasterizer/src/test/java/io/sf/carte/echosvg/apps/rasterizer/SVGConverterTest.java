@@ -61,7 +61,7 @@ import io.sf.carte.echosvg.transcoder.image.PNGTranscoder;
  */
 public class SVGConverterTest {
 
-	private static final Path PROJECT_ROOT_URL = TestUtil.getRootProjectPath(SVGConverterTest.class,
+	private static final Path PROJECT_ROOT_DIR = TestUtil.getRootProjectPath(SVGConverterTest.class,
 			"echosvg-svgrasterizer");
 
 	static String resolveRelURI(String relPath) {
@@ -75,12 +75,12 @@ public class SVGConverterTest {
 	}
 
 	static URI resolveURI(String relPath) {
-		Path path = PROJECT_ROOT_URL.resolve(relPath);
+		Path path = PROJECT_ROOT_DIR.resolve(relPath);
 		return path.toUri();
 	}
 
 	static File resolveFile(String relPath) {
-		return PROJECT_ROOT_URL.resolve(relPath).toFile();
+		return PROJECT_ROOT_DIR.resolve(relPath).toFile();
 	}
 
 	///////////////////////////////////////////////////////////////////////
