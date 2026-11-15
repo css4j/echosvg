@@ -44,7 +44,8 @@ public class Rescale implements Painter {
 		//
 		// Load Image
 		//
-		URL url = getClass().getClassLoader().getResource("io/sf/carte/echosvg/svggen/resources/vangogh.png");
+		URL url = Rescale.class.getResource("/io/sf/carte/echosvg/svggen/resources/vangogh.png");
+		assert url != null;
 		Image image = Toolkit.getDefaultToolkit().createImage(url);
 		MediaTracker tracker = new MediaTracker(new Button(""));
 		tracker.addImage(image, 0);
