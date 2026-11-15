@@ -23,8 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
 import java.util.StringTokenizer;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -148,18 +147,12 @@ public class ExternalResourcesTest implements ErrorConstants {
 	String svgURL;
 
 	/**
-	 * Resolves the input string. If it is an invalid
-	 * URL, an IllegalArgumentException is thrown.
+	 * Resolves the input string. If it is an invalid URL, an
+	 * IllegalArgumentException is thrown.
 	 */
 	private String resolveURL(String basename) {
-		final String resName = TestLocations.PROJECT_ROOT_URL + FILE_DIR + basename + ".svg";
-		URL url;
-		try {
-			url = new URL(resName);
-		} catch (MalformedURLException e) {
-			throw new IllegalArgumentException(resName);
-		}
-		return url.toExternalForm();
+		URI uri = TestLocations.PROJECT_ROOT_URI.resolve(FILE_DIR).resolve(basename + ".svg");
+		return uri.toString();
 	}
 
 	@BeforeAll

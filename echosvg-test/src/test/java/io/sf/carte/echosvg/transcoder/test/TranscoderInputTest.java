@@ -56,7 +56,8 @@ import io.sf.carte.echosvg.util.SVGConstants;
  */
 public class TranscoderInputTest {
 
-	private static final String TEST_URI = TestLocations.PROJECT_ROOT_URL + "samples/anne.svg";
+	private static final String TEST_URI = TestLocations.PROJECT_ROOT_URI
+			.resolve("samples/anne.svg").toString();
 
 	@Test
 	public void test() throws Exception {

@@ -104,7 +104,7 @@ public class ImageIOJPEGImageWriterTest extends AbstractImageWriterCheck<Object>
 			if (isRef == null) {
 				// No reference
 				ImageFileBuilder tmpUtil = new TempImageFiles(
-						TestUtil.getProjectBuildURL(getClass(), TestLocations.TEST_DIRNAME));
+						TestUtil.getProjectBuildPath(getClass(), TestLocations.TEST_DIRNAME));
 				bytesToFile(cand, tmpUtil, baseName, "_candidate");
 				throw new FileNotFoundException("Cannot find reference resource at " + resourcePath(baseName));
 			}

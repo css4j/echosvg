@@ -22,7 +22,6 @@ package io.sf.carte.echosvg.gvt.test;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Element;
@@ -66,7 +65,8 @@ public class TextSelectionTest extends JSVGRenderingAccuracyTest {
 	@Test
 	public void testTextSelectionVerticalTextOnPath() throws IOException, TranscoderException {
 		runTextSelectionTest("samples/tests/spec/text/verticalTextOnPath.svg", "supersub", 3, 18);
-		runTextSelectionTest("samples/tests/spec/text/verticalTextOnPath.svg", "beforeafter", 0, 28);
+		runTextSelectionTest("samples/tests/spec/text/verticalTextOnPath.svg", "beforeafter", 0,
+				28);
 		runTextSelectionTest("samples/tests/spec/text/verticalTextOnPath.svg", "negpos", 3, 17);
 		runTextSelectionTest("samples/tests/spec/text/verticalTextOnPath.svg", "orient0", 3, 18);
 		runTextSelectionTest("samples/tests/spec/text/verticalTextOnPath.svg", "orient90", 3, 18);
@@ -81,9 +81,10 @@ public class TextSelectionTest extends JSVGRenderingAccuracyTest {
 	 * @param start  The first character to select
 	 * @param end    The last character to select
 	 * @param file   The reference file.
-	 * @throws MalformedURLException 
+	 * @throws IllegalArgumentException
 	 */
-	public void runTextSelectionTest(String file, String textID, int start, int end) throws MalformedURLException {
+	public void runTextSelectionTest(String file, String textID, int start, int end)
+			throws IllegalArgumentException {
 		this.textID = textID;
 		this.start = start;
 		this.end = end;
@@ -91,39 +92,41 @@ public class TextSelectionTest extends JSVGRenderingAccuracyTest {
 	}
 
 	@Override
-	protected String buildRefImgURL(String svgDir, String svgFile) {
-		return getRefImagePrefix() + svgDir + getRefImageSuffix() + svgFile + '-' + textID + '-' + start + '-' + end
-				+ PNG_EXTENSION;
+	protected String buildRefImgPath(String svgDir, String svgFile) {
+		return getRefImagePrefix() + svgDir + getRefImageSuffix() + svgFile + '-' + textID + '-'
+				+ start + '-' + end + PNG_EXTENSION;
 	}
 
 	@Override
-	public String[] buildVariationURLs(String svgDir, String svgFile) {
-		return new String[] { getVariationPrefix() + svgDir + getVariationSuffix() + svgFile + '-' + textID + '-'
-				+ start + '-' + end + PNG_EXTENSION };
+	public String[] buildVariationPaths(String svgDir, String svgFile) {
+		return new String[] { getVariationPrefix() + svgDir + getVariationSuffix() + svgFile + '-'
+				+ textID + '-' + start + '-' + end + PNG_EXTENSION };
 
 	}
 
 	@Override
 	protected String buildSaveVariationPath(String svgDir, String svgFile) {
-		return getSaveVariationPrefix() + svgDir + getSaveVariationSuffix() + svgFile + '-' + textID + '-' + start + '-'
-				+ end;
+		return getSaveVariationPrefix() + svgDir + getSaveVariationSuffix() + svgFile + '-' + textID
+				+ '-' + start + '-' + end;
 	}
 
 	@Override
 	public String buildCandidateReferenceFile(String svgDir, String svgFile) {
-		return getCandidateReferencePrefix() + svgDir + getCandidateReferenceSuffix() + svgFile + '-' + textID + '-'
-				+ start + '-' + end + PNG_EXTENSION;
+		return getCandidateReferencePrefix() + svgDir + getCandidateReferenceSuffix() + svgFile
+				+ '-' + textID + '-' + start + '-' + end + PNG_EXTENSION;
 	}
 
 	@Override
 	protected JSVGCanvasHandler createCanvasHandler() {
 		return new JSVGCanvasHandler(this, this) {
+
 			@Override
 			public JSVGCanvas createCanvas() {
 				JSVGCanvas ret = new JSVGCanvas();
 				ret.setDocumentState(JSVGComponent.ALWAYS_DYNAMIC);
 				return ret;
 			}
+
 		};
 	}
 

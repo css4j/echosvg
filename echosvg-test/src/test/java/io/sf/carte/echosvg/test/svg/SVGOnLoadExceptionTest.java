@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.io.File;
 import java.io.FilePermission;
 import java.io.IOException;
-import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.security.AccessControlContext;
 import java.security.AccessController;
@@ -259,15 +259,9 @@ public class SVGOnLoadExceptionTest {
 	 * URL, an IllegalArgumentException is thrown.
 	 */
 	private void setDocumentURL(String id) {
-		final String resName = TestLocations.PROJECT_ROOT_URL + FILE_DIR + id + SVG_EXTENSION;
-		URL urlRes;
-		try {
-			urlRes = new URL(resName);
-		} catch (MalformedURLException e) {
-			throw new IllegalArgumentException(id);
-		}
-		fileName = urlRes.getFile();
-		svgURL = urlRes.toExternalForm();
+		URI urlRes = TestLocations.PROJECT_ROOT_URI.resolve(FILE_DIR).resolve(id + SVG_EXTENSION);
+		fileName = urlRes.getPath();
+		svgURL = urlRes.toString();
 	}
 
 	/**
@@ -275,14 +269,8 @@ public class SVGOnLoadExceptionTest {
 	 * URL, an IllegalArgumentException is thrown.
 	 */
 	protected String resolveURL(String resourceURI) {
-		final String resName = TestLocations.PROJECT_ROOT_URL + resourceURI;
-		URL urlRes;
-		try {
-			urlRes = new URL(resName);
-		} catch (MalformedURLException e) {
-			throw new IllegalArgumentException(resourceURI);
-		}
-		return urlRes.toExternalForm();
+		URI uri = TestLocations.PROJECT_ROOT_URI.resolve(resourceURI);
+		return uri.toString();
 	}
 
 	/**

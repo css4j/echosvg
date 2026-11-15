@@ -21,12 +21,12 @@ package io.sf.carte.echosvg.test.image;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageTagRegistry;
@@ -56,13 +56,13 @@ public class ImageCompareUtil {
 	 * URL for the first image to be compared.
 	 */
 	private String urlAStr;
-	private URL urlA;
+	private URI urlA;
 
 	/**
 	 * URL for the second image to be compared
 	 */
 	private String urlBStr;
-	private URL urlB;
+	private URI urlB;
 
 	private final ImageFileBuilder filenameUtil;
 
@@ -96,10 +96,10 @@ public class ImageCompareUtil {
 	 * @param pixelThreshold the pixel threshold to be used in comparisons.
 	 * @param urlA           the URL to the first image.
 	 * @param urlB           the URL to the second image.
-	 * @throws MalformedURLException if any of the URLs are malformed.
+	 * @throws IllegalArgumentException if any of the URLs are null or malformed.
 	 */
 	public ImageCompareUtil(ImageFileBuilder fileUtil, int pixelThreshold, String urlA, String urlB)
-			throws MalformedURLException {
+			throws IllegalArgumentException {
 		this.filenameUtil = fileUtil;
 		this.pixelThreshold = pixelThreshold;
 		urlAStr = urlA;
@@ -112,9 +112,9 @@ public class ImageCompareUtil {
 	 * 
 	 * @param urlA the URL to the first image.
 	 * @param urlB the URL to the second image.
-	 * @throws MalformedURLException if any of the URLs are malformed.
+	 * @throws IllegalArgumentException if any of the URLs are null or malformed.
 	 */
-	public void setImageURLs(String urlA, String urlB) throws MalformedURLException {
+	public void setImageURLs(String urlA, String urlB) throws IllegalArgumentException {
 		if (urlA == null) {
 			throw new IllegalArgumentException();
 		}
@@ -133,19 +133,19 @@ public class ImageCompareUtil {
 	 * URL. Otherwise, the string is supposed to be a URL.
 	 * 
 	 * @param urlStr the input string.
-	 * @throws MalformedURLException if no URL could be formed.
+	 * @throws IllegalArgumentException if no URL could be formed.
 	 */
-	private URL resolveURL(String urlStr) throws MalformedURLException {
-		URL url;
+	private URI resolveURL(String urlStr) {
+		URI url;
 		try {
-			url = new URL(urlStr);
-		} catch (MalformedURLException e) {
+			url = new URI(urlStr);
+		} catch (URISyntaxException e) {
 			// Maybe a file
-			File file = new File(urlStr);
-			if (file.exists()) {
-				url = file.toURI().toURL();
+			Path path = Path.of(urlStr);
+			if (Files.exists(path)) {
+				url = path.toUri();
 			} else {
-				throw e;
+				throw new IllegalArgumentException(e);
 			}
 		}
 
@@ -191,11 +191,11 @@ public class ImageCompareUtil {
 		BufferedImage diff = ImageComparator.createDiffImage(imageA, imageB);
 		BufferedImage cmp = ImageComparator.createCompareImage(imageA, imageB);
 
-		File tmpDiff = imageToFile(diff, IMAGE_TYPE_DIFFERENCE);
-		File tmpCmp = imageToFile(cmp, IMAGE_TYPE_COMPARISON);
+		Path tmpDiff = imageToFile(diff, IMAGE_TYPE_DIFFERENCE);
+		Path tmpCmp = imageToFile(cmp, IMAGE_TYPE_COMPARISON);
 
 		return "Images are different [" + ImageComparator.getResultDescription(result) + "]. Comp: "
-				+ tmpCmp.getAbsolutePath() + " diff: " + tmpDiff.getAbsolutePath();
+				+ tmpCmp.toAbsolutePath() + " diff: " + tmpDiff.toAbsolutePath();
 
 	}
 
@@ -208,14 +208,14 @@ public class ImageCompareUtil {
 	/**
 	 * Creates a temporary File into which the input image is saved.
 	 */
-	private File imageToFile(BufferedImage img, String imageType) throws IOException {
+	private Path imageToFile(BufferedImage img, String imageType) throws IOException {
 
-		File imageFile = obtainDiffCmpFilename(urlA, imageType);
+		Path imageFile = obtainDiffCmpFilename(urlA, imageType);
 		//imageFile.deleteOnExit();
 
 		ImageWriter writer = ImageWriterRegistry.getInstance().getWriterFor("image/png");
 
-		try (OutputStream out = new FileOutputStream(imageFile)) {
+		try (OutputStream out = Files.newOutputStream(imageFile)) {
 			writer.writeImage(img, out);
 		}
 
@@ -226,14 +226,14 @@ public class ImageCompareUtil {
 	/**
 	 * Creates a temporary File into which the input image is saved.
 	 */
-	private File obtainDiffCmpFilename(URL pngURL, String imageType) throws IOException {
+	private Path obtainDiffCmpFilename(URI pngURL, String imageType) throws IOException {
 		return filenameUtil.createImageFile(pngURL, imageType, ".png");
 	}
 
 	/**
 	 * Loads an image from a URL
 	 */
-	private BufferedImage getImage(URL url) {
+	private BufferedImage getImage(URI url) {
 		ImageTagRegistry reg = ImageTagRegistry.getRegistry();
 		Filter filt = reg.readURL(new ParsedURL(url));
 		if (filt == null) {

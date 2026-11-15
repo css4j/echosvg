@@ -36,6 +36,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Map;
@@ -77,15 +78,14 @@ public abstract class AbstractImageTranscoderTest {
 	}
 
 	/**
-	 * Resolves the input string as a URL. If it is an invalid
-	 * URI, an IllegalArgumentException is thrown.
+	 * Resolves the input string as a URL. If it is an invalid URI, an
+	 * IllegalArgumentException is thrown.
 	 */
 	URL resolveURI(String url) {
-		url = TestLocations.PROJECT_ROOT_URL + url;
 		try {
-			return new URL(url);
-		} catch (MalformedURLException e) {
-			throw new IllegalArgumentException(url);
+			return TestLocations.resolveURI(url).toURL();
+		} catch (MalformedURLException | URISyntaxException e) {
+			throw new IllegalArgumentException(e);
 		}
 	}
 

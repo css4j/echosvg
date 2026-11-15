@@ -18,10 +18,10 @@
  */
 package io.sf.carte.echosvg.test.svg;
 
-import java.io.File;
-import java.net.MalformedURLException;
+import java.net.URI;
 
 import io.sf.carte.echosvg.test.misc.ScriptUtil;
+import io.sf.carte.echosvg.test.misc.TestLocations;
 
 /**
  * Convenience class for creating a SVGRenderingAccuracyTest with predefined
@@ -55,33 +55,41 @@ public abstract class PreconfiguredRenderingTest extends SVGRenderingAccuracyTes
 	/**
 	 * For preconfigured tests, the configuration has to be derived from the test
 	 * identifier. The identifier should characterize the SVG file to be tested.
-	 * 
-	 * @throws MalformedURLException if any of the URLs are malformed.
 	 */
 	@Override
-	public void setInputAndRefURL(String svgURL, String refImgURL) throws MalformedURLException {
+	public void setInputAndRefURL(URI svgURL, URI refImgURL) {
 		super.setInputAndRefURL(svgURL, refImgURL);
-		setFile(getURL().getFile());
+
+		String relSvgFile = TestLocations.PROJECT_ROOT_URI.relativize(getURI()).getPath();
+		String[] dirNfile = breakSVGFile(relSvgFile);
+
+		setVariations(dirNfile);
 	}
 
-	public void setFile(String id) throws MalformedURLException {
+	public void setFile(String id) throws IllegalArgumentException {
 		String svgFile = id;
 
 		String[] dirNfile = breakSVGFile(svgFile);
 
-		super.setInputAndRefURL(buildSVGURL(dirNfile[0], dirNfile[1], dirNfile[2]),
-				buildRefImgURL(dirNfile[0], dirNfile[1]));
+		super.setInputAndRefURL(resolveURI(buildSVGURL(dirNfile[0], dirNfile[1], dirNfile[2])),
+				resolveURI(buildRefImgPath(dirNfile[0], dirNfile[1])));
 
-		String[] variationURLs = buildVariationURLs(dirNfile[0], dirNfile[1]);
-		for (String variationURL : variationURLs) {
-			addVariationURL(variationURL);
+		setVariations(dirNfile);
+	}
+
+	protected void setVariations(String[] dirNfile) {
+		String[] variationPaths = buildVariationPaths(dirNfile[0], dirNfile[1]);
+		for (String variationPath : variationPaths) {
+			addVariationPath(variationPath);
 		}
 		String vpath = buildSaveVariationPath(dirNfile[0], dirNfile[1]);
 		String rangeVariation = vpath + PNG_EXTENSION;
 		String platformVariation = vpath + PLATFORM_VARIATION_SUFFIX + PNG_EXTENSION;
-		setSaveRangeVariation(resolveURL(rangeVariation).getPath());
-		setSavePlatformVariation(resolveURL(platformVariation).getPath());
-		setCandidateReference(new File(resolveURL(buildCandidateReferenceFile(dirNfile[0], dirNfile[1])).getPath()));
+		setSaveRangeVariation(resolveURI(rangeVariation).getPath());
+		setSavePlatformVariation(resolveURI(platformVariation).getPath());
+
+		setCandidateReference(
+				resolvePath(buildCandidateReferenceFile(dirNfile[0], dirNfile[1])));
 	}
 
 	/**
@@ -89,7 +97,7 @@ public abstract class PreconfiguredRenderingTest extends SVGRenderingAccuracyTes
 	 * test id, which is the relevant identifier for the test user.
 	 */
 	public String getName() {
-		return getURI();
+		return getURI().toString();
 	}
 
 	/**
@@ -104,10 +112,10 @@ public abstract class PreconfiguredRenderingTest extends SVGRenderingAccuracyTes
 
 	/**
 	 * Gives a chance to the subclass to control the construction of the reference
-	 * PNG file from the svgFile name The refImgURL is built as: getRefImagePrefix()
+	 * PNG file from the svgFile name The refImgPath is built as: getRefImagePrefix()
 	 * + svgDir + getRefImageSuffix() + svgFile
 	 */
-	protected String buildRefImgURL(String svgDir, String svgFile) {
+	protected String buildRefImgPath(String svgDir, String svgFile) {
 		String refPrefix = getRefImagePrefix();
 		String refSuffix = getRefImageSuffix();
 		CharSequence imgSuffix = getImageSuffix();
@@ -128,18 +136,19 @@ public abstract class PreconfiguredRenderingTest extends SVGRenderingAccuracyTes
 
 	/**
 	 * Gives a chance to the subclass to control the construction of the variation
-	 * URL, which is built as: getVariationPrefix() + svgDir + getVariationSuffix()
-	 * + svgFile + PNG_EXTENSION
+	 * paths, which are built as: getVariationPrefix() + svgDir +
+	 * getVariationSuffix() + svgFile + PNG_EXTENSION
 	 */
-	public String[] buildVariationURLs(String svgDir, String svgFile) {
+	public String[] buildVariationPaths(String svgDir, String svgFile) {
 		String[] platforms = getVariationPlatforms();
-		String[] urls = new String[platforms.length + 1];
-		urls[0] = getVariationPrefix() + svgDir + getVariationSuffix() + svgFile + getImageSuffix() + PNG_EXTENSION;
+		String[] paths = new String[platforms.length + 1];
+		paths[0] = getVariationPrefix() + svgDir + getVariationSuffix() + svgFile + getImageSuffix()
+				+ PNG_EXTENSION;
 		for (int i = 0; i < platforms.length; i++) {
-			urls[i + 1] = getVariationPrefix() + svgDir + getVariationSuffix() + svgFile + getImageSuffix() + '_'
-					+ platforms[i] + PNG_EXTENSION;
+			paths[i + 1] = getVariationPrefix() + svgDir + getVariationSuffix() + svgFile
+					+ getImageSuffix() + '_' + platforms[i] + PNG_EXTENSION;
 		}
-		return urls;
+		return paths;
 	}
 
 	protected abstract String getVariationPrefix();
@@ -150,11 +159,12 @@ public abstract class PreconfiguredRenderingTest extends SVGRenderingAccuracyTes
 
 	/**
 	 * Gives a chance to the subclass to control the construction of the
-	 * saveVariation URL, which is built as: getSaveVariationPrefix() + svgDir +
+	 * saveVariation path, which is built as: getSaveVariationPrefix() + svgDir +
 	 * getSaveVariationSuffix() + svgFile, without PNG_EXTENSION
 	 */
 	protected String buildSaveVariationPath(String svgDir, String svgFile) {
-		return getSaveVariationPrefix() + svgDir + getSaveVariationSuffix() + svgFile + getImageSuffix();
+		return getSaveVariationPrefix() + svgDir + getSaveVariationSuffix() + svgFile
+				+ getImageSuffix();
 	}
 
 	protected abstract String getSaveVariationPrefix();
@@ -163,12 +173,12 @@ public abstract class PreconfiguredRenderingTest extends SVGRenderingAccuracyTes
 
 	/**
 	 * Gives a chance to the subclass to control the construction of the
-	 * candidateReference URL, which is built as: getCandidatereferencePrefix() +
+	 * candidateReference path, which is built as: getCandidatereferencePrefix() +
 	 * svgDir + getCandidatereferenceSuffix() + svgFile + PNG_EXTENSION
 	 */
 	public String buildCandidateReferenceFile(String svgDir, String svgFile) {
-		return getCandidateReferencePrefix() + svgDir + getCandidateReferenceSuffix() + svgFile + getImageSuffix()
-				+ PNG_EXTENSION;
+		return getCandidateReferencePrefix() + svgDir + getCandidateReferenceSuffix() + svgFile
+				+ getImageSuffix() + PNG_EXTENSION;
 	}
 
 	protected abstract String getCandidateReferencePrefix();

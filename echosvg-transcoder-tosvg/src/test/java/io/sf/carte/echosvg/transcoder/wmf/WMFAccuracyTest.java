@@ -17,17 +17,19 @@
 
  */
 package io.sf.carte.echosvg.transcoder.wmf;
+
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.awt.GraphicsEnvironment;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 
@@ -60,11 +62,11 @@ import io.sf.carte.echosvg.transcoder.wmf.tosvg.WMFTranscoder;
  */
 public class WMFAccuracyTest {
 
-	private static final String PROJECT_ROOT_URL = TestUtil.getRootProjectURL(WMFAccuracyTest.class,
+	private static final Path PROJECT_ROOT_DIR = TestUtil.getRootProjectPath(WMFAccuracyTest.class,
 			"echosvg-transcoder-tosvg");
 
-	private static final String GENERATOR_REFERENCE_BASE = PROJECT_ROOT_URL
-			+ "test-references/io/sf/carte/echosvg/transcoder/wmf";
+	private static final Path GENERATOR_REFERENCE_BASE = PROJECT_ROOT_DIR.resolve(
+			"test-references/io/sf/carte/echosvg/transcoder/wmf");
 
 	private static final String CANDIDATE_REF_DIR = "candidate";
 
@@ -82,7 +84,7 @@ public class WMFAccuracyTest {
 	/**
 	 * Painter which performs an arbitrary rendering sequence.
 	 */
-	private URL wmfURL;
+	private URI wmfURL;
 
 	/**
 	 * Reference SVG URL
@@ -92,7 +94,7 @@ public class WMFAccuracyTest {
 	/**
 	 * File where the generated SVG might be saved
 	 */
-	private File saveSVG;
+	private Path saveSVG;
 
 	@Test
 	public void testBlackShapes() throws IOException, TranscoderException {
@@ -165,11 +167,10 @@ public class WMFAccuracyTest {
 
 		String[] dirNfile = breakWMFFile(wmfFile);
 
-		wmfURL = new URL(PROJECT_ROOT_URL + dirNfile[0] + dirNfile[1] + dirNfile[2]);
-		refURL = new URL(GENERATOR_REFERENCE_BASE + '/' + dirNfile[1] + SVG_EXTENSION);
-		String saveURL = new URL(GENERATOR_REFERENCE_BASE + '/' + CANDIDATE_REF_DIR + "/" + dirNfile[1]
-				+ SVG_EXTENSION).getFile();
-		saveSVG = new File(saveURL);
+		wmfURL = PROJECT_ROOT_DIR.resolve(dirNfile[0] + dirNfile[1] + dirNfile[2]).toUri();
+		refURL = GENERATOR_REFERENCE_BASE.resolve(dirNfile[1] + SVG_EXTENSION).toUri().toURL();
+		saveSVG = GENERATOR_REFERENCE_BASE.resolve(CANDIDATE_REF_DIR)
+				.resolve(dirNfile[1] + SVG_EXTENSION);
 	}
 
 	private String[] breakWMFFile(String wmfFile) {
@@ -192,7 +193,8 @@ public class WMFAccuracyTest {
 		if (fileNameStart != -1) {
 			if (wmfFile.length() < fileNameStart + 2) {
 				// Nothing after PATH_SEPARATOR
-				throw new IllegalArgumentException("Nothing after '" + PATH_SEPARATOR + "': " + wmfFile);
+				throw new IllegalArgumentException(
+						"Nothing after '" + PATH_SEPARATOR + "': " + wmfFile);
 			}
 			wmfDir = wmfFile.substring(0, fileNameStart + 1);
 			wmfFile = wmfFile.substring(fileNameStart + 1);

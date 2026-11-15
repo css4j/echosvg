@@ -28,9 +28,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -60,32 +61,26 @@ import io.sf.carte.echosvg.transcoder.image.PNGTranscoder;
  */
 public class SVGConverterTest {
 
-	private static final String PROJECT_ROOT_URL = TestUtil.getRootProjectURL(SVGConverterTest.class,
+	private static final Path PROJECT_ROOT_DIR = TestUtil.getRootProjectPath(SVGConverterTest.class,
 			"echosvg-svgrasterizer");
 
 	static String resolveRelURI(String relPath) {
-		URL url = resolveURI(relPath);
-		String f = url.getFile();
-		String ref = url.getRef();
+		URI url = resolveURI(relPath);
+		String f = url.getPath();
+		String ref = url.getFragment();
 		if (ref == null) {
 			return f;
 		}
 		return f + '#' + ref;
 	}
 
-	static URL resolveURI(String relPath) {
-		URL url;
-		try {
-			url = new URL(PROJECT_ROOT_URL + relPath);
-		} catch (MalformedURLException e) {
-			throw new IllegalStateException(e);
-		}
-		return url;
+	static URI resolveURI(String relPath) {
+		Path path = PROJECT_ROOT_DIR.resolve(relPath);
+		return path.toUri();
 	}
 
 	static File resolveFile(String relPath) {
-		URL url = resolveURI(relPath);
-		return new File(url.getFile());
+		return PROJECT_ROOT_DIR.resolve(relPath).toFile();
 	}
 
 	///////////////////////////////////////////////////////////////////////
@@ -328,7 +323,7 @@ public class SVGConverterTest {
 			@Override
 			protected void configure(SVGConverter c) {
 				String[] srcs = new String[1];
-				srcs[0] = SVGConverterTest.resolveURI("samples/anne.svg").getFile();
+				srcs[0] = SVGConverterTest.resolveURI("samples/anne.svg").getPath();
 				c.setSources(srcs);
 				c.setDst(SVGConverterTest.resolveFile("samples/anne.png"));
 				File file = SVGConverterTest.resolveFile("samples/anne.png");
@@ -375,8 +370,8 @@ public class SVGConverterTest {
 					throw new RuntimeException(ioEx.getMessage());
 				}
 				String[] srcs = new String[2];
-				srcs[0] = SVGConverterTest.resolveURI("samples/anne.svg").getFile();
-				srcs[1] = SVGConverterTest.resolveURI("samples/batikFX.svg").getFile();
+				srcs[0] = SVGConverterTest.resolveURI("samples/anne.svg").getPath();
+				srcs[1] = SVGConverterTest.resolveURI("samples/batikFX.svg").getPath();
 				c.setSources(srcs);
 				c.setDst(dummy);
 				dummy.deleteOnExit();
@@ -389,7 +384,7 @@ public class SVGConverterTest {
 			@Override
 			protected void configure(SVGConverter c) {
 				String[] srcs = new String[1];
-				srcs[0] = SVGConverterTest.resolveURI("samples/anne.svg").getFile();
+				srcs[0] = SVGConverterTest.resolveURI("samples/anne.svg").getPath();
 				c.setSources(srcs);
 				c.setDst(SVGConverterTest.resolveFile("samples/anne.svg"));
 			}
@@ -402,7 +397,7 @@ public class SVGConverterTest {
 			protected void configure(SVGConverter c) {
 				String[] srcs = new String[1];
 				srcs[0] = SVGConverterTest
-						.resolveURI("test-resources/io/sf/carte/echosvg/apps/rasterizer/notReadable.svg").getFile();
+						.resolveURI("test-resources/io/sf/carte/echosvg/apps/rasterizer/notReadable.svg").getPath();
 				c.setSources(srcs);
 				c.setDst(SVGConverterTest.resolveFile("test-reports"));
 			}
@@ -431,7 +426,7 @@ public class SVGConverterTest {
 			protected void configure(SVGConverter c) {
 				String[] srcs = new String[1];
 				srcs[0] = SVGConverterTest
-						.resolveURI("test-resources/io/sf/carte/echosvg/apps/rasterizer/notReadable.svg").getFile();
+						.resolveURI("test-resources/io/sf/carte/echosvg/apps/rasterizer/notReadable.svg").getPath();
 				c.setSources(srcs);
 			}
 
@@ -459,7 +454,7 @@ public class SVGConverterTest {
 			@Override
 			protected void configure(SVGConverter c) {
 				String[] srcs = new String[1];
-				srcs[0] = SVGConverterTest.resolveURI("samples/anne.svg").getFile();
+				srcs[0] = SVGConverterTest.resolveURI("samples/anne.svg").getPath();
 				c.setSources(srcs);
 				File o = SVGConverterTest.resolveFile(
 						"test-resources/io/sf/carte/echosvg/apps/rasterizer/readOnly.png");
@@ -484,7 +479,7 @@ public class SVGConverterTest {
 			protected void configure(SVGConverter c) {
 				String[] srcs = new String[1];
 				srcs[0] = SVGConverterTest.resolveURI(
-						"test-resources/io/sf/carte/echosvg/apps/rasterizer/invalidSVG.svg").getFile();
+						"test-resources/io/sf/carte/echosvg/apps/rasterizer/invalidSVG.svg").getPath();
 				c.setSources(srcs);
 			}
 		};
@@ -955,7 +950,7 @@ class ConfigErrorTest implements SVGConverterController {
 		c.setDestinationType(DestinationType.PNG);
 
 		String[] srcs = new String[1];
-		srcs[0] = SVGConverterTest.resolveURI("samples/anne.svg").getFile();
+		srcs[0] = SVGConverterTest.resolveURI("samples/anne.svg").getPath();
 		c.setSources(srcs);
 
 		configure(c);
@@ -1007,8 +1002,8 @@ class ConverterOutputTest {
 
 	private static final String PROJECT_NAME = "echosvg-svgrasterizer";
 
-	public void runTest(String svgSource, String pngDest, String pngRef) throws SVGConverterException,
-			IOException {
+	public void runTest(String svgSource, String pngDest, String pngRef)
+			throws SVGConverterException, IOException {
 		SVGConverter c = new SVGConverter();
 
 		String[] srcs = new String[1];
@@ -1021,13 +1016,14 @@ class ConverterOutputTest {
 
 		c.execute();
 
-		URL urlRef = new URL(TestUtil.getRootProjectURL(SVGConverterTest.class, PROJECT_NAME) + pngRef);
+		URL urlRef = TestUtil.getRootProjectURI(SVGConverterTest.class, PROJECT_NAME)
+				.resolve(pngRef).toURL();
 		pngRef = urlRef.toExternalForm();
 
 		pngDest = destFile.toURI().toURL().toExternalForm();
 
-		TempImageFiles fileUtil = new TempImageFiles(TestUtil.getProjectBuildURL(SVGConverterTest.class,
-				PROJECT_NAME));
+		TempImageFiles fileUtil = new TempImageFiles(
+				TestUtil.getProjectBuildPath(SVGConverterTest.class, PROJECT_NAME));
 		ImageCompareUtil t = new ImageCompareUtil(fileUtil, 8, pngDest, pngRef);
 		String err = t.compare(0.9f, 0.06f);
 

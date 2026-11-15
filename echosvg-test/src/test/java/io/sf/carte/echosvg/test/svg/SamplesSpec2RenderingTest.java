@@ -78,7 +78,7 @@ public class SamplesSpec2RenderingTest extends AbstractSamplesRendering {
 
 	@Test
 	public void testConditionalRulesPrint() throws TranscoderException, IOException {
-		testNVErrIgnore("samples/tests/spec2/styling/conditionalRules.svg", PRINT_MEDIA, 0);
+		testMedia("samples/tests/spec2/styling/conditionalRules.svg", PRINT_MEDIA, false);
 	}
 
 	@Test

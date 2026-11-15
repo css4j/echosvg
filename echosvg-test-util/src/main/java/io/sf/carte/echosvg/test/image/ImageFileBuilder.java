@@ -18,9 +18,9 @@
  */
 package io.sf.carte.echosvg.test.image;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
+import java.net.URI;
+import java.nio.file.Path;
 
 /**
  * Create files derived from image filenames, according to provided prefixes and
@@ -32,7 +32,7 @@ public interface ImageFileBuilder {
 	 * Create a file with a name derived from the URL of a file, according to the
 	 * given prefixes and suffixes.
 	 * 
-	 * @param imageUrl     the base file URL.
+	 * @param imageUrl     the base file URI.
 	 * @param fileSuffix   the file suffix (for example <code>_diff</code>).
 	 * @param dotExtension the file extension, preceded by a dot (example:
 	 *                     <code>.png</code>)
@@ -40,7 +40,7 @@ public interface ImageFileBuilder {
 	 * @throws IOException if it was determined that a file could not be created at
 	 *                     the given place.
 	 */
-	File createImageFile(URL imageUrl, CharSequence fileSuffix, CharSequence dotExtension)
+	Path createImageFile(URI imageUrl, CharSequence fileSuffix, CharSequence dotExtension)
 			throws IOException;
 
 	/**
@@ -52,6 +52,6 @@ public interface ImageFileBuilder {
 	 * @throws IOException if it was determined that a file could not be created at
 	 *                     the given place.
 	 */
-	File createImageFile(String imageNameWithExtension) throws IOException;
+	Path createImageFile(String imageNameWithExtension) throws IOException;
 
 }

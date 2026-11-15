@@ -199,12 +199,12 @@ public class SamplesSpecRenderingTest extends AbstractSamplesRendering {
 	 */
 	@Test
 	public void testFontAltGlyph() throws TranscoderException, IOException {
-		testNVErrIgnore("samples/tests/spec/fonts/fontAltGlyph.svg", null, 4);
+		testNVErrIgnore("samples/tests/spec/fonts/fontAltGlyph.svg", 4);
 	}
 
 	@Test
 	public void testFontAltGlyph2() throws TranscoderException, IOException {
-		testNVErrIgnore("samples/tests/spec/fonts/fontAltGlyph2.svg", null, 5);
+		testNVErrIgnore("samples/tests/spec/fonts/fontAltGlyph2.svg", 5);
 	}
 
 	@Test
@@ -319,7 +319,7 @@ public class SamplesSpecRenderingTest extends AbstractSamplesRendering {
 
 	@Test
 	public void testMissingRef() throws TranscoderException, IOException {
-		testNVErrIgnore("samples/tests/spec/linking/missingRef.svg", null, 16);
+		testNVErrIgnore("samples/tests/spec/linking/missingRef.svg", 16);
 	}
 
 	@Test
@@ -549,17 +549,17 @@ public class SamplesSpecRenderingTest extends AbstractSamplesRendering {
 	 */
 	@Test
 	public void testShapesPolygons() throws TranscoderException, IOException {
-		testNVErrIgnore("samples/tests/spec/shapes/polygons.svg", BROWSER_MEDIA, 2);
+		testNVErrIgnore("samples/tests/spec/shapes/polygons.svg", 2);
 	}
 
 	@Test
 	public void testShapesWrongAttr() throws TranscoderException, IOException {
-		testNVErrIgnore("samples/tests/spec/shapes/wrongAttr.svg", null, 10);
+		testNVErrIgnore("samples/tests/spec/shapes/wrongAttr.svg", 10);
 	}
 
 	@Test
 	public void testShapesMissingAttr() throws TranscoderException, IOException {
-		testNVErrIgnore("samples/tests/spec/shapes/missingAttr.svg", null, 1);
+		testNVErrIgnore("samples/tests/spec/shapes/missingAttr.svg", 1);
 	}
 
 	@Test
@@ -721,12 +721,12 @@ public class SamplesSpecRenderingTest extends AbstractSamplesRendering {
 
 	@Test
 	public void testStructureSystemLanguage() throws TranscoderException, IOException {
-		test("samples/tests/spec/structure/systemLanguage.svg", "fr");
+		testLang("samples/tests/spec/structure/systemLanguage.svg", "fr");
 	}
 
 	@Test
 	public void testStructureSystemLanguageDialect() throws TranscoderException, IOException {
-		test("samples/tests/spec/structure/systemLanguageDialect.svg", "en-UK");
+		testLang("samples/tests/spec/structure/systemLanguageDialect.svg", "en-UK");
 	}
 
 	/*

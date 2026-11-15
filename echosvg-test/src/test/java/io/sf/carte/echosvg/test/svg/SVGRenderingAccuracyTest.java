@@ -23,8 +23,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.awt.Color;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
 
 import org.w3c.dom.Document;
 
@@ -39,6 +38,7 @@ import io.sf.carte.echosvg.transcoder.TranscoderOutput;
 import io.sf.carte.echosvg.transcoder.XMLAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
 import io.sf.carte.echosvg.transcoder.image.PNGTranscoder;
+import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.SVGConstants;
 
 /**
@@ -108,21 +108,14 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 	private String[] zTXt;
 
 	/**
-	 * Constructor.
-	 * 
-	 * @param svgURL    the URL String for the SVG document being tested.
-	 * @param refImgURL the URL for the reference image.
-	 * @throws MalformedURLException 
-	 */
-	public SVGRenderingAccuracyTest(String svgURL, String refImgURL) throws MalformedURLException {
-		super(PIXEL_THRESHOLD, svgURL, refImgURL);
-	}
-
-	/**
-	 * For subclasses
+	 * Instantiate with a default pixel threshold
 	 */
 	protected SVGRenderingAccuracyTest() {
 		super(PIXEL_THRESHOLD);
+	}
+
+	public SVGRenderingAccuracyTest(int pixelThreshold) {
+		super(pixelThreshold);
 	}
 
 	/**
@@ -277,7 +270,7 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 	}
 
 	@Override
-	protected void encode(URL srcURL, FileOutputStream fos) throws TranscoderException, IOException {
+	protected void encode(URI srcURL, FileOutputStream fos) throws TranscoderException, IOException {
 		ImageTranscoder transcoder = getTestImageTranscoder();
 		TranscoderInput src = getTranscoderInput();
 		TranscoderOutput dst = new TranscoderOutput(fos);
@@ -351,7 +344,8 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 	 * @throws IOException if an I/O error happened creating the input.
 	 */
 	TranscoderInput getTranscoderInput() throws IOException {
-		TranscoderInput inp = new TranscoderInput(getURI());
+		String uri = new ParsedURL(getURI()).toString();
+		TranscoderInput inp = new TranscoderInput(uri);
 		inp.setEncoding("utf-8");
 		return inp;
 	}

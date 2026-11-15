@@ -23,10 +23,12 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.awt.Font;
 import java.awt.FontFormatException;
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -86,7 +88,8 @@ public class SVGGeneratorTest {
 	private static final int PIXEL_THRESHOLD = 8;
 
 	static {
-		GENERATOR_REFERENCE_BASE = TestLocations.PROJECT_ROOT_URL + "test-references/io/sf/carte/echosvg/svggen/";
+		GENERATOR_REFERENCE_BASE = TestLocations.PROJECT_ROOT_DIR
+				.resolve("test-references/io/sf/carte/echosvg/svggen/").toString();
 	}
 
 	@BeforeAll
@@ -367,50 +370,57 @@ public class SVGGeneratorTest {
 		}
 	}
 
-	private ImageCompareUtil makeImageCompareTest(Painter painter, String prefixA, String prefixB)
-		throws MalformedURLException {
+	private ImageCompareUtil makeImageCompareTest(Painter painter, String prefixA, String prefixB) {
 		String cl = getNonQualifiedClassName(painter);
 		String clA = prefixA + cl;
 		String clB = prefixB + cl;
-		String testReferenceA = GENERATOR_REFERENCE_BASE + RENDERING_DIR + "/" + clA + PNG_EXTENSION;
-		String testReferenceB = GENERATOR_REFERENCE_BASE + RENDERING_DIR + "/" + clB + PNG_EXTENSION;
-		TempImageFiles fileUtil = new TempImageFiles(TestLocations.getTestProjectBuildURL());
+		String testReferenceA = Paths
+				.get(GENERATOR_REFERENCE_BASE, RENDERING_DIR, clA + PNG_EXTENSION).toString();
+		String testReferenceB = Paths
+				.get(GENERATOR_REFERENCE_BASE, RENDERING_DIR, clB + PNG_EXTENSION).toString();
+		TempImageFiles fileUtil = new TempImageFiles(TestLocations.getTestProjectBuildPath());
 		return new ImageCompareUtil(fileUtil, PIXEL_THRESHOLD, testReferenceA, testReferenceB);
 	}
 
 	private SVGRenderingAccuracyTest makeSVGRenderingAccuracyTest(Painter painter, String prefix,
-			XmlSerializer xmlSerializer) throws MalformedURLException {
+			XmlSerializer xmlSerializer) {
 		String simpleName = getNonQualifiedClassName(painter);
 		String cl = prefix + simpleName;
 		String svgId = prefix + getSVGTestID(simpleName, xmlSerializer);
 
-		String testSource = GENERATOR_REFERENCE_BASE + svgId + SVG_EXTENSION;
+		URI testSource = Paths.get(GENERATOR_REFERENCE_BASE, svgId + SVG_EXTENSION).toUri();
 
-		String testReference = GENERATOR_REFERENCE_BASE + RENDERING_DIR + "/" + cl + PNG_EXTENSION;
+		URI testReference = Paths.get(GENERATOR_REFERENCE_BASE, RENDERING_DIR, cl + PNG_EXTENSION)
+				.toUri();
 
-		String[] variationURLs = new String[VARIATION_PLATFORMS.length + 1];
-		variationURLs[0] = GENERATOR_REFERENCE_BASE + RENDERING_DIR + "/" + ACCEPTED_VARIATION_DIR
-				+ "/" + cl + PNG_EXTENSION;
+		String[] variationPaths = new String[VARIATION_PLATFORMS.length + 1];
+		variationPaths[0] = GENERATOR_REFERENCE_BASE + '/' + RENDERING_DIR + "/"
+				+ ACCEPTED_VARIATION_DIR + "/" + cl + PNG_EXTENSION;
 		for (int i = 0; i < VARIATION_PLATFORMS.length; i++) {
-			variationURLs[i + 1] = GENERATOR_REFERENCE_BASE + RENDERING_DIR + "/"
+			variationPaths[i + 1] = GENERATOR_REFERENCE_BASE + '/' + RENDERING_DIR + "/"
 					+ ACCEPTED_VARIATION_DIR + "/" + cl + '_' + VARIATION_PLATFORMS[i]
 					+ PNG_EXTENSION;
 		}
-		String vPath = GENERATOR_REFERENCE_BASE + RENDERING_DIR + "/" + CANDIDATE_VARIATION_DIR
-				+ "/" + cl;
+
+		String vPath = Paths
+				.get(GENERATOR_REFERENCE_BASE, RENDERING_DIR, CANDIDATE_VARIATION_DIR, cl)
+				.toString();
 		String saveRangeVariation = vPath + PNG_EXTENSION;
 		String savePlatformVariation = vPath + PLATFORM_VARIATION_SUFFIX + PNG_EXTENSION;
-		String candidateReference = GENERATOR_REFERENCE_BASE + RENDERING_DIR + "/"
-				+ RENDERING_CANDIDATE_REF_DIR + "/" + cl + PNG_EXTENSION;
 
-		SVGRenderingAccuracyTest test = new SVGRenderingAccuracyTest(testSource, testReference);
-		for (String variationURL : variationURLs) {
-			test.addVariationURL(variationURL);
+		Path candidateReference = Paths.get(GENERATOR_REFERENCE_BASE, RENDERING_DIR,
+				RENDERING_CANDIDATE_REF_DIR, cl + PNG_EXTENSION);
+
+		SVGRenderingAccuracyTest test = new SVGRenderingAccuracyTest(PIXEL_THRESHOLD);
+		test.setInputAndRefURL(testSource, testReference);
+
+		for (String variationURL : variationPaths) {
+			test.addVariationPath(variationURL);
 		}
 
-		test.setSaveRangeVariation(new URL(saveRangeVariation).getFile());
-		test.setSavePlatformVariation(new URL(savePlatformVariation).getFile());
-		test.setCandidateReference(new File(new URL(candidateReference).getFile()));
+		test.setSaveRangeVariation(saveRangeVariation);
+		test.setSavePlatformVariation(savePlatformVariation);
+		test.setCandidateReference(candidateReference);
 
 		return test;
 	}
@@ -423,9 +433,8 @@ public class SVGGeneratorTest {
 		GeneratorContext test = new GeneratorContext(painter,
 				getReferenceURL(painter, CUSTOM_CONTEXT_GENERATION_PREFIX, xmlSerializer));
 
-		String filename = new URL(
-				GENERATOR_REFERENCE_BASE + CANDIDATE_REF_DIR + "/" + cl + SVG_EXTENSION).getFile();
-		test.setSaveSVG(new File(filename));
+		Path filename = Paths.get(GENERATOR_REFERENCE_BASE, CANDIDATE_REF_DIR, cl + SVG_EXTENSION);
+		test.setSaveSVG(filename);
 		return test;
 	}
 
@@ -440,9 +449,8 @@ public class SVGGeneratorTest {
 		test.setCompressionLevel(compressionLevel);
 		test.setXmlSerializer(xmlSerializer);
 
-		String filename = new URL(
-				GENERATOR_REFERENCE_BASE + CANDIDATE_REF_DIR + "/" + cl + SVG_EXTENSION).getFile();
-		test.setSaveSVG(new File(filename));
+		Path filename = Paths.get(GENERATOR_REFERENCE_BASE, CANDIDATE_REF_DIR, cl + SVG_EXTENSION);
+		test.setSaveSVG(filename);
 		return test;
 	}
 
@@ -461,7 +469,7 @@ public class SVGGeneratorTest {
 			throws MalformedURLException {
 		String simpleName = getNonQualifiedClassName(painter);
 		String suffix = prefix + getSVGTestID(simpleName, xmlSerializer) + SVG_EXTENSION;
-		return new URL(GENERATOR_REFERENCE_BASE + suffix);
+		return Paths.get(GENERATOR_REFERENCE_BASE, suffix).toUri().toURL();
 	}
 
 }

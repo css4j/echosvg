@@ -18,8 +18,10 @@
  */
 package io.sf.carte.echosvg.test.misc;
 
-import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Path;
 
 import io.sf.carte.echosvg.test.ResourceLoader;
 import io.sf.carte.echosvg.test.TestUtil;
@@ -32,9 +34,16 @@ public class TestLocations {
 	public static final String TEST_DIRNAME = "echosvg-test";
 
 	/**
-	 * The project's root directory URL, with the last '/' included.
+	 * The project's root directory URI.
 	 */
-	public static final String PROJECT_ROOT_URL = TestUtil.getRootProjectURL(TestLocations.class, TEST_DIRNAME);
+	public static final URI PROJECT_ROOT_URI = TestUtil.getRootProjectURI(TestLocations.class,
+			TEST_DIRNAME);
+
+	/**
+	 * The project's root directory, with the last '/' included.
+	 */
+	public static final Path PROJECT_ROOT_DIR = TestUtil.getRootProjectPath(TestLocations.class,
+			TEST_DIRNAME);
 
 	/**
 	 * Test location utility.
@@ -43,16 +52,8 @@ public class TestLocations {
 		super();
 	}
 
-	public static String getTestProjectBuildURL() {
-		String resName = TestLocations.class.getName().replace(".", "/") + ".class";
-		URL url = ResourceLoader.getInstance().getResource(TestLocations.class, resName);
-		if (url == null) {
-			return null;
-		}
-		String classUrl = url.toExternalForm();
-		int testDirIdx = classUrl.lastIndexOf(TEST_DIRNAME);
-		String buildDir = classUrl.substring(5, testDirIdx + TEST_DIRNAME.length()) + "/build/";
-		return buildDir;
+	public static Path getTestProjectBuildPath() {
+		return TestUtil.getProjectBuildPath(TestLocations.class, TEST_DIRNAME);
 	}
 
 	public static String getProjectClassURL(Class<?> projectClass) {
@@ -72,15 +73,12 @@ public class TestLocations {
 	}
 
 	/**
-	 * Resolves the input string as  a URL.
+	 * Resolves the input string as a URL.
 	 * 
-	 * @throws MalformedURLException if the argument is not recognized as a URL.
+	 * @throws URISyntaxException if the argument is not recognized as a URL.
 	 */
-	public static URL resolveURL(String url) throws MalformedURLException {
-		if (url.startsWith("file:")) {
-			return new URL(url);
-		}
-		return new URL(PROJECT_ROOT_URL + url);
+	public static URI resolveURI(String url) throws URISyntaxException {
+		return PROJECT_ROOT_DIR.resolve(url).toUri();
 	}
 
 }

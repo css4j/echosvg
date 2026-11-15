@@ -23,12 +23,11 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
@@ -39,6 +38,7 @@ import io.sf.carte.echosvg.svggen.SVGGeneratorContext;
 import io.sf.carte.echosvg.svggen.SVGGeneratorContext.GraphicContextDefaults;
 import io.sf.carte.echosvg.svggen.SVGGraphics2D;
 import io.sf.carte.echosvg.svggen.XmlSerializer;
+import io.sf.carte.echosvg.test.TestUtil;
 import io.sf.carte.echosvg.test.misc.TestFonts;
 import io.sf.carte.echosvg.test.xml.XmlUtil;
 import io.sf.carte.echosvg.util.SVGConstants;
@@ -79,9 +79,9 @@ public class SVGAccuracyTest {
 	private URL refURL;
 
 	/**
-	 * File where the generated SVG might be saved
+	 * Path where the generated SVG might be saved
 	 */
-	private File saveSVG;
+	private Path saveSVG;
 
 	/**
 	 * The compression level
@@ -148,7 +148,7 @@ public class SVGAccuracyTest {
 		this.xmlSerializer = xmlSerializer;
 	}
 
-	void setSaveSVG(File saveSVG) {
+	void setSaveSVG(Path saveSVG) {
 		this.saveSVG = saveSVG;
 	}
 
@@ -216,16 +216,7 @@ public class SVGAccuracyTest {
 			return;
 		}
 
-		File parentDir = saveSVG.getParentFile();
-		if (!parentDir.exists()) {
-			if (!parentDir.mkdir()) {
-				return;
-			}
-		}
-
-		FileOutputStream os = new FileOutputStream(saveSVG);
-		os.write(data);
-		os.close();
+		TestUtil.save(data, saveSVG);
 	}
 
 	/**

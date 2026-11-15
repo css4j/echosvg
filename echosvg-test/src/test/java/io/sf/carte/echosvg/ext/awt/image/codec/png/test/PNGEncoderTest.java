@@ -40,11 +40,11 @@ import java.awt.image.RenderedImage;
 import java.awt.image.WritableRaster;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Locale;
 
@@ -316,7 +316,7 @@ public class PNGEncoderTest {
 		BufferedImage cmp = ImageComparator.createCompareImage(imgA, imgB);
 
 		ImageFileBuilder tmpUtil = new TempImageFiles(
-				TestUtil.getProjectBuildURL(getClass(), TestLocations.TEST_DIRNAME));
+				TestUtil.getProjectBuildPath(getClass(), TestLocations.TEST_DIRNAME));
 
 		imageToFile(diff, tmpUtil, "PNGEncoderTest", "_diff");
 		imageToFile(cmp, tmpUtil, "PNGEncoderTest", "_cmp");
@@ -329,14 +329,14 @@ public class PNGEncoderTest {
 	/**
 	 * Creates a temporary File into which the input image is saved.
 	 */
-	private File imageToFile(BufferedImage img, ImageFileBuilder fileBuilder, String name, String imageSuffix)
+	private Path imageToFile(BufferedImage img, ImageFileBuilder fileBuilder, String name, String imageSuffix)
 			throws IOException {
 
-		File imageFile = obtainDiffCmpFilename(fileBuilder, name, imageSuffix);
+		Path imageFile = obtainDiffCmpFilename(fileBuilder, name, imageSuffix);
 
 		ImageWriter writer = ImageWriterRegistry.getInstance().getWriterFor("image/png");
 
-		try (OutputStream out = new FileOutputStream(imageFile)) {
+		try (OutputStream out = Files.newOutputStream(imageFile)) {
 			writer.writeImage(img, out);
 		}
 
@@ -347,7 +347,7 @@ public class PNGEncoderTest {
 	/**
 	 * Creates a temporary File into which the input image is saved.
 	 */
-	private File obtainDiffCmpFilename(ImageFileBuilder fileBuilder, String name, String imageSuffix)
+	private Path obtainDiffCmpFilename(ImageFileBuilder fileBuilder, String name, String imageSuffix)
 			throws IOException {
 		return fileBuilder.createImageFile(name + imageSuffix + ".png");
 	}

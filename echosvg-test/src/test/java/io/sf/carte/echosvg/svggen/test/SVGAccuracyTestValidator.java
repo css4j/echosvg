@@ -22,11 +22,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 
 import org.junit.jupiter.api.Test;
 
@@ -139,10 +139,10 @@ public class SVGAccuracyTestValidator {
 	static class DiffWithReferenceImage extends ValidPainterTest {
 
 		public void test() throws IOException {
-			File tmpFile = Files.createTempFile("EmptySVGReference", null).toFile();
-			tmpFile.deleteOnExit();
+			Path tmpFile = Files.createTempFile("EmptySVGReference", null);
+			tmpFile.toFile().deleteOnExit();
 
-			SVGAccuracyTest t = new SVGAccuracyTest(this, tmpFile.toURI().toURL());
+			SVGAccuracyTest t = new SVGAccuracyTest(this, tmpFile.toUri().toURL());
 			t.runTest(SVGAccuracyTest.FAIL_IF_NO_ERROR);
 		}
 
@@ -151,10 +151,11 @@ public class SVGAccuracyTestValidator {
 	static class SameAsReferenceImage extends ValidPainterTest {
 
 		public void test() throws IOException {
-			File tmpFile = Files.createTempFile("SVGReference", null).toFile();
-			tmpFile.deleteOnExit();
+			Path tmpFile = Files.createTempFile("SVGReference", null);
 
-			SVGAccuracyTest t = new SVGAccuracyTest(this, tmpFile.toURI().toURL());
+			tmpFile.toFile().deleteOnExit();
+
+			SVGAccuracyTest t = new SVGAccuracyTest(this, tmpFile.toUri().toURL());
 
 			t.setSaveSVG(tmpFile);
 
