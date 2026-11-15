@@ -17,6 +17,7 @@
 
  */
 package io.sf.carte.echosvg.transcoder.wmf;
+
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
@@ -29,7 +30,6 @@ import java.net.URI;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
@@ -62,10 +62,10 @@ import io.sf.carte.echosvg.transcoder.wmf.tosvg.WMFTranscoder;
  */
 public class WMFAccuracyTest {
 
-	private static final URI PROJECT_ROOT_URL = TestUtil.getRootProjectURI(WMFAccuracyTest.class,
+	private static final Path PROJECT_ROOT_DIR = TestUtil.getRootProjectPath(WMFAccuracyTest.class,
 			"echosvg-transcoder-tosvg");
 
-	private static final URI GENERATOR_REFERENCE_BASE = PROJECT_ROOT_URL.resolve(
+	private static final Path GENERATOR_REFERENCE_BASE = PROJECT_ROOT_DIR.resolve(
 			"test-references/io/sf/carte/echosvg/transcoder/wmf");
 
 	private static final String CANDIDATE_REF_DIR = "candidate";
@@ -84,7 +84,7 @@ public class WMFAccuracyTest {
 	/**
 	 * Painter which performs an arbitrary rendering sequence.
 	 */
-	private URL wmfURL;
+	private URI wmfURL;
 
 	/**
 	 * Reference SVG URL
@@ -167,10 +167,10 @@ public class WMFAccuracyTest {
 
 		String[] dirNfile = breakWMFFile(wmfFile);
 
-		wmfURL = PROJECT_ROOT_URL.resolve(dirNfile[0] + dirNfile[1] + dirNfile[2]).toURL();
-		refURL = GENERATOR_REFERENCE_BASE.resolve(dirNfile[1] + SVG_EXTENSION).toURL();
-		saveSVG = Paths.get(GENERATOR_REFERENCE_BASE.resolve(CANDIDATE_REF_DIR)
-				.resolve(dirNfile[1] + SVG_EXTENSION));
+		wmfURL = PROJECT_ROOT_DIR.resolve(dirNfile[0] + dirNfile[1] + dirNfile[2]).toUri();
+		refURL = GENERATOR_REFERENCE_BASE.resolve(dirNfile[1] + SVG_EXTENSION).toUri().toURL();
+		saveSVG = GENERATOR_REFERENCE_BASE.resolve(CANDIDATE_REF_DIR)
+				.resolve(dirNfile[1] + SVG_EXTENSION);
 	}
 
 	private String[] breakWMFFile(String wmfFile) {
@@ -193,7 +193,8 @@ public class WMFAccuracyTest {
 		if (fileNameStart != -1) {
 			if (wmfFile.length() < fileNameStart + 2) {
 				// Nothing after PATH_SEPARATOR
-				throw new IllegalArgumentException("Nothing after '" + PATH_SEPARATOR + "': " + wmfFile);
+				throw new IllegalArgumentException(
+						"Nothing after '" + PATH_SEPARATOR + "': " + wmfFile);
 			}
 			wmfDir = wmfFile.substring(0, fileNameStart + 1);
 			wmfFile = wmfFile.substring(fileNameStart + 1);
