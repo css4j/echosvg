@@ -11,4 +11,5 @@ repositories {
 dependencies {
 	implementation('org.owasp:dependency-check-gradle:13.0.0')
 	implementation('com.github.jk1:gradle-license-report:3.1.5')
+	implementation('dev.sigstore.sign:dev.sigstore.sign.gradle.plugin:2.4.0')
 }

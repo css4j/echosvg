@@ -4,6 +4,7 @@ plugins {
 	id 'java-library'
 	id 'maven-publish'
 	id 'signing'
+	id 'dev.sigstore.sign'
 	id 'org.owasp.dependencycheck'
 	id 'checkstyle'
 	id 'jacoco'
