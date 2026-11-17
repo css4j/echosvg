@@ -36,7 +36,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="body" width="450" height="500" viewBox="0 0 450 500" onload="show(evt,'texts')">
 <title>Missing Glyph</title>
 
-<script><![CDATA[
+<script type="text/ecmascript"><![CDATA[
     var svgns = "http://www.w3.org/2000/svg";
 
     function show(evt,parent){
