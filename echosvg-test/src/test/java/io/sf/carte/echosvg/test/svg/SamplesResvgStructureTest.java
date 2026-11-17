@@ -43,27 +43,27 @@ public class SamplesResvgStructureTest extends SamplesResvgRendering {
 	 * a
 	 */
 
-	public void testStructureAInsideText() throws TranscoderException, IOException {
+	public void testAInsideText() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/a/inside-text.svg");
 	}
 
 	@Test
-	public void testStructureAInsideTspan() throws TranscoderException, IOException {
+	public void testAInsideTspan() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/a/inside-tspan.svg");
 	}
 
 	@Test
-	public void testStructureAOnShape() throws TranscoderException, IOException {
+	public void testAOnShape() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/a/on-shape.svg");
 	}
 
 	@Test
-	public void testStructureAOnText() throws TranscoderException, IOException {
+	public void testAOnText() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/a/on-text.svg");
 	}
 
 	@Test
-	public void testStructureAOnTspan() throws TranscoderException, IOException {
+	public void testAOnTspan() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/a/on-tspan.svg");
 	}
 
@@ -72,37 +72,37 @@ public class SamplesResvgStructureTest extends SamplesResvgRendering {
 	 */
 
 	@Test
-	public void testStructureDefsIgnoreShapesInsideDefs() throws TranscoderException, IOException {
+	public void testDefsIgnoreShapesInsideDefs() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/defs/ignore-shapes-inside-defs.svg");
 	}
 
 	@Test
-	public void testStructureDefsMultipleDefs() throws TranscoderException, IOException {
+	public void testDefsMultipleDefs() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/defs/multiple-defs.svg");
 	}
 
 	@Test
-	public void testStructureDefsNestedDefs() throws TranscoderException, IOException {
+	public void testDefsNestedDefs() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/defs/nested-defs.svg");
 	}
 
 	@Test
-	public void testStructureDefsOutOfOrder() throws TranscoderException, IOException {
+	public void testDefsOutOfOrder() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/defs/out-of-order.svg");
 	}
 
 	@Test
-	public void testStructureDefsSimpleCase() throws TranscoderException, IOException {
+	public void testDefsSimpleCase() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/defs/simple-case.svg");
 	}
 
 	@Test
-	public void testStructureDefsStyleInheritanceOnText() throws TranscoderException, IOException {
+	public void testDefsStyleInheritanceOnText() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/defs/style-inheritance-on-text.svg");
 	}
 
 	@Test
-	public void testStructureDefsStyleInheritance() throws TranscoderException, IOException {
+	public void testDefsStyleInheritance() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/defs/style-inheritance.svg");
 	}
 
@@ -111,13 +111,13 @@ public class SamplesResvgStructureTest extends SamplesResvgRendering {
 	 */
 
 	@Test
-	public void testStructureGDeeplyNestedGroups() throws TranscoderException, IOException {
+	public void testGDeeplyNestedGroups() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/g/deeply-nested-groups.svg");
 	}
 
 	@Disabled
 	@Test
-	public void testStructureGRecursiveInheritance() throws TranscoderException, IOException {
+	public void testGRecursiveInheritance() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/g/recursive-inheritance.svg");
 	}
 
@@ -127,281 +127,281 @@ public class SamplesResvgStructureTest extends SamplesResvgRendering {
 
 	@Disabled
 	@Test
-	public void testStructureImageEmbedded_16bitPng() throws TranscoderException, IOException {
+	public void testImageEmbedded_16bitPng() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/embedded-16bit-png.svg");
 	}
 
 	@Disabled
 	@Test
-	public void testStructureImageEmbeddedGif() throws TranscoderException, IOException {
+	public void testImageEmbeddedGif() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/embedded-gif.svg");
 	}
 
 	@Test
-	public void testStructureImageEmbeddedJpegAsImageJpeg()
+	public void testImageEmbeddedJpegAsImageJpeg()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/embedded-jpeg-as-image-jpeg.svg");
 	}
 
 	@Test
-	public void testStructureImageEmbeddedJpegAsImageJpg() throws TranscoderException, IOException {
+	public void testImageEmbeddedJpegAsImageJpg() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/embedded-jpeg-as-image-jpg.svg");
 	}
 
 	@Test
-	public void testStructureImageEmbeddedJpegWithoutMime()
+	public void testImageEmbeddedJpegWithoutMime()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/embedded-jpeg-without-mime.svg");
 	}
 
 	@Test
-	public void testStructureImageEmbeddedPng() throws TranscoderException, IOException {
+	public void testImageEmbeddedPng() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/embedded-png.svg");
 	}
 
 	@Test
-	public void testStructureImageEmbeddedSvgWithText() throws TranscoderException, IOException {
+	public void testImageEmbeddedSvgWithText() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/embedded-svg-with-text.svg");
 	}
 
 	@Test
-	public void testStructureImageEmbeddedSvgWithoutMime() throws TranscoderException, IOException {
+	public void testImageEmbeddedSvgWithoutMime() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/embedded-svg-without-mime.svg");
 	}
 
 	@Test
-	public void testStructureImageEmbeddedSvg() throws TranscoderException, IOException {
+	public void testImageEmbeddedSvg() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/embedded-svg.svg");
 	}
 
 	@Test
-	public void testStructureImageEmbeddedSvgz() throws TranscoderException, IOException {
+	public void testImageEmbeddedSvgz() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/embedded-svgz.svg");
 	}
 
 	@Disabled
 	@Test
-	public void testStructureImageExternalGif() throws TranscoderException, IOException {
+	public void testImageExternalGif() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/external-gif.svg");
 	}
 
 	@Test
-	public void testStructureImageExternalJpeg() throws TranscoderException, IOException {
+	public void testImageExternalJpeg() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/external-jpeg.svg");
 	}
 
 	@Test
-	public void testStructureImageExternalPng() throws TranscoderException, IOException {
+	public void testImageExternalPng() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/external-png.svg");
 	}
 
 	@Test
-	public void testStructureImageExternalSvgWithTransform()
+	public void testImageExternalSvgWithTransform()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/external-svg-with-transform.svg");
 	}
 
 	@Test
-	public void testStructureImageExternalSvg() throws TranscoderException, IOException {
+	public void testImageExternalSvg() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/external-svg.svg");
 	}
 
 	@Test
-	public void testStructureImageExternalSvgz() throws TranscoderException, IOException {
+	public void testImageExternalSvgz() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/external-svgz.svg");
 	}
 
 	@Test
-	public void testStructureImageFloatSize() throws TranscoderException, IOException {
+	public void testImageFloatSize() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/float-size.svg");
 	}
 
 	@Test
-	public void testStructureImageImageWithFloatSizeScaling()
+	public void testImageImageWithFloatSizeScaling()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/image-with-float-size-scaling.svg");
 	}
 
 	@Disabled
 	@Test
-	public void testStructureImageNoHeightNonSquare() throws TranscoderException, IOException {
+	public void testImageNoHeightNonSquare() throws TranscoderException, IOException {
 		testNVErrIgnore("samples/resvg/tests/structure/image/no-height-non-square.svg",
 				BROWSER_MEDIA, 1);
 	}
 
 	@Disabled
 	@Test
-	public void testStructureImageNoHeightOnSvg() throws TranscoderException, IOException {
+	public void testImageNoHeightOnSvg() throws TranscoderException, IOException {
 		testNVErrIgnore("samples/resvg/tests/structure/image/no-height-on-svg.svg", 1);
 	}
 
 	@Disabled
 	@Test
-	public void testStructureImageNoHeight() throws TranscoderException, IOException {
+	public void testImageNoHeight() throws TranscoderException, IOException {
 		testNVErrIgnore("samples/resvg/tests/structure/image/no-height.svg", 1);
 	}
 
 	@Disabled
 	@Test
-	public void testStructureImageNoWidthAndHeightOnSvg() throws TranscoderException, IOException {
+	public void testImageNoWidthAndHeightOnSvg() throws TranscoderException, IOException {
 		testNVErrIgnore("samples/resvg/tests/structure/image/no-width-and-height-on-svg.svg", 1);
 	}
 
 	@Disabled
 	@Test
-	public void testStructureImageNoWidthAndHeight() throws TranscoderException, IOException {
+	public void testImageNoWidthAndHeight() throws TranscoderException, IOException {
 		testNVErrIgnore("samples/resvg/tests/structure/image/no-width-and-height.svg", 1);
 	}
 
 	@Disabled
 	@Test
-	public void testStructureImageNoWidthOnSvg() throws TranscoderException, IOException {
+	public void testImageNoWidthOnSvg() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/no-width-on-svg.svg");
 	}
 
 	@Disabled
 	@Test
-	public void testStructureImageNoWidth() throws TranscoderException, IOException {
+	public void testImageNoWidth() throws TranscoderException, IOException {
 		testNVErrIgnore("samples/resvg/tests/structure/image/no-width.svg", 1);
 	}
 
 	@Test
-	public void testStructureImagePreserveAspectRatioEqNoneOnSvg()
+	public void testImagePreserveAspectRatioEqNoneOnSvg()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/preserveAspectRatio=none-on-svg.svg");
 	}
 
 	@Test
-	public void testStructureImagePreserveAspectRatioEqNone()
+	public void testImagePreserveAspectRatioEqNone()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/preserveAspectRatio=none.svg");
 	}
 
 	@Test
-	public void testStructureImagePreserveAspectRatioEqXMaxYMaxMeetOnSvg()
+	public void testImagePreserveAspectRatioEqXMaxYMaxMeetOnSvg()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/preserveAspectRatio=xMaxYMax-meet-on-svg.svg");
 	}
 
 	@Test
-	public void testStructureImagePreserveAspectRatioEqXMaxYMaxMeet()
+	public void testImagePreserveAspectRatioEqXMaxYMaxMeet()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/preserveAspectRatio=xMaxYMax-meet.svg");
 	}
 
 	@Test
-	public void testStructureImagePreserveAspectRatioEqXMaxYMaxSliceOnSvg()
+	public void testImagePreserveAspectRatioEqXMaxYMaxSliceOnSvg()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/preserveAspectRatio=xMaxYMax-slice-on-svg.svg");
 	}
 
 	@Test
-	public void testStructureImagePreserveAspectRatioEqXMaxYMaxSlice()
+	public void testImagePreserveAspectRatioEqXMaxYMaxSlice()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/preserveAspectRatio=xMaxYMax-slice.svg");
 	}
 
 	@Test
-	public void testStructureImagePreserveAspectRatioEqXMidYMidMeetOnSvg()
+	public void testImagePreserveAspectRatioEqXMidYMidMeetOnSvg()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/preserveAspectRatio=xMidYMid-meet-on-svg.svg");
 	}
 
 	@Test
-	public void testStructureImagePreserveAspectRatioEqXMidYMidMeet()
+	public void testImagePreserveAspectRatioEqXMidYMidMeet()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/preserveAspectRatio=xMidYMid-meet.svg");
 	}
 
 	@Test
-	public void testStructureImagePreserveAspectRatioEqXMidYMidSliceOnSvg()
+	public void testImagePreserveAspectRatioEqXMidYMidSliceOnSvg()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/preserveAspectRatio=xMidYMid-slice-on-svg.svg");
 	}
 
 	@Test
-	public void testStructureImagePreserveAspectRatioEqXMidYMidSlice()
+	public void testImagePreserveAspectRatioEqXMidYMidSlice()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/preserveAspectRatio=xMidYMid-slice.svg");
 	}
 
 	@Test
-	public void testStructureImagePreserveAspectRatioEqXMinYMinMeetOnSvg()
+	public void testImagePreserveAspectRatioEqXMinYMinMeetOnSvg()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/preserveAspectRatio=xMinYMin-meet-on-svg.svg");
 	}
 
 	@Test
-	public void testStructureImagePreserveAspectRatioEqXMinYMinMeet()
+	public void testImagePreserveAspectRatioEqXMinYMinMeet()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/preserveAspectRatio=xMinYMin-meet.svg");
 	}
 
 	@Test
-	public void testStructureImagePreserveAspectRatioEqXMinYMinSliceOnSvg()
+	public void testImagePreserveAspectRatioEqXMinYMinSliceOnSvg()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/preserveAspectRatio=xMinYMin-slice-on-svg.svg");
 	}
 
 	@Test
-	public void testStructureImagePreserveAspectRatioEqXMinYMinSlice()
+	public void testImagePreserveAspectRatioEqXMinYMinSlice()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/preserveAspectRatio=xMinYMin-slice.svg");
 	}
 
 	@Test
-	public void testStructureImageRasterImageAndSizeWithOddNumbers()
+	public void testImageRasterImageAndSizeWithOddNumbers()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/raster-image-and-size-with-odd-numbers.svg");
 	}
 
 	@Disabled
 	@Test
-	public void testStructureImageRecursive_1() throws TranscoderException, IOException {
+	public void testImageRecursive_1() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/recursive-1.svg");
 	}
 
 	@Disabled
 	@Test
-	public void testStructureImageRecursive_2() throws TranscoderException, IOException {
+	public void testImageRecursive_2() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/recursive-2.svg");
 	}
 
 	@Test
-	public void testStructureImageUrlToPng() throws TranscoderException, IOException {
+	public void testImageUrlToPng() throws TranscoderException, IOException {
 		testAllowExternal("samples/resvg/tests/structure/image/url-to-png.svg", false);
 	}
 
 	@Test
-	public void testStructureImageUrlToSvg() throws TranscoderException, IOException {
+	public void testImageUrlToSvg() throws TranscoderException, IOException {
 		testAllowExternal("samples/resvg/tests/structure/image/url-to-svg.svg", false);
 	}
 
 	// Enable when geometry properties are supported
 	@Disabled
 	@Test
-	public void testStructureImageWidthAndHeightSetToAuto()
+	public void testImageWidthAndHeightSetToAuto()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/width-and-height-set-to-auto.svg");
 	}
 
 	@Test
-	public void testStructureImageWithTransform() throws TranscoderException, IOException {
+	public void testImageWithTransform() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/with-transform.svg");
 	}
 
 	@Test
-	public void testStructureImageWithZeroWidthAndHeight() throws TranscoderException, IOException {
+	public void testImageWithZeroWidthAndHeight() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/with-zero-width-and-height.svg");
 	}
 
 	@Test
-	public void testStructureImageZeroHeight() throws TranscoderException, IOException {
+	public void testImageZeroHeight() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/zero-height.svg");
 	}
 
 	@Test
-	public void testStructureImageZeroWidth() throws TranscoderException, IOException {
+	public void testImageZeroWidth() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/zero-width.svg");
 	}
 
@@ -410,24 +410,24 @@ public class SamplesResvgStructureTest extends SamplesResvgRendering {
 	 */
 
 	@Test
-	public void testStructureStyleAttributeComments() throws TranscoderException, IOException {
+	public void testStyleAttributeComments() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/style-attribute/comments.svg");
 	}
 
 	@Test
-	public void testStructureStyleAttributeNonPresentationalAttribute()
+	public void testStyleAttributeNonPresentationalAttribute()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/style-attribute/non-presentational-attribute.svg");
 	}
 
 	@Test
-	public void testStructureStyleAttributeSimpleCase() throws TranscoderException, IOException {
+	public void testStyleAttributeSimpleCase() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/style-attribute/simple-case.svg");
 	}
 
 	@Disabled
 	@Test
-	public void testStructureStyleAttributeTransform() throws TranscoderException, IOException {
+	public void testStyleAttributeTransform() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/style-attribute/transform.svg");
 	}
 
@@ -436,84 +436,84 @@ public class SamplesResvgStructureTest extends SamplesResvgRendering {
 	 */
 
 	@Test
-	public void testStructureStyleAttributeSelector() throws TranscoderException, IOException {
+	public void testStyleAttributeSelector() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/style/attribute-selector.svg");
 	}
 
 	@Test
-	public void testStructureStyleClassSelector() throws TranscoderException, IOException {
+	public void testStyleClassSelector() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/style/class-selector.svg");
 	}
 
 	@Test
-	public void testStructureStyleCombinedSelectors() throws TranscoderException, IOException {
+	public void testStyleCombinedSelectors() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/style/combined-selectors.svg");
 	}
 
 	@Test
-	public void testStructureStyleExternal_CSS() throws TranscoderException, IOException {
+	public void testStyleExternal_CSS() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/style/external-CSS.svg");
 	}
 
 	@Test
-	public void testStructureStyleIDSelector() throws TranscoderException, IOException {
+	public void testStyleIDSelector() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/style/iD-selector.svg");
 	}
 
 	@Test
-	public void testStructureStyleImportant() throws TranscoderException, IOException {
+	public void testStyleImportant() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/style/important.svg");
 	}
 
 	@Test
-	public void testStructureStyleInvalidType() throws TranscoderException, IOException {
+	public void testStyleInvalidType() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/style/invalid-type.svg");
 	}
 
 	@Test
-	public void testStructureStyleNonPresentationalAttribute()
+	public void testStyleNonPresentationalAttribute()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/style/non-presentational-attribute.svg");
 	}
 
 	@Test
-	public void testStructureStyleResolveOrder() throws TranscoderException, IOException {
+	public void testStyleResolveOrder() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/style/resolve-order.svg");
 	}
 
 	@Test
-	public void testStructureStyleRuleSpecificity() throws TranscoderException, IOException {
+	public void testStyleRuleSpecificity() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/style/rule-specificity.svg");
 	}
 
 	@Test
-	public void testStructureStyleStyleAfterUsage() throws TranscoderException, IOException {
+	public void testStyleStyleAfterUsage() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/style/style-after-usage.svg");
 	}
 
 	@Test
-	public void testStructureStyleStyleInside_CDATA() throws TranscoderException, IOException {
+	public void testStyleStyleInside_CDATA() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/style/style-inside-CDATA.svg");
 	}
 
 	@Disabled
 	@Test
-	public void testStructureStyleTransform() throws TranscoderException, IOException {
+	public void testStyleTransform() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/style/transform.svg");
 	}
 
 	@Test
-	public void testStructureStyleTypeSelector() throws TranscoderException, IOException {
+	public void testStyleTypeSelector() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/style/type-selector.svg");
 	}
 
 	@Test
-	public void testStructureStyleUniversalSelector() throws TranscoderException, IOException {
+	public void testStyleUniversalSelector() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/style/universal-selector.svg");
 	}
 
 	@Test
-	public void testStructureStyleUnresolvedClassSelector()
+	public void testStyleUnresolvedClassSelector()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/style/unresolved-class-selector.svg");
 	}
@@ -523,239 +523,239 @@ public class SamplesResvgStructureTest extends SamplesResvgRendering {
 	 */
 
 	@Test
-	public void testStructureSvgAttributeValueVia_ENTITYReference()
+	public void testSvgAttributeValueVia_ENTITYReference()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/attribute-value-via-ENTITY-reference.svg");
 	}
 
 	@Test
-	public void testStructureSvgDeeplyNestedSvg() throws TranscoderException, IOException {
+	public void testSvgDeeplyNestedSvg() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/deeply-nested-svg.svg");
 	}
 
 	@Test
-	public void testStructureSvgElementsVia_ENTITYReference_1()
+	public void testSvgElementsVia_ENTITYReference_1()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/elements-via-ENTITY-reference-1.svg");
 	}
 
 	@Test
-	public void testStructureSvgElementsVia_ENTITYReference_2()
+	public void testSvgElementsVia_ENTITYReference_2()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/elements-via-ENTITY-reference-2.svg");
 	}
 
 	@Test
-	public void testStructureSvgElementsVia_ENTITYReference_3()
+	public void testSvgElementsVia_ENTITYReference_3()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/elements-via-ENTITY-reference-3.svg");
 	}
 
 	@Test
-	public void testStructureSvgExplicitSvgNamespace() throws TranscoderException, IOException {
+	public void testSvgExplicitSvgNamespace() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/explicit-svg-namespace.svg");
 	}
 
 	@Disabled
 	@Test
-	public void testStructureSvgFuncIRIParsing() throws TranscoderException, IOException {
+	public void testSvgFuncIRIParsing() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/funcIRI-parsing.svg");
 	}
 
 	@Test
-	public void testStructureSvgFuncIRIWithInvalidCharacters()
+	public void testSvgFuncIRIWithInvalidCharacters()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/funcIRI-with-invalid-characters.svg");
 	}
 
 	@Test
-	public void testStructureSvgFuncIRIWithQuotes() throws TranscoderException, IOException {
+	public void testSvgFuncIRIWithQuotes() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/funcIRI-with-quotes.svg");
 	}
 
 	@Test
-	public void testStructureSvgInvalidIdAttribute_1() throws TranscoderException, IOException {
+	public void testSvgInvalidIdAttribute_1() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/invalid-id-attribute-1.svg");
 	}
 
 	@Test
-	public void testStructureSvgInvalidIdAttribute_2() throws TranscoderException, IOException {
+	public void testSvgInvalidIdAttribute_2() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/invalid-id-attribute-2.svg");
 	}
 
 	@Test
-	public void testStructureSvgMixedNamespaces() throws TranscoderException, IOException {
+	public void testSvgMixedNamespaces() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/mixed-namespaces.svg");
 	}
 
 	@Test
-	public void testStructureSvgNegativeSize() throws TranscoderException, IOException {
+	public void testSvgNegativeSize() throws TranscoderException, IOException {
 		testNVErrIgnore("samples/resvg/tests/structure/svg/negative-size.svg", 2);
 	}
 
 	@Test
-	public void testStructureSvgNestedSvgOneWithRectAndOneWithViewBox()
+	public void testSvgNestedSvgOneWithRectAndOneWithViewBox()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/nested-svg-one-with-rect-and-one-with-viewBox.svg");
 	}
 
 	@Test
-	public void testStructureSvgNestedSvgWithOverflowAuto()
+	public void testSvgNestedSvgWithOverflowAuto()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/nested-svg-with-overflow-auto.svg");
 	}
 
 	@Test
-	public void testStructureSvgNestedSvgWithOverflowVisible()
+	public void testSvgNestedSvgWithOverflowVisible()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/nested-svg-with-overflow-visible.svg");
 	}
 
 	@Test
-	public void testStructureSvgNestedSvgWithRectAndPercentValues()
+	public void testSvgNestedSvgWithRectAndPercentValues()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/nested-svg-with-rect-and-percent-values.svg");
 	}
 
 	@Test
-	public void testStructureSvgNestedSvgWithRectAndViewBox_1()
+	public void testSvgNestedSvgWithRectAndViewBox_1()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/nested-svg-with-rect-and-viewBox-1.svg");
 	}
 
 	@Test
-	public void testStructureSvgNestedSvgWithRectAndViewBox_2()
+	public void testSvgNestedSvgWithRectAndViewBox_2()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/nested-svg-with-rect-and-viewBox-2.svg");
 	}
 
 	@Test
-	public void testStructureSvgNestedSvgWithRectAndViewBox_3()
+	public void testSvgNestedSvgWithRectAndViewBox_3()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/nested-svg-with-rect-and-viewBox-3.svg");
 	}
 
 	@Test
-	public void testStructureSvgNestedSvgWithRectAndViewBoxAndPercentValues()
+	public void testSvgNestedSvgWithRectAndViewBoxAndPercentValues()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/nested-svg-with-rect-and-viewBox-and-percent-values.svg");
 	}
 
 	@Test
-	public void testStructureSvgNestedSvgWithRect() throws TranscoderException, IOException {
+	public void testSvgNestedSvgWithRect() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/nested-svg-with-rect.svg");
 	}
 
 	@Test
-	public void testStructureSvgNestedSvgWithRelativeWidthAndHeight()
+	public void testSvgNestedSvgWithRelativeWidthAndHeight()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/nested-svg-with-relative-width-and-height.svg");
 	}
 
 	@Test
-	public void testStructureSvgNestedSvgWithViewBoxAndPercentValues()
+	public void testSvgNestedSvgWithViewBoxAndPercentValues()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/nested-svg-with-viewBox-and-percent-values.svg");
 	}
 
 	@Test
-	public void testStructureSvgNestedSvgWithViewBox() throws TranscoderException, IOException {
+	public void testSvgNestedSvgWithViewBox() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/nested-svg-with-viewBox.svg");
 	}
 
 	@Test
-	public void testStructureSvgNestedSvg() throws TranscoderException, IOException {
+	public void testSvgNestedSvg() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/nested-svg.svg");
 	}
 
 	@Test
-	public void testStructureSvgNoChildren() throws TranscoderException, IOException {
+	public void testSvgNoChildren() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/no-children.svg");
 	}
 
 	@Test
-	public void testStructureSvgNoSize() throws TranscoderException, IOException {
+	public void testSvgNoSize() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/no-size.svg");
 	}
 
 	@Disabled
 	@Test
-	public void testStructureSvgNot_UTF_8Encoding() throws TranscoderException, IOException {
+	public void testSvgNot_UTF_8Encoding() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/not-UTF-8-encoding.svg");
 	}
 
 	@Test
-	public void testStructureSvgPreserveAspectRatioWithViewBoxNotAtZeroPos()
+	public void testSvgPreserveAspectRatioWithViewBoxNotAtZeroPos()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/preserveAspectRatio-with-viewBox-not-at-zero-pos.svg");
 	}
 
 	@Test
-	public void testStructureSvgPreserveAspectRatioEqNone()
+	public void testSvgPreserveAspectRatioEqNone()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/preserveAspectRatio=none.svg");
 	}
 
 	@Test
-	public void testStructureSvgPreserveAspectRatioEqXMaxYMaxSlice()
+	public void testSvgPreserveAspectRatioEqXMaxYMaxSlice()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/preserveAspectRatio=xMaxYMax-slice.svg");
 	}
 
 	@Test
-	public void testStructureSvgPreserveAspectRatioEqXMaxYMax()
+	public void testSvgPreserveAspectRatioEqXMaxYMax()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/preserveAspectRatio=xMaxYMax.svg");
 	}
 
 	@Test
-	public void testStructureSvgPreserveAspectRatioEqXMidYMidSlice()
+	public void testSvgPreserveAspectRatioEqXMidYMidSlice()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/preserveAspectRatio=xMidYMid-slice.svg");
 	}
 
 	@Test
-	public void testStructureSvgPreserveAspectRatioEqXMidYMid()
+	public void testSvgPreserveAspectRatioEqXMidYMid()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/preserveAspectRatio=xMidYMid.svg");
 	}
 
 	@Test
-	public void testStructureSvgPreserveAspectRatioEqXMinYMinSlice()
+	public void testSvgPreserveAspectRatioEqXMinYMinSlice()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/preserveAspectRatio=xMinYMin-slice.svg");
 	}
 
 	@Test
-	public void testStructureSvgPreserveAspectRatioEqXMinYMin()
+	public void testSvgPreserveAspectRatioEqXMinYMin()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/preserveAspectRatio=xMinYMin.svg");
 	}
 
 	@Test
-	public void testStructureSvgProportionalViewBox() throws TranscoderException, IOException {
+	public void testSvgProportionalViewBox() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/proportional-viewBox.svg");
 	}
 
 	@Test
-	public void testStructureSvgRectInsideANon_SVGElement()
+	public void testSvgRectInsideANon_SVGElement()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/rect-inside-a-non-SVG-element.svg");
 	}
 
 	@Test
-	public void testStructureSvgViewBoxNotAtZeroPos() throws TranscoderException, IOException {
+	public void testSvgViewBoxNotAtZeroPos() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/viewBox-not-at-zero-pos.svg");
 	}
 
 	@Test
-	public void testStructureSvgXmlnsValidation() throws TranscoderException, IOException {
+	public void testSvgXmlnsValidation() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/xmlns-validation.svg");
 	}
 
 	@Disabled
 	@Test
-	public void testStructureSvgZeroSize() throws TranscoderException, IOException {
+	public void testSvgZeroSize() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/svg/zero-size.svg");
 	}
 
@@ -764,68 +764,68 @@ public class SamplesResvgStructureTest extends SamplesResvgRendering {
 	 */
 
 	@Test
-	public void testStructureSwitchCommentAsFirstChild() throws TranscoderException, IOException {
+	public void testSwitchCommentAsFirstChild() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/switch/comment-as-first-child.svg");
 	}
 
 	@Disabled
 	@Test
-	public void testStructureSwitchDisplayNoneOnChild() throws TranscoderException, IOException {
+	public void testSwitchDisplayNoneOnChild() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/switch/display-none-on-child.svg");
 	}
 
 	@Test
-	public void testStructureSwitchNon_SVGChild() throws TranscoderException, IOException {
+	public void testSwitchNon_SVGChild() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/switch/non-SVG-child.svg");
 	}
 
 	@Test
-	public void testStructureSwitchRequiredFeatures() throws TranscoderException, IOException {
+	public void testSwitchRequiredFeatures() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/switch/requiredFeatures.svg");
 	}
 
 	@Test
-	public void testStructureSwitchSimpleCase() throws TranscoderException, IOException {
+	public void testSwitchSimpleCase() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/switch/simple-case.svg");
 	}
 
 	@Test
-	public void testStructureSwitchSingleChild() throws TranscoderException, IOException {
+	public void testSwitchSingleChild() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/switch/single-child.svg");
 	}
 
 	@Test
-	public void testStructureSwitchSystemLanguage() throws TranscoderException, IOException {
+	public void testSwitchSystemLanguage() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/switch/systemLanguage.svg");
 	}
 
 	@Test
-	public void testStructureSwitchSystemLanguageEqEn_GB() throws TranscoderException, IOException {
+	public void testSwitchSystemLanguageEqEn_GB() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/switch/systemLanguage=en-GB.svg");
 	}
 
 	@Test
-	public void testStructureSwitchSystemLanguageEqEn_US() throws TranscoderException, IOException {
+	public void testSwitchSystemLanguageEqEn_US() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/switch/systemLanguage=en-US.svg");
 	}
 
 	@Test
-	public void testStructureSwitchSystemLanguageEqEn() throws TranscoderException, IOException {
+	public void testSwitchSystemLanguageEqEn() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/switch/systemLanguage=en.svg");
 	}
 
 	@Test
-	public void testStructureSwitchSystemLanguageEqRu_Ru() throws TranscoderException, IOException {
+	public void testSwitchSystemLanguageEqRu_Ru() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/switch/systemLanguage=ru-Ru.svg");
 	}
 
 	@Test
-	public void testStructureSwitchSystemLanguageEqRuEn() throws TranscoderException, IOException {
+	public void testSwitchSystemLanguageEqRuEn() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/switch/systemLanguage=ru-en.svg");
 	}
 
 	@Test
-	public void testStructureSwitchWithAttributes() throws TranscoderException, IOException {
+	public void testSwitchWithAttributes() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/switch/with-attributes.svg");
 	}
 
@@ -834,88 +834,88 @@ public class SamplesResvgStructureTest extends SamplesResvgRendering {
 	 */
 
 	@Test
-	public void testStructureSymbolContentOutsideTheViewbox()
+	public void testSymbolContentOutsideTheViewbox()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/symbol/content-outside-the-viewbox.svg");
 	}
 
 	@Test
-	public void testStructureSymbolIndirectSymbolReference()
+	public void testSymbolIndirectSymbolReference()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/symbol/indirect-symbol-reference.svg");
 	}
 
 	@Test
-	public void testStructureSymbolOpacityOnSymbolWithViewBox()
+	public void testSymbolOpacityOnSymbolWithViewBox()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/symbol/opacity-on-symbol-with-viewBox.svg");
 	}
 
 	@Test
-	public void testStructureSymbolOpacityOnSymbol() throws TranscoderException, IOException {
+	public void testSymbolOpacityOnSymbol() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/symbol/opacity-on-symbol.svg");
 	}
 
 	@Test
-	public void testStructureSymbolOpacityOnUseAndSymbol() throws TranscoderException, IOException {
+	public void testSymbolOpacityOnUseAndSymbol() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/symbol/opacity-on-use-and-symbol.svg");
 	}
 
 	@Test
-	public void testStructureSymbolOpacityOnUse() throws TranscoderException, IOException {
+	public void testSymbolOpacityOnUse() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/symbol/opacity-on-use.svg");
 	}
 
 	@Test
-	public void testStructureSymbolSimpleCase() throws TranscoderException, IOException {
+	public void testSymbolSimpleCase() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/symbol/simple-case.svg");
 	}
 
 	@Test
-	public void testStructureSymbolUnusedSymbol() throws TranscoderException, IOException {
+	public void testSymbolUnusedSymbol() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/symbol/unused-symbol.svg");
 	}
 
 	@Test
-	public void testStructureSymbolWithCustomUseSize() throws TranscoderException, IOException {
+	public void testSymbolWithCustomUseSize() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/symbol/with-custom-use-size.svg");
 	}
 
 	@Test
-	public void testStructureSymbolWithOverflowVisible() throws TranscoderException, IOException {
+	public void testSymbolWithOverflowVisible() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/symbol/with-overflow-visible.svg");
 	}
 
 	@Test
-	public void testStructureSymbolWithTransformOnUseNoSize()
+	public void testSymbolWithTransformOnUseNoSize()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/symbol/with-transform-on-use-no-size.svg");
 	}
 
 	@Test
-	public void testStructureSymbolWithTransformOnUse() throws TranscoderException, IOException {
+	public void testSymbolWithTransformOnUse() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/symbol/with-transform-on-use.svg");
 	}
 
 	@Test
-	public void testStructureSymbolWithTransform() throws TranscoderException, IOException {
+	public void testSymbolWithTransform() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/symbol/with-transform.svg");
 	}
 
 	@Test
-	public void testStructureSymbolWithViewBoxAndCustomUseRect()
+	public void testSymbolWithViewBoxAndCustomUseRect()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/symbol/with-viewBox-and-custom-use-rect.svg");
 	}
 
 	@Test
-	public void testStructureSymbolWithViewBoxAndCustomUseSize()
+	public void testSymbolWithViewBoxAndCustomUseSize()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/symbol/with-viewBox-and-custom-use-size.svg");
 	}
 
 	@Test
-	public void testStructureSymbolWithViewBox() throws TranscoderException, IOException {
+	public void testSymbolWithViewBox() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/symbol/with-viewBox.svg");
 	}
 
@@ -924,54 +924,54 @@ public class SamplesResvgStructureTest extends SamplesResvgRendering {
 	 */
 
 	@Test
-	public void testStructureSystemLanguageEn_GB() throws TranscoderException, IOException {
+	public void testSystemLanguageEn_GB() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/systemLanguage/en-GB.svg");
 	}
 
 	@Test
-	public void testStructureSystemLanguageEn_US() throws TranscoderException, IOException {
+	public void testSystemLanguageEn_US() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/systemLanguage/en-US.svg");
 	}
 
 	@Test
-	public void testStructureSystemLanguageEn() throws TranscoderException, IOException {
+	public void testSystemLanguageEn() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/systemLanguage/en.svg");
 	}
 
 	@Test
-	public void testStructureSystemLanguageOnClipPath() throws TranscoderException, IOException {
+	public void testSystemLanguageOnClipPath() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/systemLanguage/on-clipPath.svg");
 	}
 
 	@Test
-	public void testStructureSystemLanguageOnDefs() throws TranscoderException, IOException {
+	public void testSystemLanguageOnDefs() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/systemLanguage/on-defs.svg");
 	}
 
 	@Test
-	public void testStructureSystemLanguageOnLinearGradient()
+	public void testSystemLanguageOnLinearGradient()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/systemLanguage/on-linearGradient.svg");
 	}
 
 	@Disabled
 	@Test
-	public void testStructureSystemLanguageOnSvg() throws TranscoderException, IOException {
+	public void testSystemLanguageOnSvg() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/systemLanguage/on-svg.svg");
 	}
 
 	@Test
-	public void testStructureSystemLanguageOnTspan() throws TranscoderException, IOException {
+	public void testSystemLanguageOnTspan() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/systemLanguage/on-tspan.svg");
 	}
 
 	@Test
-	public void testStructureSystemLanguageRu_Ru() throws TranscoderException, IOException {
+	public void testSystemLanguageRu_Ru() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/systemLanguage/ru-Ru.svg");
 	}
 
 	@Test
-	public void testStructureSystemLanguageRuEn() throws TranscoderException, IOException {
+	public void testSystemLanguageRuEn() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/systemLanguage/ru-en.svg");
 	}
 
@@ -981,141 +981,141 @@ public class SamplesResvgStructureTest extends SamplesResvgRendering {
 
 	@Disabled
 	@Test
-	public void testStructureTransformOriginBottom() throws TranscoderException, IOException {
+	public void testTransformOriginBottom() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform-origin/bottom.svg");
 	}
 
 	@Disabled
 	@Test
-	public void testStructureTransformOriginCenter() throws TranscoderException, IOException {
+	public void testTransformOriginCenter() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform-origin/center.svg");
 	}
 
 	@Disabled
 	@Test
-	public void testStructureTransformOriginKeywordLength()
+	public void testTransformOriginKeywordLength()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform-origin/keyword-length.svg");
 	}
 
 	@Disabled
 	@Test
-	public void testStructureTransformOriginLeft() throws TranscoderException, IOException {
+	public void testTransformOriginLeft() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform-origin/left.svg");
 	}
 
 	@Disabled
 	@Test
-	public void testStructureTransformOriginLengthPercent()
+	public void testTransformOriginLengthPercent()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform-origin/length-percent.svg");
 	}
 
 	@Disabled
 	@Test
-	public void testStructureTransformOriginLengthPx() throws TranscoderException, IOException {
+	public void testTransformOriginLengthPx() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform-origin/length-px.svg");
 	}
 
 	@Test
-	public void testStructureTransformOriginNoTransform() throws TranscoderException, IOException {
+	public void testTransformOriginNoTransform() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform-origin/no-transform.svg");
 	}
 
 	@Disabled
 	@Test
-	public void testStructureTransformOriginOnClippathObjectBoundingBox()
+	public void testTransformOriginOnClippathObjectBoundingBox()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform-origin/on-clippath-objectBoundingBox.svg");
 	}
 
 	@Disabled
 	@Test
-	public void testStructureTransformOriginOnClippath() throws TranscoderException, IOException {
+	public void testTransformOriginOnClippath() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform-origin/on-clippath.svg");
 	}
 
 	@Test
-	public void testStructureTransformOriginOnGradientObjectBoundingBox()
+	public void testTransformOriginOnGradientObjectBoundingBox()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform-origin/on-gradient-object-bounding-box.svg");
 	}
 
 	@Test
-	public void testStructureTransformOriginOnGradientUserSpaceOnUse()
+	public void testTransformOriginOnGradientUserSpaceOnUse()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform-origin/on-gradient-user-space-on-use.svg");
 	}
 
 	@Disabled
 	@Test
-	public void testStructureTransformOriginOnGroup() throws TranscoderException, IOException {
+	public void testTransformOriginOnGroup() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform-origin/on-group.svg");
 	}
 
 	@Disabled
 	@Test
-	public void testStructureTransformOriginOnImage() throws TranscoderException, IOException {
+	public void testTransformOriginOnImage() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform-origin/on-image.svg");
 	}
 
 	@Disabled
 	@Test
-	public void testStructureTransformOriginOnPatternObjectBoundingBox()
+	public void testTransformOriginOnPatternObjectBoundingBox()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform-origin/on-pattern-object-bounding-box.svg");
 	}
 
 	@Disabled
 	@Test
-	public void testStructureTransformOriginOnPatternUserSpaceOnUse()
+	public void testTransformOriginOnPatternUserSpaceOnUse()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform-origin/on-pattern-user-space-on-use.svg");
 	}
 
 	@Disabled
 	@Test
-	public void testStructureTransformOriginOnShape() throws TranscoderException, IOException {
+	public void testTransformOriginOnShape() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform-origin/on-shape.svg");
 	}
 
 	@Disabled
 	@Test
-	public void testStructureTransformOriginOnTextPath() throws TranscoderException, IOException {
+	public void testTransformOriginOnTextPath() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform-origin/on-text-path.svg");
 	}
 
 	@Disabled
 	@Test
-	public void testStructureTransformOriginOnText() throws TranscoderException, IOException {
+	public void testTransformOriginOnText() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform-origin/on-text.svg");
 	}
 
 	@Disabled
 	@Test
-	public void testStructureTransformOriginRightBottom() throws TranscoderException, IOException {
+	public void testTransformOriginRightBottom() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform-origin/right-bottom.svg");
 	}
 
 	@Disabled
 	@Test
-	public void testStructureTransformOriginRight() throws TranscoderException, IOException {
+	public void testTransformOriginRight() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform-origin/right.svg");
 	}
 
 	@Test
-	public void testStructureTransformOriginTopLeft() throws TranscoderException, IOException {
+	public void testTransformOriginTopLeft() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform-origin/top-left.svg");
 	}
 
 	@Disabled
 	@Test
-	public void testStructureTransformOriginTop() throws TranscoderException, IOException {
+	public void testTransformOriginTop() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform-origin/top.svg");
 	}
 
 	@Test
-	public void testStructureTransformOriginTransformOnParent()
+	public void testTransformOriginTransformOnParent()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform-origin/transform-on-parent.svg");
 	}
@@ -1125,98 +1125,98 @@ public class SamplesResvgStructureTest extends SamplesResvgRendering {
 	 */
 
 	@Test
-	public void testStructureTransformDefault() throws TranscoderException, IOException {
+	public void testTransformDefault() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform/default.svg");
 	}
 
 	@Test
-	public void testStructureTransformDirectTransform() throws TranscoderException, IOException {
+	public void testTransformDirectTransform() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform/direct-transform.svg");
 	}
 
 	@Test
-	public void testStructureTransformEmpty() throws TranscoderException, IOException {
+	public void testTransformEmpty() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform/empty.svg");
 	}
 
 	@Test
-	public void testStructureTransformExtraSpaces() throws TranscoderException, IOException {
+	public void testTransformExtraSpaces() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform/extra-spaces.svg");
 	}
 
 	@Test
-	public void testStructureTransformMatrixNoCommas() throws TranscoderException, IOException {
+	public void testTransformMatrixNoCommas() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform/matrix-no-commas.svg");
 	}
 
 	@Test
-	public void testStructureTransformMatrix() throws TranscoderException, IOException {
+	public void testTransformMatrix() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform/matrix.svg");
 	}
 
 	@Test
-	public void testStructureTransformNestedTransforms_1() throws TranscoderException, IOException {
+	public void testTransformNestedTransforms_1() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform/nested-transforms-1.svg");
 	}
 
 	@Test
-	public void testStructureTransformNestedTransforms_2() throws TranscoderException, IOException {
+	public void testTransformNestedTransforms_2() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform/nested-transforms-2.svg");
 	}
 
 	@Test
-	public void testStructureTransformNumericCharacterReferences()
+	public void testTransformNumericCharacterReferences()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform/numeric-character-references.svg");
 	}
 
 	@Test
-	public void testStructureTransformRotateAtPosition() throws TranscoderException, IOException {
+	public void testTransformRotateAtPosition() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform/rotate-at-position.svg");
 	}
 
 	@Test
-	public void testStructureTransformRotate() throws TranscoderException, IOException {
+	public void testTransformRotate() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform/rotate.svg");
 	}
 
 	@Test
-	public void testStructureTransformScaleWithout_Y() throws TranscoderException, IOException {
+	public void testTransformScaleWithout_Y() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform/scale-without-Y.svg");
 	}
 
 	@Test
-	public void testStructureTransformScale() throws TranscoderException, IOException {
+	public void testTransformScale() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform/scale.svg");
 	}
 
 	@Test
-	public void testStructureTransformSkewX() throws TranscoderException, IOException {
+	public void testTransformSkewX() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform/skewX.svg");
 	}
 
 	@Test
-	public void testStructureTransformSkewY() throws TranscoderException, IOException {
+	public void testTransformSkewY() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform/skewY.svg");
 	}
 
 	@Test
-	public void testStructureTransformTransformList() throws TranscoderException, IOException {
+	public void testTransformTransformList() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform/transform-list.svg");
 	}
 
 	@Test
-	public void testStructureTransformTranslateWithout_Y() throws TranscoderException, IOException {
+	public void testTransformTranslateWithout_Y() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform/translate-without-Y.svg");
 	}
 
 	@Test
-	public void testStructureTransformTranslate() throws TranscoderException, IOException {
+	public void testTransformTranslate() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform/translate.svg");
 	}
 
 	@Test
-	public void testStructureTransformZeroedMatrix() throws TranscoderException, IOException {
+	public void testTransformZeroedMatrix() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/transform/zeroed-matrix.svg");
 	}
 
@@ -1225,226 +1225,226 @@ public class SamplesResvgStructureTest extends SamplesResvgRendering {
 	 */
 
 	@Test
-	public void testStructureUseCSSRules() throws TranscoderException, IOException {
+	public void testUseCSSRules() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/cSS-rules.svg");
 	}
 
 	@Test
-	public void testStructureUseComplexStyleResolvingOrder()
+	public void testUseComplexStyleResolvingOrder()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/complex-style-resolving-order.svg");
 	}
 
 	@Test
-	public void testStructureUseDisplayInheritance() throws TranscoderException, IOException {
+	public void testUseDisplayInheritance() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/display-inheritance.svg");
 	}
 
 	@Test
-	public void testStructureUseDuplicated_IDs() throws TranscoderException, IOException {
+	public void testUseDuplicated_IDs() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/duplicated-IDs.svg");
 	}
 
 	@Test
-	public void testStructureUseFillOpacityInheritance() throws TranscoderException, IOException {
+	public void testUseFillOpacityInheritance() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/fill-opacity-inheritance.svg");
 	}
 
 	@Test
-	public void testStructureUseFromDefs() throws TranscoderException, IOException {
+	public void testUseFromDefs() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/from-defs.svg");
 	}
 
 	@Test
-	public void testStructureUseHrefWithoutTheXlinkNamespace()
+	public void testUseHrefWithoutTheXlinkNamespace()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/href-without-the-xlink-namespace.svg");
 	}
 
 	@Disabled
 	@Test
-	public void testStructureUseIndirectRecursive_1() throws TranscoderException, IOException {
+	public void testUseIndirectRecursive_1() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/indirect-recursive-1.svg");
 	}
 
 	@Disabled
 	@Test
-	public void testStructureUseIndirectRecursive_2() throws TranscoderException, IOException {
+	public void testUseIndirectRecursive_2() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/indirect-recursive-2.svg");
 	}
 
 	@Disabled
 	@Test
-	public void testStructureUseIndirectRecursive_3() throws TranscoderException, IOException {
+	public void testUseIndirectRecursive_3() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/indirect-recursive-3.svg");
 	}
 
 	@Test
-	public void testStructureUseIndirect() throws TranscoderException, IOException {
+	public void testUseIndirect() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/indirect.svg");
 	}
 
 	@Disabled
 	@Test
-	public void testStructureUseNestedRecursive_1() throws TranscoderException, IOException {
+	public void testUseNestedRecursive_1() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/nested-recursive-1.svg");
 	}
 
 	@Disabled
 	@Test
-	public void testStructureUseNestedRecursive_2() throws TranscoderException, IOException {
+	public void testUseNestedRecursive_2() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/nested-recursive-2.svg");
 	}
 
 	@Test
-	public void testStructureUseNestedXlinkToSvgElementWithRectAndSize()
+	public void testUseNestedXlinkToSvgElementWithRectAndSize()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/nested-xlink-to-svg-element-with-rect-and-size.svg");
 	}
 
 	@Test
-	public void testStructureUseNonLinearOrder() throws TranscoderException, IOException {
+	public void testUseNonLinearOrder() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/non-linear-order.svg");
 	}
 
 	@Test
-	public void testStructureUseOpacityInheritance() throws TranscoderException, IOException {
+	public void testUseOpacityInheritance() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/opacity-inheritance.svg");
 	}
 
 	@Test
-	public void testStructureUsePositionInheritance() throws TranscoderException, IOException {
+	public void testUsePositionInheritance() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/position-inheritance.svg");
 	}
 
 	@Disabled
 	@Test
-	public void testStructureUseRecursive() throws TranscoderException, IOException {
+	public void testUseRecursive() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/recursive.svg");
 	}
 
 	@Test
-	public void testStructureUseSelfRecursive() throws TranscoderException, IOException {
+	public void testUseSelfRecursive() throws TranscoderException, IOException {
 		testNVErrIgnore("samples/resvg/tests/structure/use/self-recursive.svg", 1);
 	}
 
 	@Test
-	public void testStructureUseSimpleCase() throws TranscoderException, IOException {
+	public void testUseSimpleCase() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/simple-case.svg");
 	}
 
 	@Test
-	public void testStructureUseStrokeOpacityInheritance() throws TranscoderException, IOException {
+	public void testUseStrokeOpacityInheritance() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/stroke-opacity-inheritance.svg");
 	}
 
 	@Test
-	public void testStructureUseStyleInheritance_1() throws TranscoderException, IOException {
+	public void testUseStyleInheritance_1() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/style-inheritance-1.svg");
 	}
 
 	@Test
-	public void testStructureUseStyleInheritance_2() throws TranscoderException, IOException {
+	public void testUseStyleInheritance_2() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/style-inheritance-2.svg");
 	}
 
 	@Test
-	public void testStructureUseStyleInheritance_3() throws TranscoderException, IOException {
+	public void testUseStyleInheritance_3() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/style-inheritance-3.svg");
 	}
 
 	@Test
-	public void testStructureUseTransformAttribute_1() throws TranscoderException, IOException {
+	public void testUseTransformAttribute_1() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/transform-attribute-1.svg");
 	}
 
 	@Test
-	public void testStructureUseTransformAttribute_2() throws TranscoderException, IOException {
+	public void testUseTransformAttribute_2() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/transform-attribute-2.svg");
 	}
 
 	@Test
-	public void testStructureUseTransformInheritance() throws TranscoderException, IOException {
+	public void testUseTransformInheritance() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/transform-inheritance.svg");
 	}
 
 	@Test
-	public void testStructureUseWithCurrentColor() throws TranscoderException, IOException {
+	public void testUseWithCurrentColor() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/with-currentColor.svg");
 	}
 
 	@Test
-	public void testStructureUseWithSize() throws TranscoderException, IOException {
+	public void testUseWithSize() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/with-size.svg");
 	}
 
 	@Test
-	public void testStructureUseXlinkToAChildOfANon_SVGElement()
+	public void testUseXlinkToAChildOfANon_SVGElement()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/xlink-to-a-child-of-a-non-SVG-element.svg");
 	}
 
 	@Test
-	public void testStructureUseXlinkToAChildOfAnInvalidElement()
+	public void testUseXlinkToAChildOfAnInvalidElement()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/xlink-to-a-child-of-an-invalid-element.svg");
 	}
 
 	@Test
-	public void testStructureUseXlinkToAnExternalFile() throws TranscoderException, IOException {
+	public void testUseXlinkToAnExternalFile() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/xlink-to-an-external-file.svg");
 	}
 
 	@Test
-	public void testStructureUseXlinkToAnInvalidElement_1()
+	public void testUseXlinkToAnInvalidElement_1()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/xlink-to-an-invalid-element-1.svg");
 	}
 
 	@Test
-	public void testStructureUseXlinkToAnInvalidElement_2()
+	public void testUseXlinkToAnInvalidElement_2()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/xlink-to-an-invalid-element-2.svg");
 	}
 
 	@Test
-	public void testStructureUseXlinkToAnInvalidElement_3()
+	public void testUseXlinkToAnInvalidElement_3()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/xlink-to-an-invalid-element-3.svg");
 	}
 
 	@Test
-	public void testStructureUseXlinkToSvgElementWithRectOnlyWidth()
+	public void testUseXlinkToSvgElementWithRectOnlyWidth()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/xlink-to-svg-element-with-rect-only-width.svg");
 	}
 
 	@Test
-	public void testStructureUseXlinkToSvgElementWithRect()
+	public void testUseXlinkToSvgElementWithRect()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/xlink-to-svg-element-with-rect.svg");
 	}
 
 	@Test
-	public void testStructureUseXlinkToSvgElementWithViewBox()
+	public void testUseXlinkToSvgElementWithViewBox()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/xlink-to-svg-element-with-viewBox.svg");
 	}
 
 	@Test
-	public void testStructureUseXlinkToSvgElementWithWidthHeightOnUse()
+	public void testUseXlinkToSvgElementWithWidthHeightOnUse()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/xlink-to-svg-element-with-width-height-on-use.svg");
 	}
 
 	@Test
-	public void testStructureUseXlinkToSvgElementWithXYOnUse()
+	public void testUseXlinkToSvgElementWithXYOnUse()
 			throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/xlink-to-svg-element-with-x-y-on-use.svg");
 	}
 
 	@Test
-	public void testStructureUseXlinkToSvgElement() throws TranscoderException, IOException {
+	public void testUseXlinkToSvgElement() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/use/xlink-to-svg-element.svg");
 	}
 
