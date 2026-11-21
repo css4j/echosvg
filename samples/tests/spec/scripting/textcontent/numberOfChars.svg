@@ -48,7 +48,7 @@ viewBox="0 0 450 600" onmouseover="showNumberOfChars(evt)" >
       <line stroke-width="3" id="line" x1="-5" y1="0" x2="5" y2="0" />
     </defs>
 
-<script><![CDATA[
+<script type="text/javascript"><![CDATA[
   var interval;
   var currentFile;
   var display;

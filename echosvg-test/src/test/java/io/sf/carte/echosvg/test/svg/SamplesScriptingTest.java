@@ -390,6 +390,20 @@ public class SamplesScriptingTest extends AbstractSamplesRendering {
 	}
 
 	/*
+	 * textcontent
+	 */
+
+	@Test
+	public void testTCMissingGlyph() throws TranscoderException, IOException {
+		test("samples/tests/spec/scripting/textcontent/missing-glyph.svg");
+	}
+
+	@Test
+	public void testTCNumberOfChars() throws TranscoderException, IOException {
+		testNV("samples/tests/spec/scripting/textcontent/numberOfChars.svg");
+	}
+
+	/*
 	 * Dynamic Update Tests
 	 */
 	@Test
