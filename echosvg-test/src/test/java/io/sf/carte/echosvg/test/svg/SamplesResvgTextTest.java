@@ -693,7 +693,6 @@ public class SamplesResvgTextTest extends SamplesResvgRendering {
 	 * font-weight
 	 */
 
-	@Disabled
 	@Test
 	public void testFontWeight650() throws TranscoderException, IOException {
 		test("samples/resvg/tests/text/font-weight/650.svg");

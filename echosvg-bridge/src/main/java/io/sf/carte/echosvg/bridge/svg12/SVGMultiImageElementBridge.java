@@ -254,7 +254,8 @@ public class SVGMultiImageElementBridge extends SVGImageElementBridge {
 	 * @param ctx     the bridge context
 	 * @param element the image element
 	 */
-	protected static Rectangle2D getImageBounds(BridgeContext ctx, Element element) {
+	@Override
+	protected Rectangle2D getImageBounds(BridgeContext ctx, Element element) {
 
 		UnitProcessor.Context uctx = UnitProcessor.createContext(ctx, element);
 

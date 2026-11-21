@@ -60,3 +60,18 @@ were in close contact with the author of the spec.
 At some point I even made changes to the code so it mimicked Chrome, but was
 unconvinced that such interpretation matched the original intent so I dropped
 them.
+
+<br/>
+
+## Geometry properties
+
+The Structure tests contain two non-presentational attribute tests in the style
+and style-attribute subdirectories. User agents supporting geometry properties,
+like EchoSVG 3.x and the web browsers, render it as intended by the SVG2
+specification. Although the resvg website gives it as passed by resvg, Inkscape
+and QtSvg, and failed by the browsers, the reference images were replaced by the
+EchoSVG output.
+
+Note that the SVG file has the `version` attribute of the `svg` element set to
+`1.1`, but that attribute was removed from the SVG specification and must be
+ignored by SVG2-compliant user agents.

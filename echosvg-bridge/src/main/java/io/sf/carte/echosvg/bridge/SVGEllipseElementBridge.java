@@ -25,7 +25,11 @@ import org.w3c.dom.Element;
 
 import io.sf.carte.echosvg.anim.dom.AbstractSVGAnimatedLength;
 import io.sf.carte.echosvg.anim.dom.AnimatedLiveAttributeValue;
+import io.sf.carte.echosvg.anim.dom.SVGGeometryProperty;
 import io.sf.carte.echosvg.anim.dom.SVGOMEllipseElement;
+import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
+import io.sf.carte.echosvg.css.engine.StyleMap;
+import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.dom.svg.LiveAttributeException;
 import io.sf.carte.echosvg.gvt.ShapeNode;
 import io.sf.carte.echosvg.gvt.ShapePainter;
@@ -75,34 +79,34 @@ public class SVGEllipseElementBridge extends SVGShapeElementBridge {
 			throws BridgeException {
 		SVGOMEllipseElement ee = (SVGOMEllipseElement) e;
 
+		StyleMap sm = safeComputedStyleMap(ee);
+
 		// 'cx' attribute - default is 0
-		AbstractSVGAnimatedLength _cx = (AbstractSVGAnimatedLength) ee.getCx();
-		float cx = safeAnimatedLength(_cx, 0f);
+		float cx = ((AbstractSVGAnimatedLength) ee.getCx()).getAnimatedComputedValue(sm);
 
 		// 'cy' attribute - default is 0
-		AbstractSVGAnimatedLength _cy = (AbstractSVGAnimatedLength) ee.getCy();
-		float cy = safeAnimatedLength(_cy, 0f);
+		float cy = ((AbstractSVGAnimatedLength) ee.getCy()).getAnimatedComputedValue(sm);
 
 		// 'rx' attribute - default is auto (SVG2)
 		boolean rxAuto = false;
-		AbstractSVGAnimatedLength _rx = (AbstractSVGAnimatedLength) ee.getRx();
+		SVGGeometryProperty _rx = (SVGGeometryProperty) ee.getRx();
 		float rx;
-		try {
-			rx = _rx.getCheckedValue();
-		} catch (LiveAttributeException ex) {
+		Value css = _rx.computeAnimatedValue(sm);
+		if (css != null) {
+			rx = css.getFloatValue();
+		} else {
 			rx = 0f;
 			rxAuto = true;
-			reportLiveAttributeException(ctx, ex);
 		}
 
 		// 'ry' attribute - default is auto (SVG2)
-		AbstractSVGAnimatedLength _ry = (AbstractSVGAnimatedLength) ee.getRy();
+		SVGGeometryProperty _ry = (SVGGeometryProperty) ee.getRy();
 		float ry;
-		try {
-			ry = _ry.getCheckedValue();
-		} catch (LiveAttributeException ex) {
+		css = _ry.computeAnimatedValue(sm);
+		if (css != null) {
+			ry = css.getFloatValue();
+		} else {
 			ry = rx;
-			reportLiveAttributeException(ctx, ex);
 		}
 
 		// Check whether rx was auto
@@ -113,6 +117,34 @@ public class SVGEllipseElementBridge extends SVGShapeElementBridge {
 		 */
 		if (rxAuto) {
 			rx = ry;
+		}
+
+		// Report negative values for rx & ry, for the SVG linter use case
+		// rx & ry could come from calc(), so allow some tolerance
+		final float TOL = (float) AbstractGraphicsNodeBridge.TOLERANCE;
+		if (rx < TOL || ry < TOL) {
+			if (rx < 0f) {
+				if (!rxAuto && rx < -TOL) {
+					BridgeException be = new BridgeException(ctx, e, ERR_LENGTH_NEGATIVE,
+							new Object[] { SVG_RX_ATTRIBUTE });
+					displayErrorOrThrow(ctx, be);
+				}
+				rxAuto = true;
+				rx = ry;
+			}
+			if (ry < 0f) {
+				if (ry < -TOL) {
+					BridgeException be = new BridgeException(ctx, e, ERR_LENGTH_NEGATIVE,
+							new Object[] { SVG_RY_ATTRIBUTE });
+					displayErrorOrThrow(ctx, be);
+				}
+				if (rxAuto) {
+					ry = 0f;
+					rx = 0f;
+				} else {
+					ry = rx;
+				}
+			}
 		}
 
 		try {
@@ -139,6 +171,22 @@ public class SVGEllipseElementBridge extends SVGShapeElementBridge {
 			}
 		}
 		super.handleAnimatedAttributeChanged(alav);
+	}
+
+	@Override
+	protected void handleCSSPropertyChanged(int property) {
+		switch (property) {
+		case SVGCSSEngine.CX_INDEX:
+		case SVGCSSEngine.CY_INDEX:
+		case SVGCSSEngine.RX_INDEX:
+		case SVGCSSEngine.RY_INDEX: {
+			buildShape(ctx, e, (ShapeNode) node);
+			handleGeometryChanged();
+			break;
+		}
+		default:
+			super.handleCSSPropertyChanged(property);
+		}
 	}
 
 	@Override

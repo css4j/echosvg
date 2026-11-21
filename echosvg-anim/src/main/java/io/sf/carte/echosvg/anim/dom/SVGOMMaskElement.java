@@ -23,6 +23,9 @@ import org.w3c.dom.svg.SVGAnimatedEnumeration;
 import org.w3c.dom.svg.SVGAnimatedLength;
 import org.w3c.dom.svg.SVGMaskElement;
 
+import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
+import io.sf.carte.echosvg.css.engine.value.Value;
+import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.util.DoublyIndexedTable;
 import io.sf.carte.echosvg.util.SVGTypes;
@@ -185,6 +188,20 @@ public class SVGOMMaskElement extends SVGGraphicsElement implements SVGMaskEleme
 	@Override
 	public SVGAnimatedLength getHeight() {
 		return height;
+	}
+
+	@Override
+	public Value getInitialValue(int idx) {
+		Value v;
+		switch (idx) {
+		case SVGCSSEngine.WIDTH_INDEX:
+		case SVGCSSEngine.HEIGHT_INDEX:
+			v = ValueConstants.PERCENTAGE_120;
+			break;
+		default:
+			v = null;
+		}
+		return v;
 	}
 
 	/**

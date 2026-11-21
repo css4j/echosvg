@@ -69,7 +69,7 @@ public class CircleTest {
 		Attr d = document.createAttribute(SVGConstants.SVG_R_ATTRIBUTE);
 		circle.setAttributeNode(d);
 		assertBounds(document, 40, 50, 160, 150);
-		assertEquals(1, errorCount);
+		assertEquals(0, errorCount);
 	}
 
 	@Test
@@ -77,6 +77,137 @@ public class CircleTest {
 		Element circle = createDocumentWithCircle();
 		Document document = circle.getOwnerDocument();
 		circle.setAttribute(SVGConstants.SVG_R_ATTRIBUTE, ",");
+		assertBounds(document, 40, 50, 160, 150);
+		assertEquals(1, errorCount);
+	}
+
+	@Test
+	public void testInvalidR_Unit() {
+		Element circle = createDocumentWithCircle();
+		Document document = circle.getOwnerDocument();
+		circle.setAttribute(SVGConstants.SVG_R_ATTRIBUTE, "3ms");
+		assertBounds(document, 40, 50, 160, 150);
+		assertEquals(1, errorCount);
+	}
+
+	@Test
+	public void testInvalidR_Calc() {
+		Element circle = createDocumentWithCircle();
+		Document document = circle.getOwnerDocument();
+		circle.setAttribute(SVGConstants.SVG_R_ATTRIBUTE, "calc(20px + 30s)");
+		assertBounds(document, 40, 50, 160, 150);
+		assertEquals(1, errorCount);
+	}
+
+	@Test
+	public void testInvalidR_CSS() {
+		Element circle = createDocumentWithCircle();
+		Document document = circle.getOwnerDocument();
+		circle.setAttribute(SVGConstants.SVG_STYLE_ATTRIBUTE, "r:r");
+		assertBounds(document, 40, 50, 160, 150);
+		assertEquals(1, errorCount);
+	}
+
+	@Test
+	public void testMissingCX() {
+		Element circle = createDocumentWithCircle();
+		Document document = circle.getOwnerDocument();
+		circle.removeAttribute(SVGConstants.SVG_CX_ATTRIBUTE);
+		assertBounds(document, 0, 50, 200, 150);
+		assertEquals(0, errorCount);
+	}
+
+	@Test
+	public void testEmptyCX() {
+		Element circle = createDocumentWithCircle();
+		Document document = circle.getOwnerDocument();
+		Attr d = document.createAttribute(SVGConstants.SVG_CX_ATTRIBUTE);
+		circle.setAttributeNode(d);
+		assertBounds(document, 0, 50, 200, 150);
+		assertEquals(0, errorCount);
+	}
+
+	@Test
+	public void testInvalidCX() {
+		Element circle = createDocumentWithCircle();
+		Document document = circle.getOwnerDocument();
+		circle.setAttribute(SVGConstants.SVG_CX_ATTRIBUTE, ",");
+		assertBounds(document, 0, 50, 200, 150);
+		assertEquals(1, errorCount);
+	}
+
+	@Test
+	public void testInvalidCX_Calc() {
+		Element circle = createDocumentWithCircle();
+		Document document = circle.getOwnerDocument();
+		circle.setAttribute(SVGConstants.SVG_CX_ATTRIBUTE, "calc(20px + 30ms)");
+		assertBounds(document, 0, 50, 200, 150);
+		assertEquals(1, errorCount);
+	}
+
+	@Test
+	public void testInvalidCX_CSS() {
+		Element circle = createDocumentWithCircle();
+		Document document = circle.getOwnerDocument();
+		circle.setAttribute(SVGConstants.SVG_STYLE_ATTRIBUTE, "cx:x");
+		assertBounds(document, 40, 50, 160, 150);
+		assertEquals(1, errorCount);
+	}
+
+	@Test
+	public void testMissingCY() {
+		Element circle = createDocumentWithCircle();
+		Document document = circle.getOwnerDocument();
+		circle.removeAttribute(SVGConstants.SVG_CY_ATTRIBUTE);
+		assertBounds(document, 40, 0, 160, 200);
+		assertEquals(0, errorCount);
+	}
+
+	@Test
+	public void testEmptyCY() {
+		Element circle = createDocumentWithCircle();
+		Document document = circle.getOwnerDocument();
+		Attr d = document.createAttribute(SVGConstants.SVG_CY_ATTRIBUTE);
+		circle.setAttributeNode(d);
+		assertBounds(document, 40, 0, 160, 200);
+		assertEquals(0, errorCount);
+	}
+
+	@Test
+	public void testInvalidCY() {
+		Element circle = createDocumentWithCircle();
+		Document document = circle.getOwnerDocument();
+		circle.setAttribute(SVGConstants.SVG_CY_ATTRIBUTE, ",");
+		assertBounds(document, 40, 0, 160, 200);
+		assertEquals(1, errorCount);
+	}
+
+	@Test
+	public void testInvalidSVGWidth() {
+		Element circle = createDocumentWithCircle();
+		Document document = circle.getOwnerDocument();
+		Element svg = document.getDocumentElement();
+		svg.setAttribute(SVGConstants.SVG_WIDTH_ATTRIBUTE, ",");
+		assertBounds(document, 40, 50, 160, 150);
+		assertEquals(1, errorCount);
+	}
+
+	@Test
+	public void testInvalidSVGWidth_Calc() {
+		Element circle = createDocumentWithCircle();
+		Document document = circle.getOwnerDocument();
+		Element svg = document.getDocumentElement();
+		svg.setAttribute(SVGConstants.SVG_WIDTH_ATTRIBUTE, "calc(200 + 3s)");
+		assertBounds(document, 40, 50, 160, 150);
+		assertEquals(1, errorCount);
+	}
+
+	@Test
+	public void testInvalidSVGHeight() {
+		Element circle = createDocumentWithCircle();
+		Document document = circle.getOwnerDocument();
+		Element svg = document.getDocumentElement();
+		svg.setAttribute(SVGConstants.SVG_HEIGHT_ATTRIBUTE, ",");
 		assertBounds(document, 40, 50, 160, 150);
 		assertEquals(1, errorCount);
 	}

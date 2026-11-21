@@ -81,8 +81,11 @@ public class SVGFeImageElementBridge extends AbstractSVGFilterPrimitiveElementBr
 
 		// 'xlink:href' attribute
 		String uriStr = XLinkSupport.getXLinkHref(filterElement);
-		if (uriStr.length() == 0) {
-			throw new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_MISSING, new Object[] { "xlink:href" });
+		if (uriStr.isEmpty()) {
+			BridgeException be = new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_MISSING,
+					new Object[] { "xlink:href" });
+			AbstractSVGBridge.displayErrorOrThrow(ctx, be);
+			return null;
 		}
 
 		//

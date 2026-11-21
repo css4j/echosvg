@@ -26,6 +26,8 @@ import org.w3c.dom.Element;
 import io.sf.carte.echosvg.anim.dom.AbstractSVGAnimatedLength;
 import io.sf.carte.echosvg.anim.dom.AnimatedLiveAttributeValue;
 import io.sf.carte.echosvg.anim.dom.SVGOMCircleElement;
+import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
+import io.sf.carte.echosvg.css.engine.StyleMap;
 import io.sf.carte.echosvg.dom.svg.LiveAttributeException;
 import io.sf.carte.echosvg.gvt.ShapeNode;
 import io.sf.carte.echosvg.gvt.ShapePainter;
@@ -71,20 +73,31 @@ public class SVGCircleElementBridge extends SVGShapeElementBridge {
 	 * @param shapeNode the shape node to initialize
 	 */
 	@Override
-	protected void buildShape(BridgeContext ctx, Element e, ShapeNode shapeNode) {
+	protected void buildShape(BridgeContext ctx, Element e, ShapeNode shapeNode)
+			throws BridgeException {
 		SVGOMCircleElement ce = (SVGOMCircleElement) e;
 
+		StyleMap sm = safeComputedStyleMap(ce);
+
 		// 'cx' attribute - default is 0
-		AbstractSVGAnimatedLength _cx = (AbstractSVGAnimatedLength) ce.getCx();
-		float cx = safeAnimatedLength(_cx, 0f);
+		float cx = ((AbstractSVGAnimatedLength) ce.getCx()).getAnimatedComputedValue(sm);
 
 		// 'cy' attribute - default is 0
-		AbstractSVGAnimatedLength _cy = (AbstractSVGAnimatedLength) ce.getCy();
-		float cy = safeAnimatedLength(_cy, 0f);
+		float cy = ((AbstractSVGAnimatedLength) ce.getCy()).getAnimatedComputedValue(sm);
 
 		// 'r' attribute - default is 0 (SVG2)
-		AbstractSVGAnimatedLength _r = (AbstractSVGAnimatedLength) ce.getR();
-		float r = safeAnimatedLength(_r, 0f);
+		float r = ((AbstractSVGAnimatedLength) ce.getR()).getAnimatedComputedValue(sm);
+
+		if (r < 0f) {
+			// Report negative values for r, for the SVG linter use case
+			// r could come from calc(), so allow some tolerance
+			if (r < -TOLERANCE) {
+				BridgeException be = new BridgeException(ctx, e, ERR_LENGTH_NEGATIVE,
+						new Object[] { SVG_R_ATTRIBUTE });
+				displayErrorOrThrow(ctx, be);
+			}
+			r = 0f;
+		}
 
 		float x = cx - r;
 		float y = cy - r;
@@ -115,10 +128,26 @@ public class SVGCircleElementBridge extends SVGShapeElementBridge {
 	}
 
 	@Override
+	protected void handleCSSPropertyChanged(int property) {
+		switch (property) {
+		case SVGCSSEngine.CX_INDEX:
+		case SVGCSSEngine.CY_INDEX:
+		case SVGCSSEngine.R_INDEX: {
+			buildShape(ctx, e, (ShapeNode) node);
+			handleGeometryChanged();
+			break;
+		}
+		default:
+			super.handleCSSPropertyChanged(property);
+		}
+	}
+
+	@Override
 	protected ShapePainter createShapePainter(BridgeContext ctx, Element e, ShapeNode shapeNode) {
 		Rectangle2D r2d = shapeNode.getShape().getBounds2D();
-		if ((r2d.getWidth() == 0) || (r2d.getHeight() == 0))
+		if (r2d.getWidth() < TOLERANCE || r2d.getHeight() < TOLERANCE) {
 			return null;
+		}
 		return super.createShapePainter(ctx, e, shapeNode);
 	}
 

@@ -181,7 +181,7 @@ public class SelfContainedSVGOnLoadTestValidator {
 
 		public InvalidRectRxUnit() {
 			super(invalidRectRxUnitURL, SelfContainedSVGOnLoadTest.ERROR_WHILE_PROCESSING_SVG_DOCUMENT,
-					"io.sf.carte.echosvg.bridge.BridgeException");
+					"org.w3c.dom.DOMException");
 		}
 
 	}

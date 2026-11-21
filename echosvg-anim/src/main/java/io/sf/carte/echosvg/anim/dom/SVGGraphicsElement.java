@@ -31,6 +31,7 @@ import org.w3c.dom.svg.SVGStringList;
 import io.sf.carte.echosvg.anim.values.AnimatableMotionPointValue;
 import io.sf.carte.echosvg.anim.values.AnimatableValue;
 import io.sf.carte.echosvg.dom.AbstractDocument;
+import io.sf.carte.echosvg.dom.svg.LiveAttributeValue;
 import io.sf.carte.echosvg.dom.svg.SVGMotionAnimatableElement;
 import io.sf.carte.echosvg.dom.svg.SVGTestsSupport;
 import io.sf.carte.echosvg.dom.util.XMLSupport;
@@ -264,6 +265,18 @@ public abstract class SVGGraphicsElement extends SVGStylableElement implements S
 	}
 
 	// AnimationTarget ///////////////////////////////////////////////////////
+
+	/**
+	 * Updates a property value in this target.
+	 */
+	@Override
+	public void updatePropertyValue(String pn, AnimatableValue val) {
+		super.updatePropertyValue(pn, val);
+		LiveAttributeValue a = getLiveAttributeValue(null, pn);
+		if (a != null) {
+			((AbstractSVGAnimatedValue) a).updateAnimatedValue(val);
+		}
+	}
 
 	/**
 	 * Updates a 'other' animation value in this target.

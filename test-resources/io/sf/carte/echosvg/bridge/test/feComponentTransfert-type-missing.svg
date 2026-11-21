@@ -32,7 +32,7 @@
 
 <svg xmlns="http://www.w3.org/2000/svg"
      id="body" width="450" height="500" viewBox="0 0 450 500">
-<title>Error: attribute "type" on &lt;feComponentTransfert> subelement is missing</title>
+<title>Attribute "type" on &lt;feComponentTransfert> subelement is missing</title>
 
     <test:testResult id="testResult" result="failed" errorCode="ecmascript.not.loaded"/>
     <script type="text/ecmascript" xlink:href="error/ran.js" />

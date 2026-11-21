@@ -390,25 +390,26 @@ public abstract class AbstractParser implements Parser {
 		// For performance, ignore how many bytes were read
 		reader.read(calcBuf);
 
-		if (equalsAny(calcLCRef, calcUCRef, calcBuf)) {
+		int idx = equalsAny(calcLCRef, calcUCRef, calcBuf);
+		if (idx == -1) {
 			handleCalc(line, column);
 		} else {
-			reportError("character.unexpected", new Object[] { current }, line, column);
+			reportError("character.unexpected", new Object[] { current }, line, column + idx);
 		}
 	}
 
-	private static boolean equalsAny(char[] lcRef, char[] ucRef, char[] buf) {
+	private static int equalsAny(char[] lcRef, char[] ucRef, char[] buf) {
 		// It's up to the caller to make sure that buf, lcRef and ucRef have the same length
 		assert lcRef.length == buf.length;
 
 		for (int i = 0; i < lcRef.length; i++) {
 			char c = buf[i];
 			if (c != lcRef[i] && c != ucRef[i]) {
-				return false;
+				return i;
 			}
 		}
 
-		return true;
+		return -1;
 	}
 
 	/**
@@ -426,6 +427,44 @@ public abstract class AbstractParser implements Parser {
 	 */
 	protected void handleCalc(int line, int column) throws CalcParseException {
 		throw new CalcParseException("Cannot handle calc().", line, column);
+	}
+
+	void checkForAuto() throws IOException {
+		int line = reader.getLine();
+		int column = reader.getColumn();
+
+		char[] autoLCRef = { 'u', 't', 'o' };
+		char[] autoUCRef = { 'U', 'T', 'O' };
+		char[] buf = new char[3];
+
+		int count = reader.read(buf);
+
+		int idx = 0;
+		if (count == 3 && reader.read() == -1
+				&& (idx = equalsAny(autoLCRef, autoUCRef, buf)) == -1) {
+			String auto = getAutoValue();
+			if (auto != null) {
+				parse(auto);
+			} else {
+				unexpectedCharacterError(line, column - 1);
+			}
+		} else {
+			unexpectedCharacterError(line, column + idx);
+		}
+	}
+
+	/**
+	 * Get the value corresponding to the {@code auto} identifier.
+	 * 
+	 * @return the parsable representation of the {@code auto} value or {@code null}
+	 *         if not supported.
+	 */
+	protected String getAutoValue() {
+		return null;
+	}
+
+	private void unexpectedCharacterError(int line, int column) {
+		reportError("character.unexpected", new Object[] { current }, line, column);
 	}
 
 	private void reportError(String key, Object[] objects, int line, int column) {

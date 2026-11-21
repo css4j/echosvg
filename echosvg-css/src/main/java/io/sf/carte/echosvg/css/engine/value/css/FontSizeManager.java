@@ -205,14 +205,12 @@ public class FontSizeManager extends LengthManager {
 			case CSSUnit.CSS_LH:
 				sm.putLineHeightRelative(idx, true);
 				scale = value.getFloatValue();
-				int lhidx = engine.getLineHeightIndex();
 				CSSStylableElement p = CSSEngine.getParentCSSStylableElement(elt);
 				float lh;
 				if (p == null) {
 					lh = DEFAULT_LINE_HEIGHT * engine.getCSSContext().getMediumFontSize();
 				} else {
-					Value cs = engine.getComputedStyle(p, null, lhidx);
-					lh = lineHeightValue(p, null, engine, cs);
+					lh = lineHeightValue(p, null, engine);
 				}
 				return new FloatValue(CSSUnit.CSS_PX, lh * scale);
 			case CSSUnit.CSS_REM:
@@ -226,13 +224,11 @@ public class FontSizeManager extends LengthManager {
 			case CSSUnit.CSS_RLH:
 				sm.putLineHeightRelative(idx, true);
 				scale = value.getFloatValue();
-				lhidx = engine.getLineHeightIndex();
 				CSSStylableElement root = (CSSStylableElement) elt.getOwnerDocument().getDocumentElement();
 				if (elt == root) {
 					lh = DEFAULT_LINE_HEIGHT * engine.getCSSContext().getMediumFontSize();
 				} else {
-					Value cs = engine.getComputedStyle(root, null, lhidx);
-					lh = lineHeightValue(root, null, engine, cs);
+					lh = lineHeightValue(root, null, engine);
 				}
 				return new FloatValue(CSSUnit.CSS_PX, lh * scale);
 			case CSSUnit.CSS_VW:

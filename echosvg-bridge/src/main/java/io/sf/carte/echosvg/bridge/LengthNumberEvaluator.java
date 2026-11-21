@@ -29,6 +29,9 @@ import io.sf.carte.doc.style.css.property.Evaluator;
 import io.sf.carte.doc.style.css.property.NumberValue;
 import io.sf.carte.echosvg.parser.UnitProcessor.Context;
 
+/**
+ * Evaluates length in the user space coordinate system.
+ */
 class LengthNumberEvaluator extends Evaluator {
 
 	private short percentageInterpretation;
@@ -39,11 +42,20 @@ class LengthNumberEvaluator extends Evaluator {
 	 * Instantiate a length evaluator.
 	 * 
 	 * @param pcInterp the percentage interpretation.
+	 * @param uctx     the unit context.
 	 */
 	public LengthNumberEvaluator(short pcInterp, Context uctx) {
 		super(CSSUnit.CSS_PX);
 		this.percentageInterpretation = pcInterp;
 		this.uctx = uctx;
+	}
+
+	short getPercentageInterpretation() {
+		return percentageInterpretation;
+	}
+
+	Context getUnitContext() {
+		return uctx;
 	}
 
 	@Override

@@ -18,10 +18,13 @@
  */
 package io.sf.carte.echosvg.css.engine;
 
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 
+import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.doc.style.css.nsac.Parser;
 import io.sf.carte.echosvg.css.engine.value.ShorthandManager;
+import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.css.engine.value.css.ClipManager;
@@ -57,6 +60,7 @@ import io.sf.carte.echosvg.css.engine.value.svg.FillRuleManager;
 import io.sf.carte.echosvg.css.engine.value.svg.FilterManager;
 import io.sf.carte.echosvg.css.engine.value.svg.GlyphOrientationHorizontalManager;
 import io.sf.carte.echosvg.css.engine.value.svg.GlyphOrientationVerticalManager;
+import io.sf.carte.echosvg.css.engine.value.svg.HorizontalLengthManager;
 import io.sf.carte.echosvg.css.engine.value.svg.ImageRenderingManager;
 import io.sf.carte.echosvg.css.engine.value.svg.KerningManager;
 import io.sf.carte.echosvg.css.engine.value.svg.MarkerManager;
@@ -64,6 +68,7 @@ import io.sf.carte.echosvg.css.engine.value.svg.MarkerShorthandManager;
 import io.sf.carte.echosvg.css.engine.value.svg.MaskManager;
 import io.sf.carte.echosvg.css.engine.value.svg.OpacityManager;
 import io.sf.carte.echosvg.css.engine.value.svg.PointerEventsManager;
+import io.sf.carte.echosvg.css.engine.value.svg.RadialLengthManager;
 import io.sf.carte.echosvg.css.engine.value.svg.SVGColorManager;
 import io.sf.carte.echosvg.css.engine.value.svg.SVGPaintManager;
 import io.sf.carte.echosvg.css.engine.value.svg.ShapeRenderingManager;
@@ -76,6 +81,7 @@ import io.sf.carte.echosvg.css.engine.value.svg.StrokeMiterlimitManager;
 import io.sf.carte.echosvg.css.engine.value.svg.StrokeWidthManager;
 import io.sf.carte.echosvg.css.engine.value.svg.TextAnchorManager;
 import io.sf.carte.echosvg.css.engine.value.svg.TextRenderingManager;
+import io.sf.carte.echosvg.css.engine.value.svg.VerticalLengthManager;
 import io.sf.carte.echosvg.css.engine.value.svg.WritingModeManager;
 import io.sf.carte.echosvg.css.engine.value.svg12.MarginLengthManager;
 import io.sf.carte.echosvg.util.CSSConstants;
@@ -168,7 +174,27 @@ public class SVGCSSEngine extends CSSEngine {
 			new ColorManager(), new ColorInterpolationManager(), new ColorInterpolationFiltersManager(),
 			new ColorRenderingManager(),
 
-			new CursorManager(), new DirectionManager(), new DisplayManager(), new DominantBaselineManager(),
+			new CursorManager(),
+
+			new HorizontalLengthManager() {
+
+				@Override
+				public String getPropertyName() {
+					return CSSConstants.CSS_CX_PROPERTY;
+				}
+
+			},
+
+			new VerticalLengthManager() {
+
+				@Override
+				public String getPropertyName() {
+					return CSSConstants.CSS_CY_PROPERTY;
+				}
+
+			},
+
+			new DirectionManager(), new DisplayManager(), new DominantBaselineManager(),
 			new EnableBackgroundManager(),
 
 			new SVGPaintManager(CSSConstants.CSS_FILL_PROPERTY),
@@ -180,6 +206,31 @@ public class SVGCSSEngine extends CSSEngine {
 
 			new FontStyleManager(), new FontVariantManager(), new FontWeightManager(),
 			new GlyphOrientationHorizontalManager(), new GlyphOrientationVerticalManager(),
+
+			new VerticalLengthManager() {
+
+				@Override
+				public String getPropertyName() {
+					return CSSConstants.CSS_HEIGHT_PROPERTY;
+				}
+
+				@Override
+				protected Value createIdentValue(LexicalUnit lu, CSSEngine engine)
+						throws DOMException {
+					if (!CSSConstants.CSS_AUTO_VALUE.equalsIgnoreCase(lu.getStringValue())) {
+						return super.createIdentValue(lu, engine);
+					}
+					// The 'auto' value matches the default
+					return getDefaultValue();
+				}
+
+				@Override
+				public Value getDefaultValue() {
+					// Depends on the element
+					return null;
+				}
+
+			},
 
 			new ImageRenderingManager(), new KerningManager(),
 			new SpacingManager(CSSConstants.CSS_LETTER_SPACING_PROPERTY),
@@ -196,7 +247,56 @@ public class SVGCSSEngine extends CSSEngine {
 			new MarkerManager(CSSConstants.CSS_MARKER_START_PROPERTY), new MaskManager(),
 			new OpacityManager(CSSConstants.CSS_OPACITY_PROPERTY, false), new OverflowManager(),
 
-			new PointerEventsManager(), new SrcManager(), new ShapeRenderingManager(),
+			new PointerEventsManager(),
+
+			new RadialLengthManager() {
+
+				@Override
+				public String getPropertyName() {
+					return CSSConstants.CSS_R_PROPERTY;
+				}
+
+			},
+
+			new HorizontalLengthManager() {
+
+				@Override
+				public String getPropertyName() {
+					return CSSConstants.CSS_RX_PROPERTY;
+				}
+
+				@Override
+				protected Value createIdentValue(LexicalUnit lu, CSSEngine engine)
+						throws DOMException {
+					if (!CSSConstants.CSS_AUTO_VALUE.equalsIgnoreCase(lu.getStringValue())) {
+						return super.createIdentValue(lu, engine);
+					}
+					// Ignore the value
+					return null;
+				}
+
+			},
+
+			new VerticalLengthManager() {
+
+				@Override
+				public String getPropertyName() {
+					return CSSConstants.CSS_RY_PROPERTY;
+				}
+
+				@Override
+				protected Value createIdentValue(LexicalUnit lu, CSSEngine engine)
+						throws DOMException {
+					if (!CSSConstants.CSS_AUTO_VALUE.equalsIgnoreCase(lu.getStringValue())) {
+						return super.createIdentValue(lu, engine);
+					}
+					// Ignore the value
+					return null;
+				}
+
+			},
+
+			new ShapeRenderingManager(), new SrcManager(),
 			new SVGColorManager(CSSConstants.CSS_STOP_COLOR_PROPERTY),
 			new OpacityManager(CSSConstants.CSS_STOP_OPACITY_PROPERTY, false),
 			new SVGPaintManager(CSSConstants.CSS_STROKE_PROPERTY, ValueConstants.NONE_VALUE),
@@ -208,7 +308,53 @@ public class SVGCSSEngine extends CSSEngine {
 			new TextAnchorManager(), new TextDecorationManager(), new TextRenderingManager(),
 
 			new UnicodeBidiManager(), new VisibilityManager(),
-			new SpacingManager(CSSConstants.CSS_WORD_SPACING_PROPERTY), new WritingModeManager(), };
+
+			new HorizontalLengthManager() {
+
+				@Override
+				public String getPropertyName() {
+					return CSSConstants.CSS_WIDTH_PROPERTY;
+				}
+
+				@Override
+				protected Value createIdentValue(LexicalUnit lu, CSSEngine engine)
+						throws DOMException {
+					if (!CSSConstants.CSS_AUTO_VALUE.equalsIgnoreCase(lu.getStringValue())) {
+						return super.createIdentValue(lu, engine);
+					}
+					// The 'auto' value matches the default
+					return getDefaultValue();
+				}
+
+				@Override
+				public Value getDefaultValue() {
+					// Depends on the element
+					return null;
+				}
+
+			},
+
+			new SpacingManager(CSSConstants.CSS_WORD_SPACING_PROPERTY), new WritingModeManager(),
+
+
+			new HorizontalLengthManager() {
+
+				@Override
+				public String getPropertyName() {
+					return CSSConstants.CSS_X_PROPERTY;
+				}
+
+			},
+
+			new VerticalLengthManager() {
+
+				@Override
+				public String getPropertyName() {
+					return CSSConstants.CSS_Y_PROPERTY;
+				}
+
+			}
+		};
 
 	/**
 	 * The shorthand managers for SVG.
@@ -229,9 +375,11 @@ public class SVGCSSEngine extends CSSEngine {
 	public static final int COLOR_INTERPOLATION_INDEX = COLOR_INDEX + 1;
 	public static final int COLOR_INTERPOLATION_FILTERS_INDEX = COLOR_INTERPOLATION_INDEX + 1;
 	public static final int COLOR_RENDERING_INDEX = COLOR_INTERPOLATION_FILTERS_INDEX + 1;
-
 	public static final int CURSOR_INDEX = COLOR_RENDERING_INDEX + 1;
-	public static final int DIRECTION_INDEX = CURSOR_INDEX + 1;
+
+	public static final int CX_INDEX = CURSOR_INDEX + 1;
+	public static final int CY_INDEX = CX_INDEX + 1;
+	public static final int DIRECTION_INDEX = CY_INDEX + 1;
 	public static final int DISPLAY_INDEX = DIRECTION_INDEX + 1;
 	public static final int DOMINANT_BASELINE_INDEX = DISPLAY_INDEX + 1;
 	public static final int ENABLE_BACKGROUND_INDEX = DOMINANT_BASELINE_INDEX + 1;
@@ -254,7 +402,8 @@ public class SVGCSSEngine extends CSSEngine {
 	public static final int GLYPH_ORIENTATION_HORIZONTAL_INDEX = FONT_WEIGHT_INDEX + 1;
 	public static final int GLYPH_ORIENTATION_VERTICAL_INDEX = GLYPH_ORIENTATION_HORIZONTAL_INDEX + 1;
 
-	public static final int IMAGE_RENDERING_INDEX = GLYPH_ORIENTATION_VERTICAL_INDEX + 1;
+	public static final int HEIGHT_INDEX = GLYPH_ORIENTATION_VERTICAL_INDEX + 1;
+	public static final int IMAGE_RENDERING_INDEX = HEIGHT_INDEX + 1;
 	public static final int KERNING_INDEX = IMAGE_RENDERING_INDEX + 1;
 	public static final int LETTER_SPACING_INDEX = KERNING_INDEX + 1;
 	public static final int LIGHTING_COLOR_INDEX = LETTER_SPACING_INDEX + 1;
@@ -273,9 +422,13 @@ public class SVGCSSEngine extends CSSEngine {
 	public static final int OVERFLOW_INDEX = OPACITY_INDEX + 1;
 
 	public static final int POINTER_EVENTS_INDEX = OVERFLOW_INDEX + 1;
-	public static final int SRC_INDEX = POINTER_EVENTS_INDEX + 1;
-	public static final int SHAPE_RENDERING_INDEX = SRC_INDEX + 1;
-	public static final int STOP_COLOR_INDEX = SHAPE_RENDERING_INDEX + 1;
+	public static final int R_INDEX = POINTER_EVENTS_INDEX + 1;
+	public static final int RX_INDEX = R_INDEX + 1;
+	public static final int RY_INDEX = RX_INDEX + 1;
+	public static final int SHAPE_RENDERING_INDEX = RY_INDEX + 1;
+
+	public static final int SRC_INDEX = SHAPE_RENDERING_INDEX + 1;
+	public static final int STOP_COLOR_INDEX = SRC_INDEX + 1;
 	public static final int STOP_OPACITY_INDEX = STOP_COLOR_INDEX + 1;
 	public static final int STROKE_INDEX = STOP_OPACITY_INDEX + 1;
 
@@ -293,8 +446,11 @@ public class SVGCSSEngine extends CSSEngine {
 
 	public static final int UNICODE_BIDI_INDEX = TEXT_RENDERING_INDEX + 1;
 	public static final int VISIBILITY_INDEX = UNICODE_BIDI_INDEX + 1;
-	public static final int WORD_SPACING_INDEX = VISIBILITY_INDEX + 1;
+	public static final int WIDTH_INDEX = VISIBILITY_INDEX + 1;
+	public static final int WORD_SPACING_INDEX = WIDTH_INDEX + 1;
 	public static final int WRITING_MODE_INDEX = WORD_SPACING_INDEX + 1;
-	public static final int FINAL_INDEX = WRITING_MODE_INDEX;
+	public static final int X_INDEX = WRITING_MODE_INDEX + 1;
+	public static final int Y_INDEX = X_INDEX + 1;
+	public static final int FINAL_INDEX = Y_INDEX;
 
 }

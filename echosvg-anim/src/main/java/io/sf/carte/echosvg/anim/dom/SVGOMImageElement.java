@@ -24,6 +24,9 @@ import org.w3c.dom.svg.SVGAnimatedPreserveAspectRatio;
 import org.w3c.dom.svg.SVGImageElement;
 
 import io.sf.carte.echosvg.constants.XMLConstants;
+import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
+import io.sf.carte.echosvg.css.engine.value.Value;
+import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.util.DoublyIndexedTable;
 import io.sf.carte.echosvg.util.SVGTypes;
@@ -122,14 +125,16 @@ public class SVGOMImageElement extends SVGURIReferenceGraphicsElement implements
 	 * Initializes the live attribute values of this element.
 	 */
 	private void initializeLiveAttributes() {
-		x = createLiveAnimatedLength(null, SVG_X_ATTRIBUTE, SVG_IMAGE_X_DEFAULT_VALUE,
-				AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false);
-		y = createLiveAnimatedLength(null, SVG_Y_ATTRIBUTE, SVG_IMAGE_Y_DEFAULT_VALUE,
-				AbstractSVGAnimatedLength.VERTICAL_LENGTH, false);
-		width = createLiveAnimatedLength(null, SVG_WIDTH_ATTRIBUTE, null, AbstractSVGAnimatedLength.HORIZONTAL_LENGTH,
-				true);
-		height = createLiveAnimatedLength(null, SVG_HEIGHT_ATTRIBUTE, null, AbstractSVGAnimatedLength.VERTICAL_LENGTH,
-				true);
+		x = createLiveGeometryProperty(null, SVG_X_ATTRIBUTE, SVG_IMAGE_X_DEFAULT_VALUE,
+				AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false, SVGCSSEngine.X_INDEX);
+		y = createLiveGeometryProperty(null, SVG_Y_ATTRIBUTE, SVG_IMAGE_Y_DEFAULT_VALUE,
+				AbstractSVGAnimatedLength.VERTICAL_LENGTH, false, SVGCSSEngine.Y_INDEX);
+		width = createLiveGeometryPropertyWithAuto(null, SVG_WIDTH_ATTRIBUTE,
+				SVG_IMAGE_WIDTH_DEFAULT_VALUE, AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, true,
+				SVGCSSEngine.WIDTH_INDEX, SVG_IMAGE_WIDTH_AUTO_VALUE);
+		height = createLiveGeometryPropertyWithAuto(null, SVG_HEIGHT_ATTRIBUTE,
+				SVG_IMAGE_HEIGHT_DEFAULT_VALUE, AbstractSVGAnimatedLength.VERTICAL_LENGTH, true,
+				SVGCSSEngine.HEIGHT_INDEX, SVG_IMAGE_HEIGHT_AUTO_VALUE);
 		preserveAspectRatio = createLiveAnimatedPreserveAspectRatio();
 	}
 
@@ -179,6 +184,20 @@ public class SVGOMImageElement extends SVGURIReferenceGraphicsElement implements
 	@Override
 	public SVGAnimatedPreserveAspectRatio getPreserveAspectRatio() {
 		return preserveAspectRatio;
+	}
+
+	@Override
+	public Value getInitialValue(int idx) {
+		Value v;
+		switch (idx) {
+		case SVGCSSEngine.WIDTH_INDEX:
+		case SVGCSSEngine.HEIGHT_INDEX:
+			v = ValueConstants.AUTO_VALUE;
+			break;
+		default:
+			v = null;
+		}
+		return v;
 	}
 
 	/**

@@ -28,16 +28,19 @@
 <!-- @version $Id$  -->
 <!-- ========================================================================= -->
 
-<?xml-stylesheet type="text/css" href="test.css" ?>
+<?xml-stylesheet type="text/css" href="error/test.css" ?>
 
 <svg xmlns="http://www.w3.org/2000/svg"
      id="body" width="450" height="500" viewBox="0 0 450 500">
-<title>Error: attribute "width" is missing on &lt;image></title>
+<title>Attribute "height" is missing on &lt;image></title>
+
+    <test:testResult id="testResult" result="failed" errorCode="ecmascript.not.loaded"/>
+    <script type="text/ecmascript" xlink:href="error/ran.js" />
 
     <!-- ============================================================= -->
     <!-- EchoSVG sample mark                                             -->
     <!-- ============================================================= -->
-    <use xlink:href="./echosvgMark.svg#EchoSVGTag" />
+    <use xlink:href="error/echosvgMark.svg#EchoSVGTag" />
 
     <!-- ============================================================= -->
     <!-- Test content                                                  -->
@@ -45,16 +48,16 @@
     <g id="testContent">
 
     <text x="225" y="40" class="title">
-      Error: attribute "width" is missing on &lt;image>
+      Error: attribute "height" is missing on &lt;image>
     </text>
 
 
     <text x="225" y="240" class="legend">An &lt;image> element</text>
-    <text x="225" y="440" class="legend">An &lt;image> element without the "width" attribute</text>
+    <text x="225" y="440" class="legend">An &lt;image> element without the "height" attribute</text>
 
-    <image xlink:href="svg.svg" x="70" y="60" width="300" height="170" viewBox="0 0 210 170"/>
+    <image xlink:href="error/svg.svg" x="70" y="60" width="300" height="170" viewBox="0 0 210 170"/>
 
-    <image xlink:href="svg.svg" x="70" y="260"            height="170" viewBox="0 0 210 170"/>
+    <image xlink:href="error/svg.svg" x="70" y="260" width="300"             viewBox="0 0 210 170"/>
 
     </g>
 </svg>

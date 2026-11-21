@@ -848,6 +848,10 @@ public interface SVGConstants extends CSSConstants, XMLConstants {
 	String SVG_KERN_K_DEFAULT_VALUE = "0";
 	String SVG_IMAGE_X_DEFAULT_VALUE = "0";
 	String SVG_IMAGE_Y_DEFAULT_VALUE = "0";
+	String SVG_IMAGE_WIDTH_AUTO_VALUE = "0";
+	String SVG_IMAGE_HEIGHT_AUTO_VALUE = "0";
+	String SVG_IMAGE_WIDTH_DEFAULT_VALUE = "0";
+	String SVG_IMAGE_HEIGHT_DEFAULT_VALUE = "0";
 	String SVG_LINE_X1_DEFAULT_VALUE = "0";
 	String SVG_LINE_X2_DEFAULT_VALUE = "0";
 	String SVG_LINE_Y1_DEFAULT_VALUE = "0";
@@ -876,6 +880,8 @@ public interface SVGConstants extends CSSConstants, XMLConstants {
 	String SVG_RADIAL_GRADIENT_R_DEFAULT_VALUE = "50%";
 	String SVG_RECT_X_DEFAULT_VALUE = "0";
 	String SVG_RECT_Y_DEFAULT_VALUE = "0";
+	String SVG_RECT_WIDTH_AUTO_VALUE = "0";
+	String SVG_RECT_HEIGHT_AUTO_VALUE = "0";
 	String SVG_RECT_WIDTH_DEFAULT_VALUE = "0";
 	String SVG_RECT_HEIGHT_DEFAULT_VALUE = "0";
 	String SVG_SCRIPT_TYPE_ECMASCRIPT = "text/ecmascript";
@@ -886,13 +892,17 @@ public interface SVGConstants extends CSSConstants, XMLConstants {
 	String SVG_SCRIPT_TYPE_JAVA = "application/java-archive";
 	String SVG_SVG_X_DEFAULT_VALUE = "0";
 	String SVG_SVG_Y_DEFAULT_VALUE = "0";
-	String SVG_SVG_HEIGHT_DEFAULT_VALUE = "100%";
+	String SVG_SVG_WIDTH_AUTO_VALUE = "100%";
+	String SVG_SVG_HEIGHT_AUTO_VALUE = "100%";
 	String SVG_SVG_WIDTH_DEFAULT_VALUE = "100%";
+	String SVG_SVG_HEIGHT_DEFAULT_VALUE = "100%";
 	String SVG_TEXT_PATH_START_OFFSET_DEFAULT_VALUE = "0";
 	String SVG_USE_X_DEFAULT_VALUE = "0";
 	String SVG_USE_Y_DEFAULT_VALUE = "0";
-	String SVG_USE_WIDTH_DEFAULT_VALUE = "100%";
-	String SVG_USE_HEIGHT_DEFAULT_VALUE = "100%";
+	String SVG_USE_WIDTH_AUTO_VALUE = "0";
+	String SVG_USE_HEIGHT_AUTO_VALUE = "0";
+	String SVG_USE_WIDTH_DEFAULT_VALUE = "0";
+	String SVG_USE_HEIGHT_DEFAULT_VALUE = "0";
 
 	///////////////////////////////////////////////////////////////////
 	// various constants in SVG attributes

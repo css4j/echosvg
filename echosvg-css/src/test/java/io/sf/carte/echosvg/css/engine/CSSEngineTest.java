@@ -50,6 +50,17 @@ public class CSSEngineTest {
 	public void testPropertyIndexes() throws Exception {
 		CSSEngine eng = createCSSEngine();
 
+		assertEquals(CSSConstants.CSS_X_PROPERTY, eng.getPropertyName(SVGCSSEngine.X_INDEX));
+		assertEquals(CSSConstants.CSS_Y_PROPERTY, eng.getPropertyName(SVGCSSEngine.Y_INDEX));
+		assertEquals(CSSConstants.CSS_CX_PROPERTY, eng.getPropertyName(SVGCSSEngine.CX_INDEX));
+		assertEquals(CSSConstants.CSS_CY_PROPERTY, eng.getPropertyName(SVGCSSEngine.CY_INDEX));
+		assertEquals(CSSConstants.CSS_RX_PROPERTY, eng.getPropertyName(SVGCSSEngine.RX_INDEX));
+		assertEquals(CSSConstants.CSS_RY_PROPERTY, eng.getPropertyName(SVGCSSEngine.RY_INDEX));
+		assertEquals(CSSConstants.CSS_WIDTH_PROPERTY,
+				eng.getPropertyName(SVGCSSEngine.WIDTH_INDEX));
+		assertEquals(CSSConstants.CSS_HEIGHT_PROPERTY,
+				eng.getPropertyName(SVGCSSEngine.HEIGHT_INDEX));
+
 		assertEquals(CSSConstants.CSS_LINE_HEIGHT_PROPERTY,
 				eng.getPropertyName(SVGCSSEngine.LINE_HEIGHT_INDEX));
 		assertEquals(CSSConstants.CSS_FONT_SIZE_PROPERTY,

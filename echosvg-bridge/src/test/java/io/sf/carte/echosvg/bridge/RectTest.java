@@ -69,7 +69,16 @@ public class RectTest {
 		Attr d = document.createAttribute(SVGConstants.SVG_WIDTH_ATTRIBUTE);
 		rect.setAttributeNode(d);
 		assertBounds(document, 30, 40, 170, 160);
-		assertEquals(1, errorCount);
+		assertEquals(0, errorCount);
+	}
+
+	@Test
+	public void testWidthAuto() {
+		Element rect = createDocumentWithRect();
+		Document document = rect.getOwnerDocument();
+		rect.setAttribute(SVGConstants.SVG_WIDTH_ATTRIBUTE, CSSConstants.CSS_AUTO_VALUE);
+		assertBounds(document, 30, 40, 170, 160);
+		assertEquals(0, errorCount);
 	}
 
 	@Test
@@ -77,6 +86,162 @@ public class RectTest {
 		Element rect = createDocumentWithRect();
 		Document document = rect.getOwnerDocument();
 		rect.setAttribute(SVGConstants.SVG_WIDTH_ATTRIBUTE, ",");
+		assertBounds(document, 30, 40, 170, 160);
+		assertEquals(1, errorCount);
+	}
+
+	@Test
+	public void testInvalidWidth_Unit() {
+		Element rect = createDocumentWithRect();
+		Document document = rect.getOwnerDocument();
+		rect.setAttribute(SVGConstants.SVG_WIDTH_ATTRIBUTE, "3ms");
+		assertBounds(document, 30, 40, 170, 160);
+		assertEquals(1, errorCount);
+	}
+
+	@Test
+	public void testInvalidWidth_Calc() {
+		Element rect = createDocumentWithRect();
+		Document document = rect.getOwnerDocument();
+		rect.setAttribute(SVGConstants.SVG_WIDTH_ATTRIBUTE, "calc(3 + 2ms)");
+		assertBounds(document, 30, 40, 170, 160);
+		assertEquals(1, errorCount);
+	}
+
+	@Test
+	public void testInvalidWidth_CSS() {
+		Element rect = createDocumentWithRect();
+		Document document = rect.getOwnerDocument();
+		rect.setAttribute(SVGConstants.SVG_STYLE_ATTRIBUTE, "width:w");
+		assertBounds(document, 30, 40, 170, 160);
+		assertEquals(1, errorCount);
+	}
+
+	@Test
+	public void testMissingHeight() {
+		Element rect = createDocumentWithRect();
+		Document document = rect.getOwnerDocument();
+		rect.removeAttribute(SVGConstants.SVG_HEIGHT_ATTRIBUTE);
+		assertBounds(document, 30, 40, 170, 160);
+		assertEquals(0, errorCount);
+	}
+
+	@Test
+	public void testEmptyHeight() {
+		Element rect = createDocumentWithRect();
+		Document document = rect.getOwnerDocument();
+		Attr d = document.createAttribute(SVGConstants.SVG_HEIGHT_ATTRIBUTE);
+		rect.setAttributeNode(d);
+		assertBounds(document, 30, 40, 170, 160);
+		assertEquals(0, errorCount);
+	}
+
+	@Test
+	public void testHeightAuto() {
+		Element rect = createDocumentWithRect();
+		Document document = rect.getOwnerDocument();
+		rect.setAttribute(SVGConstants.SVG_HEIGHT_ATTRIBUTE, CSSConstants.CSS_AUTO_VALUE);
+		assertBounds(document, 30, 40, 170, 160);
+		assertEquals(0, errorCount);
+	}
+
+	@Test
+	public void testInvalidHeight() {
+		Element rect = createDocumentWithRect();
+		Document document = rect.getOwnerDocument();
+		rect.setAttribute(SVGConstants.SVG_HEIGHT_ATTRIBUTE, ",");
+		assertBounds(document, 30, 40, 170, 160);
+		assertEquals(1, errorCount);
+	}
+
+	@Test
+	public void testMissingX() {
+		Element rect = createDocumentWithRect();
+		Document document = rect.getOwnerDocument();
+		rect.removeAttribute(SVGConstants.SVG_X_ATTRIBUTE);
+		assertBounds(document, 0, 40, 200, 160);
+		assertEquals(0, errorCount);
+	}
+
+	@Test
+	public void testEmptyX() {
+		Element rect = createDocumentWithRect();
+		Document document = rect.getOwnerDocument();
+		Attr d = document.createAttribute(SVGConstants.SVG_X_ATTRIBUTE);
+		rect.setAttributeNode(d);
+		assertBounds(document, 0, 40, 200, 160);
+		assertEquals(0, errorCount);
+	}
+
+	@Test
+	public void testInvalidX() {
+		Element rect = createDocumentWithRect();
+		Document document = rect.getOwnerDocument();
+		rect.setAttribute(SVGConstants.SVG_X_ATTRIBUTE, ",");
+		assertBounds(document, 0, 40, 200, 160);
+		assertEquals(1, errorCount);
+	}
+
+	@Test
+	public void testInvalidX_Unit() {
+		Element rect = createDocumentWithRect();
+		Document document = rect.getOwnerDocument();
+		rect.setAttribute(SVGConstants.SVG_X_ATTRIBUTE, "3s");
+		assertBounds(document, 0, 40, 200, 160);
+		assertEquals(1, errorCount);
+	}
+
+	@Test
+	public void testInvalidX_Calc() {
+		Element rect = createDocumentWithRect();
+		Document document = rect.getOwnerDocument();
+		rect.setAttribute(SVGConstants.SVG_X_ATTRIBUTE, "calc(3 + 2s)");
+		assertBounds(document, 0, 40, 200, 160);
+		assertEquals(1, errorCount);
+	}
+
+	@Test
+	public void testInvalidX_CSS() {
+		Element rect = createDocumentWithRect();
+		Document document = rect.getOwnerDocument();
+		rect.setAttribute(SVGConstants.SVG_STYLE_ATTRIBUTE, "x:x");
+		assertBounds(document, 30, 40, 170, 160);
+		assertEquals(1, errorCount);
+	}
+
+	@Test
+	public void testMissingY() {
+		Element rect = createDocumentWithRect();
+		Document document = rect.getOwnerDocument();
+		rect.removeAttribute(SVGConstants.SVG_Y_ATTRIBUTE);
+		assertBounds(document, 30, 0, 170, 200);
+		assertEquals(0, errorCount);
+	}
+
+	@Test
+	public void testEmptyY() {
+		Element rect = createDocumentWithRect();
+		Document document = rect.getOwnerDocument();
+		Attr d = document.createAttribute(SVGConstants.SVG_Y_ATTRIBUTE);
+		rect.setAttributeNode(d);
+		assertBounds(document, 30, 0, 170, 200);
+		assertEquals(0, errorCount);
+	}
+
+	@Test
+	public void testInvalidY() {
+		Element rect = createDocumentWithRect();
+		Document document = rect.getOwnerDocument();
+		rect.setAttribute(SVGConstants.SVG_Y_ATTRIBUTE, ",");
+		assertBounds(document, 30, 0, 170, 200);
+		assertEquals(1, errorCount);
+	}
+
+	@Test
+	public void testInvalidY_CSS() {
+		Element rect = createDocumentWithRect();
+		Document document = rect.getOwnerDocument();
+		rect.setAttribute(SVGConstants.SVG_STYLE_ATTRIBUTE, "y:y");
 		assertBounds(document, 30, 40, 170, 160);
 		assertEquals(1, errorCount);
 	}

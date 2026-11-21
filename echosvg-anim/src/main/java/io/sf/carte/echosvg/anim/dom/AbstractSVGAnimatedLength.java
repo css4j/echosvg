@@ -26,12 +26,17 @@ import org.w3c.dom.svg.SVGLength;
 
 import io.sf.carte.echosvg.anim.values.AnimatableLengthValue;
 import io.sf.carte.echosvg.anim.values.AnimatableValue;
+import io.sf.carte.echosvg.css.engine.StyleMap;
 import io.sf.carte.echosvg.dom.svg.LiveAttributeException;
 import io.sf.carte.echosvg.parser.UnitProcessor;
 
 /**
  * This class provides an implementation of the {@link SVGAnimatedLength}
  * interface.
+ * <p>
+ * Unless the {@link #nonNegativeCheck(AbstractSVGLength)} method is overridden,
+ * negative lengths are not allowed.
+ * </p>
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
@@ -56,9 +61,14 @@ public abstract class AbstractSVGAnimatedLength extends AbstractSVGAnimatedValue
 	public static final short OTHER_LENGTH = UnitProcessor.OTHER_LENGTH;
 
 	/**
+	 * Tolerance for non-negative value checks (calc() rounding errors)
+	 */
+	static final float TOLERANCE = 1e-3f;
+
+	/**
 	 * This length's direction.
 	 */
-	protected short direction;
+	private final short direction;
 
 	/**
 	 * The base value.
@@ -76,23 +86,20 @@ public abstract class AbstractSVGAnimatedLength extends AbstractSVGAnimatedValue
 	protected boolean changing;
 
 	/**
-	 * Whether the value must be non-negative.
-	 */
-	protected boolean nonNegative;
-
-	/**
 	 * Creates a new SVGAnimatedLength.
+	 * <p>
+	 * Unless the {@link #nonNegativeCheck(AbstractSVGLength)} method is overridden,
+	 * negative lengths are not allowed.
+	 * </p>
 	 * 
-	 * @param elt    The associated element.
-	 * @param ns     The attribute's namespace URI.
-	 * @param ln     The attribute's local name.
-	 * @param dir    The length's direction.
-	 * @param nonneg Whether the length must be non-negative.
+	 * @param elt The associated element.
+	 * @param ns  The attribute's namespace URI.
+	 * @param ln  The attribute's local name.
+	 * @param dir The length's direction.
 	 */
-	public AbstractSVGAnimatedLength(AbstractElement elt, String ns, String ln, short dir, boolean nonneg) {
+	public AbstractSVGAnimatedLength(AbstractElement elt, String ns, String ln, short dir) {
 		super(elt, ns, ln);
 		direction = dir;
-		nonNegative = nonneg;
 	}
 
 	/**
@@ -119,12 +126,39 @@ public abstract class AbstractSVGAnimatedLength extends AbstractSVGAnimatedValue
 	}
 
 	/**
+	 * Get the value corresponding to the {@code auto} identifier.
+	 * 
+	 * @return the {@code auto} value or {@code null} if not supported.
+	 */
+	protected String getAutoValue() {
+		return null;
+	}
+
+	/**
+	 * Get the axis or direction.
+	 * 
+	 * @return the direction according to {@link UnitProcessor#HORIZONTAL_LENGTH},
+	 *         {@link UnitProcessor#VERTICAL_LENGTH} and
+	 *         {@link UnitProcessor#OTHER_LENGTH}.
+	 */
+	public short getDirection() {
+		return direction;
+	}
+
+	/**
 	 * <b>DOM</b>: Implements {@link SVGAnimatedLength#getBaseVal()}.
 	 */
 	@Override
 	public SVGLength getBaseVal() {
 		if (baseVal == null) {
-			baseVal = new BaseSVGLength(direction);
+			baseVal = new BaseSVGLength(direction) {
+
+				@Override
+				protected String getAutoValue() {
+					return AbstractSVGAnimatedLength.this.getAutoValue();
+				}
+
+			};
 		}
 		return baseVal;
 	}
@@ -141,37 +175,40 @@ public abstract class AbstractSVGAnimatedLength extends AbstractSVGAnimatedValue
 	}
 
 	/**
-	 * Gets the current animated length value. If the attribute is missing or
-	 * malformed, an exception is thrown.
+	 * Gets the current animated length value. If the attribute is malformed, an
+	 * exception is thrown.
 	 */
 	public float getCheckedValue() throws LiveAttributeException {
 		if (hasAnimVal) {
 			if (animVal == null) {
 				animVal = new AnimSVGLength(direction);
 			}
-			if (nonNegative && animVal.value < 0) {
-				throw new LiveAttributeException(element, localName, LiveAttributeException.ERR_ATTRIBUTE_NEGATIVE,
-						animVal.getValueAsString());
-			}
-			return animVal.getValue();
+			return nonNegativeCheck(animVal);
 		} else {
 			if (baseVal == null) {
 				baseVal = new BaseSVGLength(direction);
 			}
 			baseVal.revalidate();
-			if (baseVal.missing) {
-				throw new LiveAttributeException(element, localName, LiveAttributeException.ERR_ATTRIBUTE_MISSING,
-						null);
-			} else if (baseVal.unitType == CSSUnit.CSS_INVALID) {
-				throw new LiveAttributeException(element, localName, LiveAttributeException.ERR_ATTRIBUTE_MALFORMED,
-						baseVal.getValueAsString());
+			if (baseVal.unitType == CSSUnit.CSS_INVALID) {
+				throw new LiveAttributeException(element, localName,
+						LiveAttributeException.ERR_ATTRIBUTE_MALFORMED, baseVal.getValueAsString());
 			}
-			if (nonNegative && baseVal.value < 0) {
-				throw new LiveAttributeException(element, localName, LiveAttributeException.ERR_ATTRIBUTE_NEGATIVE,
-						baseVal.getValueAsString());
-			}
-			return baseVal.getValue();
+			return nonNegativeCheck(baseVal);
 		}
+	}
+
+	public float nonNegativeCheck(SVGLength lengthVal) throws LiveAttributeException {
+		float value = lengthVal.getValue();
+		if (value < 0f) {
+			// Dimensions could come from calc(), so allow some tolerance
+			if (value < -TOLERANCE) {
+				throw new LiveAttributeException(element, localName,
+						LiveAttributeException.ERR_ATTRIBUTE_NEGATIVE,
+						lengthVal.getValueAsString());
+			}
+			value = 0f;
+		}
+		return value;
 	}
 
 	/**
@@ -200,6 +237,21 @@ public abstract class AbstractSVGAnimatedLength extends AbstractSVGAnimatedValue
 		SVGLength base = getBaseVal();
 		return new AnimatableLengthValue(target, base.getCSSUnitType(), base.getValueInSpecifiedUnits(),
 				target.getPercentageInterpretation(getNamespaceURI(), getLocalName(), false));
+	}
+
+	/**
+	 * Gets the current animated length value. If the property is malformed, returns
+	 * the default.
+	 */
+	public float getAnimatedComputedValue(StyleMap sm) {
+		float f;
+		try {
+			f = getCheckedValue();
+		} catch (LiveAttributeException e) {
+			reportError(e);
+			f = getDefault();
+		}
+		return f;
 	}
 
 	/**
@@ -251,11 +303,6 @@ public abstract class AbstractSVGAnimatedLength extends AbstractSVGAnimatedValue
 		protected boolean valid;
 
 		/**
-		 * Whether the attribute is missing.
-		 */
-		protected boolean missing;
-
-		/**
 		 * Creates a new BaseSVGLength.
 		 * 
 		 * @param direction is one of HORIZONTAL_LENGTH, VERTICAL_LENGTH, or
@@ -296,22 +343,17 @@ public abstract class AbstractSVGAnimatedLength extends AbstractSVGAnimatedValue
 				return;
 			}
 
-			missing = false;
 			valid = true;
 
-			Attr attr = element.getAttributeNodeNS(namespaceURI, localName);
-			String s;
-			if (attr == null) {
-				missing = true;
-				s = getDefaultValue();
-				if (s == null) {
+			String attr = element.getAttributeNS(namespaceURI, localName).trim();
+			if (attr.isEmpty()) {
+				attr = getDefaultValue();
+				if (attr == null) {
 					return;
 				}
-			} else {
-				s = attr.getValue();
 			}
 
-			parse(s);
+			parse(attr);
 		}
 
 		/**
@@ -320,6 +362,11 @@ public abstract class AbstractSVGAnimatedLength extends AbstractSVGAnimatedValue
 		@Override
 		protected SVGOMElement getAssociatedElement() {
 			return (SVGOMElement) element;
+		}
+
+		@Override
+		protected void reportError(Exception e) {
+			AbstractSVGAnimatedLength.this.reportError(e);
 		}
 
 	}
@@ -382,32 +429,37 @@ public abstract class AbstractSVGAnimatedLength extends AbstractSVGAnimatedValue
 
 		@Override
 		public void setValue(float value) throws DOMException {
-			throw element.createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.length", null);
+			throw createNoModificationAllowedException();
 		}
 
 		@Override
 		public void setValueInSpecifiedUnits(float value) throws DOMException {
-			throw element.createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.length", null);
+			throw createNoModificationAllowedException();
 		}
 
 		@Override
 		public void setValueAsString(String value) throws DOMException {
-			throw element.createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.length", null);
+			throw createNoModificationAllowedException();
 		}
 
 		@Override
 		public void newValueSpecifiedCSSUnits(short unit, float value) {
-			throw element.createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.length", null);
+			throw createNoModificationAllowedException();
 		}
 
 		@Override
 		public void newValueSpecifiedUnits(short unit, float value) {
-			throw element.createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.length", null);
+			throw createNoModificationAllowedException();
 		}
 
 		@Override
 		public void convertToSpecifiedUnits(short unit) {
-			throw element.createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.length", null);
+			throw createNoModificationAllowedException();
+		}
+
+		private DOMException createNoModificationAllowedException() {
+			return element.createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR,
+					"readonly.length", null);
 		}
 
 		/**
@@ -416,6 +468,11 @@ public abstract class AbstractSVGAnimatedLength extends AbstractSVGAnimatedValue
 		@Override
 		protected SVGOMElement getAssociatedElement() {
 			return (SVGOMElement) element;
+		}
+
+		@Override
+		protected void reportError(Exception e) {
+			AbstractSVGAnimatedLength.this.reportError(e);
 		}
 
 		/**

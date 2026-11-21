@@ -30,6 +30,7 @@ import org.w3c.dom.svg.SVGAnimatedNumber;
 import org.w3c.dom.svg.SVGElement;
 import org.w3c.dom.svg.SVGException;
 import org.w3c.dom.svg.SVGFitToViewBox;
+import org.w3c.dom.svg.SVGLength;
 import org.w3c.dom.svg.SVGSVGElement;
 
 import io.sf.carte.echosvg.anim.values.AnimatableNumberOptionalNumberValue;
@@ -493,9 +494,93 @@ public abstract class SVGOMElement extends AbstractElement implements SVGElement
 	 */
 	protected SVGOMAnimatedLength createLiveAnimatedLength(String ns, String ln, String val, short dir,
 			boolean nonneg) {
-		SVGOMAnimatedLength v = new SVGOMAnimatedLength(this, ns, ln, val, dir, nonneg);
+		SVGOMAnimatedLength v;
+		if (nonneg) {
+			v = new SVGOMAnimatedLength(this, ns, ln, val, dir);
+		} else {
+			v = new SVGOMAnimatedLength(this, ns, ln, val, dir) {
+
+				@Override
+				public float nonNegativeCheck(SVGLength lengthVal) {
+					return lengthVal.getValue();
+				}
+
+			};
+		}
 		liveAttributeValues.put(ns, ln, v);
 		v.addAnimatedAttributeListener(((SVGOMDocument) ownerDocument).getAnimatedAttributeListener());
+		return v;
+	}
+
+	/**
+	 * Creates a new {@link SVGOMAnimatedLength} and stores it in this element's
+	 * LiveAttributeValue table.
+	 */
+	SVGOMGeometryProperty createLiveGeometryProperty(String ns, String ln, String val,
+			short dir, boolean nonneg, int pty_idx) {
+		SVGOMGeometryProperty v;
+		if (nonneg) {
+			v = new SVGOMGeometryProperty(this, ns, ln, val, dir, pty_idx);
+		} else {
+			v = new SVGOMGeometryProperty(this, ns, ln, val, dir, pty_idx) {
+
+				@Override
+				public float nonNegativeCheck(SVGLength lengthVal) {
+					return lengthVal.getValue();
+				}
+
+				@Override
+				float nonNegativeCheck(float f) {
+					return f;
+				}
+
+			};
+		}
+		liveAttributeValues.put(ns, ln, v);
+		v.addAnimatedAttributeListener(
+				((SVGOMDocument) ownerDocument).getAnimatedAttributeListener());
+		return v;
+	}
+
+	/**
+	 * Creates a new {@link SVGOMAnimatedLength} with the given {@code auto} value
+	 * and stores it in this element's LiveAttributeValue table.
+	 */
+	SVGOMGeometryProperty createLiveGeometryPropertyWithAuto(String ns, String ln, String val,
+			short dir, boolean nonneg, int pty_idx, String auto) {
+		SVGOMGeometryProperty v;
+		if (nonneg) {
+			v = new SVGOMGeometryProperty(this, ns, ln, val, dir, pty_idx) {
+
+				@Override
+				protected String getAutoValue() {
+					return auto;
+				}
+
+			};
+		} else {
+			v = new SVGOMGeometryProperty(this, ns, ln, val, dir, pty_idx) {
+
+				@Override
+				public float nonNegativeCheck(SVGLength lengthVal) {
+					return lengthVal.getValue();
+				}
+
+				@Override
+				float nonNegativeCheck(float f) {
+					return f;
+				}
+
+				@Override
+				protected String getAutoValue() {
+					return auto;
+				}
+
+			};
+		}
+		liveAttributeValues.put(ns, ln, v);
+		v.addAnimatedAttributeListener(
+				((SVGOMDocument) ownerDocument).getAnimatedAttributeListener());
 		return v;
 	}
 

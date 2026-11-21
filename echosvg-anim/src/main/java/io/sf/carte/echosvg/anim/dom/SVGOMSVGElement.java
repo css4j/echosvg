@@ -52,6 +52,9 @@ import org.w3c.dom.views.AbstractView;
 import org.w3c.dom.views.DocumentView;
 
 import io.sf.carte.echosvg.constants.XMLConstants;
+import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
+import io.sf.carte.echosvg.css.engine.value.Value;
+import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.dom.svg.AbstractSVGMatrix;
 import io.sf.carte.echosvg.dom.svg.SVGContext;
@@ -122,22 +125,22 @@ public class SVGOMSVGElement extends SVGStylableElement implements SVGSVGElement
 	/**
 	 * The 'x' attribute value.
 	 */
-	protected SVGOMAnimatedLength x;
+	protected SVGGeometryProperty x;
 
 	/**
 	 * The 'y' attribute value.
 	 */
-	protected SVGOMAnimatedLength y;
+	protected SVGGeometryProperty y;
 
 	/**
 	 * The 'width' attribute value.
 	 */
-	protected SVGOMAnimatedLength width;
+	protected SVGGeometryProperty width;
 
 	/**
 	 * The 'height' attribute value.
 	 */
-	protected SVGOMAnimatedLength height;
+	protected SVGGeometryProperty height;
 
 	/**
 	 * The 'externalResourcesRequired' attribute value.
@@ -184,15 +187,18 @@ public class SVGOMSVGElement extends SVGStylableElement implements SVGSVGElement
 	 * Initializes the live attribute values of this element.
 	 */
 	private void initializeLiveAttributes() {
-		x = createLiveAnimatedLength(null, SVG_X_ATTRIBUTE, SVG_SVG_X_DEFAULT_VALUE,
-				AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false);
-		y = createLiveAnimatedLength(null, SVG_Y_ATTRIBUTE, SVG_SVG_Y_DEFAULT_VALUE,
-				AbstractSVGAnimatedLength.VERTICAL_LENGTH, false);
-		width = createLiveAnimatedLength(null, SVG_WIDTH_ATTRIBUTE, SVG_SVG_WIDTH_DEFAULT_VALUE,
-				AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, true);
-		height = createLiveAnimatedLength(null, SVG_HEIGHT_ATTRIBUTE, SVG_SVG_HEIGHT_DEFAULT_VALUE,
-				AbstractSVGAnimatedLength.VERTICAL_LENGTH, true);
-		externalResourcesRequired = createLiveAnimatedBoolean(null, SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE, false);
+		x = createLiveGeometryProperty(null, SVG_X_ATTRIBUTE, SVG_SVG_X_DEFAULT_VALUE,
+				AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false, SVGCSSEngine.X_INDEX);
+		y = createLiveGeometryProperty(null, SVG_Y_ATTRIBUTE, SVG_SVG_Y_DEFAULT_VALUE,
+				AbstractSVGAnimatedLength.VERTICAL_LENGTH, false, SVGCSSEngine.Y_INDEX);
+		width = createLiveGeometryPropertyWithAuto(null, SVG_WIDTH_ATTRIBUTE,
+				SVG_SVG_WIDTH_DEFAULT_VALUE, AbstractSVGAnimatedLength.HORIZONTAL_LENGTH,
+				true, SVGCSSEngine.WIDTH_INDEX, SVG_SVG_WIDTH_AUTO_VALUE);
+		height = createLiveGeometryPropertyWithAuto(null, SVG_HEIGHT_ATTRIBUTE,
+				SVG_SVG_HEIGHT_DEFAULT_VALUE, AbstractSVGAnimatedLength.VERTICAL_LENGTH,
+				true, SVGCSSEngine.HEIGHT_INDEX, SVG_SVG_HEIGHT_AUTO_VALUE);
+		externalResourcesRequired = createLiveAnimatedBoolean(null,
+				SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE, false);
 		preserveAspectRatio = createLiveAnimatedPreserveAspectRatio();
 		viewBox = createLiveAnimatedRect(null, SVG_VIEW_BOX_ATTRIBUTE, null);
 	}
@@ -874,6 +880,20 @@ public class SVGOMSVGElement extends SVGStylableElement implements SVGSVGElement
 	@Override
 	public boolean hasExtension(String extension) {
 		return SVGTestsSupport.hasExtension(this, extension);
+	}
+
+	@Override
+	public Value getInitialValue(int idx) {
+		Value v;
+		switch (idx) {
+		case SVGCSSEngine.WIDTH_INDEX:
+		case SVGCSSEngine.HEIGHT_INDEX:
+			v = ValueConstants.PERCENTAGE_100;
+			break;
+		default:
+			v = null;
+		}
+		return v;
 	}
 
 	/**

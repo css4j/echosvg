@@ -21,6 +21,10 @@ package io.sf.carte.echosvg.anim.dom;
 /**
  * This class provides an implementation of the
  * {@link org.w3c.dom.svg.SVGAnimatedLength} interface.
+ * <p>
+ * Unless the {@link #nonNegativeCheck(AbstractSVGLength)} method is overridden,
+ * negative lengths are not allowed.
+ * </p>
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
@@ -41,10 +45,9 @@ public class SVGOMAnimatedLength extends AbstractSVGAnimatedLength {
 	 * @param ln     The attribute's local name.
 	 * @param def    The default value if the attribute is not specified.
 	 * @param dir    The length's direction.
-	 * @param nonneg Whether the length must be non-negative.
 	 */
-	public SVGOMAnimatedLength(AbstractElement elt, String ns, String ln, String def, short dir, boolean nonneg) {
-		super(elt, ns, ln, dir, nonneg);
+	public SVGOMAnimatedLength(AbstractElement elt, String ns, String ln, String def, short dir) {
+		super(elt, ns, ln, dir);
 		defaultValue = def;
 	}
 

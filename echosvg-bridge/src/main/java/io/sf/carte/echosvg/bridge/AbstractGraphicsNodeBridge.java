@@ -80,6 +80,9 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
 public abstract class AbstractGraphicsNodeBridge extends AnimatableSVGBridge
 		implements SVGContext, BridgeUpdateHandler, GraphicsNodeBridge, ErrorConstants {
 
+	// Dimensions could come from calc(), so allow some tolerance in lengths
+	static final double TOLERANCE = 1e-3d;
+
 	/**
 	 * The graphics node constructed by this bridge.
 	 */
@@ -170,24 +173,6 @@ public abstract class AbstractGraphicsNodeBridge extends AnimatableSVGBridge
 		} catch (LiveAttributeException ex) {
 			reportLiveAttributeException(ctx, ex);
 			value = animValue.getDefault();
-		}
-		return value;
-	}
-
-	/**
-	 * Give a safe value for an animated length, regardless of exceptions.
-	 * 
-	 * @param animValue the animated length.
-	 * @param defValue  the default value.
-	 * @return the value.
-	 */
-	float safeAnimatedLength(AbstractSVGAnimatedLength animValue, float defValue) throws BridgeException {
-		float value;
-		try {
-			value = animValue.getCheckedValue();
-		} catch (LiveAttributeException ex) {
-			reportLiveAttributeException(ctx, ex);
-			value = defValue;
 		}
 		return value;
 	}

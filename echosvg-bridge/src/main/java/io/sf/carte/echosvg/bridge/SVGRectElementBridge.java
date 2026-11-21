@@ -24,9 +24,12 @@ import java.awt.geom.RoundRectangle2D;
 
 import org.w3c.dom.Element;
 
-import io.sf.carte.echosvg.anim.dom.AbstractSVGAnimatedLength;
 import io.sf.carte.echosvg.anim.dom.AnimatedLiveAttributeValue;
+import io.sf.carte.echosvg.anim.dom.SVGGeometryProperty;
 import io.sf.carte.echosvg.anim.dom.SVGOMRectElement;
+import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
+import io.sf.carte.echosvg.css.engine.StyleMap;
+import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.dom.svg.LiveAttributeException;
 import io.sf.carte.echosvg.gvt.ShapeNode;
 import io.sf.carte.echosvg.gvt.ShapePainter;
@@ -76,46 +79,46 @@ public class SVGRectElementBridge extends SVGShapeElementBridge {
 			throws BridgeException {
 		SVGOMRectElement re = (SVGOMRectElement) e;
 
+		StyleMap sm = safeComputedStyleMap(re);
+
 		// 'x' attribute - default is 0
-		AbstractSVGAnimatedLength _x = (AbstractSVGAnimatedLength) re.getX();
-		float x = safeAnimatedLength(_x, 0f);
+		float x = ((SVGGeometryProperty) re.getX()).getAnimatedComputedValue(sm);
 
 		// 'y' attribute - default is 0
-		AbstractSVGAnimatedLength _y = (AbstractSVGAnimatedLength) re.getY();
-		float y = safeAnimatedLength(_y, 0f);
+		float y = ((SVGGeometryProperty) re.getY()).getAnimatedComputedValue(sm);
 
 		// 'width' attribute - default is 0
-		AbstractSVGAnimatedLength _width = (AbstractSVGAnimatedLength) re.getWidth();
-		float w = safeAnimatedLength(_width, 0f);
+		float w = ((SVGGeometryProperty) re.getWidth()).getAnimatedComputedValue(sm);
 
 		// 'height' attribute - default is 0
-		AbstractSVGAnimatedLength _height = (AbstractSVGAnimatedLength) re.getHeight();
-		float h = safeAnimatedLength(_height, 0f);
+		float h = ((SVGGeometryProperty) re.getHeight()).getAnimatedComputedValue(sm);
 
 		// 'rx' attribute - default is 0
 		boolean rxAuto = false;
-		AbstractSVGAnimatedLength _rx = (AbstractSVGAnimatedLength) re.getRx();
+		SVGGeometryProperty _rx = (SVGGeometryProperty) re.getRx();
 		float rx;
-		try {
-			rx = _rx.getCheckedValue();
-		} catch (LiveAttributeException ex) {
+		Value css = _rx.computeAnimatedValue(sm);
+		if (css != null) {
+			rx = css.getFloatValue();
+		} else {
 			rx = 0f;
 			rxAuto = true;
-			reportLiveAttributeException(ctx, ex);
 		}
+
 		if (rx > w / 2f) {
 			rx = w / 2f;
 		}
 
 		// 'ry' attribute - default is rx
-		AbstractSVGAnimatedLength _ry = (AbstractSVGAnimatedLength) re.getRy();
+		SVGGeometryProperty _ry = (SVGGeometryProperty) re.getRy();
 		float ry;
-		try {
-			ry = _ry.getCheckedValue();
-		} catch (LiveAttributeException ex) {
+		css = _ry.computeAnimatedValue(sm);
+		if (css != null) {
+			ry = css.getFloatValue();
+		} else {
 			ry = rx;
-			reportLiveAttributeException(ctx, ex);
 		}
+
 		if (ry > h / 2f) {
 			ry = h / 2f;
 		}
@@ -130,8 +133,35 @@ public class SVGRectElementBridge extends SVGShapeElementBridge {
 			rx = ry;
 		}
 
+		// Report negative values for rx & ry, for the SVG linter use case
+		// rx & ry could come from calc(), so allow some tolerance
+		if (rx < TOLERANCE || ry < TOLERANCE) {
+			if (rx < 0f) {
+				if (!rxAuto && rx < -TOLERANCE) {
+					BridgeException be = new BridgeException(ctx, e, ERR_LENGTH_NEGATIVE,
+							new Object[] { SVG_RX_ATTRIBUTE });
+					displayErrorOrThrow(ctx, be);
+				}
+				rxAuto = true;
+				rx = ry;
+			}
+			if (ry < 0f) {
+				if (ry < -TOLERANCE) {
+					BridgeException be = new BridgeException(ctx, e, ERR_LENGTH_NEGATIVE,
+							new Object[] { SVG_RY_ATTRIBUTE });
+					displayErrorOrThrow(ctx, be);
+				}
+				if (rxAuto) {
+					ry = 0f;
+					rx = 0f;
+				} else {
+					ry = rx;
+				}
+			}
+		}
+
 		Shape shape;
-		if (rx == 0f || ry == 0f) {
+		if (rx <= 0f || ry <= 0f) {
 			shape = new Rectangle2D.Float(x, y, w, h);
 		} else {
 			shape = new RoundRectangle2D.Float(x, y, w, h, rx * 2f, ry * 2f);
@@ -164,11 +194,30 @@ public class SVGRectElementBridge extends SVGShapeElementBridge {
 	}
 
 	@Override
+	protected void handleCSSPropertyChanged(int property) {
+		switch (property) {
+		case SVGCSSEngine.X_INDEX:
+		case SVGCSSEngine.Y_INDEX:
+		case SVGCSSEngine.WIDTH_INDEX:
+		case SVGCSSEngine.HEIGHT_INDEX:
+		case SVGCSSEngine.RX_INDEX:
+		case SVGCSSEngine.RY_INDEX: {
+			buildShape(ctx, e, (ShapeNode) node);
+			handleGeometryChanged();
+			break;
+		}
+		default:
+			super.handleCSSPropertyChanged(property);
+		}
+	}
+
+	@Override
 	protected ShapePainter createShapePainter(BridgeContext ctx, Element e, ShapeNode shapeNode) {
 		Shape shape = shapeNode.getShape();
 		Rectangle2D r2d = shape.getBounds2D();
-		if ((r2d.getWidth() == 0) || (r2d.getHeight() == 0))
+		if (r2d.getWidth() < TOLERANCE || r2d.getHeight() < TOLERANCE) {
 			return null;
+		}
 		return super.createShapePainter(ctx, e, shapeNode);
 	}
 
