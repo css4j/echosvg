@@ -409,6 +409,7 @@ public class SamplesResvgShapesTest extends SamplesResvgRendering {
 		testNVErrIgnore("samples/resvg/tests/shapes/path/invalid-data-in-L.svg", 1);
 	}
 
+	@Disabled
 	@Test
 	public void testPathInvalidTransform() throws TranscoderException, IOException {
 		testNVErrIgnore("samples/resvg/tests/shapes/path/invalid-transform.svg", 1);

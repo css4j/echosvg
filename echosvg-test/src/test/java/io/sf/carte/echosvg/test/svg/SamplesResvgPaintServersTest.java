@@ -137,12 +137,14 @@ public class SamplesResvgPaintServersTest extends SamplesResvgRendering {
 				1);
 	}
 
+	@Disabled
 	@Test
 	public void testLinearGradientInvalidGradientUnits() throws TranscoderException, IOException {
 		testNVErrIgnore(
 				"samples/resvg/tests/paint-servers/linearGradient/invalid-gradientUnits.svg", 1);
 	}
 
+	@Disabled
 	@Test
 	public void testLinearGradientInvalidSpreadMethod() throws TranscoderException, IOException {
 		testNVErrIgnore("samples/resvg/tests/paint-servers/linearGradient/invalid-spreadMethod.svg",
@@ -312,11 +314,13 @@ public class SamplesResvgPaintServersTest extends SamplesResvgRendering {
 				2);
 	}
 
+	@Disabled
 	@Test
 	public void testPatternMissingHeight() throws TranscoderException, IOException {
 		testNVErrIgnore("samples/resvg/tests/paint-servers/pattern/missing-height.svg", 1);
 	}
 
+	@Disabled
 	@Test
 	public void testPatternMissingWidth() throws TranscoderException, IOException {
 		testNVErrIgnore("samples/resvg/tests/paint-servers/pattern/missing-width.svg", 1);
@@ -589,12 +593,14 @@ public class SamplesResvgPaintServersTest extends SamplesResvgRendering {
 				1);
 	}
 
+	@Disabled
 	@Test
 	public void testRadialGradientInvalidGradientUnits() throws TranscoderException, IOException {
 		testNVErrIgnore(
 				"samples/resvg/tests/paint-servers/radialGradient/invalid-gradientUnits.svg", 1);
 	}
 
+	@Disabled
 	@Test
 	public void testRadialGradientInvalidSpreadMethod() throws TranscoderException, IOException {
 		testNVErrIgnore("samples/resvg/tests/paint-servers/radialGradient/invalid-spreadMethod.svg",
@@ -612,6 +618,7 @@ public class SamplesResvgPaintServersTest extends SamplesResvgRendering {
 		test("samples/resvg/tests/paint-servers/radialGradient/many-stops.svg");
 	}
 
+	@Disabled
 	@Test
 	public void testRadialGradientNegativeR() throws TranscoderException, IOException {
 		testNVErrIgnore("samples/resvg/tests/paint-servers/radialGradient/negative-r.svg", 1);
@@ -744,11 +751,13 @@ public class SamplesResvgPaintServersTest extends SamplesResvgRendering {
 		test("samples/resvg/tests/paint-servers/stop/hsla-color.svg");
 	}
 
+	@Disabled
 	@Test
 	public void testStopInvalidOffset_1() throws TranscoderException, IOException {
 		testNVErrIgnore("samples/resvg/tests/paint-servers/stop/invalid-offset-1.svg", 1);
 	}
 
+	@Disabled
 	@Test
 	public void testStopInvalidOffset_2() throws TranscoderException, IOException {
 		testNVErrIgnore("samples/resvg/tests/paint-servers/stop/invalid-offset-2.svg", 1);

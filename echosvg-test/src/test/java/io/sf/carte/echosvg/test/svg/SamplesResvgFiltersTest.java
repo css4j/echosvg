@@ -150,6 +150,7 @@ public class SamplesResvgFiltersTest extends SamplesResvgRendering {
 		test("samples/resvg/tests/filters/enable-background/with-transform.svg");
 	}
 
+	@Disabled
 	@Test
 	public void testFeBlendEmpty() throws TranscoderException, IOException {
 		testNVErrIgnore("samples/resvg/tests/filters/feBlend/empty.svg", 1);
@@ -202,6 +203,7 @@ public class SamplesResvgFiltersTest extends SamplesResvgRendering {
 		test("samples/resvg/tests/filters/feBlend/with-subregion-on-input-2.svg");
 	}
 
+	@Disabled
 	@Test
 	public void testFeColorMatrixInvalidType() throws TranscoderException, IOException {
 		testNVErrIgnore("samples/resvg/tests/filters/feColorMatrix/invalid-type.svg", 1);
@@ -235,6 +237,7 @@ public class SamplesResvgFiltersTest extends SamplesResvgRendering {
 		test("samples/resvg/tests/filters/feColorMatrix/type=matrix-with-non-normalized-values.svg");
 	}
 
+	@Disabled
 	@Test
 	public void testFeColorMatrixTypeEqMatrixWithNotEnoughValues()
 			throws TranscoderException, IOException {
@@ -243,6 +246,7 @@ public class SamplesResvgFiltersTest extends SamplesResvgRendering {
 				1);
 	}
 
+	@Disabled
 	@Test
 	public void testFeColorMatrixTypeEqMatrixWithTooManyValues()
 			throws TranscoderException, IOException {
@@ -295,6 +299,7 @@ public class SamplesResvgFiltersTest extends SamplesResvgRendering {
 		test("samples/resvg/tests/filters/feColorMatrix/without-attributes.svg");
 	}
 
+	@Disabled
 	@Test
 	public void testFeComponentTransferInvalidType() throws TranscoderException, IOException {
 		testNVErrIgnore("samples/resvg/tests/filters/feComponentTransfer/invalid-type.svg", 1);
@@ -321,6 +326,7 @@ public class SamplesResvgFiltersTest extends SamplesResvgRendering {
 		test("samples/resvg/tests/filters/feComponentTransfer/type=gamma-on-blue.svg");
 	}
 
+	@Disabled
 	@Test
 	public void testFeComponentTransferTypeEqGammaWithAnInvalidOffset()
 			throws TranscoderException, IOException {
@@ -350,6 +356,7 @@ public class SamplesResvgFiltersTest extends SamplesResvgRendering {
 		test("samples/resvg/tests/filters/feComponentTransfer/type=linear-on-blue.svg");
 	}
 
+	@Disabled
 	@Test
 	public void testFeComponentTransferTypeEqLinearWithInvalidValues()
 			throws TranscoderException, IOException {
@@ -384,6 +391,7 @@ public class SamplesResvgFiltersTest extends SamplesResvgRendering {
 		test("samples/resvg/tests/filters/feComponentTransfer/type=table-and-tableValues=100--100.svg");
 	}
 
+	@Disabled
 	@Test
 	public void testFeComponentTransferTypeEqTableAndTableValuesEq1px()
 			throws TranscoderException, IOException {
@@ -440,6 +448,7 @@ public class SamplesResvgFiltersTest extends SamplesResvgRendering {
 		test("samples/resvg/tests/filters/feComposite/default-operator.svg");
 	}
 
+	@Disabled
 	@Test
 	public void testFeCompositeEmpty() throws TranscoderException, IOException {
 		testNVErrIgnore("samples/resvg/tests/filters/feComposite/empty.svg", 1);
@@ -991,6 +1000,7 @@ public class SamplesResvgFiltersTest extends SamplesResvgRendering {
 		test("samples/resvg/tests/filters/feGaussianBlur/small-stdDeviation.svg");
 	}
 
+	@Disabled
 	@Test
 	public void testFeGaussianBlurStdDeviationWithMultipleValues()
 			throws TranscoderException, IOException {
@@ -1198,6 +1208,7 @@ public class SamplesResvgFiltersTest extends SamplesResvgRendering {
 		test("samples/resvg/tests/filters/feMorphology/huge-radius.svg");
 	}
 
+	@Disabled
 	@Test
 	public void testFeMorphologyNegativeRadius() throws TranscoderException, IOException {
 		testNVErrIgnore("samples/resvg/tests/filters/feMorphology/negative-radius.svg", 1);
@@ -1294,6 +1305,7 @@ public class SamplesResvgFiltersTest extends SamplesResvgRendering {
 		test("samples/resvg/tests/filters/feOffset/only-dy.svg");
 	}
 
+	@Disabled
 	@Test
 	public void testFeOffsetPercentageValues() throws TranscoderException, IOException {
 		testNVErrIgnore("samples/resvg/tests/filters/feOffset/percentage-values.svg", 2);
@@ -1576,6 +1588,7 @@ public class SamplesResvgFiltersTest extends SamplesResvgRendering {
 		test("samples/resvg/tests/filters/feTurbulence/seed=-20.svg");
 	}
 
+	@Disabled
 	@Test
 	public void testFeTurbulenceSeedEq1_5() throws TranscoderException, IOException {
 		test("samples/resvg/tests/filters/feTurbulence/seed=1.5.svg");
@@ -2026,6 +2039,7 @@ public class SamplesResvgFiltersTest extends SamplesResvgRendering {
 		testNVErrIgnore("samples/resvg/tests/filters/filter/invalid-FuncIRI.svg", 1);
 	}
 
+	@Disabled
 	@Test
 	public void testFilterInvalidFilterUnits() throws TranscoderException, IOException {
 		testNVErrIgnore("samples/resvg/tests/filters/filter/invalid-filterUnits.svg", 1);

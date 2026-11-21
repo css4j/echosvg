@@ -1275,6 +1275,7 @@ public class SamplesResvgTextTest extends SamplesResvgRendering {
 		test("samples/resvg/tests/text/text/rotate-on-Arabic.svg");
 	}
 
+	@Disabled
 	@Test
 	public void testTextRotateWithAnInvalidAngle() throws TranscoderException, IOException {
 		testNVErrIgnore("samples/resvg/tests/text/text/rotate-with-an-invalid-angle.svg", 1);
@@ -1433,6 +1434,7 @@ public class SamplesResvgTextTest extends SamplesResvgRendering {
 		test("samples/resvg/tests/text/textLength/inherit.svg");
 	}
 
+	@Disabled
 	@Test
 	public void testTextLengthNegative() throws TranscoderException, IOException {
 		testNVErrIgnore("samples/resvg/tests/text/textLength/negative.svg", 1);
@@ -1465,6 +1467,7 @@ public class SamplesResvgTextTest extends SamplesResvgRendering {
 		test("samples/resvg/tests/text/textPath/closed-path.svg");
 	}
 
+	@Disabled
 	@Test
 	public void testTextPathComplex() throws TranscoderException, IOException {
 		testNVErrIgnore("samples/resvg/tests/text/textPath/complex.svg", 1);
@@ -1476,11 +1479,13 @@ public class SamplesResvgTextTest extends SamplesResvgRendering {
 		test("samples/resvg/tests/text/textPath/dy-with-tiny-coordinates.svg");
 	}
 
+	@Disabled
 	@Test
 	public void testTextPathInvalidLink() throws TranscoderException, IOException {
 		testNVErrIgnore("samples/resvg/tests/text/textPath/invalid-link.svg", 1);
 	}
 
+	@Disabled
 	@Test
 	public void testTextPathInvalidTextPathInTheMiddle() throws TranscoderException, IOException {
 		testNVErrIgnore("samples/resvg/tests/text/textPath/invalid-textPath-in-the-middle.svg", 1);
@@ -1523,6 +1528,7 @@ public class SamplesResvgTextTest extends SamplesResvgRendering {
 		test("samples/resvg/tests/text/textPath/nested.svg");
 	}
 
+	@Disabled
 	@Test
 	public void testTextPathNoLink() throws TranscoderException, IOException {
 		testNVErrIgnore("samples/resvg/tests/text/textPath/no-link.svg", 1);

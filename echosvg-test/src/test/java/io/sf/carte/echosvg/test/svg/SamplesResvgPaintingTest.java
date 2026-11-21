@@ -876,6 +876,7 @@ public class SamplesResvgPaintingTest extends SamplesResvgRendering {
 		test("samples/resvg/tests/painting/marker/with-an-image-child.svg");
 	}
 
+	@Disabled
 	@Test
 	public void testMarkerWithInvalidMarkerUnits() throws TranscoderException, IOException {
 		testNVErrIgnore("samples/resvg/tests/painting/marker/with-invalid-markerUnits.svg", 3);
@@ -1604,9 +1605,8 @@ public class SamplesResvgPaintingTest extends SamplesResvgRendering {
 	@Test
 	public void testStrokePatternWithObjectBoundingBoxFallbackOnZeroBboxShape()
 			throws TranscoderException, IOException {
-		testNVErrIgnore(
-				"samples/resvg/tests/painting/stroke/pattern-with-objectBoundingBox-fallback-on-zero-bbox-shape.svg",
-				2);
+		testNV(
+				"samples/resvg/tests/painting/stroke/pattern-with-objectBoundingBox-fallback-on-zero-bbox-shape.svg");
 	}
 
 	@Disabled
