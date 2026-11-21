@@ -23,6 +23,7 @@ import org.w3c.dom.DOMException;
 
 import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
+import io.sf.carte.doc.style.css.nsac.LexicalUnit.LexicalType;
 import io.sf.carte.doc.style.css.property.NumberValue;
 import io.sf.carte.echosvg.css.Viewport;
 import io.sf.carte.echosvg.css.engine.CSSContext;
@@ -63,9 +64,6 @@ public abstract class LengthManager extends AbstractValueManager {
 	 */
 	static final double SQRT2 = Math.sqrt(2.0);
 
-	/**
-	 * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
-	 */
 	@Override
 	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
 		switch (lu.getLexicalUnitType()) {
@@ -108,6 +106,9 @@ public abstract class LengthManager extends AbstractValueManager {
 			}
 			return v;
 
+		case IDENT:
+			return createIdentValue(lu, engine);
+
 		default:
 			break;
 		}
@@ -119,6 +120,10 @@ public abstract class LengthManager extends AbstractValueManager {
 			return new FloatValue(lu.getCssUnit(), lu.getFloatValue());
 		}
 		throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
+	}
+
+	protected Value createIdentValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
+		throw createInvalidLexicalUnitDOMException(LexicalType.IDENT);
 	}
 
 	/**
@@ -138,6 +143,7 @@ public abstract class LengthManager extends AbstractValueManager {
 				return evaluateMath((NumericDelegateValue<?>) value, elt, pseudo, engine, idx, sm,
 						CSSUnit.CSS_PX);
 			} catch (Exception e) {
+				reportError(engine, e);
 				return isInheritedProperty() ? null : getDefaultValue();
 			}
 		}
@@ -177,9 +183,7 @@ public abstract class LengthManager extends AbstractValueManager {
 			sm.putFontSizeRelative(idx, true);
 
 			v = value.getFloatValue();
-			int fsidx = engine.getFontSizeIndex();
-			Value cv = engine.getComputedStyle(elt, pseudo, fsidx);
-			float fs = lengthValue(cv);
+			float fs = floatFontSize(elt, pseudo, engine);
 			value = new FloatValue(CSSUnit.CSS_PX, v * fs);
 			break;
 
@@ -187,9 +191,7 @@ public abstract class LengthManager extends AbstractValueManager {
 			sm.putFontSizeRelative(idx, true);
 
 			v = value.getFloatValue();
-			fsidx = engine.getFontSizeIndex();
-			cv = engine.getComputedStyle(elt, pseudo, fsidx);
-			fs = cv.getFloatValue();
+			fs = floatFontSize(elt, pseudo, engine);
 			value = new FloatValue(CSSUnit.CSS_PX, v * fs * 0.5f);
 			break;
 
@@ -218,9 +220,7 @@ public abstract class LengthManager extends AbstractValueManager {
 			sm.putLineHeightRelative(idx, true);
 
 			v = value.getFloatValue();
-			int lhidx = engine.getLineHeightIndex();
-			cv = engine.getComputedStyle(elt, pseudo, lhidx);
-			float lh = lineHeightValue(elt, pseudo, engine, cv);
+			float lh = lineHeightValue(elt, pseudo, engine);
 			value = new FloatValue(CSSUnit.CSS_PX, v * lh);
 			break;
 
@@ -228,11 +228,9 @@ public abstract class LengthManager extends AbstractValueManager {
 			sm.putRootFontSizeRelative(idx, true);
 
 			v = value.getFloatValue();
-			fsidx = engine.getFontSizeIndex();
 			CSSStylableElement root = (CSSStylableElement) elt.getOwnerDocument()
 					.getDocumentElement();
-			cv = engine.getComputedStyle(root, null, fsidx);
-			fs = cv.getFloatValue();
+			fs = floatFontSize(root, null, engine);
 			value = new FloatValue(CSSUnit.CSS_PX, v * fs);
 			break;
 
@@ -240,10 +238,8 @@ public abstract class LengthManager extends AbstractValueManager {
 			sm.putRootFontSizeRelative(idx, true);
 
 			v = value.getFloatValue();
-			fsidx = engine.getFontSizeIndex();
 			root = (CSSStylableElement) elt.getOwnerDocument().getDocumentElement();
-			cv = engine.getComputedStyle(root, null, fsidx);
-			fs = cv.getFloatValue();
+			fs = floatFontSize(root, null, engine);
 			value = new FloatValue(CSSUnit.CSS_PX, v * fs * 0.5f);
 			break;
 
@@ -251,10 +247,8 @@ public abstract class LengthManager extends AbstractValueManager {
 			sm.putRootLineHeightRelative(idx, true);
 
 			v = value.getFloatValue();
-			lhidx = engine.getLineHeightIndex();
 			root = (CSSStylableElement) elt.getOwnerDocument().getDocumentElement();
-			cv = engine.getComputedStyle(root, null, lhidx);
-			lh = lineHeightValue(root, null, engine, cv);
+			lh = lineHeightValue(root, null, engine);
 			value = new FloatValue(CSSUnit.CSS_PX, v * lh);
 			break;
 
@@ -298,15 +292,20 @@ public abstract class LengthManager extends AbstractValueManager {
 
 		case CSSUnit.CSS_INVALID:
 		case CSSUnit.CSS_OTHER:
+			DOMException ex = new DOMException(DOMException.INVALID_ACCESS_ERR,
+					"Unsupported value: " + value.getCssText());
+			reportError(engine, ex);
 			value = null;
 			break;
 
 		default:
 			// Maybe it is one of the new absolute length units
 			try {
-				value = new FloatValue(CSSUnit.CSS_PX, NumberValue.floatValueConversion(
-						value.getFloatValue(), value.getUnitType(), CSSUnit.CSS_PX));
+				float f = NumberValue.floatValueConversion(value.getFloatValue(),
+						value.getUnitType(), CSSUnit.CSS_PX);
+				value = new FloatValue(CSSUnit.CSS_PX, f);
 			} catch (DOMException e) {
+				reportError(engine, e);
 				value = null;
 			}
 		}
@@ -314,18 +313,47 @@ public abstract class LengthManager extends AbstractValueManager {
 		return value;
 	}
 
-	protected float lineHeightValue(CSSStylableElement elt, String pseudo, CSSEngine engine, Value v)
-			throws DOMException {
-		short unit = v.getUnitType();
-		if (unit == CSSUnit.CSS_NUMBER) {
-			int fsidx = engine.getFontSizeIndex();
-			Value cv = engine.getComputedStyle(elt, pseudo, fsidx);
-			float fs = cv.getFloatValue();
-			return fs * v.getFloatValue();
-		} else if (unit == CSSUnit.CSS_PX) {
-			return v.getFloatValue();
+	protected static float floatFontSize(CSSStylableElement elt, String pseudo, CSSEngine engine) {
+		int fsidx = engine.getFontSizeIndex();
+		Value cv = engine.getComputedStyle(elt, pseudo, fsidx);
+		if (cv != null) {
+			short unit = cv.getUnitType();
+			if (unit == CSSUnit.CSS_NUMBER || unit == CSSUnit.CSS_PX) {
+				return cv.getFloatValue();
+			}
+			DOMException ex = new DOMException(DOMException.INVALID_ACCESS_ERR,
+					"Unsupported value: " + cv.getCssText());
+			reportError(engine, ex);
 		}
-		return NumberValue.floatValueConversion(v.getFloatValue(), unit, CSSUnit.CSS_PX);
+		return engine.getCSSContext().getMediumFontSize();
+	}
+
+	protected static float lineHeightValue(CSSStylableElement elt, String pseudo,
+			CSSEngine engine) {
+		int lhidx = engine.getLineHeightIndex();
+		Value v = engine.getComputedStyle(elt, pseudo, lhidx);
+
+		if (v != null) {
+			short unit = v.getUnitType();
+			if (unit == CSSUnit.CSS_NUMBER) {
+				int fsidx = engine.getFontSizeIndex();
+				Value cv = engine.getComputedStyle(elt, pseudo, fsidx);
+				if (cv != null) {
+					float fs = cv.getFloatValue();
+					return fs * v.getFloatValue();
+				}
+			} else if (unit == CSSUnit.CSS_PX) {
+				return v.getFloatValue();
+			} else {
+				try {
+					return NumberValue.floatValueConversion(v.getFloatValue(), unit,
+							CSSUnit.CSS_PX);
+				} catch (DOMException e) {
+					reportError(engine, e);
+				}
+			}
+		}
+		return DEFAULT_LINE_HEIGHT * engine.getCSSContext().getMediumFontSize();
 	}
 
 	//

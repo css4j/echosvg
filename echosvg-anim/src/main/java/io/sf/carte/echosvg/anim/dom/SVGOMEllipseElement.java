@@ -22,7 +22,12 @@ import org.w3c.dom.Node;
 import org.w3c.dom.svg.SVGAnimatedLength;
 import org.w3c.dom.svg.SVGEllipseElement;
 
+import io.sf.carte.echosvg.css.engine.CSSEngine;
+import io.sf.carte.echosvg.css.engine.CSSStylableElement;
+import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
+import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.dom.AbstractDocument;
+import io.sf.carte.echosvg.dom.svg.LiveAttributeException;
 import io.sf.carte.echosvg.util.DoublyIndexedTable;
 import io.sf.carte.echosvg.util.SVGTypes;
 
@@ -63,12 +68,12 @@ public class SVGOMEllipseElement extends SVGGraphicsElement implements SVGEllips
 	/**
 	 * The 'rx' attribute value.
 	 */
-	protected AbstractSVGAnimatedLength rx;
+	protected SVGOMGeometryProperty rx;
 
 	/**
 	 * The 'ry' attribute value.
 	 */
-	protected AbstractSVGAnimatedLength ry;
+	protected SVGOMGeometryProperty ry;
 
 	/**
 	 * Creates a new SVGOMEllipseElement object.
@@ -100,16 +105,38 @@ public class SVGOMEllipseElement extends SVGGraphicsElement implements SVGEllips
 	 * Initializes the live attribute values of this element.
 	 */
 	private void initializeLiveAttributes() {
-		cx = createLiveAnimatedLength(null, SVG_CX_ATTRIBUTE, SVG_ELLIPSE_CX_DEFAULT_VALUE,
-				AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false);
-		cy = createLiveAnimatedLength(null, SVG_CY_ATTRIBUTE, SVG_ELLIPSE_CY_DEFAULT_VALUE,
-				AbstractSVGAnimatedLength.VERTICAL_LENGTH, false);
-		rx = new AbstractSVGAnimatedLength(this, null, SVG_RX_ATTRIBUTE, AbstractSVGAnimatedLength.HORIZONTAL_LENGTH,
-				true) {
+		cx = createLiveGeometryProperty(null, SVG_CX_ATTRIBUTE, SVG_ELLIPSE_CX_DEFAULT_VALUE,
+				AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false, SVGCSSEngine.CX_INDEX);
+		cy = createLiveGeometryProperty(null, SVG_CY_ATTRIBUTE, SVG_ELLIPSE_CY_DEFAULT_VALUE,
+				AbstractSVGAnimatedLength.VERTICAL_LENGTH, false, SVGCSSEngine.CY_INDEX);
+		rx = new SVGOMGeometryProperty(this, null, SVG_RX_ATTRIBUTE, null,
+				AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, SVGCSSEngine.RX_INDEX) {
+
 			@Override
 			protected String getDefaultValue() {
-				String defval = getAttribute(SVG_RY_ATTRIBUTE).trim();
-				if (defval.isEmpty() || SVG_AUTO_VALUE.equalsIgnoreCase(defval)) {
+				// If there is an animated value, we want it
+				AnimSVGLength length;
+				if (ry.hasAnimVal && (length = ry.animVal) != null) {
+					try {
+						ry.nonNegativeCheck(length);
+						return length.getValueAsString();
+					} catch (LiveAttributeException e) {
+					}
+				}
+
+				// No viable ry animated value, try computing the property
+				if (computedStyleMap == null) {
+					CSSStylableElement se = (CSSStylableElement) element;
+					CSSEngine eng = ((SVGOMDocument) element.getOwnerDocument()).getCSSEngine();
+					// spare a setComputedStyleMap call
+					computedStyleMap = eng.getCascadedStyleMap(se, null);
+				}
+
+				String defval;
+				Value v = ry.computeValue(computedStyleMap);
+				if (v != null) {
+					defval = v.getCssText();
+				} else {
 					defval = "0";
 				}
 				return defval;
@@ -123,13 +150,36 @@ public class SVGOMEllipseElement extends SVGGraphicsElement implements SVGEllips
 					ry.attrChanged();
 				}
 			}
+
 		};
-		ry = new AbstractSVGAnimatedLength(this, null, SVG_RY_ATTRIBUTE, AbstractSVGAnimatedLength.VERTICAL_LENGTH,
-				true) {
+		ry = new SVGOMGeometryProperty(this, null, SVG_RY_ATTRIBUTE, null,
+				AbstractSVGAnimatedLength.VERTICAL_LENGTH, SVGCSSEngine.RY_INDEX) {
+
 			@Override
 			protected String getDefaultValue() {
-				String defval = getAttribute(SVG_RX_ATTRIBUTE).trim();
-				if (defval.isEmpty() || SVG_AUTO_VALUE.equalsIgnoreCase(defval)) {
+				// If there is an animated value, we want it
+				AnimSVGLength length;
+				if (rx.hasAnimVal && (length = rx.animVal) != null) {
+					try {
+						rx.nonNegativeCheck(length);
+						return length.getValueAsString();
+					} catch (LiveAttributeException e) {
+					}
+				}
+
+				// No viable rx animated value, try computing the property
+				if (computedStyleMap == null) {
+					CSSStylableElement se = (CSSStylableElement) element;
+					CSSEngine eng = ((SVGOMDocument) element.getOwnerDocument()).getCSSEngine();
+					// spare a setComputedStyleMap call
+					computedStyleMap = eng.getCascadedStyleMap(se, null);
+				}
+
+				String defval;
+				Value v = rx.computeValue(computedStyleMap);
+				if (v != null) {
+					defval = v.getCssText();
+				} else {
 					defval = "0";
 				}
 				return defval;
@@ -143,6 +193,7 @@ public class SVGOMEllipseElement extends SVGGraphicsElement implements SVGEllips
 					rx.attrChanged();
 				}
 			}
+
 		};
 
 		liveAttributeValues.put(null, SVG_RX_ATTRIBUTE, rx);

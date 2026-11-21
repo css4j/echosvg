@@ -123,6 +123,11 @@ public class LengthParser extends AbstractParser {
 			// calc() ?
 			checkForCalc();
 			return;
+		case 'a':
+		case 'A':
+			// auto ?
+			checkForAuto();
+			return;
 		}
 
 		m1: switch (current) {

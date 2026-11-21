@@ -55,6 +55,62 @@ public class EllipseTest {
 	}
 
 	@Test
+	public void testEmptyCX() {
+		Element ellipse = createDocumentWithEllipse();
+		Document document = ellipse.getOwnerDocument();
+		Attr d = document.createAttribute(SVGConstants.SVG_CX_ATTRIBUTE);
+		ellipse.setAttributeNode(d);
+		assertBounds(document, 0, 50, 200, 150);
+		assertEquals(0, errorCount);
+	}
+
+	@Test
+	public void testInvalidCX() {
+		Element ellipse = createDocumentWithEllipse();
+		Document document = ellipse.getOwnerDocument();
+		ellipse.setAttribute(SVGConstants.SVG_CX_ATTRIBUTE, ",");
+		assertBounds(document, 0, 50, 200, 150);
+		assertEquals(1, errorCount);
+	}
+
+	@Test
+	public void testInvalidCX_Unit() {
+		Element ellipse = createDocumentWithEllipse();
+		Document document = ellipse.getOwnerDocument();
+		ellipse.setAttribute(SVGConstants.SVG_CX_ATTRIBUTE, "3ms");
+		assertBounds(document, 0, 50, 200, 150);
+		assertEquals(1, errorCount);
+	}
+
+	@Test
+	public void testInvalidCX_Calc() {
+		Element ellipse = createDocumentWithEllipse();
+		Document document = ellipse.getOwnerDocument();
+		ellipse.setAttribute(SVGConstants.SVG_CX_ATTRIBUTE, "calc(3 + 3ms)");
+		assertBounds(document, 0, 50, 200, 150);
+		assertEquals(1, errorCount);
+	}
+
+	@Test
+	public void testEmptyCY() {
+		Element ellipse = createDocumentWithEllipse();
+		Document document = ellipse.getOwnerDocument();
+		Attr d = document.createAttribute(SVGConstants.SVG_CY_ATTRIBUTE);
+		ellipse.setAttributeNode(d);
+		assertBounds(document, 40, 0, 160, 200);
+		assertEquals(0, errorCount);
+	}
+
+	@Test
+	public void testInvalidCY() {
+		Element ellipse = createDocumentWithEllipse();
+		Document document = ellipse.getOwnerDocument();
+		ellipse.setAttribute(SVGConstants.SVG_CY_ATTRIBUTE, ",");
+		assertBounds(document, 40, 0, 160, 200);
+		assertEquals(1, errorCount);
+	}
+
+	@Test
 	public void testMissingR() {
 		Element ellipse = createDocumentWithEllipse();
 		Document document = ellipse.getOwnerDocument();
@@ -69,7 +125,16 @@ public class EllipseTest {
 		Attr d = document.createAttribute(SVGConstants.SVG_RX_ATTRIBUTE);
 		ellipse.setAttributeNode(d);
 		assertBounds(document, 40, 50, 160, 150);
-		assertEquals(1, errorCount);
+		assertEquals(0, errorCount);
+	}
+
+	@Test
+	public void testAutoRX() {
+		Element ellipse = createDocumentWithEllipse();
+		Document document = ellipse.getOwnerDocument();
+		ellipse.setAttribute(SVGConstants.SVG_RX_ATTRIBUTE, CSSConstants.CSS_AUTO_VALUE);
+		assertBounds(document, 40, 50, 160, 150);
+		assertEquals(0, errorCount);
 	}
 
 	@Test
@@ -77,6 +142,70 @@ public class EllipseTest {
 		Element ellipse = createDocumentWithEllipse();
 		Document document = ellipse.getOwnerDocument();
 		ellipse.setAttribute(SVGConstants.SVG_RX_ATTRIBUTE, ",");
+		assertBounds(document, 40, 50, 160, 150);
+		assertEquals(1, errorCount);
+	}
+
+	@Test
+	public void testInvalidRX_Unit() {
+		Element ellipse = createDocumentWithEllipse();
+		Document document = ellipse.getOwnerDocument();
+		ellipse.setAttribute(SVGConstants.SVG_RX_ATTRIBUTE, "3ms");
+		assertBounds(document, 40, 50, 160, 150);
+		assertEquals(1, errorCount);
+	}
+
+	@Test
+	public void testInvalidRX_Calc() {
+		Element ellipse = createDocumentWithEllipse();
+		Document document = ellipse.getOwnerDocument();
+		ellipse.setAttribute(SVGConstants.SVG_RX_ATTRIBUTE, "calc(20 + 3ms)");
+		assertBounds(document, 40, 50, 160, 150);
+		assertEquals(1, errorCount);
+	}
+
+	@Test
+	public void testEmptyRY() {
+		Element ellipse = createDocumentWithEllipse();
+		Document document = ellipse.getOwnerDocument();
+		Attr d = document.createAttribute(SVGConstants.SVG_RY_ATTRIBUTE);
+		ellipse.setAttributeNode(d);
+		assertBounds(document, 40, 50, 160, 150);
+		assertEquals(0, errorCount);
+	}
+
+	@Test
+	public void testAutoRY() {
+		Element ellipse = createDocumentWithEllipse();
+		Document document = ellipse.getOwnerDocument();
+		ellipse.setAttribute(SVGConstants.SVG_RY_ATTRIBUTE, CSSConstants.CSS_AUTO_VALUE);
+		assertBounds(document, 40, 50, 160, 150);
+		assertEquals(0, errorCount);
+	}
+
+	@Test
+	public void testInvalidRY() {
+		Element ellipse = createDocumentWithEllipse();
+		Document document = ellipse.getOwnerDocument();
+		ellipse.setAttribute(SVGConstants.SVG_RY_ATTRIBUTE, ",");
+		assertBounds(document, 40, 50, 160, 150);
+		assertEquals(1, errorCount);
+	}
+
+	@Test
+	public void testInvalidRY_Unit() {
+		Element ellipse = createDocumentWithEllipse();
+		Document document = ellipse.getOwnerDocument();
+		ellipse.setAttribute(SVGConstants.SVG_RY_ATTRIBUTE, "3ms");
+		assertBounds(document, 40, 50, 160, 150);
+		assertEquals(1, errorCount);
+	}
+
+	@Test
+	public void testInvalidRY_CSS() {
+		Element ellipse = createDocumentWithEllipse();
+		Document document = ellipse.getOwnerDocument();
+		ellipse.setAttribute(SVGConstants.SVG_STYLE_ATTRIBUTE, "ry:f");
 		assertBounds(document, 40, 50, 160, 150);
 		assertEquals(1, errorCount);
 	}

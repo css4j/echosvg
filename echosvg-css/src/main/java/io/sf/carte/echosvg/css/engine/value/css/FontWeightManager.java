@@ -18,6 +18,7 @@
  */
 package io.sf.carte.echosvg.css.engine.value.css;
 
+import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
 
 import io.sf.carte.doc.style.css.CSSValue.Type;
@@ -26,6 +27,7 @@ import io.sf.carte.echosvg.css.engine.CSSContext;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
+import io.sf.carte.echosvg.css.engine.value.FloatValue;
 import io.sf.carte.echosvg.css.engine.value.IdentifierManager;
 import io.sf.carte.echosvg.css.engine.value.StringMap;
 import io.sf.carte.echosvg.css.engine.value.Value;
@@ -111,28 +113,7 @@ public class FontWeightManager extends IdentifierManager {
 	@Override
 	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
 		if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.INTEGER) {
-			int i = lu.getIntegerValue();
-			switch (i) {
-			case 100:
-				return ValueConstants.NUMBER_100;
-			case 200:
-				return ValueConstants.NUMBER_200;
-			case 300:
-				return ValueConstants.NUMBER_300;
-			case 400:
-				return ValueConstants.NUMBER_400;
-			case 500:
-				return ValueConstants.NUMBER_500;
-			case 600:
-				return ValueConstants.NUMBER_600;
-			case 700:
-				return ValueConstants.NUMBER_700;
-			case 800:
-				return ValueConstants.NUMBER_800;
-			case 900:
-				return ValueConstants.NUMBER_900;
-			}
-			throw createInvalidFloatValueDOMException(i);
+			return createFontWeight(lu.getIntegerValue());
 		}
 		return super.createValue(lu, engine);
 	}
@@ -142,8 +123,8 @@ public class FontWeightManager extends IdentifierManager {
 	 * {@link ValueManager#computeValue(CSSStylableElement,String,CSSEngine,int,StyleMap,Value)}.
 	 */
 	@Override
-	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx, StyleMap sm,
-			Value value) {
+	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx,
+			StyleMap sm, Value value) {
 		if (value != null && value.getPrimitiveType() == Type.IDENT) {
 			if (value.getIdentifierValue() == CSSConstants.CSS_BOLDER_VALUE) {
 				sm.putParentRelative(idx, true);
@@ -157,7 +138,12 @@ public class FontWeightManager extends IdentifierManager {
 					Value v = engine.getComputedStyle(p, pseudo, idx);
 					fw = lengthValue(v);
 				}
-				return createFontWeight(ctx.getBolderFontWeight(fw));
+				try {
+					return createFontWeight((int) ctx.getBolderFontWeight(fw));
+				} catch (DOMException e) {
+					reportError(engine, e);
+					return null;
+				}
 			} else if (value.getIdentifierValue() == CSSConstants.CSS_LIGHTER_VALUE) {
 				sm.putParentRelative(idx, true);
 
@@ -170,7 +156,12 @@ public class FontWeightManager extends IdentifierManager {
 					Value v = engine.getComputedStyle(p, pseudo, idx);
 					fw = lengthValue(v);
 				}
-				return createFontWeight(ctx.getLighterFontWeight(fw));
+				try {
+					return createFontWeight((int) ctx.getLighterFontWeight(fw));
+				} catch (DOMException e) {
+					reportError(engine, e);
+					return null;
+				}
 			} else if (value.getIdentifierValue() == CSSConstants.CSS_NORMAL_VALUE) {
 				return ValueConstants.NUMBER_400;
 			} else if (value.getIdentifierValue() == CSSConstants.CSS_BOLD_VALUE) {
@@ -183,27 +174,53 @@ public class FontWeightManager extends IdentifierManager {
 	/**
 	 * Returns the CSS value associated with the given font-weight.
 	 */
-	protected Value createFontWeight(float f) {
-		switch ((int) f) {
+	protected Value createFontWeight(int i) throws DOMException {
+		Value v;
+		switch (i) {
 		case 100:
-			return ValueConstants.NUMBER_100;
+			v = ValueConstants.NUMBER_100;
+			break;
 		case 200:
-			return ValueConstants.NUMBER_200;
+			v = ValueConstants.NUMBER_200;
+			break;
 		case 300:
-			return ValueConstants.NUMBER_300;
+			v = ValueConstants.NUMBER_300;
+			break;
 		case 400:
-			return ValueConstants.NUMBER_400;
+			v = ValueConstants.NUMBER_400;
+			break;
 		case 500:
-			return ValueConstants.NUMBER_500;
+			v = ValueConstants.NUMBER_500;
+			break;
 		case 600:
-			return ValueConstants.NUMBER_600;
+			v = ValueConstants.NUMBER_600;
+			break;
 		case 700:
-			return ValueConstants.NUMBER_700;
+			v = ValueConstants.NUMBER_700;
+			break;
 		case 800:
-			return ValueConstants.NUMBER_800;
-		default: // 900
-			return ValueConstants.NUMBER_900;
+			v = ValueConstants.NUMBER_800;
+			break;
+		case 900:
+			v = ValueConstants.NUMBER_900;
+			break;
+		default:
+			int fw = ((i + 99) / 100) * 100 - (i < 400 ? 100 : 0);
+			if (fw <= 100) {
+				if (i < 1) {
+					throw createInvalidFloatValueDOMException(i);
+				}
+				v = ValueConstants.NUMBER_100;
+			} else if (fw >= 900) {
+				if (i > 1000) {
+					throw createInvalidFloatValueDOMException(i);
+				}
+				v = ValueConstants.NUMBER_900;
+			} else {
+				v = new FloatValue(CSSUnit.CSS_NUMBER, fw);
+			}
 		}
+		return v;
 	}
 
 	/**

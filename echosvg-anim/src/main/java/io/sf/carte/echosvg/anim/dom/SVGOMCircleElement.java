@@ -22,6 +22,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.svg.SVGAnimatedLength;
 import org.w3c.dom.svg.SVGCircleElement;
 
+import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.util.DoublyIndexedTable;
 import io.sf.carte.echosvg.util.SVGTypes;
@@ -97,12 +98,12 @@ public class SVGOMCircleElement extends SVGGraphicsElement implements SVGCircleE
 	 * Initializes the live attribute values of this element.
 	 */
 	private void initializeLiveAttributes() {
-		cx = createLiveAnimatedLength(null, SVG_CX_ATTRIBUTE, SVG_CIRCLE_CX_DEFAULT_VALUE,
-				AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false);
-		cy = createLiveAnimatedLength(null, SVG_CY_ATTRIBUTE, SVG_CIRCLE_CY_DEFAULT_VALUE,
-				AbstractSVGAnimatedLength.VERTICAL_LENGTH, false);
-		r = createLiveAnimatedLength(null, SVG_R_ATTRIBUTE, SVG_CIRCLE_R_DEFAULT_VALUE,
-				AbstractSVGAnimatedLength.OTHER_LENGTH, true);
+		cx = createLiveGeometryProperty(null, SVG_CX_ATTRIBUTE, SVG_CIRCLE_CX_DEFAULT_VALUE,
+				AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false, SVGCSSEngine.CX_INDEX);
+		cy = createLiveGeometryProperty(null, SVG_CY_ATTRIBUTE, SVG_CIRCLE_CY_DEFAULT_VALUE,
+				AbstractSVGAnimatedLength.VERTICAL_LENGTH, false, SVGCSSEngine.CY_INDEX);
+		r = createLiveGeometryProperty(null, SVG_R_ATTRIBUTE, SVG_CIRCLE_R_DEFAULT_VALUE,
+				AbstractSVGAnimatedLength.OTHER_LENGTH, true, SVGCSSEngine.R_INDEX);
 	}
 
 	/**

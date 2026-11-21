@@ -21,6 +21,7 @@ package io.sf.carte.echosvg.anim.dom;
 import java.util.LinkedList;
 
 import io.sf.carte.echosvg.anim.values.AnimatableValue;
+import io.sf.carte.echosvg.css.engine.CSSEngine;
 
 /**
  * An abstract base class for the <code>SVGAnimated*</code> classes, that
@@ -90,6 +91,11 @@ public abstract class AbstractSVGAnimatedValue implements AnimatedLiveAttributeV
 	 */
 	public boolean isSpecified() {
 		return hasAnimVal || element.hasAttributeNS(namespaceURI, localName);
+	}
+
+	protected void reportError(Exception e) {
+		CSSEngine eng = ((SVGOMDocument) element.getOwnerDocument()).getCSSEngine();
+		eng.getCSSEngineUserAgent().displayError(e);
 	}
 
 	/**

@@ -87,25 +87,25 @@ public class LoadPermissionsTest {
 	}
 
 	@Test
-	public void testBridgeExceptionNegativeWidth() throws Exception {
+	public void testExceptionNegativeWidth() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/rect-negative-width", "ANY", false,
-			false, "io.sf.carte.echosvg.bridge.BridgeException");
+			false, "io.sf.carte.echosvg.dom.svg.LiveAttributeException");
 	}
 
 	@Test
-	public void testBridgeExceptionInvalidClipPathUnits() throws Exception {
+	public void testExceptionInvalidClipPathUnits() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/clipPath-clipPathUnits-invalid",
 			"ANY", false, false, "io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
-	public void testBridgeExceptionInvalidClipPathSubelement() throws Exception {
+	public void testExceptionInvalidClipPathSubelement() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/clipPath-subelement-invalid", "ANY",
-			false, false, "io.sf.carte.echosvg.bridge.BridgeException");
+			false, false, "org.w3c.dom.DOMException");
 	}
 
 	@Test
-	public void testBridgeExceptionIllegalClipPathUri() throws Exception {
+	public void testExceptionIllegalClipPathUri() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/clipPath-uri-illegal", "ANY", false,
 			false, "io.sf.carte.echosvg.bridge.BridgeException");
 	}
@@ -117,55 +117,55 @@ public class LoadPermissionsTest {
 	 * @throws Exception
 	 */
 	@Test
-	public void testBridgeExceptionInvalidCSS() throws Exception {
+	public void testExceptionInvalidCSS() throws Exception {
 		runTest("text/ecmascript", "bridge/test/error/css-invalid", "ANY", false, false,
 			"org.w3c.dom.DOMException");
 	}
 
 	@Test
-	public void testBridgeExceptionEllipseWrongUnitRx() throws Exception {
+	public void testExceptionEllipseWrongUnitRx() throws Exception {
 		runTest("text/javascript", "bridge/test/error/ellipse-wrong-unit-rx", "ANY", false, false,
-			"io.sf.carte.echosvg.bridge.BridgeException");
+			"org.w3c.dom.DOMException");
 	}
 
 	@Test
-	public void testBridgeExceptionEllipseWrongUnitRy() throws Exception {
+	public void testExceptionEllipseWrongUnitRy() throws Exception {
 		runTest("text/javascript", "bridge/test/error/ellipse-wrong-unit-ry", "ANY", false, false,
-			"io.sf.carte.echosvg.bridge.BridgeException");
+			"org.w3c.dom.DOMException");
 	}
 
 	@Test
-	public void testBridgeExceptionEllipseNegativeRx() throws Exception {
+	public void testExceptionEllipseNegativeRx() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/ellipse-negative-rx", "ANY", false,
 			false, "io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
-	public void testBridgeExceptionEllipseNegativeRy() throws Exception {
+	public void testExceptionEllipseNegativeRy() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/ellipse-negative-ry", "ANY", false,
 			false, "io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
-	public void testBridgeExceptionInvalidColorMatrixType() throws Exception {
+	public void testExceptionInvalidColorMatrixType() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/feColorMatrix-type-invalid", "ANY",
 			false, false, "io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
-	public void testBridgeExceptionInvalidColorMatrixValue() throws Exception {
+	public void testExceptionInvalidColorMatrixValue() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/feColorMatrix-value-invalid", "ANY",
 			false, false, "io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
-	public void testBridgeExceptionInvalidColorMatrixValues() throws Exception {
+	public void testExceptionInvalidColorMatrixValues() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/feColorMatrix-values-invalid", "ANY",
 			false, false, "io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
-	public void testBridgeExceptionInvalidComponentTransfertType() throws Exception {
+	public void testExceptionInvalidComponentTransfertType() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/feComponentTransfert-type-invalid",
 			"ANY", false, false, "io.sf.carte.echosvg.bridge.BridgeException");
 	}
@@ -178,123 +178,123 @@ public class LoadPermissionsTest {
 	}
 
 	@Test
-	public void testBridgeExceptionInvalidComponentTransfertValue() throws Exception {
+	public void testExceptionInvalidComponentTransfertValue() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/feComponentTransfert-value-invalid",
 			"ANY", false, false, "io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
-	public void testBridgeExceptionMissingCompositeIn2() throws Exception {
+	public void testExceptionMissingCompositeIn2() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/feComposite-in2-missing", "ANY",
 			false, false, "io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
-	public void testBridgeExceptionInvalidCompositeOperator() throws Exception {
+	public void testExceptionInvalidCompositeOperator() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/feComposite-operator-invalid", "ANY",
 			false, false, "io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
-	public void testBridgeExceptionInvalidDMChannelSelector() throws Exception {
+	public void testExceptionInvalidDMChannelSelector() throws Exception {
 		runTest("application/java-archive",
 			"bridge/test/error/feDisplacementMap-channelSelector-invalid", "ANY", false, false,
 			"io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
-	public void testBridgeExceptionMissingDMIn2() throws Exception {
+	public void testExceptionMissingDMIn2() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/feDisplacementMap-in2-missing",
 			"ANY", false, false, "io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
-	public void testBridgeExceptionInvalidGBStdDevX() throws Exception {
+	public void testExceptionInvalidGBStdDevX() throws Exception {
 		runTest("application/java-archive",
 			"bridge/test/error/feGaussianBlur-stdDeviationX-invalid", "ANY", false, false,
 			"io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
-	public void testBridgeExceptionInvalidGBStdDevY() throws Exception {
+	public void testExceptionInvalidGBStdDevY() throws Exception {
 		runTest("application/java-archive",
 			"bridge/test/error/feGaussianBlur-stdDeviationY-invalid", "ANY", false, false,
 			"io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
-	public void testBridgeExceptionFeImageBadURL() throws Exception {
+	public void testExceptionFeImageBadURL() throws Exception {
 		runTest("text/ecmascript", "bridge/test/error/feImage-badurl", "ANY", false, false,
 			"io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
-	public void testBridgeExceptionInvalidMergeNode() throws Exception {
+	public void testExceptionInvalidMergeNode() throws Exception {
 		runTest("text/ecmascript", "bridge/test/error/feMerge-feMergeNode-invalid", "ANY", false,
 			false, null);
 	}
 
 	@Test
-	public void testBridgeExceptionInvalidMorphologyOperator() throws Exception {
+	public void testExceptionInvalidMorphologyOperator() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/feMorphology-operator-invalid",
 			"ANY", false, false, "io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
-	public void testBridgeExceptionMorphologyNegativeRadiusX() throws Exception {
+	public void testExceptionMorphologyNegativeRadiusX() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/feMorphology-radiusX-negative",
 			"ANY", false, false, "io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
-	public void testBridgeExceptionMorphologyNegativeRadiusY() throws Exception {
+	public void testExceptionMorphologyNegativeRadiusY() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/feMorphology-radiusY-negative",
 			"ANY", false, false, "io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
-	public void testBridgeExceptionInvalidTurbulenceStitchTiles() throws Exception {
+	public void testExceptionInvalidTurbulenceStitchTiles() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/feTurbulence-stitchTiles.invalid",
 			"ANY", false, false, "io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
-	public void testBridgeExceptionInvalidTurbulenceType() throws Exception {
+	public void testExceptionInvalidTurbulenceType() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/feTurbulence-type-invalid", "ANY",
 			false, false, "io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
-	public void testBridgeExceptionEmptyFilter() throws Exception {
+	public void testExceptionEmptyFilter() throws Exception {
 		runTest("text/ecmascript", "bridge/test/error/filter-empty", "ANY", false, false, null);
 	}
 
 	@Test
-	public void testBridgeExceptionInvalidFilterPrimitive() throws Exception {
+	public void testExceptionInvalidFilterPrimitive() throws Exception {
 		runTest("text/ecmascript", "bridge/test/error/filter-filterPrimitive-invalid", "ANY", false,
 			false, null);
 	}
 
 	@Test
-	public void testBridgeExceptionFilterNegativeResX() throws Exception {
+	public void testExceptionFilterNegativeResX() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/filter-filterResX-negative", "ANY",
 			false, false, "io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
-	public void testBridgeExceptionFilterNegativeResY() throws Exception {
+	public void testExceptionFilterNegativeResY() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/filter-filterResY-negative", "ANY",
 			false, false, "io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
-	public void testBridgeExceptionInvalidFilterUnits() throws Exception {
+	public void testExceptionInvalidFilterUnits() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/filter-filterUnits-invalid", "ANY",
 			false, false, "io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
-	public void testBridgeExceptionIllegalFilterUri() throws Exception {
+	public void testExceptionIllegalFilterUri() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/filter-uri-illegal", "ANY", false,
 			false, "io.sf.carte.echosvg.bridge.BridgeException");
 	}
@@ -308,207 +308,207 @@ public class LoadPermissionsTest {
 	 * @throws Exception
 	 */
 	@Test
-	public void testBridgeExceptionImageBadURL() throws Exception {
+	public void testExceptionImageBadURL() throws Exception {
 		runTest("text/ecmascript", "bridge/test/error/image-badurl", "ANY", false, false,
 			"io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
-	public void testBridgeExceptionImageMissingHeight() throws Exception {
-		runTest("application/java-archive", "bridge/test/error/image-missing-height", "ANY", false,
-			false, "io.sf.carte.echosvg.bridge.BridgeException");
+	public void testImageMissingHeight() throws Exception {
+		runTest("text/ecmascript", "bridge/test/image-missing-height", "ANY", false,
+			false, null);
 	}
 
 	@Test
-	public void testBridgeExceptionImageMissingWidth() throws Exception {
-		runTest("application/java-archive", "bridge/test/error/image-missing-width", "ANY", false,
-			false, "io.sf.carte.echosvg.bridge.BridgeException");
+	public void testImageMissingWidth() throws Exception {
+		runTest("text/ecmascript", "bridge/test/image-missing-width", "ANY", false,
+			false, null);
 	}
 
 	@Test
-	public void testBridgeExceptionImageNegativeHeight() throws Exception {
+	public void testExceptionImageNegativeHeight() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/image-negative-height", "ANY", false,
-			false, "io.sf.carte.echosvg.bridge.BridgeException");
+			false, "io.sf.carte.echosvg.dom.svg.LiveAttributeException");
 	}
 
 	@Test
-	public void testBridgeExceptionImageNegativeWidth() throws Exception {
+	public void testExceptionImageNegativeWidth() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/image-negative-width", "ANY", false,
-			false, "io.sf.carte.echosvg.bridge.BridgeException");
+			false, "io.sf.carte.echosvg.dom.svg.LiveAttributeException");
 	}
 
 	@Test
-	public void testBridgeExceptionEmptyLinearGradient() throws Exception {
+	public void testExceptionEmptyLinearGradient() throws Exception {
 		runTest("text/ecmascript", "bridge/test/error/linearGradient-empty", "ANY", false, false,
 			null);
 	}
 
 	@Test
-	public void testBridgeExceptionInvalidGradientUnits() throws Exception {
+	public void testExceptionInvalidGradientUnits() throws Exception {
 		runTest("application/java-archive",
 			"bridge/test/error/linearGradient-gradientUnits-invalid", "ANY", false, false,
 			"io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
-	public void testBridgeExceptionMissingGradientOffset() throws Exception {
+	public void testExceptionMissingGradientOffset() throws Exception {
 		runTest("text/ecmascript", "bridge/test/error/linearGradient-missing-offset", "ANY", false,
 			false, null);
 	}
 
 	@Test
-	public void testBridgeExceptionInvalidGradientSpreadMethod() throws Exception {
+	public void testExceptionInvalidGradientSpreadMethod() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/linearGradient-spreadMethod-invalid",
 			"ANY", false, false, "io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
-	public void testBridgeExceptionInvalidGradientUri() throws Exception {
+	public void testExceptionInvalidGradientUri() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/linearGradient-uri-invalid", "ANY",
 			false, false, "io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
-	public void testBridgeExceptionEmptyMask() throws Exception {
+	public void testExceptionEmptyMask() throws Exception {
 		runTest("text/ecmascript", "bridge/test/error/mask-empty", "ANY", false, false, null);
 	}
 
 	@Test
-	public void testBridgeExceptionInvalidMaskUnits() throws Exception {
+	public void testExceptionInvalidMaskUnits() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/mask-maskUnits-invalid", "ANY",
 			false, false, "io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
-	public void testBridgeExceptionInvalidMaskSubelement() throws Exception {
+	public void testExceptionInvalidMaskSubelement() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/mask-subelement-invalid", "ANY",
-			false, false, "io.sf.carte.echosvg.bridge.BridgeException");
+			false, false, "org.w3c.dom.DOMException");
 	}
 
 	@Test
-	public void testBridgeExceptionIllegalMaskUri() throws Exception {
+	public void testExceptionIllegalMaskUri() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/mask-uri-illegal", "ANY", false,
 			false, "io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
-	public void testBridgeExceptionInvalidPathD() throws Exception {
+	public void testExceptionInvalidPathD() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/path-invalid-d", "ANY", false, false,
 			"io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
-	public void testBridgeExceptionEmptyPattern() throws Exception {
+	public void testExceptionEmptyPattern() throws Exception {
 		runTest("text/ecmascript", "bridge/test/error/pattern-empty", "ANY", false, false, null);
 	}
 
 	@Test
-	public void testBridgeExceptionInvalidPatternUnits() throws Exception {
+	public void testExceptionInvalidPatternUnits() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/pattern-patternUnits-invalid", "ANY",
 			false, false, "io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
-	public void testBridgeExceptionInvalidPatternSubelement() throws Exception {
+	public void testExceptionInvalidPatternSubelement() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/pattern-subelement-invalid", "ANY",
-			false, false, "io.sf.carte.echosvg.bridge.BridgeException");
+			false, false, "org.w3c.dom.DOMException");
 	}
 
 	@Test
-	public void testBridgeExceptionInvalidPolygonPoints() throws Exception {
+	public void testExceptionInvalidPolygonPoints() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/polygon-invalid-points", "ANY",
 			false, false, "io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
-	public void testBridgeExceptionInvalidPolylinePoints() throws Exception {
+	public void testExceptionInvalidPolylinePoints() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/polyline-invalid-points", "ANY",
 			false, false, "io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	// This is not an error according to 13.2.4
 	@Test
-	public void testBridgeExceptionEmptyRadialGradient() throws Exception {
+	public void testExceptionEmptyRadialGradient() throws Exception {
 		runTest("text/ecmascript", "bridge/test/error/radialGradient-empty", "ANY", false, false,
 			null);
 	}
 
 	@Test
-	public void testBridgeExceptionInvalidRadialGradientUnits() throws Exception {
+	public void testExceptionInvalidRadialGradientUnits() throws Exception {
 		runTest("application/java-archive",
 			"bridge/test/error/radialGradient-gradientUnits-invalid", "ANY", false, false,
 			"io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
-	public void testBridgeExceptionMissingRadialGradientOffset() throws Exception {
+	public void testExceptionMissingRadialGradientOffset() throws Exception {
 		runTest("text/ecmascript", "bridge/test/error/radialGradient-missing-offset", "ANY", false,
 			false, null);
 	}
 
 	@Test
-	public void testBridgeExceptionRadialGradientRNegative() throws Exception {
+	public void testExceptionRadialGradientRNegative() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/radialGradient-r-negative", "ANY",
 			false, false, "io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	// This is not an error according to 13.2.3
 	@Test
-	public void testBridgeExceptionRadialGradientRZero() throws Exception {
+	public void testExceptionRadialGradientRZero() throws Exception {
 		runTest("text/ecmascript", "bridge/test/error/radialGradient-r-zero", "ANY", false, false,
 			null);
 	}
 
 	@Test
-	public void testBridgeExceptionInvalidRadialGradientSpreadMethod() throws Exception {
+	public void testExceptionInvalidRadialGradientSpreadMethod() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/radialGradient-spreadMethod-invalid",
 			"ANY", false, false, "io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
-	public void testBridgeExceptionInvalidRectHeight() throws Exception {
+	public void testExceptionInvalidRectHeight() throws Exception {
 		runTest("text/javascript", "bridge/test/error/rect-invalid-height", "ANY", false, false,
-			"io.sf.carte.echosvg.bridge.BridgeException");
+			"org.w3c.dom.DOMException");
 	}
 
 	@Test
-	public void testBridgeExceptionInvalidRectWidth() throws Exception {
+	public void testExceptionInvalidRectWidth() throws Exception {
 		runTest("text/javascript", "bridge/test/error/rect-invalid-width", "ANY", false, false,
-			"io.sf.carte.echosvg.bridge.BridgeException");
+			"org.w3c.dom.DOMException");
 	}
 
 	@Test
-	public void testBridgeExceptionNegativeRectHeight() throws Exception {
+	public void testExceptionNegativeRectHeight() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/rect-negative-height", "ANY", false,
-			false, "io.sf.carte.echosvg.bridge.BridgeException");
+			false, "io.sf.carte.echosvg.dom.svg.LiveAttributeException");
 	}
 
 	@Test
-	public void testBridgeExceptionNegativeRectRx() throws Exception {
+	public void testExceptionNegativeRectRx() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/rect-negative-rx", "ANY", false,
 			false, "io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
-	public void testBridgeExceptionNegativeRectRy() throws Exception {
+	public void testExceptionNegativeRectRy() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/rect-negative-ry", "ANY", false,
 			false, "io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
-	public void testBridgeExceptionNegativeRectWidth() throws Exception {
+	public void testExceptionNegativeRectWidth() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/rect-negative-width", "ANY", false,
-			false, "io.sf.carte.echosvg.bridge.BridgeException");
+			false, "io.sf.carte.echosvg.dom.svg.LiveAttributeException");
 	}
 
 	@Test
-	public void testBridgeExceptionMalformedTransform() throws Exception {
+	public void testExceptionMalformedTransform() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/transform", "ANY", false, false,
 			"io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
-	public void testBridgeExceptionInvalidXML() throws Exception {
+	public void testExceptionInvalidXML() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/xml-invalid", "ANY", false, false,
 			"java.io.IOException");
 	}

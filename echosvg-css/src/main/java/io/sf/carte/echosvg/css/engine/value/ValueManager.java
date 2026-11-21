@@ -66,6 +66,9 @@ public interface ValueManager {
 
 	/**
 	 * Returns the default value for the handled property.
+	 * 
+	 * @return the default value, or {@code null} if the default depends on the
+	 *         element type.
 	 */
 	Value getDefaultValue();
 
@@ -74,7 +77,7 @@ public interface ValueManager {
 	 * 
 	 * @param lu     The SAC lexical unit used to create the value.
 	 * @param engine The calling CSSEngine.
-	 * @return the new value.
+	 * @return the new value, or {@code null} if the initial value is deferred.
 	 */
 	Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException;
 
@@ -87,7 +90,7 @@ public interface ValueManager {
 	 * @param idx    The property index in the engine.
 	 * @param sm     The computed style map.
 	 * @param value  The value to compute.
-	 * @return the computed value.
+	 * @return the computed value, or {@code null} if initial or inherit.
 	 */
 	Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx,
 			StyleMap sm, Value value);

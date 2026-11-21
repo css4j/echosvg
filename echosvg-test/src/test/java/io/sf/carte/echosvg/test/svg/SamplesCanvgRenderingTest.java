@@ -178,6 +178,12 @@ public class SamplesCanvgRenderingTest extends AbstractSamplesRendering {
 	}
 
 	@Test
+	public void test21_css() throws TranscoderException, IOException {
+		float[] times = { 0f, 2f, 4f };
+		testAnim("samples/canvg/21-css.svg", times, false);
+	}
+
+	@Test
 	public void test22() throws TranscoderException, IOException {
 		testNV("samples/canvg/22.svg");
 	}
@@ -546,6 +552,12 @@ public class SamplesCanvgRenderingTest extends AbstractSamplesRendering {
 	public void testIssue121() throws TranscoderException, IOException {
 		float[] times = { 0f, 1f };
 		testAnim("samples/canvg/issue121.svg", times, false);
+	}
+
+	@Test
+	public void testIssue121_css() throws TranscoderException, IOException {
+		float[] times = { 0f, 1f };
+		testAnim("samples/canvg/issue121-css.svg", times, false);
 	}
 
 	@Test

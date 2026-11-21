@@ -46,6 +46,8 @@ public interface CSSConstants {
 	String CSS_COLOR_INTERPOLATION_FILTERS_PROPERTY = "color-interpolation-filters";
 	String CSS_COLOR_RENDERING_PROPERTY = "color-rendering";
 	String CSS_CURSOR_PROPERTY = "cursor";
+	String CSS_CX_PROPERTY = "cx";
+	String CSS_CY_PROPERTY = "cy";
 	String CSS_DIRECTION_PROPERTY = "direction";
 	String CSS_DISPLAY_PROPERTY = "display";
 	String CSS_DOMINANT_BASELINE_PROPERTY = "dominant-baseline";
@@ -66,6 +68,7 @@ public interface CSSConstants {
 	String CSS_FONT_WEIGHT_PROPERTY = "font-weight";
 	String CSS_GLYPH_ORIENTATION_HORIZONTAL_PROPERTY = "glyph-orientation-horizontal";
 	String CSS_GLYPH_ORIENTATION_VERTICAL_PROPERTY = "glyph-orientation-vertical";
+	String CSS_HEIGHT_PROPERTY = "height";
 	String CSS_IMAGE_RENDERING_PROPERTY = "image-rendering";
 	String CSS_KERNING_PROPERTY = "kerning";
 	String CSS_LETTER_SPACING_PROPERTY = "letter-spacing";
@@ -89,6 +92,9 @@ public interface CSSConstants {
 	String CSS_OPACITY_PROPERTY = "opacity";
 	String CSS_OVERFLOW_PROPERTY = "overflow";
 	String CSS_POINTER_EVENTS_PROPERTY = "pointer-events";
+	String CSS_R_PROPERTY = "r";
+	String CSS_RX_PROPERTY = "rx";
+	String CSS_RY_PROPERTY = "ry";
 	String CSS_SHAPE_RENDERING_PROPERTY = "shape-rendering";
 	String CSS_SRC_PROPERTY = "src";
 	String CSS_STOP_COLOR_PROPERTY = "stop-color";
@@ -106,8 +112,11 @@ public interface CSSConstants {
 	String CSS_TEXT_RENDERING_PROPERTY = "text-rendering";
 	String CSS_UNICODE_BIDI_PROPERTY = "unicode-bidi";
 	String CSS_VISIBILITY_PROPERTY = "visibility";
+	String CSS_WIDTH_PROPERTY = "width";
 	String CSS_WORD_SPACING_PROPERTY = "word-spacing";
 	String CSS_WRITING_MODE_PROPERTY = "writing-mode";
+	String CSS_X_PROPERTY = "x";
+	String CSS_Y_PROPERTY = "y";
 
 	//
 	// The CSS property values.

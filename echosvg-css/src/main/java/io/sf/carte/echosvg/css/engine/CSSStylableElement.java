@@ -18,8 +18,10 @@
  */
 package io.sf.carte.echosvg.css.engine;
 
+import org.w3c.css.om.CSSStyleDeclaration;
 import org.w3c.dom.Element;
 
+import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.util.ParsedURL;
 
 /**
@@ -58,9 +60,26 @@ public interface CSSStylableElement extends Element {
 	ParsedURL getCSSBase();
 
 	/**
+	 * Get the element-dependent initial value for the given property.
+	 * 
+	 * @param idx the property index.
+	 * @return the initial value, or {@code null} if no initial value is known for
+	 *         the given index.
+	 */
+	Value getInitialValue(int idx);
+
+	/**
 	 * Tells whether this element is an instance of the given pseudo class.
 	 */
 	boolean isPseudoInstanceOf(String pseudoClass);
+
+	/**
+	 * Gets the inline style of this element.
+	 * 
+	 * @return the inline style, or {@code null} if this element cannot have inline
+	 *         style.
+	 */
+	CSSStyleDeclaration getStyle();
 
 	/**
 	 * Returns the object that gives access to the underlying

@@ -24,6 +24,8 @@ import org.w3c.dom.svg.SVGElementInstance;
 import org.w3c.dom.svg.SVGUseElement;
 
 import io.sf.carte.echosvg.constants.XMLConstants;
+import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
+import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.dom.svg.SVGOMUseShadowRoot;
 import io.sf.carte.echosvg.util.DoublyIndexedTable;
@@ -122,14 +124,16 @@ public class SVGOMUseElement extends SVGURIReferenceGraphicsElement implements S
 	 * Initializes the live attribute values of this element.
 	 */
 	private void initializeLiveAttributes() {
-		x = createLiveAnimatedLength(null, SVG_X_ATTRIBUTE, SVG_USE_X_DEFAULT_VALUE,
-				AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false);
-		y = createLiveAnimatedLength(null, SVG_Y_ATTRIBUTE, SVG_USE_Y_DEFAULT_VALUE,
-				AbstractSVGAnimatedLength.VERTICAL_LENGTH, false);
-		width = createLiveAnimatedLength(null, SVG_WIDTH_ATTRIBUTE, null, AbstractSVGAnimatedLength.HORIZONTAL_LENGTH,
-				true);
-		height = createLiveAnimatedLength(null, SVG_HEIGHT_ATTRIBUTE, null, AbstractSVGAnimatedLength.VERTICAL_LENGTH,
-				true);
+		x = createLiveGeometryProperty(null, SVG_X_ATTRIBUTE, SVG_USE_X_DEFAULT_VALUE,
+				AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false, SVGCSSEngine.X_INDEX);
+		y = createLiveGeometryProperty(null, SVG_Y_ATTRIBUTE, SVG_USE_Y_DEFAULT_VALUE,
+				AbstractSVGAnimatedLength.VERTICAL_LENGTH, false, SVGCSSEngine.Y_INDEX);
+		width = createLiveGeometryPropertyWithAuto(null, SVG_WIDTH_ATTRIBUTE,
+				SVG_USE_WIDTH_DEFAULT_VALUE, AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, true,
+				SVGCSSEngine.WIDTH_INDEX, SVG_USE_WIDTH_AUTO_VALUE);
+		height = createLiveGeometryPropertyWithAuto(null, SVG_HEIGHT_ATTRIBUTE,
+				SVG_USE_HEIGHT_DEFAULT_VALUE, AbstractSVGAnimatedLength.VERTICAL_LENGTH, true,
+				SVGCSSEngine.HEIGHT_INDEX, SVG_USE_HEIGHT_AUTO_VALUE);
 	}
 
 	/**
@@ -252,6 +256,11 @@ public class SVGOMUseElement extends SVGURIReferenceGraphicsElement implements S
 	@Override
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
+	}
+
+	@Override
+	public Value getInitialValue(int idx) {
+		return null;
 	}
 
 }

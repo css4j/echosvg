@@ -156,10 +156,21 @@ public abstract class AbstractSVGLength implements SVGLength {
 		try {
 			return UnitProcessor.cssToUserSpace(value, unitType, direction, context);
 		} catch (IllegalArgumentException ex) {
-			// XXX Should we throw an exception here when the length
-			// type is unknown?
+			// The length type is unknown
+			reportError(ex);
 			return 0f;
 		}
+	}
+
+	/**
+	 * Report an error.
+	 * <p>
+	 * The base implementation does nothing.
+	 * </p>
+	 * 
+	 * @param exception the exception to report.
+	 */
+	protected void reportError(Exception exception) {
 	}
 
 	/**
@@ -307,7 +318,14 @@ public abstract class AbstractSVGLength implements SVGLength {
 				}
 
 			};
-			LengthParser lengthParser = new LengthParser(ur);
+			LengthParser lengthParser = new LengthParser(ur) {
+
+				@Override
+				public String getAutoValue() {
+					return AbstractSVGLength.this.getAutoValue();
+				}
+
+			};
 			lengthParser.parse(s);
 			unitType = ur.unit;
 			value = ur.value;
@@ -315,6 +333,15 @@ public abstract class AbstractSVGLength implements SVGLength {
 			unitType = CSSUnit.CSS_INVALID;
 			value = 0;
 		}
+	}
+
+	/**
+	 * Get the value corresponding to the {@code auto} identifier.
+	 * 
+	 * @return the {@code auto} value or {@code null} if not supported.
+	 */
+	protected String getAutoValue() {
+		return null;
 	}
 
 	/**

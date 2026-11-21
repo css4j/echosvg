@@ -27,6 +27,7 @@ import org.w3c.dom.svg.SVGStylable;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleDeclarationProvider;
 import io.sf.carte.echosvg.css.engine.StyleMap;
+import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.dom.AbstractStylableDocument;
 import io.sf.carte.echosvg.util.ParsedURL;
@@ -147,6 +148,11 @@ public abstract class StylableExtensionElement extends ExtensionElement implemen
 		return null;
 	}
 
+	@Override
+	public Value getInitialValue(int idx) {
+		return null;
+	}
+
 	// SVGStylable //////////////////////////////////////////////////
 
 	/**
@@ -154,7 +160,7 @@ public abstract class StylableExtensionElement extends ExtensionElement implemen
 	 */
 	@Override
 	public CSSStyleDeclaration getStyle() {
-		throw new UnsupportedOperationException("Not implemented");
+		return null;
 	}
 
 	@Override

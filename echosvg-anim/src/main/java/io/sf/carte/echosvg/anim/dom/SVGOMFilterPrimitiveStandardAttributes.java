@@ -22,6 +22,9 @@ import org.w3c.dom.svg.SVGAnimatedLength;
 import org.w3c.dom.svg.SVGAnimatedString;
 import org.w3c.dom.svg.SVGFilterPrimitiveStandardAttributes;
 
+import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
+import io.sf.carte.echosvg.css.engine.value.Value;
+import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.util.DoublyIndexedTable;
 import io.sf.carte.echosvg.util.SVGTypes;
@@ -162,6 +165,20 @@ public abstract class SVGOMFilterPrimitiveStandardAttributes extends SVGStylable
 	@Override
 	public SVGAnimatedString getResult() {
 		return result;
+	}
+
+	@Override
+	public Value getInitialValue(int idx) {
+		Value v;
+		switch (idx) {
+		case SVGCSSEngine.WIDTH_INDEX:
+		case SVGCSSEngine.HEIGHT_INDEX:
+			v = ValueConstants.PERCENTAGE_100;
+			break;
+		default:
+			v = null;
+		}
+		return v;
 	}
 
 	/**

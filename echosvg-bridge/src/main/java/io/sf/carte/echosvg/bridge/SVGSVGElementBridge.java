@@ -35,11 +35,13 @@ import org.w3c.dom.svg.SVGAnimatedPreserveAspectRatio;
 import org.w3c.dom.svg.SVGDocument;
 import org.w3c.dom.svg.SVGRect;
 
-import io.sf.carte.echosvg.anim.dom.AbstractSVGAnimatedLength;
 import io.sf.carte.echosvg.anim.dom.AnimatedLiveAttributeValue;
+import io.sf.carte.echosvg.anim.dom.SVGGeometryProperty;
 import io.sf.carte.echosvg.anim.dom.SVGOMAnimatedRect;
 import io.sf.carte.echosvg.anim.dom.SVGOMElement;
 import io.sf.carte.echosvg.anim.dom.SVGOMSVGElement;
+import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
+import io.sf.carte.echosvg.css.engine.StyleMap;
 import io.sf.carte.echosvg.dom.svg.LiveAttributeException;
 import io.sf.carte.echosvg.dom.svg.SVGContext;
 import io.sf.carte.echosvg.dom.svg.SVGSVGContext;
@@ -49,6 +51,8 @@ import io.sf.carte.echosvg.gvt.CanvasGraphicsNode;
 import io.sf.carte.echosvg.gvt.CompositeGraphicsNode;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
 import io.sf.carte.echosvg.gvt.ShapeNode;
+import io.sf.carte.echosvg.parser.UnitProcessor.Context;
+import io.sf.carte.echosvg.util.SVGConstants;
 
 /**
  * Bridge class for the &lt;svg&gt; element.
@@ -117,26 +121,36 @@ public class SVGSVGElementBridge extends SVGGElementBridge implements SVGSVGCont
 		SVGDocument doc = (SVGDocument) e.getOwnerDocument();
 		SVGOMSVGElement se = (SVGOMSVGElement) e;
 		boolean isOutermost = (doc.getRootElement() == e);
+
+		StyleMap sm = safeComputedStyleMap(se);
+
+		UnitProcessor.Context uctx = UnitProcessor.createContext(ctx, se);
+
 		float x = 0;
 		float y = 0;
 		// x and y have no meaning on the outermost 'svg' element
 		if (!isOutermost) {
 			// 'x' attribute - default is 0
-			AbstractSVGAnimatedLength _x = (AbstractSVGAnimatedLength) se.getX();
-			x = safeAnimatedLength(_x, 0f);
+			x = ((SVGGeometryProperty) se.getX()).getAnimatedComputedValue(sm);
 
 			// 'y' attribute - default is 0
-			AbstractSVGAnimatedLength _y = (AbstractSVGAnimatedLength) se.getY();
-			y = safeAnimatedLength(_y, 0f);
+			y = ((SVGGeometryProperty) se.getY()).getAnimatedComputedValue(sm);
 		}
 
 		// 'width' attribute - default is 100%
-		AbstractSVGAnimatedLength _width = (AbstractSVGAnimatedLength) se.getWidth();
-		float w = safeAnimatedLength(_width);
+		float w = ((SVGGeometryProperty) se.getWidth()).getAnimatedComputedValue(sm);
 
 		// 'height' attribute - default is 100%
-		AbstractSVGAnimatedLength _height = (AbstractSVGAnimatedLength) se.getHeight();
-		float h = safeAnimatedLength(_height);
+		float h = ((SVGGeometryProperty) se.getHeight()).getAnimatedComputedValue(sm);
+
+		// Sanity check
+		if (w <= 0f) {
+			w = defaultSVGSize(UnitProcessor.HORIZONTAL_LENGTH, uctx, isOutermost);
+		}
+
+		if (h <= 0f) {
+			h = defaultSVGSize(UnitProcessor.VERTICAL_LENGTH, uctx, isOutermost);
+		}
 
 		try {
 			// 'visibility'
@@ -248,11 +262,45 @@ public class SVGSVGElementBridge extends SVGGElementBridge implements SVGSVGCont
 					displayErrorOrThrow(ctx, ex);
 				}
 			}
+
 			ctx.openViewport(e, new SVGSVGElementViewport(actualWidth, actualHeight));
 			return cgn;
 		} catch (LiveAttributeException ex) {
 			throw new BridgeException(ctx, ex);
 		}
+	}
+
+	private float defaultSVGSize(short axis, Context uctx, boolean isOutermost) {
+		String defaultValue;
+		String attributeName;
+		if (axis == UnitProcessor.HORIZONTAL_LENGTH) {
+			defaultValue = SVGConstants.SVG_SVG_WIDTH_DEFAULT_VALUE;
+			attributeName = SVGConstants.SVG_WIDTH_ATTRIBUTE;
+		} else {
+			defaultValue = SVGConstants.SVG_SVG_HEIGHT_DEFAULT_VALUE;
+			attributeName = SVGConstants.SVG_HEIGHT_ATTRIBUTE;
+		}
+		BridgeException be = new BridgeException(ctx, e, ERR_LENGTH_NEGATIVE,
+				new Object[] { attributeName });
+		displayErrorOrThrow(ctx, be);
+
+		float wh;
+		if (!isOutermost) {
+			wh = UnitProcessor.cssToUserSpace(defaultValue, attributeName, axis, uctx);
+		} else {
+			UserAgent ua = ctx.getUserAgent();
+			if (ua != null) {
+				Dimension2D vp = ua.getViewportSize();
+				if (axis == UnitProcessor.HORIZONTAL_LENGTH) {
+					wh = (float) vp.getWidth();
+				} else {
+					wh = (float) vp.getHeight();
+				}
+			} else {
+				wh = 400f;
+			}
+		}
+		return wh;
 	}
 
 	/**
@@ -305,16 +353,17 @@ public class SVGSVGElementBridge extends SVGGElementBridge implements SVGSVGCont
 				} else if (ln.equals(SVG_X_ATTRIBUTE) || ln.equals(SVG_Y_ATTRIBUTE)) {
 					SVGDocument doc = (SVGDocument) e.getOwnerDocument();
 					SVGOMSVGElement se = (SVGOMSVGElement) e;
+
 					// X & Y are ignored on outermost SVG.
 					boolean isOutermost = doc.getRootElement() == e;
 					if (!isOutermost) {
+						StyleMap sm = safeComputedStyleMap(se);
+
 						// 'x' attribute - default is 0
-						AbstractSVGAnimatedLength _x = (AbstractSVGAnimatedLength) se.getX();
-						float x = safeAnimatedLength(_x, 0f);
+						float x = ((SVGGeometryProperty) se.getX()).getAnimatedComputedValue(sm);
 
 						// 'y' attribute - default is 0
-						AbstractSVGAnimatedLength _y = (AbstractSVGAnimatedLength) se.getY();
-						float y = safeAnimatedLength(_y, 0f);
+						float y = ((SVGGeometryProperty) se.getY()).getAnimatedComputedValue(sm);
 
 						AffineTransform positionTransform = AffineTransform.getTranslateInstance(x, y);
 						CanvasGraphicsNode cgn;
@@ -328,26 +377,24 @@ public class SVGSVGElementBridge extends SVGGElementBridge implements SVGSVGCont
 					SVGOMSVGElement se = (SVGOMSVGElement) e;
 					boolean isOutermost = doc.getRootElement() == e;
 
+					StyleMap sm = safeComputedStyleMap(se);
+
 					// X & Y are ignored on outermost SVG.
 					float x = 0;
 					float y = 0;
 					if (!isOutermost) {
 						// 'x' attribute - default is 0
-						AbstractSVGAnimatedLength _x = (AbstractSVGAnimatedLength) se.getX();
-						x = safeAnimatedLength(_x, 0f);
+						x = ((SVGGeometryProperty) se.getX()).getAnimatedComputedValue(sm);
 
 						// 'y' attribute - default is 0
-						AbstractSVGAnimatedLength _y = (AbstractSVGAnimatedLength) se.getY();
-						y = safeAnimatedLength(_y, 0f);
+						y = ((SVGGeometryProperty) se.getY()).getAnimatedComputedValue(sm);
 					}
 
 					// 'width' attribute - default is 100%
-					AbstractSVGAnimatedLength _width = (AbstractSVGAnimatedLength) se.getWidth();
-					float w = safeAnimatedLength(_width);
+					float w = ((SVGGeometryProperty) se.getWidth()).getAnimatedComputedValue(sm);
 
 					// 'height' attribute - default is 100%
-					AbstractSVGAnimatedLength _height = (AbstractSVGAnimatedLength) se.getHeight();
-					float h = safeAnimatedLength(_height);
+					float h = ((SVGGeometryProperty) se.getHeight()).getAnimatedComputedValue(sm);
 
 					CanvasGraphicsNode cgn;
 					cgn = (CanvasGraphicsNode) node;
@@ -415,6 +462,30 @@ public class SVGSVGElementBridge extends SVGGElementBridge implements SVGSVGCont
 			throw new BridgeException(ctx, ex);
 		}
 		super.handleAnimatedAttributeChanged(alav);
+	}
+
+	@Override
+	protected void handleCSSPropertyChanged(int property) {
+		switch (property) {
+		case SVGCSSEngine.X_INDEX:
+		case SVGCSSEngine.Y_INDEX:
+			SVGDocument doc = (SVGDocument) e.getOwnerDocument();
+			boolean isOutermost = doc.getRootElement() == e;
+			if (isOutermost) {
+				break;
+			}
+		case SVGCSSEngine.WIDTH_INDEX:
+		case SVGCSSEngine.HEIGHT_INDEX: {
+			CompositeGraphicsNode gn = node.getParent();
+			gn.remove(node);
+			disposeTree(e, false);
+
+			handleElementAdded(gn, e.getParentNode(), e);
+			break;
+		}
+		default:
+			super.handleCSSPropertyChanged(property);
+		}
 	}
 
 	/**

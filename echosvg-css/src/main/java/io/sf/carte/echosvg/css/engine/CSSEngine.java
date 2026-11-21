@@ -1123,20 +1123,20 @@ public abstract class CSSEngine {
 			if (lunit != null) {
 				result = vm.createValue(lunit, this);
 				if (result == null || result.getCssValueType() == CSSValue.CssType.KEYWORD) {
-					result = initialOrNull(p != null, vm, result);
+					result = initialOrNull(p != null, vm, result, elt);
 				}
 			} else {
-				result = initialOrNull(p != null, vm, null);
+				result = initialOrNull(p != null, vm, null, elt);
 			}
 		} else if (value.getPrimitiveType() == Type.INTERNAL) {
 			PendingValue pending = (PendingValue) value;
 			if (substitutePendingShorthand(sm, pending, elt, p, propidx)) {
 				result = sm.getValue(propidx);
 			} else {
-				result = initialOrNull(p != null, vm, null);
+				result = initialOrNull(p != null, vm, null, elt);
 			}
 		} else if (value.getCssValueType() == CSSValue.CssType.KEYWORD) {
-			result = initialOrNull(p != null, vm, value);
+			result = initialOrNull(p != null, vm, value, elt);
 		}
 
 		if (result != null) {
@@ -1144,7 +1144,7 @@ public abstract class CSSEngine {
 			result = vm.computeValue(elt, pseudo, this, propidx, sm, result);
 			if (result == null) {
 				// calc() gave invalid result
-				result = initialOrNull(p != null, vm, null);
+				result = initialOrNull(p != null, vm, null, elt);
 			}
 		}
 
@@ -1170,12 +1170,23 @@ public abstract class CSSEngine {
 		return result;
 	}
 
-	private static Value initialOrNull(boolean hasParent, ValueManager vm, Value value) {
+	private Value initialOrNull(boolean hasParent, ValueManager vm, Value value,
+			CSSStylableElement elt) {
 		Value result;
 		if (hasParent && (vm.isInheritedProperty() || value == InheritValue.getInstance())) {
 			result = null;
 		} else {
 			result = vm.getDefaultValue();
+			if (result == null) {
+				int propidx = getPropertyIndex(vm.getPropertyName());
+				result = elt.getInitialValue(propidx);
+				// Maybe it is a relative value.
+				StyleMap sm = elt.getComputedStyleMap(null);
+				if (sm == null) { // Could be null if this is computing a pseudo-element
+					sm = getCascadedStyleMap(elt, null);
+				}
+				result = vm.computeValue(elt, null, this, propidx, sm, result);
+			}
 		}
 		return result;
 	}
@@ -1921,6 +1932,7 @@ public abstract class CSSEngine {
 	 * @param elt   The element property is from.
 	 * @param prop  The property name.
 	 * @param value The property value.
+	 * @return the value, or {@code null} if the property is unknown.
 	 */
 	public Value parsePropertyValue(CSSStylableElement elt, String prop, String value) {
 		int idx = getPropertyIndex(prop);
@@ -1948,7 +1960,12 @@ public abstract class CSSEngine {
 			element = null;
 			cssBaseURI = null;
 		}
-		return vm.getDefaultValue();
+
+		Value def = vm.getDefaultValue();
+		if (def == null) {
+			def = elt.getInitialValue(idx);
+		}
+		return def;
 	}
 
 	/**
@@ -3553,17 +3570,7 @@ public abstract class CSSEngine {
 				style.putValue(idx, v);
 				style.putOrigin(idx, StyleMap.NON_CSS_ORIGIN);
 			} catch (Exception e) {
-				String m = e.getMessage();
-				if (m == null)
-					m = "";
-				String u = ((documentURI == null) ? "<unknown>" : documentURI.toString());
-				String s = Messages.formatMessage("property.syntax.error.at",
-						new Object[] { u, property, newValue, m });
-				DOMException de = new DOMException(DOMException.SYNTAX_ERR, s);
-				de.initCause(e);
-				if (userAgent == null)
-					throw de;
-				userAgent.displayError(de);
+				// invalidateProperties() should catch this as well, do not report
 			} finally {
 				element = null;
 				cssBaseURI = null;

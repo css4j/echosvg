@@ -100,6 +100,16 @@ public interface ValueConstants {
 	NumericValue NUMBER_900 = FloatValue.createConstant(CSSUnit.CSS_NUMBER, 900);
 
 	/**
+	 * 100%
+	 */
+	NumericValue PERCENTAGE_100 = FloatValue.createConstant(CSSUnit.CSS_PERCENTAGE, 100f);
+
+	/**
+	 * 120%
+	 */
+	NumericValue PERCENTAGE_120 = FloatValue.createConstant(CSSUnit.CSS_PERCENTAGE, 120f);
+
+	/**
 	 * The 'inherit' value.
 	 */
 	Value INHERIT_VALUE = InheritValue.getInstance();

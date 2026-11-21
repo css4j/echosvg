@@ -26,6 +26,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import org.w3c.css.om.unit.CSSUnit;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.svg.SVGDocument;
@@ -34,6 +36,11 @@ import org.w3c.dom.svg.SVGLangSpace;
 import org.w3c.dom.svg.SVGNumberList;
 
 import io.sf.carte.echosvg.css.engine.CSSEngine;
+import io.sf.carte.echosvg.css.engine.CSSStylableElement;
+import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
+import io.sf.carte.echosvg.css.engine.StyleMap;
+import io.sf.carte.echosvg.css.engine.value.NumericDelegateValue;
+import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.dom.util.XLinkSupport;
 import io.sf.carte.echosvg.dom.util.XMLSupport;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
@@ -41,6 +48,7 @@ import io.sf.carte.echosvg.parser.AWTTransformProducer;
 import io.sf.carte.echosvg.parser.ClockHandler;
 import io.sf.carte.echosvg.parser.ClockParser;
 import io.sf.carte.echosvg.parser.ParseException;
+import io.sf.carte.echosvg.parser.UnitProcessor.Context;
 import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.SVG12Constants;
 import io.sf.carte.echosvg.util.SVGConstants;
@@ -458,7 +466,7 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 		//
 		// The values were converted from float to double and could come from a
 		// calc() expression or a function, so allow some tolerance.
-		final double TOL = 1e-4d; // Effective zero
+		final double TOL = AbstractGraphicsNodeBridge.TOLERANCE; // Effective zero
 		if (region.getWidth() < TOL || region.getHeight() < TOL) {
 			// "A value of zero disables rendering of the element (i.e., no
 			// paint is applied)."
@@ -708,17 +716,83 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 	public static Rectangle2D getBaseFilterPrimitiveRegion(Element filterPrimitiveElement,
 			Element filteredElement, GraphicsNode filteredNode, Rectangle2D defaultRegion,
 			BridgeContext ctx) {
-		String s;
-
 		// resolve units in the (referenced) filteredElement's
 		// coordinate system
-		UnitProcessor.Context uctx;
-		uctx = UnitProcessor.createContext(ctx, filteredElement);
+		UnitProcessor.Context uctx = UnitProcessor.createContext(ctx, filteredElement);
+		Rectangle2D region;
+		if (filterPrimitiveElement instanceof CSSStylableElement) {
+			region = basefilterPrimitiveRegion((CSSStylableElement) filterPrimitiveElement,
+					filteredNode, defaultRegion, uctx);
+		} else {
+			region = baseFilterPrimitiveRegionFromAttributes(filterPrimitiveElement,
+					filteredElement, filteredNode, defaultRegion, uctx);
+		}
+		return region;
+	}
 
+	private static Rectangle2D basefilterPrimitiveRegion(CSSStylableElement filterPrimitiveElement,
+			GraphicsNode filteredNode, Rectangle2D defaultRegion, Context uctx) {
+		double x = defaultRegion.getX();
+		double y = defaultRegion.getY();
+		double w = defaultRegion.getWidth();
+		double h = defaultRegion.getHeight();
+
+		StyleMap sm = AnimatableSVGBridge.safeComputedStyleMap(filterPrimitiveElement);
+
+		// 'x' property - default is defaultRegion.getX()
+		Value css_x = sm.getValue(SVGCSSEngine.X_INDEX);
+
+		// 'y' property - default is defaultRegion.getY()
+		Value css_y = sm.getValue(SVGCSSEngine.Y_INDEX);
+
+		// 'width' property - default is defaultRegion.getWidth()
+		Value css_w = sm.getValue(SVGCSSEngine.WIDTH_INDEX);
+
+		// 'height' property - default is defaultRegion.getHeight()
+		Value css_h = sm.getValue(SVGCSSEngine.HEIGHT_INDEX);
+
+		if (css_x != null) {
+			try {
+				x = computeLengthUserSpace(css_x, UnitProcessor.HORIZONTAL_LENGTH, uctx);
+			} catch (RuntimeException e) {
+				displayErrorOrThrow(uctx, e);
+			}
+		}
+		if (css_y != null) {
+			try {
+				y = computeLengthUserSpace(css_y, UnitProcessor.VERTICAL_LENGTH, uctx);
+			} catch (RuntimeException e) {
+				displayErrorOrThrow(uctx, e);
+			}
+		}
+		if (css_w != null) {
+			try {
+				w = computeLengthUserSpace(css_w, UnitProcessor.HORIZONTAL_LENGTH, uctx);
+			} catch (RuntimeException e) {
+				displayErrorOrThrow(uctx, e);
+			}
+		}
+		if (css_h != null) {
+			try {
+				h = computeLengthUserSpace(css_h, UnitProcessor.VERTICAL_LENGTH, uctx);
+			} catch (RuntimeException e) {
+				displayErrorOrThrow(uctx, e);
+			}
+		}
+
+		// NOTE: it may be that dx/dy/dw/dh should be applied here
+		// but since this is mostly aimed at feImage I am
+		// unsure that it is really needed.
+		return new Rectangle2D.Double(x, y, w, h);
+	}
+
+	private static Rectangle2D baseFilterPrimitiveRegionFromAttributes(
+			Element filterPrimitiveElement, Element filteredElement, GraphicsNode filteredNode,
+			Rectangle2D defaultRegion, Context uctx) {
 		// 'x' attribute - default is defaultRegion.getX()
 		double x = defaultRegion.getX();
-		s = filterPrimitiveElement.getAttributeNS(null, SVG_X_ATTRIBUTE);
-		if (s.length() != 0) {
+		String s = filterPrimitiveElement.getAttributeNS(null, SVG_X_ATTRIBUTE);
+		if (!s.isEmpty()) {
 			x = UnitProcessor.svgHorizontalCoordinateToUserSpace(s, SVG_X_ATTRIBUTE, null,
 					(float) x, uctx);
 		}
@@ -726,7 +800,7 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 		// 'y' attribute - default is defaultRegion.getY()
 		double y = defaultRegion.getY();
 		s = filterPrimitiveElement.getAttributeNS(null, SVG_Y_ATTRIBUTE);
-		if (s.length() != 0) {
+		if (!s.isEmpty()) {
 			y = UnitProcessor.svgVerticalCoordinateToUserSpace(s, SVG_Y_ATTRIBUTE, null, (float) y,
 					uctx);
 		}
@@ -734,7 +808,7 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 		// 'width' attribute - default is defaultRegion.getWidth()
 		double w = defaultRegion.getWidth();
 		s = filterPrimitiveElement.getAttributeNS(null, SVG_WIDTH_ATTRIBUTE);
-		if (s.length() != 0) {
+		if (!s.isEmpty()) {
 			w = UnitProcessor.svgHorizontalLengthToUserSpace(s, SVG_WIDTH_ATTRIBUTE, null,
 					(float) w, uctx);
 		}
@@ -742,7 +816,7 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 		// 'height' attribute - default is defaultRegion.getHeight()
 		double h = defaultRegion.getHeight();
 		s = filterPrimitiveElement.getAttributeNS(null, SVG_HEIGHT_ATTRIBUTE);
-		if (s.length() != 0) {
+		if (!s.isEmpty()) {
 			h = UnitProcessor.svgVerticalLengthToUserSpace(s, SVG_HEIGHT_ATTRIBUTE, null, (float) h,
 					uctx);
 		}
@@ -766,98 +840,45 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 	 * @param filterRegion           the filter chain region
 	 * @param ctx                    the bridge context
 	 */
-	public static Rectangle2D convertFilterPrimitiveRegion(Element filterPrimitiveElement, Element filterElement,
-			Element filteredElement, GraphicsNode filteredNode, Rectangle2D defaultRegion, Rectangle2D filterRegion,
-			BridgeContext ctx) {
+	public static Rectangle2D convertFilterPrimitiveRegion(Element filterPrimitiveElement,
+			Element filterElement, Element filteredElement, GraphicsNode filteredNode,
+			Rectangle2D defaultRegion, Rectangle2D filterRegion, BridgeContext ctx) {
 
 		// 'primitiveUnits' - default is userSpaceOnUse
 		String units = "";
 		if (filterElement != null) {
-			units = getChainableAttributeNS(filterElement, null, SVG_PRIMITIVE_UNITS_ATTRIBUTE, ctx);
+			units = getChainableAttributeNS(filterElement, null, SVG_PRIMITIVE_UNITS_ATTRIBUTE,
+					ctx);
 		}
 		short unitsType;
-		if (units.length() == 0) {
+		if (units.isEmpty()) {
 			unitsType = USER_SPACE_ON_USE;
 		} else {
-			unitsType = parseCoordinateSystem(filterElement, SVG_FILTER_UNITS_ATTRIBUTE, units, ctx);
+			unitsType = parseCoordinateSystem(filterElement, SVG_FILTER_UNITS_ATTRIBUTE, units,
+					ctx);
 		}
-
-		String xStr = "", yStr = "", wStr = "", hStr = "";
-
-		if (filterPrimitiveElement != null) {
-			// 'x' attribute - default is defaultRegion.getX()
-			xStr = filterPrimitiveElement.getAttributeNS(null, SVG_X_ATTRIBUTE);
-
-			// 'y' attribute - default is defaultRegion.getY()
-			yStr = filterPrimitiveElement.getAttributeNS(null, SVG_Y_ATTRIBUTE);
-
-			// 'width' attribute - default is defaultRegion.getWidth()
-			wStr = filterPrimitiveElement.getAttributeNS(null, SVG_WIDTH_ATTRIBUTE);
-
-			// 'height' attribute - default is defaultRegion.getHeight()
-			hStr = filterPrimitiveElement.getAttributeNS(null, SVG_HEIGHT_ATTRIBUTE);
-		}
-
-		double x = defaultRegion.getX();
-		double y = defaultRegion.getY();
-		double w = defaultRegion.getWidth();
-		double h = defaultRegion.getHeight();
 
 		// resolve units in the (referenced) filteredElement's coordinate system
 		UnitProcessor.Context uctx = UnitProcessor.createContext(ctx, filteredElement);
 
-		switch (unitsType) {
-		case OBJECT_BOUNDING_BOX:
-			Rectangle2D bounds = filteredNode.getGeometryBounds();
-			if (bounds != null) {
-				if (xStr.length() != 0) {
-					x = UnitProcessor.svgHorizontalCoordinateToObjectBoundingBox(xStr,
-							SVG_X_ATTRIBUTE, null, (float) x, uctx);
-					x = bounds.getX() + x * bounds.getWidth();
-				}
-				if (yStr.length() != 0) {
-					y = UnitProcessor.svgVerticalCoordinateToObjectBoundingBox(yStr,
-							SVG_Y_ATTRIBUTE, null, (float) y, uctx);
-					y = bounds.getY() + y * bounds.getHeight();
-				}
-				if (wStr.length() != 0) {
-					w = UnitProcessor.svgHorizontalLengthToObjectBoundingBox(wStr,
-							SVG_WIDTH_ATTRIBUTE, null, (float) w, uctx);
-					w *= bounds.getWidth();
-				}
-				if (hStr.length() != 0) {
-					h = UnitProcessor.svgVerticalLengthToObjectBoundingBox(hStr,
-							SVG_HEIGHT_ATTRIBUTE, null, (float) h, uctx);
-					h *= bounds.getHeight();
-				}
+		Rectangle2D region;
+
+		if (filterPrimitiveElement != null) {
+			if (filterPrimitiveElement instanceof CSSStylableElement) {
+				region = primitiveRegion((CSSStylableElement) filterPrimitiveElement, filteredNode,
+						defaultRegion, unitsType, uctx);
+			} else {
+				// Some elements are not stylable
+				region = primitiveRegionFromAttributes(filterPrimitiveElement, filteredNode,
+						defaultRegion, unitsType, uctx);
 			}
-			break;
-		case USER_SPACE_ON_USE:
-			if (xStr.length() != 0) {
-				x = UnitProcessor.svgHorizontalCoordinateToUserSpace(xStr, SVG_X_ATTRIBUTE, null,
-						(float) x, uctx);
-			}
-			if (yStr.length() != 0) {
-				y = UnitProcessor.svgVerticalCoordinateToUserSpace(yStr, SVG_Y_ATTRIBUTE, null,
-						(float) y, uctx);
-			}
-			if (wStr.length() != 0) {
-				w = UnitProcessor.svgHorizontalLengthToUserSpace(wStr, SVG_WIDTH_ATTRIBUTE, null,
-						(float) w, uctx);
-			}
-			if (hStr.length() != 0) {
-				h = UnitProcessor.svgVerticalLengthToUserSpace(hStr, SVG_HEIGHT_ATTRIBUTE, null,
-						(float) h, uctx);
-			}
-			break;
-		default:
-			throw new RuntimeException("invalid unitsType:" + unitsType); // can't be reached
+		} else {
+			region = new Rectangle2D.Double(defaultRegion.getX(), defaultRegion.getY(),
+					defaultRegion.getWidth(), defaultRegion.getHeight());
 		}
 
-		Rectangle2D region = new Rectangle2D.Double(x, y, w, h);
-
 		// Now, extend filter primitive region with dx/dy/dw/dh
-		// settings (EchoSVG extension). The dx/dy/dw/dh padding is
+		// settings (Batik extension). The dx/dy/dw/dh padding is
 		// *always* in userSpaceOnUse space.
 
 		units = "";
@@ -888,16 +909,17 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 			// 'dh' attribute - default is 0
 			dhStr = filterPrimitiveElement.getAttributeNS(null, SVG12Constants.SVG_MH_ATRIBUTE);
 		}
-		if (dxStr.length() == 0) {
+
+		if (dxStr.isEmpty()) {
 			dxStr = SVG12Constants.SVG_FILTER_MX_DEFAULT_VALUE;
 		}
-		if (dyStr.length() == 0) {
+		if (dyStr.isEmpty()) {
 			dyStr = SVG12Constants.SVG_FILTER_MY_DEFAULT_VALUE;
 		}
-		if (dwStr.length() == 0) {
+		if (dwStr.isEmpty()) {
 			dwStr = SVG12Constants.SVG_FILTER_MW_DEFAULT_VALUE;
 		}
-		if (dhStr.length() == 0) {
+		if (dhStr.isEmpty()) {
 			dhStr = SVG12Constants.SVG_FILTER_MH_DEFAULT_VALUE;
 		}
 
@@ -906,6 +928,247 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 		Rectangle2D.intersect(region, filterRegion, region);
 
 		return region;
+	}
+
+	private static Rectangle2D primitiveRegion(CSSStylableElement filterPrimitiveElement,
+			GraphicsNode filteredNode, Rectangle2D defaultRegion, short unitsType, Context uctx) {
+		double x = defaultRegion.getX();
+		double y = defaultRegion.getY();
+		double w = defaultRegion.getWidth();
+		double h = defaultRegion.getHeight();
+
+		StyleMap sm = AnimatableSVGBridge.safeComputedStyleMap(filterPrimitiveElement);
+
+		// 'x' property - default is defaultRegion.getX()
+		Value css_x = sm.getValue(SVGCSSEngine.X_INDEX);
+
+		// 'y' property - default is defaultRegion.getY()
+		Value css_y = sm.getValue(SVGCSSEngine.Y_INDEX);
+
+		// 'width' property - default is defaultRegion.getWidth()
+		Value css_w = sm.getValue(SVGCSSEngine.WIDTH_INDEX);
+
+		// 'height' property - default is defaultRegion.getHeight()
+		Value css_h = sm.getValue(SVGCSSEngine.HEIGHT_INDEX);
+
+		switch (unitsType) {
+		case OBJECT_BOUNDING_BOX:
+			Rectangle2D bounds = filteredNode.getGeometryBounds();
+			if (bounds != null) {
+				if (css_x != null) {
+					try {
+						x = computeLengthBBox(css_x, UnitProcessor.HORIZONTAL_LENGTH, uctx);
+						x = bounds.getX() + x * bounds.getWidth();
+					} catch (RuntimeException e) {
+						displayErrorOrThrow(uctx, e);
+					}
+				}
+				if (css_y != null) {
+					try {
+						y = computeLengthBBox(css_y, UnitProcessor.VERTICAL_LENGTH, uctx);
+						y = bounds.getY() + y * bounds.getHeight();
+					} catch (RuntimeException e) {
+						displayErrorOrThrow(uctx, e);
+					}
+				}
+				if (css_w != null) {
+					try {
+						w = computeLengthBBox(css_w, UnitProcessor.HORIZONTAL_LENGTH, uctx);
+						w *= bounds.getWidth();
+					} catch (RuntimeException e) {
+						displayErrorOrThrow(uctx, e);
+					}
+				}
+				if (css_h != null) {
+					try {
+						h = computeLengthBBox(css_h, UnitProcessor.VERTICAL_LENGTH, uctx);
+						h *= bounds.getHeight();
+					} catch (RuntimeException e) {
+						displayErrorOrThrow(uctx, e);
+					}
+				}
+			}
+			break;
+		case USER_SPACE_ON_USE:
+			if (css_x != null) {
+				try {
+					x = computeLengthUserSpace(css_x, UnitProcessor.HORIZONTAL_LENGTH, uctx);
+				} catch (RuntimeException e) {
+					displayErrorOrThrow(uctx, e);
+				}
+			}
+			if (css_y != null) {
+				try {
+					y = computeLengthUserSpace(css_y, UnitProcessor.VERTICAL_LENGTH, uctx);
+				} catch (RuntimeException e) {
+					displayErrorOrThrow(uctx, e);
+				}
+			}
+			if (css_w != null) {
+				try {
+					w = computeLengthUserSpace(css_w, UnitProcessor.HORIZONTAL_LENGTH, uctx);
+				} catch (RuntimeException e) {
+					displayErrorOrThrow(uctx, e);
+				}
+			}
+			if (css_h != null) {
+				try {
+					h = computeLengthUserSpace(css_h, UnitProcessor.VERTICAL_LENGTH, uctx);
+				} catch (RuntimeException e) {
+					displayErrorOrThrow(uctx, e);
+				}
+			}
+			break;
+		default:
+			throw new IllegalStateException("invalid unitsType:" + unitsType); // can't be reached
+		}
+
+		return new Rectangle2D.Double(x, y, w, h);
+	}
+
+	private static void displayErrorOrThrow(Context uctx, RuntimeException e) {
+		BridgeContext ctx = UnitProcessor.getBridgeContext(uctx);
+		if (ctx != null) {
+			AbstractSVGBridge.displayErrorOrThrow(ctx, e);
+		}
+	}
+
+	private static float computeLengthUserSpace(Value v, short axis, Context uctx)
+		throws DOMException {
+		assert v != null;
+		switch (v.getPrimitiveType()) {
+		case NUMERIC:
+			float f = v.getFloatValue();
+			short unit = v.getUnitType();
+			if (unit != CSSUnit.CSS_NUMBER && unit != CSSUnit.CSS_PX) {
+				try {
+					f = UnitProcessor.cssToUserSpace(f, unit, axis, uctx);
+				} catch (IllegalArgumentException ex) {
+					DOMException e = new DOMException(DOMException.TYPE_MISMATCH_ERR,
+							ex.getMessage());
+					e.initCause(ex);
+					throw e;
+				}
+			}
+			return f;
+		case EXPRESSION:
+		case MATH_FUNCTION:
+			NumericDelegateValue<?> num = (NumericDelegateValue<?>) v;
+			LengthNumberEvaluator eval = new LengthNumberEvaluator(axis, uctx);
+			Value fv = num.floatValue(eval);
+			return fv.getFloatValue();
+		default:
+			break;
+		}
+		throw new DOMException(DOMException.TYPE_MISMATCH_ERR,
+				"Unsupported type: " + v.getPrimitiveType());
+	}
+
+	private static float computeLengthBBox(Value v, short axis, Context uctx)
+			throws DOMException {
+		assert v != null;
+		switch (v.getPrimitiveType()) {
+		case NUMERIC:
+			short unit = v.getUnitType();
+			float f = v.getFloatValue();
+			switch (unit) {
+			default:
+				try {
+					f = UnitProcessor.cssToUserSpace(f, unit, axis, uctx);
+				} catch (IllegalArgumentException ex) {
+					DOMException e = new DOMException(DOMException.TYPE_MISMATCH_ERR,
+							ex.getMessage());
+					e.initCause(ex);
+					throw e;
+				}
+				break;
+			case CSSUnit.CSS_PERCENTAGE:
+				f /= 100f;
+			case CSSUnit.CSS_NUMBER:
+			case CSSUnit.CSS_PX:
+			}
+			return f;
+		case EXPRESSION:
+		case MATH_FUNCTION:
+			NumericDelegateValue<?> num = (NumericDelegateValue<?>) v;
+			LengthBBEvaluator eval = new LengthBBEvaluator(axis, uctx);
+			Value fv = num.floatValue(eval);
+			return fv.getFloatValue();
+		default:
+			break;
+		}
+		throw new DOMException(DOMException.TYPE_MISMATCH_ERR,
+				"Unsupported type: " + v.getPrimitiveType());
+	}
+
+	private static Rectangle2D primitiveRegionFromAttributes(Element filterPrimitiveElement,
+			GraphicsNode filteredNode, Rectangle2D defaultRegion, short unitsType, Context uctx) {
+		// 'x' attribute - default is defaultRegion.getX()
+		String xStr = filterPrimitiveElement.getAttributeNS(null, SVG_X_ATTRIBUTE);
+
+		// 'y' attribute - default is defaultRegion.getY()
+		String yStr = filterPrimitiveElement.getAttributeNS(null, SVG_Y_ATTRIBUTE);
+
+		// 'width' attribute - default is defaultRegion.getWidth()
+		String wStr = filterPrimitiveElement.getAttributeNS(null, SVG_WIDTH_ATTRIBUTE);
+
+		// 'height' attribute - default is defaultRegion.getHeight()
+		String hStr = filterPrimitiveElement.getAttributeNS(null, SVG_HEIGHT_ATTRIBUTE);
+
+		double x = defaultRegion.getX();
+		double y = defaultRegion.getY();
+		double w = defaultRegion.getWidth();
+		double h = defaultRegion.getHeight();
+
+		switch (unitsType) {
+		case OBJECT_BOUNDING_BOX:
+			Rectangle2D bounds = filteredNode.getGeometryBounds();
+			if (bounds != null) {
+				if (!xStr.isEmpty()) {
+					x = UnitProcessor.svgHorizontalCoordinateToObjectBoundingBox(xStr,
+							SVG_X_ATTRIBUTE, null, (float) x, uctx);
+					x = bounds.getX() + x * bounds.getWidth();
+				}
+				if (!yStr.isEmpty()) {
+					y = UnitProcessor.svgVerticalCoordinateToObjectBoundingBox(yStr,
+							SVG_Y_ATTRIBUTE, null, (float) y, uctx);
+					y = bounds.getY() + y * bounds.getHeight();
+				}
+				if (!wStr.isEmpty()) {
+					w = UnitProcessor.svgHorizontalLengthToObjectBoundingBox(wStr,
+							SVG_WIDTH_ATTRIBUTE, null, (float) w, uctx);
+					w *= bounds.getWidth();
+				}
+				if (!hStr.isEmpty()) {
+					h = UnitProcessor.svgVerticalLengthToObjectBoundingBox(hStr,
+							SVG_HEIGHT_ATTRIBUTE, null, (float) h, uctx);
+					h *= bounds.getHeight();
+				}
+			}
+			break;
+		case USER_SPACE_ON_USE:
+			if (!xStr.isEmpty()) {
+				x = UnitProcessor.svgHorizontalCoordinateToUserSpace(xStr, SVG_X_ATTRIBUTE, null,
+						(float) x, uctx);
+			}
+			if (!yStr.isEmpty()) {
+				y = UnitProcessor.svgVerticalCoordinateToUserSpace(yStr, SVG_Y_ATTRIBUTE, null,
+						(float) y, uctx);
+			}
+			if (!wStr.isEmpty()) {
+				w = UnitProcessor.svgHorizontalLengthToUserSpace(wStr, SVG_WIDTH_ATTRIBUTE, null,
+						(float) w, uctx);
+			}
+			if (!hStr.isEmpty()) {
+				h = UnitProcessor.svgVerticalLengthToUserSpace(hStr, SVG_HEIGHT_ATTRIBUTE, null,
+						(float) h, uctx);
+			}
+			break;
+		default:
+			throw new IllegalStateException("invalid unitsType:" + unitsType); // can't be reached
+		}
+
+		return new Rectangle2D.Double(x, y, w, h);
 	}
 
 	/**

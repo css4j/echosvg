@@ -23,6 +23,12 @@ import org.w3c.dom.svg.SVGAnimatedLength;
 import org.w3c.dom.svg.SVGRectElement;
 
 import io.sf.carte.echosvg.anim.values.AnimatableValue;
+import io.sf.carte.echosvg.css.engine.CSSEngine;
+import io.sf.carte.echosvg.css.engine.CSSStylableElement;
+import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
+import io.sf.carte.echosvg.css.engine.StyleMap;
+import io.sf.carte.echosvg.css.engine.value.Value;
+import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.util.DoublyIndexedTable;
 import io.sf.carte.echosvg.util.SVGTypes;
@@ -66,12 +72,12 @@ public class SVGOMRectElement extends SVGGraphicsElement implements SVGRectEleme
 	/**
 	 * The 'rx' attribute value.
 	 */
-	protected AbstractSVGAnimatedLength rx;
+	protected SVGOMGeometryProperty rx;
 
 	/**
 	 * The 'ry' attribute value.
 	 */
-	protected AbstractSVGAnimatedLength ry;
+	protected SVGOMGeometryProperty ry;
 
 	/**
 	 * The 'width' attribute value.
@@ -113,21 +119,35 @@ public class SVGOMRectElement extends SVGGraphicsElement implements SVGRectEleme
 	 * Initializes the live attribute values of this element.
 	 */
 	private void initializeLiveAttributes() {
-		x = createLiveAnimatedLength(null, SVG_X_ATTRIBUTE, SVG_RECT_X_DEFAULT_VALUE,
-				AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false);
-		y = createLiveAnimatedLength(null, SVG_Y_ATTRIBUTE, SVG_RECT_Y_DEFAULT_VALUE,
-				AbstractSVGAnimatedLength.VERTICAL_LENGTH, false);
-		width = createLiveAnimatedLength(null, SVG_WIDTH_ATTRIBUTE, SVG_RECT_WIDTH_DEFAULT_VALUE,
-				AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, true);
-		height = createLiveAnimatedLength(null, SVG_HEIGHT_ATTRIBUTE, SVG_RECT_HEIGHT_DEFAULT_VALUE,
-				AbstractSVGAnimatedLength.VERTICAL_LENGTH, true);
-		rx = new AbstractSVGAnimatedLength(this, null, SVG_RX_ATTRIBUTE, AbstractSVGAnimatedLength.HORIZONTAL_LENGTH,
-				true) {
+		x = createLiveGeometryProperty(null, SVG_X_ATTRIBUTE, SVG_RECT_X_DEFAULT_VALUE,
+				AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false, SVGCSSEngine.X_INDEX);
+		y = createLiveGeometryProperty(null, SVG_Y_ATTRIBUTE, SVG_RECT_Y_DEFAULT_VALUE,
+				AbstractSVGAnimatedLength.VERTICAL_LENGTH, false, SVGCSSEngine.Y_INDEX);
+		width = createLiveGeometryPropertyWithAuto(null, SVG_WIDTH_ATTRIBUTE,
+				SVG_RECT_WIDTH_DEFAULT_VALUE, AbstractSVGAnimatedLength.HORIZONTAL_LENGTH,
+				true, SVGCSSEngine.WIDTH_INDEX, SVG_RECT_WIDTH_AUTO_VALUE);
+		height = createLiveGeometryPropertyWithAuto(null, SVG_HEIGHT_ATTRIBUTE,
+				SVG_RECT_HEIGHT_DEFAULT_VALUE, AbstractSVGAnimatedLength.VERTICAL_LENGTH,
+				true, SVGCSSEngine.HEIGHT_INDEX, SVG_RECT_HEIGHT_AUTO_VALUE);
+		rx = new SVGOMGeometryProperty(this, null, SVG_RX_ATTRIBUTE, null,
+				AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, SVGCSSEngine.RX_INDEX) {
+
 			@Override
 			protected String getDefaultValue() {
-				String defval = getAttribute(SVG_RY_ATTRIBUTE).trim();
-				if (defval.isEmpty() || SVG_AUTO_VALUE.equalsIgnoreCase(defval)) {
+				CSSEngine eng = ((SVGOMDocument) element.getOwnerDocument()).getCSSEngine();
+				CSSStylableElement se = (CSSStylableElement) element;
+				StyleMap sm = se.getComputedStyleMap(null);
+				if (sm == null) {
+					sm = eng.getCascadedStyleMap(se, null);
+					se.setComputedStyleMap(null, sm);
+				}
+
+				String defval;
+				Value v = ry.computeAnimatedValue(sm);
+				if (v == null || ValueConstants.AUTO_VALUE.equals(v)) {
 					defval = "0";
+				} else {
+					defval = v.getCssText();
 				}
 				return defval;
 			}
@@ -140,14 +160,27 @@ public class SVGOMRectElement extends SVGGraphicsElement implements SVGRectEleme
 					ry.attrChanged();
 				}
 			}
+
 		};
-		ry = new AbstractSVGAnimatedLength(this, null, SVG_RY_ATTRIBUTE, AbstractSVGAnimatedLength.VERTICAL_LENGTH,
-				true) {
+		ry = new SVGOMGeometryProperty(this, null, SVG_RY_ATTRIBUTE, null,
+				AbstractSVGAnimatedLength.VERTICAL_LENGTH, SVGCSSEngine.RY_INDEX) {
+
 			@Override
 			protected String getDefaultValue() {
-				String defval = getAttribute(SVG_RX_ATTRIBUTE).trim();
-				if (defval.isEmpty() || SVG_AUTO_VALUE.equalsIgnoreCase(defval)) {
+				CSSEngine eng = ((SVGOMDocument) element.getOwnerDocument()).getCSSEngine();
+				CSSStylableElement se = (CSSStylableElement) element;
+				StyleMap sm = se.getComputedStyleMap(null);
+				if (sm == null) {
+					sm = eng.getCascadedStyleMap(se, null);
+					se.setComputedStyleMap(null, sm);
+				}
+
+				String defval;
+				Value v = rx.computeAnimatedValue(sm);
+				if (v == null || ValueConstants.AUTO_VALUE.equals(v)) {
 					defval = "0";
+				} else {
+					defval = v.getCssText();
 				}
 				return defval;
 			}
@@ -160,6 +193,7 @@ public class SVGOMRectElement extends SVGGraphicsElement implements SVGRectEleme
 					rx.attrChanged();
 				}
 			}
+
 		};
 
 		liveAttributeValues.put(null, SVG_RX_ATTRIBUTE, rx);

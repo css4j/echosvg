@@ -27,16 +27,21 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
+import org.w3c.dom.css.CSSStyleDeclaration;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.svg.SVGTransformable;
-import org.w3c.dom.svg.SVGUseElement;
 
 import io.sf.carte.echosvg.anim.dom.AbstractSVGAnimatedLength;
 import io.sf.carte.echosvg.anim.dom.AnimatedLiveAttributeValue;
+import io.sf.carte.echosvg.anim.dom.SVGGeometryProperty;
 import io.sf.carte.echosvg.anim.dom.SVGOMDocument;
 import io.sf.carte.echosvg.anim.dom.SVGOMUseElement;
 import io.sf.carte.echosvg.constants.XMLConstants;
+import io.sf.carte.echosvg.css.engine.CSSStylableElement;
+import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
+import io.sf.carte.echosvg.css.engine.StyleMap;
+import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.dom.events.NodeEventTarget;
 import io.sf.carte.echosvg.dom.svg.LiveAttributeException;
 import io.sf.carte.echosvg.dom.svg.SVGOMUseShadowRoot;
@@ -207,29 +212,11 @@ public class SVGUseElementBridge extends AbstractGraphicsNodeBridge {
 				svgElement.setAttributeNS(attr.getNamespaceURI(), attr.getName(), attr.getValue());
 			}
 			// move the children from <symbol> to the <svg> element
-			for (Node n = localRefElement.getFirstChild(); n != null; n = localRefElement.getFirstChild()) {
+			for (Node n = localRefElement.getFirstChild(); n != null; n = localRefElement
+					.getFirstChild()) {
 				svgElement.appendChild(n);
 			}
 			localRefElement = svgElement;
-		}
-
-		if (SVG_SVG_TAG.equals(localRefElement.getLocalName())) {
-			// The referenced 'svg' and its contents are deep-cloned into the
-			// generated tree. If attributes width and/or height are provided
-			// on the 'use' element, then these values will override the
-			// corresponding attributes on the 'svg' in the generated tree.
-			try {
-				AbstractSVGAnimatedLength al = (AbstractSVGAnimatedLength) ue.getWidth();
-				if (al.isSpecified()) {
-					localRefElement.setAttributeNS(null, SVG_WIDTH_ATTRIBUTE, al.getAnimVal().getValueAsString());
-				}
-				al = (AbstractSVGAnimatedLength) ue.getHeight();
-				if (al.isSpecified()) {
-					localRefElement.setAttributeNS(null, SVG_HEIGHT_ATTRIBUTE, al.getAnimVal().getValueAsString());
-				}
-			} catch (LiveAttributeException ex) {
-				throw new BridgeException(ctx, ex);
-			}
 		}
 
 		// attach the referenced element to the current document
@@ -254,6 +241,46 @@ public class SVGUseElementBridge extends AbstractGraphicsNodeBridge {
 
 		// compute URIs and style sheets for the used element
 		CSSUtilities.computeStyleAndURIs(refElement, localRefElement, uri);
+
+		// Override width and height geometry properties if element is <svg>
+		// (x and y are dealt with via transform)
+		if (SVG_SVG_TAG.equals(localRefElement.getLocalName())) {
+			// The referenced element and its contents are deep-cloned into the
+			// generated tree. If attributes width or height are provided on the
+			// <use> element, then these values will override the corresponding
+			// attributes on the referenced element in the generated tree.
+
+			StyleMap usm = safeComputedStyleMap(ue);
+
+			CSSStylableElement se = (CSSStylableElement) localRefElement;
+			StyleMap sm = se.getComputedStyleMap(null);
+
+			// 'width' attribute - default is 0
+			SVGGeometryProperty al = (SVGGeometryProperty) ue.getWidth();
+			Value css_val = al.computeValue(usm);
+			if (css_val != null) {
+				se.setAttributeNS(null, SVG_WIDTH_ATTRIBUTE, css_val.getCssText());
+				sm.putValue(SVGCSSEngine.WIDTH_INDEX, css_val);
+				sm.putMask(SVGCSSEngine.WIDTH_INDEX, usm.getMask(SVGCSSEngine.WIDTH_INDEX));
+				CSSStyleDeclaration style = se.getStyle();
+				if (style != null) {
+					style.setProperty(CSS_WIDTH_PROPERTY, css_val.toString(), null);
+				}
+			}
+
+			// 'height' attribute - default is 0
+			al = (SVGGeometryProperty) ue.getHeight();
+			css_val = al.computeValue(usm);
+			if (css_val != null) {
+				se.setAttributeNS(null, SVG_HEIGHT_ATTRIBUTE, css_val.getCssText());
+				sm.putValue(SVGCSSEngine.HEIGHT_INDEX, css_val);
+				sm.putMask(SVGCSSEngine.HEIGHT_INDEX, usm.getMask(SVGCSSEngine.HEIGHT_INDEX));
+				CSSStyleDeclaration style = se.getStyle();
+				if (style != null) {
+					style.setProperty(CSS_HEIGHT_PROPERTY, css_val.toString(), null);
+				}
+			}
+		}
 
 		GVTBuilder builder = ctx.getGVTBuilder();
 		GraphicsNode refNode = builder.build(ctx, g);
@@ -357,15 +384,15 @@ public class SVGUseElementBridge extends AbstractGraphicsNodeBridge {
 	protected AffineTransform computeTransform(SVGTransformable e, BridgeContext ctx)
 			throws BridgeException {
 		AffineTransform at = super.computeTransform(e, ctx);
-		SVGUseElement ue = (SVGUseElement) e;
+		SVGOMUseElement ue = (SVGOMUseElement) e;
+
+		StyleMap sm = safeComputedStyleMap(ue);
 
 		// 'x' attribute - default is 0
-		AbstractSVGAnimatedLength _x = (AbstractSVGAnimatedLength) ue.getX();
-		float x = safeAnimatedLength(_x, 0f);
+		float x = ((AbstractSVGAnimatedLength) ue.getX()).getAnimatedComputedValue(sm);
 
 		// 'y' attribute - default is 0
-		AbstractSVGAnimatedLength _y = (AbstractSVGAnimatedLength) ue.getY();
-		float y = safeAnimatedLength(_y, 0f);
+		float y = ((AbstractSVGAnimatedLength) ue.getY()).getAnimatedComputedValue(sm);
 
 		AffineTransform xy = AffineTransform.getTranslateInstance(x, y);
 		xy.preConcatenate(at);
@@ -486,6 +513,23 @@ public class SVGUseElementBridge extends AbstractGraphicsNodeBridge {
 			throw new BridgeException(ctx, ex);
 		}
 		super.handleAnimatedAttributeChanged(alav);
+	}
+
+	@Override
+	protected void handleCSSPropertyChanged(int property) {
+		switch (property) {
+		case SVGCSSEngine.X_INDEX:
+		case SVGCSSEngine.Y_INDEX:
+			node.setTransform(computeTransform((SVGTransformable) e, ctx));
+			handleGeometryChanged();
+			break;
+		case SVGCSSEngine.WIDTH_INDEX:
+		case SVGCSSEngine.HEIGHT_INDEX:
+			buildCompositeGraphicsNode(ctx, e, (CompositeGraphicsNode) node);
+			break;
+		default:
+			super.handleCSSPropertyChanged(property);
+		}
 	}
 
 }

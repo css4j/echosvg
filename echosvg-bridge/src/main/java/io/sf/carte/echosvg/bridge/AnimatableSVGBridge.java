@@ -26,6 +26,9 @@ import org.w3c.dom.Element;
 import io.sf.carte.echosvg.anim.dom.AnimationTarget;
 import io.sf.carte.echosvg.anim.dom.AnimationTargetListener;
 import io.sf.carte.echosvg.anim.dom.SVGAnimationTargetContext;
+import io.sf.carte.echosvg.css.engine.CSSEngine;
+import io.sf.carte.echosvg.css.engine.CSSStylableElement;
+import io.sf.carte.echosvg.css.engine.StyleMap;
 
 /**
  * Abstract bridge class for those elements that can be animated.
@@ -92,6 +95,22 @@ public abstract class AnimatableSVGBridge extends AbstractSVGBridge implements S
 				}
 			}
 		}
+	}
+
+	/**
+	 * Obtain the cascaded style map for the given element, compute it if necessary.
+	 * 
+	 * @param se the element.
+	 * @return the style map.
+	 */
+	protected static StyleMap safeComputedStyleMap(CSSStylableElement se) {
+		StyleMap sm = se.getComputedStyleMap(null);
+		if (sm == null) {
+			CSSEngine eng = CSSUtilities.getCSSEngine(se);
+			sm = eng.getCascadedStyleMap(se, null);
+			se.setComputedStyleMap(null, sm);
+		}
+		return sm;
 	}
 
 }

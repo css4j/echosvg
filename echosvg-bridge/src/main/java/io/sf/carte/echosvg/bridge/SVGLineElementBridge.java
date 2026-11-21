@@ -100,19 +100,19 @@ public class SVGLineElementBridge extends SVGDecoratedShapeElementBridge {
 
 		// 'x1' attribute - default is 0
 		AbstractSVGAnimatedLength _x1 = (AbstractSVGAnimatedLength) le.getX1();
-		float x1 = safeAnimatedLength(_x1, 0f);
+		float x1 = safeAnimatedLength(_x1);
 
 		// 'y1' attribute - default is 0
 		AbstractSVGAnimatedLength _y1 = (AbstractSVGAnimatedLength) le.getY1();
-		float y1 = safeAnimatedLength(_y1, 0f);
+		float y1 = safeAnimatedLength(_y1);
 
 		// 'x2' attribute - default is 0
 		AbstractSVGAnimatedLength _x2 = (AbstractSVGAnimatedLength) le.getX2();
-		float x2 = safeAnimatedLength(_x2, 0f);
+		float x2 = safeAnimatedLength(_x2);
 
 		// 'y2' attribute - default is 0
 		AbstractSVGAnimatedLength _y2 = (AbstractSVGAnimatedLength) le.getY2();
-		float y2 = safeAnimatedLength(_y2, 0f);
+		float y2 = safeAnimatedLength(_y2);
 
 		try {
 			shapeNode.setShape(new Line2D.Float(x1, y1, x2, y2));

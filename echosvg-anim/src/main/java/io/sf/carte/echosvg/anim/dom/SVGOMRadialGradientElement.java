@@ -20,6 +20,7 @@ package io.sf.carte.echosvg.anim.dom;
 
 import org.w3c.dom.Node;
 import org.w3c.dom.svg.SVGAnimatedLength;
+import org.w3c.dom.svg.SVGLength;
 import org.w3c.dom.svg.SVGRadialGradientElement;
 
 import io.sf.carte.echosvg.dom.AbstractDocument;
@@ -112,32 +113,63 @@ public class SVGOMRadialGradientElement extends SVGOMGradientElement implements 
 				AbstractSVGAnimatedLength.VERTICAL_LENGTH, false);
 		r = createLiveAnimatedLength(null, SVG_R_ATTRIBUTE, SVG_RADIAL_GRADIENT_R_DEFAULT_VALUE,
 				AbstractSVGAnimatedLength.OTHER_LENGTH, false);
-		fx = new AbstractSVGAnimatedLength(this, null, SVG_FX_ATTRIBUTE, AbstractSVGAnimatedLength.HORIZONTAL_LENGTH,
-				false) {
+		fx = new AbstractSVGAnimatedLength(this, null, SVG_FX_ATTRIBUTE,
+				AbstractSVGAnimatedLength.HORIZONTAL_LENGTH) {
+
+			@Override
+			public float nonNegativeCheck(SVGLength lengthVal) {
+				// Accepts negative values
+				return lengthVal.getValue();
+			}
+
 			@Override
 			protected String getDefaultValue() {
-				String defval = getAttribute(SVG_CX_ATTRIBUTE).trim();
-				if (defval.isEmpty()) {
-					defval = SVG_RADIAL_GRADIENT_CX_DEFAULT_VALUE;
+				String defval;
+				AnimSVGLength length; // Use a local variable to avoid races
+				if (cx.hasAnimVal && (length = cx.animVal) != null) {
+					// nonNegativeCheck() can be omitted
+					defval = length.getValueAsString();
+				} else {
+					defval = getAttribute(SVG_CX_ATTRIBUTE);
+					if (defval.isEmpty()) {
+						defval = SVG_RADIAL_GRADIENT_CX_DEFAULT_VALUE;
+					}
 				}
 				return defval;
 			}
+
 		};
-		fy = new AbstractSVGAnimatedLength(this, null, SVG_FY_ATTRIBUTE, AbstractSVGAnimatedLength.VERTICAL_LENGTH,
-				false) {
+		fy = new AbstractSVGAnimatedLength(this, null, SVG_FY_ATTRIBUTE,
+				AbstractSVGAnimatedLength.VERTICAL_LENGTH) {
+
+			@Override
+			public float nonNegativeCheck(SVGLength lengthVal) {
+				// Accepts negative values
+				return lengthVal.getValue();
+			}
+
 			@Override
 			protected String getDefaultValue() {
-				String defval = getAttribute(SVG_CY_ATTRIBUTE).trim();
-				if (defval.isEmpty()) {
-					defval = SVG_RADIAL_GRADIENT_CY_DEFAULT_VALUE;
+				String defval;
+				AnimSVGLength length; // Use a local variable to avoid races
+				if (cy.hasAnimVal && (length = cy.animVal) != null) {
+					// nonNegativeCheck() can be omitted
+					defval = length.getValueAsString();
+				} else {
+					defval = getAttribute(SVG_CY_ATTRIBUTE);
+					if (defval.isEmpty()) {
+						defval = SVG_RADIAL_GRADIENT_CY_DEFAULT_VALUE;
+					}
 				}
 				return defval;
 			}
+
 		};
 
 		liveAttributeValues.put(null, SVG_FX_ATTRIBUTE, fx);
 		liveAttributeValues.put(null, SVG_FY_ATTRIBUTE, fy);
-		AnimatedAttributeListener l = ((SVGOMDocument) ownerDocument).getAnimatedAttributeListener();
+		AnimatedAttributeListener l = ((SVGOMDocument) ownerDocument)
+				.getAnimatedAttributeListener();
 		fx.addAnimatedAttributeListener(l);
 		fy.addAnimatedAttributeListener(l);
 	}

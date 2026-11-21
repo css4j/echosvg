@@ -27,6 +27,9 @@ import org.w3c.dom.svg.SVGAnimatedString;
 import org.w3c.dom.svg.SVGFilterElement;
 
 import io.sf.carte.echosvg.constants.XMLConstants;
+import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
+import io.sf.carte.echosvg.css.engine.value.Value;
+import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.dom.util.XMLSupport;
 import io.sf.carte.echosvg.util.DoublyIndexedTable;
@@ -308,6 +311,20 @@ public class SVGOMFilterElement extends SVGStylableElement implements SVGFilterE
 	@Override
 	public void setXMLspace(String space) {
 		setAttributeNS(XML_NAMESPACE_URI, XML_SPACE_QNAME, space);
+	}
+
+	@Override
+	public Value getInitialValue(int idx) {
+		Value v;
+		switch (idx) {
+		case SVGCSSEngine.WIDTH_INDEX:
+		case SVGCSSEngine.HEIGHT_INDEX:
+			v = ValueConstants.PERCENTAGE_120;
+			break;
+		default:
+			v = null;
+		}
+		return v;
 	}
 
 	/**

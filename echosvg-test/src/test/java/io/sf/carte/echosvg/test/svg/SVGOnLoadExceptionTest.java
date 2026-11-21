@@ -523,6 +523,18 @@ public class SVGOnLoadExceptionTest {
 			this.e = e;
 		}
 
+		@Override
+		public void displayError(String message) {
+			RuntimeException ex = new RuntimeException(message);
+			displayError(ex);
+		}
+
+		@Override
+		public void displayMessage(String message) {
+			RuntimeException ex = new RuntimeException(message);
+			displayError(ex);
+		}
+
 	}
 
 }

@@ -37,6 +37,7 @@ import io.sf.carte.echosvg.css.engine.StyleDeclarationProvider;
 import io.sf.carte.echosvg.css.engine.StyleMap;
 import io.sf.carte.echosvg.css.engine.value.AbstractValueModificationHandler;
 import io.sf.carte.echosvg.css.engine.value.Value;
+import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.svg.SVGColorManager;
 import io.sf.carte.echosvg.css.engine.value.svg.SVGPaintManager;
 import io.sf.carte.echosvg.dom.AbstractDocument;
@@ -210,6 +211,16 @@ public abstract class SVGStylableElement extends SVGOMElement implements CSSStyl
 	// AnimationTarget ///////////////////////////////////////////////////////
 
 	/**
+	 * Updates an attribute value in this target.
+	 */
+	@Override
+	public void updateAttributeValue(String ns, String ln, AnimatableValue val) {
+		LiveAttributeValue a = getLiveAttributeValue(ns, ln);
+		((AbstractSVGAnimatedValue) a).updateAnimatedValue(val);
+		// XXX Override this for NumberOptionalNumber values
+	}
+
+	/**
 	 * Updates a property value in this target.
 	 */
 	@Override
@@ -265,6 +276,7 @@ public abstract class SVGStylableElement extends SVGOMElement implements CSSStyl
 
 	// SVGStylable support ///////////////////////////////////////////////////
 
+	@Override
 	public CSSStyleDeclaration getStyle() {
 		if (style == null) {
 			CSSEngine eng = ((SVGOMDocument) getOwnerDocument()).getCSSEngine();
@@ -328,6 +340,20 @@ public abstract class SVGStylableElement extends SVGOMElement implements CSSStyl
 	@Override
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
+	}
+
+	@Override
+	public Value getInitialValue(int idx) {
+		Value v;
+		switch (idx) {
+		case SVGCSSEngine.WIDTH_INDEX:
+		case SVGCSSEngine.HEIGHT_INDEX:
+			v = ValueConstants.NUMBER_0;
+			break;
+		default:
+			v = null;
+		}
+		return v;
 	}
 
 	/**

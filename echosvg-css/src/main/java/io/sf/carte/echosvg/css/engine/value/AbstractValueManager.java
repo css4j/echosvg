@@ -226,6 +226,19 @@ public abstract class AbstractValueManager extends AbstractValueFactory implemen
 	}
 
 	/**
+	 * Report an error during style computation.
+	 * 
+	 * @param engine the CSS engine.
+	 * @param ex     the exception to report.
+	 */
+	protected static void reportError(CSSEngine engine, Exception ex) {
+		CSSEngineUserAgent ua = engine.getCSSEngineUserAgent();
+		if (ua != null) {
+			ua.displayError(ex);
+		}
+	}
+
+	/**
 	 * Creates an INVALID_ACCESS_ERR exception.
 	 * @param cv the value.
 	 */

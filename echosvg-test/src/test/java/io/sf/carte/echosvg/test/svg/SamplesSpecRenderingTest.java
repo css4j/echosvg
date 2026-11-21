@@ -140,6 +140,11 @@ public class SamplesSpecRenderingTest extends AbstractSamplesRendering {
 	}
 
 	@Test
+	public void testFilterFeImageCSS() throws TranscoderException, IOException {
+		testNV("samples/tests/spec/filters/feImageCSS.svg");
+	}
+
+	@Test
 	public void testFilterFeImage2() throws TranscoderException, IOException {
 		test("samples/tests/spec/filters/feImage2.svg");
 	}
@@ -177,6 +182,11 @@ public class SamplesSpecRenderingTest extends AbstractSamplesRendering {
 	@Test
 	public void testFilterRegions() throws TranscoderException, IOException {
 		test("samples/tests/spec/filters/filterRegions.svg");
+	}
+
+	@Test
+	public void testFilterRegionsCSS() throws TranscoderException, IOException {
+		testNV("samples/tests/spec/filters/filterRegionsCSS.svg");
 	}
 
 	@Test
@@ -304,7 +314,7 @@ public class SamplesSpecRenderingTest extends AbstractSamplesRendering {
 		/*
 		 * Admits errors (the broken link and the invalid x,y being reported).
 		 */
-		testNVErrIgnore("samples/tests/spec/linking/imageBadUrl.svg", null, 5);
+		testNVErrIgnore("samples/tests/spec/linking/imageBadUrl.svg", null, 3);
 	}
 
 	@Test
@@ -343,6 +353,11 @@ public class SamplesSpecRenderingTest extends AbstractSamplesRendering {
 	@Test
 	public void testMaskRegions() throws TranscoderException, IOException {
 		test("samples/tests/spec/masking/maskRegions.svg");
+	}
+
+	@Test
+	public void testMaskRegionsCSS() throws TranscoderException, IOException {
+		testNV("samples/tests/spec/masking/maskRegionsCSS.svg");
 	}
 
 	@Test
@@ -547,6 +562,11 @@ public class SamplesSpecRenderingTest extends AbstractSamplesRendering {
 	/*
 	 * Shapes
 	 */
+	@Test
+	public void testShapesCssRectCircleEllipse() throws TranscoderException, IOException {
+		testNV("samples/tests/spec/shapes/cssRectCircleEllipse.svg");
+	}
+
 	@Test
 	public void testShapesPolygons() throws TranscoderException, IOException {
 		testNVErrIgnore("samples/tests/spec/shapes/polygons.svg", 2);

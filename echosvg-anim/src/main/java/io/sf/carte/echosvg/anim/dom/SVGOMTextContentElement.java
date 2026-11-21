@@ -111,7 +111,7 @@ public abstract class SVGOMTextContentElement extends SVGStylableElement {
 		lengthAdjust = createLiveAnimatedEnumeration(null, SVG_LENGTH_ADJUST_ATTRIBUTE, LENGTH_ADJUST_VALUES,
 				(short) 1);
 		textLength = new AbstractSVGAnimatedLength(this, null, SVG_TEXT_LENGTH_ATTRIBUTE,
-				AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, true) {
+				AbstractSVGAnimatedLength.HORIZONTAL_LENGTH) {
 			boolean usedDefault;
 
 			@Override
@@ -123,7 +123,7 @@ public abstract class SVGOMTextContentElement extends SVGStylableElement {
 			@Override
 			public SVGLength getBaseVal() {
 				if (baseVal == null) {
-					baseVal = new SVGTextLength(direction);
+					baseVal = new SVGTextLength(getDirection());
 				}
 				return baseVal;
 			}
