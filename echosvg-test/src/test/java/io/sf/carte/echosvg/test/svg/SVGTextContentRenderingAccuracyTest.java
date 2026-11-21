@@ -36,7 +36,6 @@ public class SVGTextContentRenderingAccuracyTest extends ParameterizedRenderingA
 
 	private String script; // null
 	private String onload; // null
-	private String parameter; // null
 
 	public void setScript(String script) {
 		this.script = script;
@@ -44,10 +43,6 @@ public class SVGTextContentRenderingAccuracyTest extends ParameterizedRenderingA
 
 	public void setOnLoadFunction(String onload) {
 		this.onload = onload;
-	}
-
-	public void setParameter(String parameter) {
-		this.parameter = parameter;
 	}
 
 	@Override
