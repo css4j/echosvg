@@ -28,7 +28,7 @@ import io.sf.carte.echosvg.transcoder.ErrorHandler;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 
 /**
- * An error handler that ignores errors and warnings (but not fatal errors).
+ * An error handler that does not throw errors and ignores warnings.
  *
  * @author github.com/carlosame
  * @author For later modifications, see Git history.
@@ -52,9 +52,7 @@ public class DummyErrorHandler implements ErrorHandler {
 
 	@Override
 	public void fatalError(TranscoderException ex) throws TranscoderException {
-		ex.printStackTrace();
-		prepareErrorList();
-		errors.add(ex);
+		error(ex);
 	}
 
 	@Override

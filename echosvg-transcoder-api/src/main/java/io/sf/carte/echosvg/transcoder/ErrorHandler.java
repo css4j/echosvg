@@ -48,7 +48,7 @@ public interface ErrorHandler {
 	void error(TranscoderException ex) throws TranscoderException;
 
 	/**
-	 * Invoked when an fatal error occured while transcoding.
+	 * Invoked when a fatal error occurred while transcoding.
 	 * 
 	 * @param ex the fatal error informations encapsulated in a TranscoderException
 	 * @exception TranscoderException if the method want to forward the exception

@@ -62,6 +62,7 @@ import io.sf.carte.echosvg.dom.util.DocumentFactory;
 import io.sf.carte.echosvg.gvt.CanvasGraphicsNode;
 import io.sf.carte.echosvg.gvt.CompositeGraphicsNode;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
+import io.sf.carte.echosvg.gvt.ShapeNode;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
 import io.sf.carte.echosvg.transcoder.TranscoderOutput;
@@ -213,8 +214,8 @@ public abstract class SVGAbstractTranscoder extends io.sf.carte.echosvg.transcod
 			gvtRoot = builder.build(ctx, svgDoc);
 
 			if (gvtRoot == null) {
-				throw new TranscoderException("Could not build a bridge for the document at uri "
-						+ Objects.toString(uri, "<unknown>"));
+				setEmptyImage(uri);
+				return;
 			}
 
 			// dispatch an 'onload' event if needed
@@ -559,6 +560,21 @@ public abstract class SVGAbstractTranscoder extends io.sf.carte.echosvg.transcod
 			}
 		}
 		return size;
+	}
+
+	private void setEmptyImage(String uri) throws TranscoderException {
+		TranscoderException ex = new TranscoderException(
+				"Could not build a bridge for the document at uri "
+						+ Objects.toString(uri, "<unknown>"));
+		handler.fatalError(ex);
+
+		Rectangle2D rect = new Rectangle2D.Float(0f, 0f, width, height);
+		ShapeNode sn = new ShapeNode();
+		sn.setShape(rect);
+		ctx.close();
+		this.root = sn;
+		setCurrentAOI(rect);
+		setCurrentAOITransform(new AffineTransform());
 	}
 
 	protected CanvasGraphicsNode getCanvasGraphicsNode(GraphicsNode gn) {

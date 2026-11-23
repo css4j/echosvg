@@ -745,10 +745,9 @@ public class SamplesResvgStructureTest extends SamplesResvgRendering {
 		test("samples/resvg/tests/structure/svg/xmlns-validation.svg");
 	}
 
-	@Disabled
 	@Test
 	public void testSvgZeroSize() throws TranscoderException, IOException {
-		test("samples/resvg/tests/structure/svg/zero-size.svg");
+		testNVErrIgnore("samples/resvg/tests/structure/svg/zero-size.svg", 1);
 	}
 
 	/*
