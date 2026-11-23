@@ -22,6 +22,8 @@ import java.awt.Cursor;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
@@ -147,7 +149,7 @@ public class SVGUseElementBridge extends AbstractGraphicsNodeBridge {
 		do {
 			if (refElement == anc) {
 				BridgeException be = new BridgeException(ctx, e, ERR_XLINK_HREF_CIRCULAR_DEPENDENCIES,
-						new Object[] { "href" });
+						new Object[] { uri });
 				displayErrorOrThrow(ctx, be);
 				if (gn != null) {
 					clearGraphicsNode(gn);
@@ -156,6 +158,19 @@ public class SVGUseElementBridge extends AbstractGraphicsNodeBridge {
 			}
 			anc = anc.getParentNode();
 		} while (anc != null && anc.getNodeType() == Node.ELEMENT_NODE);
+
+		// Check for <use> recursion
+		Set<Element> refs = new HashSet<>();
+		refs.add(ue);
+		try {
+			checkReferenceCircularity(ctx, refElement, refs);
+		} catch (BridgeException be) {
+			displayErrorOrThrow(ctx, be);
+			if (gn != null) {
+				clearGraphicsNode(gn);
+			}
+			return null; // Circularity
+		}
 
 		// Check that the referenced element is SVG
 		if (!SVG_NAMESPACE_URI.equals(refElement.getNamespaceURI())) {
@@ -319,6 +334,32 @@ public class SVGUseElementBridge extends AbstractGraphicsNodeBridge {
 		}
 
 		return gn;
+	}
+
+	private void checkReferenceCircularity(BridgeContext ctx, Node refNode, Set<Element> refs) {
+		if (SVG_USE_TAG.equals(refNode.getLocalName())) {
+			SVGOMUseElement refUse = (SVGOMUseElement) refNode;
+			String refUri = refUse.getHref().getAnimVal().trim();
+			if (!refs.add(refUse)) {
+				throw new BridgeException(ctx, e, ERR_XLINK_HREF_CIRCULAR_DEPENDENCIES,
+						new Object[] { refUri });
+			}
+			Node ref = ctx.getReferencedNode(refUse, refUri);
+			checkReferenceCircularity(ctx, ref, refs);
+		} else {
+			// Allocate a set for the child elements with a reasonable size
+			Set<Element> subtreeRefs = new HashSet<>(refs.size() + 1);
+			subtreeRefs.addAll(refs);
+			checkSiblingsCircularity(ctx, refNode.getFirstChild(), subtreeRefs);
+		}
+	}
+
+	private void checkSiblingsCircularity(BridgeContext ctx, Node refNode, Set<Element> refs) {
+		Node node = refNode;
+		while (node != null) {
+			checkReferenceCircularity(ctx, node, refs);
+			node = node.getNextSibling();
+		}
 	}
 
 	private static void clearGraphicsNode(CompositeGraphicsNode gn) {
