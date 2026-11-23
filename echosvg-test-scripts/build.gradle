@@ -19,6 +19,23 @@ checkBytecodeVersion.enabled = false
 jar.enabled = false
 sourcesJar.enabled = false
 
+// Eclipse IDE support
+if (project.getPluginManager().hasPlugin('eclipse')) {
+	eclipse {
+		classpath {
+			file {
+				whenMerged {
+					cp -> cp.entries.findAll {
+						it instanceof org.gradle.plugins.ide.eclipse.model.SourceFolder
+					}.each {
+						it.entryAttributes['test'] = 'true'
+					}
+				}
+			}
+		}
+	}
+}
+
 task iWasLoadedJar(type: Jar) {
 	archiveFileName = 'IWasLoaded.jar'
 	dependsOn configurations.compileClasspath
