@@ -26,7 +26,6 @@ import org.w3c.dom.svg.SVGImageElement;
 import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
 import io.sf.carte.echosvg.css.engine.value.Value;
-import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.util.DoublyIndexedTable;
 import io.sf.carte.echosvg.util.SVGTypes;
@@ -83,12 +82,12 @@ public class SVGOMImageElement extends SVGURIReferenceGraphicsElement implements
 	/**
 	 * The 'width' attribute value.
 	 */
-	protected SVGOMAnimatedLength width;
+	protected SVGGeometryProperty width;
 
 	/**
 	 * The 'height' attribute value.
 	 */
-	protected SVGOMAnimatedLength height;
+	protected SVGGeometryProperty height;
 
 	/**
 	 * The 'preserveAspectRatio' attribute value.
@@ -188,16 +187,7 @@ public class SVGOMImageElement extends SVGURIReferenceGraphicsElement implements
 
 	@Override
 	public Value getInitialValue(int idx) {
-		Value v;
-		switch (idx) {
-		case SVGCSSEngine.WIDTH_INDEX:
-		case SVGCSSEngine.HEIGHT_INDEX:
-			v = ValueConstants.AUTO_VALUE;
-			break;
-		default:
-			v = null;
-		}
-		return v;
+		return null;
 	}
 
 	/**

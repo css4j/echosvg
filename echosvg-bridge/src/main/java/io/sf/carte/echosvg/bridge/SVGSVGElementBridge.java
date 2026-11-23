@@ -145,10 +145,16 @@ public class SVGSVGElementBridge extends SVGGElementBridge implements SVGSVGCont
 
 		// Sanity check
 		if (w <= 0f) {
+			if (w == 0f) {
+				return null;
+			}
 			w = defaultSVGSize(UnitProcessor.HORIZONTAL_LENGTH, uctx, isOutermost);
 		}
 
 		if (h <= 0f) {
+			if (h == 0f) {
+				return null;
+			}
 			h = defaultSVGSize(UnitProcessor.VERTICAL_LENGTH, uctx, isOutermost);
 		}
 
@@ -280,6 +286,7 @@ public class SVGSVGElementBridge extends SVGGElementBridge implements SVGSVGCont
 			defaultValue = SVGConstants.SVG_SVG_HEIGHT_DEFAULT_VALUE;
 			attributeName = SVGConstants.SVG_HEIGHT_ATTRIBUTE;
 		}
+
 		BridgeException be = new BridgeException(ctx, e, ERR_LENGTH_NEGATIVE,
 				new Object[] { attributeName });
 		displayErrorOrThrow(ctx, be);

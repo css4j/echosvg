@@ -35,24 +35,28 @@ import org.w3c.dom.events.DocumentEvent;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
+import org.w3c.dom.svg.SVGAnimatedRect;
 import org.w3c.dom.svg.SVGDocument;
 import org.w3c.dom.svg.SVGImageElement;
 import org.w3c.dom.svg.SVGSVGElement;
 
-import io.sf.carte.echosvg.anim.dom.AbstractSVGAnimatedLength;
 import io.sf.carte.echosvg.anim.dom.AnimatedLiveAttributeValue;
+import io.sf.carte.echosvg.anim.dom.SVGGeometryProperty;
 import io.sf.carte.echosvg.anim.dom.SVGOMAnimatedPreserveAspectRatio;
 import io.sf.carte.echosvg.anim.dom.SVGOMDocument;
 import io.sf.carte.echosvg.anim.dom.SVGOMElement;
 import io.sf.carte.echosvg.anim.dom.SVGOMImageElement;
+import io.sf.carte.echosvg.anim.dom.SVGOMSVGElement;
 import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
 import io.sf.carte.echosvg.css.engine.StyleMap;
+import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.dom.AbstractNode;
 import io.sf.carte.echosvg.dom.events.DOMMouseEvent;
 import io.sf.carte.echosvg.dom.events.NodeEventTarget;
 import io.sf.carte.echosvg.dom.svg.LiveAttributeException;
+import io.sf.carte.echosvg.dom.svg.SVGContext;
 import io.sf.carte.echosvg.ext.awt.image.renderable.ClipRable8Bit;
 import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
 import io.sf.carte.echosvg.ext.awt.image.spi.BrokenLinkProvider;
@@ -210,7 +214,7 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
 	protected GraphicsNode createImageGraphicsNode(BridgeContext ctx, Element e, ParsedURL purl) {
 		Rectangle2D bounds = getImageBounds(ctx, e);
 		// Dimensions could come from calc(), so allow some tolerance
-		if (bounds.getWidth() < TOLERANCE || bounds.getHeight() < TOLERANCE) {
+		if (bounds != null && (bounds.getWidth() < TOLERANCE || bounds.getHeight() < TOLERANCE)) {
 			ShapeNode sn = new ShapeNode();
 			sn.setShape(bounds);
 			return sn;
@@ -480,17 +484,18 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
 				} else if (ln.equals(SVG_WIDTH_ATTRIBUTE) || ln.equals(SVG_HEIGHT_ATTRIBUTE)) {
 					SVGOMImageElement ie = (SVGOMImageElement) e;
 					ImageNode imageNode = (ImageNode) node;
-					AbstractSVGAnimatedLength _attr;
+					SVGGeometryProperty _attr;
 					if (ln.charAt(0) == 'w') {
-						_attr = (AbstractSVGAnimatedLength) ie.getWidth();
+						_attr = (SVGGeometryProperty) ie.getWidth();
 					} else {
-						_attr = (AbstractSVGAnimatedLength) ie.getHeight();
+						_attr = (SVGGeometryProperty) ie.getHeight();
 					}
 
 					StyleMap sm = safeComputedStyleMap(ie);
 
-					float val = _attr.getAnimatedComputedValue(sm);
-					if (val <= 0f || imageNode.getImage() instanceof ShapeNode) {
+					Value v = _attr.computeAnimatedValue(sm);
+					if (v == null || v.getFloatValue() <= 0f
+							|| imageNode.getImage() instanceof ShapeNode) {
 						rebuildImageNode();
 					} else {
 						updateImageBounds();
@@ -589,24 +594,25 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
 	 */
 	@Override
 	protected void handleCSSPropertyChanged(int property) {
-		AbstractSVGAnimatedLength length = null;
+		SVGGeometryProperty length = null;
 		short axis = 0;
 		switch (property) {
 		case SVGCSSEngine.WIDTH_INDEX:
 			axis = UnitProcessor.HORIZONTAL_LENGTH;
-			length = (AbstractSVGAnimatedLength) ((SVGOMImageElement) e).getWidth();
+			length = (SVGGeometryProperty) ((SVGOMImageElement) e).getWidth();
 		case SVGCSSEngine.HEIGHT_INDEX:
 			SVGOMImageElement ie = (SVGOMImageElement) e;
 			if (axis != UnitProcessor.HORIZONTAL_LENGTH) {
 				axis = UnitProcessor.VERTICAL_LENGTH;
-				length = (AbstractSVGAnimatedLength) ie.getHeight();
+				length = (SVGGeometryProperty) ie.getHeight();
 			}
 			ImageNode imageNode = (ImageNode) node;
 
 			StyleMap sm = safeComputedStyleMap(ie);
 
-			float val = length.getAnimatedComputedValue(sm);
-			if (val > TOLERANCE && !(imageNode.getImage() instanceof ShapeNode)) {
+			Value v = length.computeAnimatedValue(sm);
+			if (v != null && v.getFloatValue() > TOLERANCE
+					&& !(imageNode.getImage() instanceof ShapeNode)) {
 				updateImageBounds();
 				break;
 			}
@@ -640,7 +646,7 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
 	 */
 	protected GraphicsNode createRasterImageNode(BridgeContext ctx, Element e, Filter img, ParsedURL purl) {
 		Rectangle2D bounds = getImageBounds(ctx, e);
-		if (bounds.getWidth() < TOLERANCE || bounds.getHeight() < TOLERANCE) {
+		if (bounds != null && (bounds.getWidth() < TOLERANCE || bounds.getHeight() < TOLERANCE)) {
 			ShapeNode sn = new ShapeNode();
 			sn.setShape(bounds);
 			return sn;
@@ -659,6 +665,10 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
 		node.setImage(img);
 		Rectangle2D imgBounds = img.getBounds2D();
 
+		if (bounds == null) {
+			bounds = adjustBoundsPosition((SVGOMImageElement) e, imgBounds);
+		}
+
 		// create the implicit viewBox for the raster image. The viewBox for a
 		// raster image is the size of the image
 		float[] vb = new float[4];
@@ -674,6 +684,79 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
 		return node;
 	}
 
+	private Rectangle2D adjustBoundsPosition(SVGOMImageElement ie, Rectangle2D sizeBounds) {
+		StyleMap sm = ie.getComputedStyleMap(null);
+
+		// 'x' attribute - default is 0
+		float x = ((SVGGeometryProperty) ie.getX()).getAnimatedComputedValue(sm);
+
+		// 'y' attribute - default is 0
+		float y = ((SVGGeometryProperty) ie.getY()).getAnimatedComputedValue(sm);
+
+		// 'width' attribute - auto is default
+		Value wval = ((SVGGeometryProperty) ie.getWidth()).computeAnimatedValue(sm);
+
+		float w;
+		if (wval != null) {
+			w = wval.getFloatValue();
+		} else {
+			w = (float) sizeBounds.getWidth();
+		}
+
+		// 'height' attribute - auto is default
+		Value hval = ((SVGGeometryProperty) ie.getHeight()).computeAnimatedValue(sm);
+
+		float h;
+		if (hval != null) {
+			h = hval.getFloatValue();
+		} else {
+			h = (float) sizeBounds.getHeight();
+		}
+
+		// Adjust by ratio
+		double aRatio = sizeBounds.getWidth() / sizeBounds.getHeight();
+		if (aRatio == 0d || Double.isNaN(aRatio)) {
+			aRatio = 1d;
+		}
+
+		if (wval != null) {
+			// Height must be null, otherwise this would not be reached
+			h = (float) (w / aRatio);
+		} if (hval != null) {
+			// Width must be null, otherwise this would not be reached
+			w = (float) (h * aRatio);
+		}
+
+		// Further adjust within viewport bounds
+		SVGContext context = ie.getSVGContext();
+		float vpw = context.getViewportWidth();
+		float vph = context.getViewportHeight();
+		if (w > vpw) {
+			w = vpw;
+			h = (float) (w / aRatio);
+		}
+		if (h > vph) {
+			h = vph;
+			w = (float) (h * aRatio);
+		}
+
+		// Check for zero width/height within tolerance
+		if (w < -TOLERANCE) {
+			BridgeException be = new BridgeException(ctx, e, ERR_LENGTH_NEGATIVE,
+					new Object[] { SVG_WIDTH_ATTRIBUTE });
+			displayErrorOrThrow(ctx, be);
+			w = 0f;
+		}
+		if (h < -TOLERANCE) {
+			BridgeException be = new BridgeException(ctx, e, ERR_LENGTH_NEGATIVE,
+					new Object[] { SVG_HEIGHT_ATTRIBUTE });
+			displayErrorOrThrow(ctx, be);
+			h = 0f;
+		}
+
+		return new Rectangle2D.Float(x, y, w, h);
+	}
+
 	/**
 	 * Returns a GraphicsNode that represents a svg document as an image.
 	 *
@@ -682,15 +765,35 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
 	 * @param imgDocument the SVG document that represents the image
 	 */
 	protected GraphicsNode createSVGImageNode(BridgeContext ctx, Element e, SVGDocument imgDocument) {
-		CSSEngine eng = ((SVGOMDocument) imgDocument).getCSSEngine();
-		subCtx = ctx.createSubBridgeContext((SVGOMDocument) imgDocument);
+		SVGOMDocument imgDoc = (SVGOMDocument) imgDocument;
+		CSSEngine eng = imgDoc.getCSSEngine();
+		subCtx = ctx.createSubBridgeContext(imgDoc);
 
 		CompositeGraphicsNode result = new CompositeGraphicsNode();
 		// handles the 'preserveAspectRatio', 'overflow' and 'clip' and
 		// sets the appropriate AffineTransform to the image node
 		Rectangle2D bounds = getImageBounds(ctx, e);
 
-		if (bounds.getWidth() < TOLERANCE || bounds.getHeight() < TOLERANCE) {
+		SVGOMSVGElement svgElement = (SVGOMSVGElement) imgDocument.getRootElement();
+
+		if (bounds == null) {
+			Rectangle2D imgBbox = null;
+			SVGContext context = svgElement.getSVGContext();
+			if (context != null) {
+				imgBbox = context.getBBox();
+			} else {
+				SVGAnimatedRect vwBox = svgElement.getViewBox();
+				if (vwBox != null) {
+					imgBbox = new Rectangle2D.Float(0f, 0f, vwBox.getBaseVal().getWidth(),
+							vwBox.getBaseVal().getHeight());
+				}
+			}
+			if (imgBbox != null) {
+				bounds = adjustBoundsPosition((SVGOMImageElement) e, imgBbox);
+			}
+		}
+
+		if (bounds == null || bounds.getWidth() < TOLERANCE || bounds.getHeight() < TOLERANCE) {
 			ShapeNode sn = new ShapeNode();
 			sn.setShape(bounds);
 			result.getChildren().add(sn);
@@ -702,7 +805,6 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
 			result.setBackgroundEnable(r);
 		}
 
-		SVGSVGElement svgElement = imgDocument.getRootElement();
 		CanvasGraphicsNode node;
 		node = (CanvasGraphicsNode) subCtx.getGVTBuilder().build(subCtx, svgElement);
 
@@ -908,6 +1010,8 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
 	 *
 	 * @param ctx     the bridge context
 	 * @param element the image element
+	 * @return the bounds, or {@code null} if either the width or height are
+	 *         {@code auto}.
 	 */
 	protected Rectangle2D getImageBounds(BridgeContext ctx, Element element)
 			throws BridgeException {
@@ -915,17 +1019,31 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
 
 		StyleMap sm = safeComputedStyleMap(ie);
 
+		// 'width' attribute - auto is default
+		Value wval = ((SVGGeometryProperty) ie.getWidth()).computeAnimatedValue(sm);
+
+		float w;
+		if (wval != null) {
+			w = wval.getFloatValue();
+		} else {
+			return null;
+		}
+
+		// 'height' attribute - auto is default
+		Value hval = ((SVGGeometryProperty) ie.getHeight()).computeAnimatedValue(sm);
+
+		float h;
+		if (hval != null) {
+			h = hval.getFloatValue();
+		} else {
+			return null;
+		}
+
 		// 'x' attribute - default is 0
-		float x = ((AbstractSVGAnimatedLength) ie.getX()).getAnimatedComputedValue(sm);
+		float x = ((SVGGeometryProperty) ie.getX()).getAnimatedComputedValue(sm);
 
 		// 'y' attribute - default is 0
-		float y = ((AbstractSVGAnimatedLength) ie.getY()).getAnimatedComputedValue(sm);
-
-		// 'width' attribute - 0 is default
-		float w = ((AbstractSVGAnimatedLength) ie.getWidth()).getAnimatedComputedValue(sm);
-
-		// 'height' attribute - 0 is default
-		float h = ((AbstractSVGAnimatedLength) ie.getHeight()).getAnimatedComputedValue(sm);
+		float y = ((SVGGeometryProperty) ie.getY()).getAnimatedComputedValue(sm);
 
 		// Report negative values for w & h, for the SVG linter use case
 		if (w < -TOLERANCE) {

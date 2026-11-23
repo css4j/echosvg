@@ -58,6 +58,16 @@ class SVGOMGeometryProperty extends SVGOMAnimatedLength implements SVGGeometryPr
 		this.pty_idx = pty_idx;
 	}
 
+	@Override
+	public boolean isSpecified() {
+		// This method will mostly be called from property updates so sm will not be null
+		// Not worth trying to obtain a new style map if null.
+		StyleMap sm;
+		return hasAnimVal
+				|| ((sm = ((CSSStylableElement) element).getComputedStyleMap(null)) != null
+						&& sm.getValue(pty_idx) != null);
+	}
+
 	/**
 	 * Get the current animated float computed value, applying defaults if the value
 	 * was invalid or not set.

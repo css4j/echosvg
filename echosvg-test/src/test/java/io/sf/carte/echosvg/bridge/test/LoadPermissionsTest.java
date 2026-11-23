@@ -328,13 +328,13 @@ public class LoadPermissionsTest {
 	@Test
 	public void testExceptionImageNegativeHeight() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/image-negative-height", "ANY", false,
-			false, "io.sf.carte.echosvg.dom.svg.LiveAttributeException");
+			false, "io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
 	public void testExceptionImageNegativeWidth() throws Exception {
 		runTest("application/java-archive", "bridge/test/error/image-negative-width", "ANY", false,
-			false, "io.sf.carte.echosvg.dom.svg.LiveAttributeException");
+			false, "io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test

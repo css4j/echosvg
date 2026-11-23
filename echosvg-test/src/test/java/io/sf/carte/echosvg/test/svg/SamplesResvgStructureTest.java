@@ -222,47 +222,39 @@ public class SamplesResvgStructureTest extends SamplesResvgRendering {
 		test("samples/resvg/tests/structure/image/image-with-float-size-scaling.svg");
 	}
 
-	@Disabled
 	@Test
 	public void testImageNoHeightNonSquare() throws TranscoderException, IOException {
-		testNVErrIgnore("samples/resvg/tests/structure/image/no-height-non-square.svg",
-				BROWSER_MEDIA, 1);
+		test("samples/resvg/tests/structure/image/no-height-non-square.svg");
 	}
 
-	@Disabled
 	@Test
 	public void testImageNoHeightOnSvg() throws TranscoderException, IOException {
-		testNVErrIgnore("samples/resvg/tests/structure/image/no-height-on-svg.svg", 1);
+		test("samples/resvg/tests/structure/image/no-height-on-svg.svg");
 	}
 
-	@Disabled
 	@Test
 	public void testImageNoHeight() throws TranscoderException, IOException {
-		testNVErrIgnore("samples/resvg/tests/structure/image/no-height.svg", 1);
+		test("samples/resvg/tests/structure/image/no-height.svg");
 	}
 
-	@Disabled
 	@Test
 	public void testImageNoWidthAndHeightOnSvg() throws TranscoderException, IOException {
-		testNVErrIgnore("samples/resvg/tests/structure/image/no-width-and-height-on-svg.svg", 1);
+		test("samples/resvg/tests/structure/image/no-width-and-height-on-svg.svg");
 	}
 
-	@Disabled
 	@Test
 	public void testImageNoWidthAndHeight() throws TranscoderException, IOException {
-		testNVErrIgnore("samples/resvg/tests/structure/image/no-width-and-height.svg", 1);
+		test("samples/resvg/tests/structure/image/no-width-and-height.svg");
 	}
 
-	@Disabled
 	@Test
 	public void testImageNoWidthOnSvg() throws TranscoderException, IOException {
 		test("samples/resvg/tests/structure/image/no-width-on-svg.svg");
 	}
 
-	@Disabled
 	@Test
 	public void testImageNoWidth() throws TranscoderException, IOException {
-		testNVErrIgnore("samples/resvg/tests/structure/image/no-width.svg", 1);
+		test("samples/resvg/tests/structure/image/no-width.svg");
 	}
 
 	@Test
@@ -377,8 +369,6 @@ public class SamplesResvgStructureTest extends SamplesResvgRendering {
 		testAllowExternal("samples/resvg/tests/structure/image/url-to-svg.svg", false);
 	}
 
-	// Enable when geometry properties are supported
-	@Disabled
 	@Test
 	public void testImageWidthAndHeightSetToAuto()
 			throws TranscoderException, IOException {
