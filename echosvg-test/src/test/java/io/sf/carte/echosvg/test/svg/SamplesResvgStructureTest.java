@@ -19,9 +19,11 @@
 package io.sf.carte.echosvg.test.svg;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 
@@ -115,10 +117,10 @@ public class SamplesResvgStructureTest extends SamplesResvgRendering {
 		test("samples/resvg/tests/structure/g/deeply-nested-groups.svg");
 	}
 
-	@Disabled
 	@Test
+	@Timeout(value = 2500, unit = TimeUnit.MILLISECONDS)
 	public void testGRecursiveInheritance() throws TranscoderException, IOException {
-		test("samples/resvg/tests/structure/g/recursive-inheritance.svg");
+		testNVErrIgnore("samples/resvg/tests/structure/g/recursive-inheritance.svg", 1);
 	}
 
 	/*
@@ -1261,22 +1263,22 @@ public class SamplesResvgStructureTest extends SamplesResvgRendering {
 		test("samples/resvg/tests/structure/use/href-without-the-xlink-namespace.svg");
 	}
 
-	@Disabled
 	@Test
+	@Timeout(value = 2500, unit = TimeUnit.MILLISECONDS)
 	public void testUseIndirectRecursive_1() throws TranscoderException, IOException {
-		test("samples/resvg/tests/structure/use/indirect-recursive-1.svg");
+		testNVErrIgnore("samples/resvg/tests/structure/use/indirect-recursive-1.svg", 2);
 	}
 
-	@Disabled
 	@Test
+	@Timeout(value = 2500, unit = TimeUnit.MILLISECONDS)
 	public void testUseIndirectRecursive_2() throws TranscoderException, IOException {
-		test("samples/resvg/tests/structure/use/indirect-recursive-2.svg");
+		testNVErrIgnore("samples/resvg/tests/structure/use/indirect-recursive-2.svg", 1);
 	}
 
-	@Disabled
+	@Timeout(value = 2500, unit = TimeUnit.MILLISECONDS)
 	@Test
 	public void testUseIndirectRecursive_3() throws TranscoderException, IOException {
-		test("samples/resvg/tests/structure/use/indirect-recursive-3.svg");
+		testNVErrIgnore("samples/resvg/tests/structure/use/indirect-recursive-3.svg", 2);
 	}
 
 	@Test
@@ -1284,16 +1286,16 @@ public class SamplesResvgStructureTest extends SamplesResvgRendering {
 		test("samples/resvg/tests/structure/use/indirect.svg");
 	}
 
-	@Disabled
 	@Test
+	@Timeout(value = 2500, unit = TimeUnit.MILLISECONDS)
 	public void testUseNestedRecursive_1() throws TranscoderException, IOException {
-		test("samples/resvg/tests/structure/use/nested-recursive-1.svg");
+		testNVErrIgnore("samples/resvg/tests/structure/use/nested-recursive-1.svg", 1);
 	}
 
-	@Disabled
 	@Test
+	@Timeout(value = 2500, unit = TimeUnit.MILLISECONDS)
 	public void testUseNestedRecursive_2() throws TranscoderException, IOException {
-		test("samples/resvg/tests/structure/use/nested-recursive-2.svg");
+		testNVErrIgnore("samples/resvg/tests/structure/use/nested-recursive-2.svg", 1);
 	}
 
 	@Test
@@ -1317,13 +1319,14 @@ public class SamplesResvgStructureTest extends SamplesResvgRendering {
 		test("samples/resvg/tests/structure/use/position-inheritance.svg");
 	}
 
-	@Disabled
 	@Test
+	@Timeout(value = 2500, unit = TimeUnit.MILLISECONDS)
 	public void testUseRecursive() throws TranscoderException, IOException {
-		test("samples/resvg/tests/structure/use/recursive.svg");
+		testNVErrIgnore("samples/resvg/tests/structure/use/recursive.svg", 2);
 	}
 
 	@Test
+	@Timeout(value = 2500, unit = TimeUnit.MILLISECONDS)
 	public void testUseSelfRecursive() throws TranscoderException, IOException {
 		testNVErrIgnore("samples/resvg/tests/structure/use/self-recursive.svg", 1);
 	}
