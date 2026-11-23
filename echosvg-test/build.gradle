@@ -201,3 +201,20 @@ task runJmh(type: JavaExec) {
 	args '-rff', resultFile
 	jvmArgs '-Dfile.encoding=UTF-8'
 }
+
+// Eclipse IDE support
+if (project.getPluginManager().hasPlugin('eclipse')) {
+	eclipse {
+		classpath {
+			file {
+				whenMerged {
+					cp -> cp.entries.findAll {
+						it.path.endsWith('src/jmh/java')
+					}.each {
+						it.entryAttributes['test'] = 'true'
+					}
+				}
+			}
+		}
+	}
+}
