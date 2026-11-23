@@ -349,16 +349,16 @@ public class SamplesResvgStructureTest extends SamplesResvgRendering {
 		test("samples/resvg/tests/structure/image/raster-image-and-size-with-odd-numbers.svg");
 	}
 
-	@Disabled
 	@Test
+	@Timeout(value = 2500, unit = TimeUnit.MILLISECONDS)
 	public void testImageRecursive_1() throws TranscoderException, IOException {
-		test("samples/resvg/tests/structure/image/recursive-1.svg");
+		testNVErrIgnore("samples/resvg/tests/structure/image/recursive-1.svg", 1);
 	}
 
-	@Disabled
 	@Test
+	@Timeout(value = 3000, unit = TimeUnit.MILLISECONDS)
 	public void testImageRecursive_2() throws TranscoderException, IOException {
-		test("samples/resvg/tests/structure/image/recursive-2.svg");
+		testNVErrIgnore("samples/resvg/tests/structure/image/recursive-2.svg", 1);
 	}
 
 	@Test

@@ -189,6 +189,11 @@ public class BridgeContext implements ErrorConstants, CSSContext, ColorContext, 
 	protected DocumentLoader documentLoader;
 
 	/**
+	 * A set of URLs referenced by image elements
+	 */
+	private Set<String> refUrls = null;
+
+	/**
 	 * The size of the document.
 	 */
 	protected Dimension2D documentSize;
@@ -843,6 +848,31 @@ public class BridgeContext implements ErrorConstants, CSSContext, ColorContext, 
 		return (Element) ref;
 	}
 
+	boolean checkCircularity(String url) {
+		if (refUrls == null) {
+			refUrls = new HashSet<>();
+			String docuri = getDocument().getDocumentURI();
+			if (docuri != null) {
+				refUrls.add(docuri);
+			}
+		}
+		if (refUrls.add(url)) {
+			return false;
+		}
+		refUrls = null;
+		return true;
+	}
+
+	void uncheckCircularity(String url) {
+		if (refUrls != null) {
+			refUrls.remove(url);
+		}
+	}
+
+	void resetCircularity() {
+		refUrls = null;
+	}
+
 	// Viewport //////////////////////////////////////////////////////////////
 
 	/**
@@ -1390,6 +1420,8 @@ public class BridgeContext implements ErrorConstants, CSSContext, ColorContext, 
 	 * Disposes this BridgeContext.
 	 */
 	public void dispose() {
+		refUrls = null;
+
 		clearChildContexts();
 
 		synchronized (eventListenerSet) {

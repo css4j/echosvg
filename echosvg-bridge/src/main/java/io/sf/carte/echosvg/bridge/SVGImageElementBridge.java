@@ -220,6 +220,8 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
 			return sn;
 		}
 
+		String url = purl.toString();
+
 		DocumentLoader loader = ctx.getDocumentLoader();
 		ImageTagRegistry reg = ImageTagRegistry.getRegistry();
 		{
@@ -228,10 +230,29 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
 			 */
 			try {
 				/* Check the document loader cache */
-				Document doc = loader.checkCache(purl.toString());
+				Document doc = loader.checkCache(url);
 				if (doc != null) {
 					imgDocument = (SVGDocument) doc;
-					return createSVGImageNode(ctx, e, imgDocument);
+
+					// Check for circularity
+					if (ctx.checkCircularity(url)) {
+						BridgeException be = new BridgeException(ctx, e,
+								ERR_XLINK_HREF_CIRCULAR_DEPENDENCIES, new Object[] { purl });
+						displayErrorOrThrow(ctx, be);
+						ShapeNode sn = new ShapeNode();
+						sn.setShape(bounds);
+						return sn;
+					}
+
+					GraphicsNode imgNode;
+					try {
+						imgNode = createSVGImageNode(ctx, e, imgDocument);
+					} catch (RuntimeException ex) {
+						ctx.resetCircularity();
+						throw ex;
+					}
+					ctx.uncheckCircularity(url);
+					return imgNode;
 				}
 			} catch (BridgeException ex) {
 				throw ex;
@@ -300,8 +321,27 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
 			 */
 			Document doc = loader.loadDocument(purl.toString(), reference);
 			reference.release();
+
+			// Check for circularity
+			if (ctx.checkCircularity(url)) {
+				BridgeException be = new BridgeException(ctx, e,
+						ERR_XLINK_HREF_CIRCULAR_DEPENDENCIES, new Object[] { purl });
+				displayErrorOrThrow(ctx, be);
+				ShapeNode sn = new ShapeNode();
+				sn.setShape(bounds);
+				return sn;
+			}
+
 			imgDocument = (SVGDocument) doc;
-			return createSVGImageNode(ctx, e, imgDocument);
+			GraphicsNode imgNode;
+			try {
+				imgNode = createSVGImageNode(ctx, e, imgDocument);
+			} catch (RuntimeException ex) {
+				ctx.resetCircularity();
+				throw ex;
+			}
+			ctx.uncheckCircularity(url);
+			return imgNode;
 		} catch (SecurityException secEx) {
 			reference.release();
 			throw new BridgeException(ctx, e, secEx, ERR_URI_UNSECURE, new Object[] { purl });

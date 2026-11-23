@@ -75,3 +75,20 @@ EchoSVG output.
 Note that the SVG file has the `version` attribute of the `svg` element set to
 `1.1`, but that attribute was removed from the SVG specification and must be
 ignored by SVG2-compliant user agents.
+
+<br/>
+
+## Images with broken links
+
+When an image link is broken, resvg puts an empty image while EchoSVG renders a
+"broken link" image. In those cases, like in `structure/image/recursive-1.svg`,
+that image was put as a reference.
+
+<br/>
+
+## Circularity in SVG image references
+
+In the "Recursive (2)" test, EchoSVG catches the circularity in an earlier
+stage than other user agents, so the image is rendered differently. But the
+purpose of the test is to show that the rendering does not crash, so it is
+considered as passed.
