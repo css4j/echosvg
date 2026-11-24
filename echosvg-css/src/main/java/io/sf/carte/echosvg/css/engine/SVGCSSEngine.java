@@ -60,6 +60,7 @@ import io.sf.carte.echosvg.css.engine.value.svg.FillRuleManager;
 import io.sf.carte.echosvg.css.engine.value.svg.FilterManager;
 import io.sf.carte.echosvg.css.engine.value.svg.GlyphOrientationHorizontalManager;
 import io.sf.carte.echosvg.css.engine.value.svg.GlyphOrientationVerticalManager;
+import io.sf.carte.echosvg.css.engine.value.svg.HeightManager;
 import io.sf.carte.echosvg.css.engine.value.svg.HorizontalLengthManager;
 import io.sf.carte.echosvg.css.engine.value.svg.ImageRenderingManager;
 import io.sf.carte.echosvg.css.engine.value.svg.KerningManager;
@@ -82,6 +83,7 @@ import io.sf.carte.echosvg.css.engine.value.svg.StrokeWidthManager;
 import io.sf.carte.echosvg.css.engine.value.svg.TextAnchorManager;
 import io.sf.carte.echosvg.css.engine.value.svg.TextRenderingManager;
 import io.sf.carte.echosvg.css.engine.value.svg.VerticalLengthManager;
+import io.sf.carte.echosvg.css.engine.value.svg.WidthManager;
 import io.sf.carte.echosvg.css.engine.value.svg.WritingModeManager;
 import io.sf.carte.echosvg.css.engine.value.svg12.MarginLengthManager;
 import io.sf.carte.echosvg.util.CSSConstants;
@@ -207,32 +209,7 @@ public class SVGCSSEngine extends CSSEngine {
 			new FontStyleManager(), new FontVariantManager(), new FontWeightManager(),
 			new GlyphOrientationHorizontalManager(), new GlyphOrientationVerticalManager(),
 
-			new VerticalLengthManager() {
-
-				@Override
-				public String getPropertyName() {
-					return CSSConstants.CSS_HEIGHT_PROPERTY;
-				}
-
-				@Override
-				protected Value createIdentValue(LexicalUnit lu, CSSEngine engine)
-						throws DOMException {
-					if (!CSSConstants.CSS_AUTO_VALUE.equalsIgnoreCase(lu.getStringValue())) {
-						return super.createIdentValue(lu, engine);
-					}
-					// The 'auto' value matches the default
-					return getDefaultValue();
-				}
-
-				@Override
-				public Value getDefaultValue() {
-					// Depends on the element
-					return null;
-				}
-
-			},
-
-			new ImageRenderingManager(), new KerningManager(),
+			new HeightManager(), new ImageRenderingManager(), new KerningManager(),
 			new SpacingManager(CSSConstants.CSS_LETTER_SPACING_PROPERTY),
 			new SVGColorManager(CSSConstants.CSS_LIGHTING_COLOR_PROPERTY, ValueConstants.WHITE_RGB_VALUE),
 			new LineHeightManager(),
@@ -307,33 +284,7 @@ public class SVGCSSEngine extends CSSEngine {
 			new OpacityManager(CSSConstants.CSS_STROKE_OPACITY_PROPERTY, true), new StrokeWidthManager(),
 			new TextAnchorManager(), new TextDecorationManager(), new TextRenderingManager(),
 
-			new UnicodeBidiManager(), new VisibilityManager(),
-
-			new HorizontalLengthManager() {
-
-				@Override
-				public String getPropertyName() {
-					return CSSConstants.CSS_WIDTH_PROPERTY;
-				}
-
-				@Override
-				protected Value createIdentValue(LexicalUnit lu, CSSEngine engine)
-						throws DOMException {
-					if (!CSSConstants.CSS_AUTO_VALUE.equalsIgnoreCase(lu.getStringValue())) {
-						return super.createIdentValue(lu, engine);
-					}
-					// The 'auto' value matches the default
-					return getDefaultValue();
-				}
-
-				@Override
-				public Value getDefaultValue() {
-					// Depends on the element
-					return null;
-				}
-
-			},
-
+			new UnicodeBidiManager(), new VisibilityManager(), new WidthManager(),
 			new SpacingManager(CSSConstants.CSS_WORD_SPACING_PROPERTY), new WritingModeManager(),
 
 
