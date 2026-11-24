@@ -25,13 +25,19 @@ import java.util.Set;
  * Defines the set of attributes from Exchange SVG that are defined as styling
  * properties in Stylable SVG.
  *
- * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * </p>
+ * For later modifications, see Git history.
+ * 
  * @version $Id$
  */
-public class SVGStylingAttributes implements SVGSyntax {
+class SVGStylingAttributes implements SVGSyntax {
 
-	static Set<String> attrSet = new HashSet<>();
+	/**
+	 * Attributes that represent styling properties
+	 */
+	private static final Set<String> attrSet = new HashSet<>(30);
 
 	static {
 		attrSet.add(SVG_CLIP_PATH_ATTRIBUTE);
@@ -66,8 +72,13 @@ public class SVGStylingAttributes implements SVGSyntax {
 	}
 
 	/**
-	 * Attributes that represent styling properties
+	 * Check whether the given attribute name is a rendering hint of a CSS property.
+	 * 
+	 * @param attrName the attribute name.
+	 * @return {@code true} if the attribute is a CSS property.
 	 */
-	public static final Set<String> set = attrSet;
+	static boolean isRenderingHint(String attrName) {
+		return attrSet.contains(attrName);
+	}
 
 }

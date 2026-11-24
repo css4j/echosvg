@@ -60,8 +60,7 @@ public class SVGCSSStyler implements SVGSyntax {
 			for (int i = 0; i < nAttr; i++) {
 				Attr attr = (Attr) attributes.item(i);
 				String attrName = attr.getName();
-				if (SVGStylingAttributes.set.contains(attrName)) {
-					// System.out.println("Found new style attribute");
+				if (SVGStylingAttributes.isRenderingHint(attrName)) {
 					styleAttrBuffer.append(attrName);
 					styleAttrBuffer.append(CSS_PROPERTY_VALUE_SEPARATOR);
 					styleAttrBuffer.append(attr.getValue());
