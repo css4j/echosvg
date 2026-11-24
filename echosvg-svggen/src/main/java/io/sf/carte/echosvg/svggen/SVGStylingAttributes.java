@@ -71,6 +71,9 @@ class SVGStylingAttributes implements SVGSyntax {
 		attrSet.add(SVG_TEXT_RENDERING_ATTRIBUTE);
 	}
 
+	private SVGStylingAttributes() {
+	}
+
 	/**
 	 * Check whether the given attribute name is a rendering hint of a CSS property.
 	 * 

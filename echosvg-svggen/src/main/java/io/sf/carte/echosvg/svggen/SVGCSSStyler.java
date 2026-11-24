@@ -35,11 +35,14 @@ import org.w3c.dom.NodeList;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGCSSStyler implements SVGSyntax {
+class SVGCSSStyler implements SVGSyntax {
 
 	private static final char CSS_PROPERTY_VALUE_SEPARATOR = ':';
 	private static final char CSS_RULE_SEPARATOR = ';';
 	private static final char SPACE = ' ';
+
+	private SVGCSSStyler() {
+	}
 
 	/**
 	 * Invoking this method removes all the styling attributes (such as 'fill' or
@@ -48,7 +51,7 @@ public class SVGCSSStyler implements SVGSyntax {
 	 *
 	 * @param node SVG Node to be converted to use style
 	 */
-	public static void style(Node node) {
+	static void style(Node node) {
 		NamedNodeMap attributes = node.getAttributes();
 		if (attributes != null) {
 			// Has to be an Element, as it has attributes
