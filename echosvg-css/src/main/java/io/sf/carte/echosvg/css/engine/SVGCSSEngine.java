@@ -88,6 +88,7 @@ import io.sf.carte.echosvg.css.engine.value.svg.WritingModeManager;
 import io.sf.carte.echosvg.css.engine.value.svg12.MarginLengthManager;
 import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.ParsedURL;
+import io.sf.carte.echosvg.util.SVGConstants;
 
 /**
  * This class provides a CSS engine initialized for SVG.
@@ -107,8 +108,8 @@ public class SVGCSSEngine extends CSSEngine {
 	 * @param ctx The CSS context.
 	 */
 	public SVGCSSEngine(Document doc, ParsedURL uri, Parser p, CSSContext ctx) {
-		super(doc, uri, p, SVG_VALUE_MANAGERS, SVG_SHORTHAND_MANAGERS, null, null, "style", null, "class", true, null,
-				ctx);
+		super(doc, uri, p, SVG_VALUE_MANAGERS, SVG_SHORTHAND_MANAGERS, null, null,
+				SVGConstants.SVG_STYLE_ATTRIBUTE, null, SVGConstants.SVG_CLASS_ATTRIBUTE, ctx);
 		colorIndex = COLOR_INDEX;
 		fontSizeIndex = FONT_SIZE_INDEX;
 		lineHeightIndex = LINE_HEIGHT_INDEX;
@@ -124,20 +125,21 @@ public class SVGCSSEngine extends CSSEngine {
 	 * @param sms Extension shorthand managers.
 	 * @param ctx The CSS context.
 	 */
-	public SVGCSSEngine(Document doc, ParsedURL uri, Parser p, ValueManager[] vms, ShorthandManager[] sms,
-			CSSContext ctx) {
-		super(doc, uri, p, mergeArrays(SVG_VALUE_MANAGERS, vms), mergeArrays(SVG_SHORTHAND_MANAGERS, sms), null, null,
-				"style", null, "class", true, null, ctx);
+	public SVGCSSEngine(Document doc, ParsedURL uri, Parser p, ValueManager[] vms,
+			ShorthandManager[] sms, CSSContext ctx) {
+		super(doc, uri, p, mergeArrays(SVG_VALUE_MANAGERS, vms),
+				mergeArrays(SVG_SHORTHAND_MANAGERS, sms), null, null,
+				SVGConstants.SVG_STYLE_ATTRIBUTE, null, SVGConstants.SVG_CLASS_ATTRIBUTE, ctx);
 		colorIndex = COLOR_INDEX;
 		fontSizeIndex = FONT_SIZE_INDEX;
 		lineHeightIndex = LINE_HEIGHT_INDEX;
 	}
 
-	protected SVGCSSEngine(Document doc, ParsedURL uri, Parser p, ValueManager[] vms, ShorthandManager[] sms,
-			String[] pe, String sns, String sln, String cns, String cln, boolean hints, String hintsNS,
+	protected SVGCSSEngine(Document doc, ParsedURL uri, Parser p, ValueManager[] vms,
+			ShorthandManager[] sms, String[] pe, String sns, String sln, String cns, String cln,
 			CSSContext ctx) {
-		super(doc, uri, p, mergeArrays(SVG_VALUE_MANAGERS, vms), mergeArrays(SVG_SHORTHAND_MANAGERS, sms), pe, sns, sln,
-				cns, cln, hints, hintsNS, ctx);
+		super(doc, uri, p, mergeArrays(SVG_VALUE_MANAGERS, vms),
+				mergeArrays(SVG_SHORTHAND_MANAGERS, sms), pe, sns, sln, cns, cln, ctx);
 		colorIndex = COLOR_INDEX;
 		fontSizeIndex = FONT_SIZE_INDEX;
 		lineHeightIndex = LINE_HEIGHT_INDEX;

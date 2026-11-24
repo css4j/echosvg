@@ -258,8 +258,8 @@ public abstract class CSSEngine {
 	protected List<Node> styleSheetNodes;
 
 	/**
-	 * List of StyleMap objects, one for each @font-face rule encountered by this
-	 * CSSEngine.
+	 * List of StyleMap objects, one for each {@code font-face} rule encountered by
+	 * this CSSEngine.
 	 */
 	protected List<FontFaceRule> fontFaces = new LinkedList<>();
 
@@ -284,14 +284,9 @@ public abstract class CSSEngine {
 	protected String classLocalName;
 
 	/**
-	 * The non CSS presentational hints.
+	 * The set of property + shorthand names.
 	 */
-	protected final Set<String> nonCSSPresentationalHints;
-
-	/**
-	 * The non CSS presentational hints namespace URI.
-	 */
-	protected final String nonCSSPresentationalHintsNamespaceURI;
+	private final Set<String> cssPropertyNames;
 
 	/**
 	 * The style declaration document handler.
@@ -394,25 +389,22 @@ public abstract class CSSEngine {
 	/**
 	 * Creates a new CSSEngine.
 	 * 
-	 * @param doc     The associated document.
-	 * @param uri     The document URI.
-	 * @param p       The CSS parser.
-	 * @param vm      The property value managers.
-	 * @param sm      The shorthand properties managers.
-	 * @param pe      The pseudo-element names supported by the associated XML
-	 *                dialect. Must be null if no support for pseudo- elements is
-	 *                required.
-	 * @param sns     The namespace URI of the style attribute.
-	 * @param sln     The local name of the style attribute.
-	 * @param cns     The namespace URI of the class attribute.
-	 * @param cln     The local name of the class attribute.
-	 * @param hints   Whether the CSS engine should support non CSS presentational
-	 *                hints.
-	 * @param hintsNS The hints namespace URI.
-	 * @param ctx     The CSS context.
+	 * @param doc The associated document.
+	 * @param uri The document URI.
+	 * @param p   The CSS parser.
+	 * @param vm  The property value managers.
+	 * @param sm  The shorthand properties managers.
+	 * @param pe  The pseudo-element names supported by the associated XML dialect.
+	 *            Must be null if no support for pseudo- elements is required.
+	 * @param sns The namespace URI of the style attribute.
+	 * @param sln The local name of the style attribute.
+	 * @param cns The namespace URI of the class attribute.
+	 * @param cln The local name of the class attribute.
+	 * @param ctx The CSS context.
 	 */
-	protected CSSEngine(Document doc, ParsedURL uri, Parser p, ValueManager[] vm, ShorthandManager[] sm, String[] pe,
-			String sns, String sln, String cns, String cln, boolean hints, String hintsNS, CSSContext ctx) {
+	protected CSSEngine(Document doc, ParsedURL uri, Parser p, ValueManager[] vm,
+			ShorthandManager[] sm, String[] pe, String sns, String sln, String cns, String cln,
+			CSSContext ctx) {
 		document = doc;
 		documentURI = uri;
 		parser = p;
@@ -445,23 +437,14 @@ public abstract class CSSEngine {
 			shorthandIndexes.put(sm[i].getPropertyName(), i);
 		}
 
-		if (hints) {
-			HashSet<String> ncph = new HashSet<>(vm.length + sm.length);
-			nonCSSPresentationalHintsNamespaceURI = hintsNS;
-			len = vm.length;
-			for (int i = 0; i < len; i++) {
-				String pn = vm[i].getPropertyName();
-				ncph.add(pn);
-			}
-			len = sm.length;
-			for (int i = 0; i < len; i++) {
-				String pn = sm[i].getPropertyName();
-				ncph.add(pn);
-			}
-			nonCSSPresentationalHints = Collections.unmodifiableSet(ncph);
-		} else {
-			nonCSSPresentationalHints = null;
-			nonCSSPresentationalHintsNamespaceURI = null;
+		cssPropertyNames = new HashSet<>(vm.length + sm.length);
+		for (ValueManager man : vm) {
+			String pn = man.getPropertyName();
+			cssPropertyNames.add(pn);
+		}
+		for (ShorthandManager man : sm) {
+			String pn = man.getPropertyName();
+			cssPropertyNames.add(pn);
 		}
 
 		if (cssContext.isDynamic() && document instanceof EventTarget) {
@@ -844,17 +827,8 @@ public abstract class CSSEngine {
 	 * 
 	 * @return the non-CSS presentational hints.
 	 */
-	protected Set<String> getNonCSSPresentationalHints() {
-		return nonCSSPresentationalHints;
-	}
-
-	/**
-	 * Get the namespace URI of non-CSS presentational hints.
-	 * 
-	 * @return the namespace URI of non-CSS presentational hints.
-	 */
-	protected String getNonCSSPresentationalHintsNamespaceURI() {
-		return nonCSSPresentationalHintsNamespaceURI;
+	protected Set<String> getCSSPropertyNames() {
+		return cssPropertyNames;
 	}
 
 	/**
@@ -944,69 +918,67 @@ public abstract class CSSEngine {
 		element = elt;
 		try {
 			// Apply the non-CSS presentational hints to the result.
-			if (nonCSSPresentationalHints != null) {
-				ShorthandManager.PropertyHandler ph = new ShorthandManager.PropertyHandler() {
+			ShorthandManager.PropertyHandler ph = new ShorthandManager.PropertyHandler() {
 
-					@Override
-					public void property(String pname, LexicalUnit lu, boolean important) {
-						int idx = getPropertyIndex(pname);
-						if (idx != -1) {
-							ValueManager vm = valueManagers[idx];
-							Value v;
-							try {
-								v = vm.createValue(lu, CSSEngine.this);
-							} catch (CSSProxyValueException e) {
-								v = new LexicalValue(lu);
-							}
-							putAuthorProperty(result, idx, v, important, StyleMap.NON_CSS_ORIGIN);
-							return;
+				@Override
+				public void property(String pname, LexicalUnit lu, boolean important) {
+					int idx = getPropertyIndex(pname);
+					if (idx != -1) {
+						ValueManager vm = valueManagers[idx];
+						Value v;
+						try {
+							v = vm.createValue(lu, CSSEngine.this);
+						} catch (CSSProxyValueException e) {
+							v = new LexicalValue(lu);
 						}
-						idx = getShorthandIndex(pname);
-						if (idx == -1)
-							return; // Unknown property...
-						// Shorthand value
-						shorthandManagers[idx].setValues(CSSEngine.this, this, lu, important);
+						putAuthorProperty(result, idx, v, important, StyleMap.NON_CSS_ORIGIN);
+						return;
 					}
+					idx = getShorthandIndex(pname);
+					if (idx == -1)
+						return; // Unknown property...
+					// Shorthand value
+					shorthandManagers[idx].setValues(CSSEngine.this, this, lu, important);
+				}
 
-					@Override
-					public void pendingValue(String pname, PendingValue v, boolean important) {
-						int idx = getPropertyIndex(pname);
-						if (idx != -1) { // line-height can be -1
-							putAuthorProperty(result, idx, v, important, StyleMap.NON_CSS_ORIGIN);
-						}
+				@Override
+				public void pendingValue(String pname, PendingValue v, boolean important) {
+					int idx = getPropertyIndex(pname);
+					if (idx != -1) { // line-height can be -1
+						putAuthorProperty(result, idx, v, important, StyleMap.NON_CSS_ORIGIN);
 					}
+				}
 
-				};
+			};
 
-				NamedNodeMap attrs = elt.getAttributes();
-				int len = attrs.getLength();
-				for (int i = 0; i < len; i++) {
-					Node attr = attrs.item(i);
-					String an = attr.getNodeName();
-					if (nonCSSPresentationalHints.contains(an)) {
-						String av = attr.getNodeValue();
-						if (!av.isEmpty()) {
-							try {
-								LexicalUnit lu;
-								lu = parser.parsePropertyValue(new StringReader(av));
-								ph.property(an, lu, false);
-							} catch (Exception e) {
-								String m = e.getMessage();
-								if (m == null)
-									m = "";
-								String u = ((documentURI == null) ? "<unknown>"
+			NamedNodeMap attrs = elt.getAttributes();
+			int len = attrs.getLength();
+			for (int i = 0; i < len; i++) {
+				Node attr = attrs.item(i);
+				String an = attr.getNodeName();
+				if (cssPropertyNames.contains(an)) {
+					String av = attr.getNodeValue();
+					if (!av.isEmpty()) {
+						try {
+							LexicalUnit lu;
+							lu = parser.parsePropertyValue(new StringReader(av));
+							ph.property(an, lu, false);
+						} catch (Exception e) {
+							String m = e.getMessage();
+							if (m == null)
+								m = "";
+							String u = ((documentURI == null) ? "<unknown>"
 									: documentURI.toString());
-								String s = Messages.formatMessage("property.syntax.error.at",
+							String s = Messages.formatMessage("property.syntax.error.at",
 									new Object[] { u, an, attr.getNodeValue(), m });
-								DOMException de = new DOMException(DOMException.SYNTAX_ERR, s);
-								de.initCause(e);
-								if (userAgent == null)
-									throw de;
-								userAgent.displayError(de);
-							}
-						} else if (userAgent != null) {
-							userAgent.warn("Empty attribute: " + an);
+							DOMException de = new DOMException(DOMException.SYNTAX_ERR, s);
+							de.initCause(e);
+							if (userAgent == null)
+								throw de;
+							userAgent.displayError(de);
 						}
+					} else if (userAgent != null) {
+						userAgent.warn("Empty attribute: " + an);
 					}
 				}
 			}
@@ -3658,14 +3630,11 @@ public abstract class CSSEngine {
 				return;
 			}
 
-			if ((nonCSSPresentationalHints != null) && (attrNS == nonCSSPresentationalHintsNamespaceURI
-					|| attrNS != null && attrNS.equals(nonCSSPresentationalHintsNamespaceURI))) {
-				if (nonCSSPresentationalHints.contains(name)) {
-					// The 'name' attribute which represents a non CSS
-					// presentational hint has been modified.
-					nonCSSPresentationalHintUpdated(elt, style, name, attrChange, newValue);
-					return;
-				}
+			if (cssPropertyNames.contains(name)) {
+				// The 'name' attribute which represents a non CSS
+				// presentational hint has been modified.
+				nonCSSPresentationalHintUpdated(elt, style, name, attrChange, newValue);
+				return;
 			}
 		}
 

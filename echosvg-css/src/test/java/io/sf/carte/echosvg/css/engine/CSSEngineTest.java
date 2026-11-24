@@ -91,7 +91,7 @@ public class CSSEngineTest {
 			protected CSSEngine createCSSEngine(Document doc, ParsedURL purl, Parser cssParser) {
 				return new CSSEngine(doc, purl, cssParser, SVGCSSEngine.SVG_VALUE_MANAGERS,
 						SVGCSSEngine.SVG_SHORTHAND_MANAGERS, null, null, "style", null, "class",
-						true, null, this) {
+						this) {
 
 					@Override
 					public ParsedURL getCSSBaseURI() {
