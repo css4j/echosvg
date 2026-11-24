@@ -166,6 +166,7 @@ to be found at the `echosvg-all/build/libs/echosvg-all-1.2.6-alldeps.jar`. Then 
 ```shell
 ./gradlew echosvg-codec-jar-with-deps
 ./gradlew echosvg-svggen-jar-with-deps
+./gradlew echosvg-svgrasterizer-jar-with-deps
 ./gradlew echosvg-transcoder-jar-with-deps
 ```
 
@@ -174,6 +175,7 @@ and add to the release the archives at
 ```
 echosvg-codec/build/libs/echosvg-codec-1.2.6-with-deps.jar
 echosvg-svggen/build/libs/echosvg-svggen-1.2.6-with-deps.jar
+echosvg-svggen/build/libs/echosvg-svgrasterizer-1.2.6-with-deps.jar
 echosvg-transcoder/build/libs/echosvg-transcoder-1.2.6-with-deps.jar
 ```
 Remember to not set it as the latest release, as it is a 1.x maintenance one.
