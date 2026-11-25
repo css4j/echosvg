@@ -25,8 +25,10 @@ import java.io.PushbackInputStream;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -56,6 +58,7 @@ import io.sf.carte.echosvg.script.Interpreter;
 import io.sf.carte.echosvg.script.InterpreterException;
 import io.sf.carte.echosvg.script.ScriptEventWrapper;
 import io.sf.carte.echosvg.util.ParsedURL;
+import io.sf.carte.echosvg.util.ParsedURLData;
 import io.sf.carte.echosvg.util.SVGConstants;
 import io.sf.carte.echosvg.w3c.dom.Location;
 
@@ -160,6 +163,7 @@ public class BaseScriptingEnvironment {
 
 	protected static final String EVENT_NAME = "event";
 	protected static final String ALTERNATE_EVENT_NAME = "evt";
+	protected static final int MAX_SCRIPT_REDIRECTS = 20;
 
 	/**
 	 * The 'application/ecmascript' MIME type.
@@ -344,7 +348,11 @@ public class BaseScriptingEnvironment {
 				} catch (MalformedURLException mue) {
 					/* nothing just let docURL be null */
 				}
-				cll = new DocumentJarClassLoader(new URL(purl.toString()), docURL);
+				URL jarURL = new URL(purl.toString());
+				// Load from the validated final URL so the class loader does
+				// not follow the redirect chain again without checks.
+				jarURL = checkScriptRedirects(type, jarURL);
+				cll = new DocumentJarClassLoader(jarURL, docURL);
 
 				// Get the 'Script-Handler' entry in the manifest.
 				URL url = cll.findResource("META-INF/MANIFEST.MF");
@@ -520,6 +528,47 @@ public class BaseScriptingEnvironment {
 	 */
 	protected void checkCompatibleScriptURL(String scriptType, ParsedURL scriptPURL) {
 		userAgent.checkLoadScript(scriptType, scriptPURL, docPURL);
+	}
+
+	/**
+	 * Checks every redirect target of a script URL against the script security
+	 * policy, since the jar class loader follows redirects unchecked. Returns the
+	 * final, non-redirecting URL, which callers should load from rather than the
+	 * original URL.
+	 */
+	protected URL checkScriptRedirects(String scriptType, URL url) throws IOException {
+		for (int redirects = 0; redirects < MAX_SCRIPT_REDIRECTS; redirects++) {
+			URLConnection conn = url.openConnection();
+			if (!(conn instanceof HttpURLConnection)) {
+				return url;
+			}
+			HttpURLConnection httpC = (HttpURLConnection) conn;
+			httpC.setInstanceFollowRedirects(false);
+			try {
+				httpC.connect();
+				String location = null;
+				if (isRedirect(httpC.getResponseCode())) {
+					location = httpC.getHeaderField("Location");
+				}
+				if (location == null) {
+					return url;
+				}
+				url = new URL(httpC.getURL(), location);
+			} finally {
+				httpC.disconnect();
+			}
+			checkCompatibleScriptURL(scriptType, new ParsedURL(url.toString()));
+		}
+		throw new IOException("Too many redirects for " + url);
+	}
+
+	/**
+	 * Returns true if the HTTP status code is a redirect that is followed through
+	 * the Location header. This also includes 305 Use Proxy, which the JDK follows
+	 * by connecting to that URL as a proxy.
+	 */
+	protected static boolean isRedirect(int code) {
+		return ParsedURLData.isRedirect(code) || code == HttpURLConnection.HTTP_USE_PROXY;
 	}
 
 	/**

@@ -29,6 +29,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
@@ -975,6 +976,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
 						ParsedURL burl;
 						burl = ((SVGOMDocument) document).getParsedURL();
 						final ParsedURL purl = new ParsedURL(burl, uri);
+						userAgent.checkLoadExternalResource(purl, burl);
 						String e = null;
 						if (enc != null) {
 							e = EncodingUtilities.javaEncoding(enc);
@@ -1058,15 +1060,17 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
 				@Override
 				public void run() {
 					try {
-						String base = document.getDocumentURI();
-						URL url;
-						if (base == null) {
-							url = new URL(uri);
-						} else {
-							url = new URL(new URL(base), uri);
-						}
-						// TODO: Change this to use ParsedURL for the POST?
+						ParsedURL documentParsedURL = ((SVGOMDocument) document).getParsedURL();
+						ParsedURL purl = new ParsedURL(documentParsedURL, uri);
+						userAgent.checkLoadExternalResource(purl, documentParsedURL);
+
+						URL url = new URL(purl.toString());
 						final URLConnection conn = url.openConnection();
+						if (conn instanceof HttpURLConnection) {
+							// Do not follow redirects to locations that
+							// were not checked by the user agent.
+							((HttpURLConnection) conn).setInstanceFollowRedirects(false);
+						}
 						conn.setDoOutput(true);
 						conn.setDoInput(true);
 						conn.setUseCaches(false);
@@ -1110,6 +1114,11 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
 						w.close();
 						os.close();
 
+						if (conn instanceof HttpURLConnection
+								&& isRedirect(((HttpURLConnection) conn).getResponseCode())) {
+							((HttpURLConnection) conn).disconnect();
+							throw new IOException("Redirect from " + url + " was not followed");
+						}
 						InputStream is = conn.getInputStream();
 						Reader r;
 						if (e == null)
