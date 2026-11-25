@@ -1060,17 +1060,17 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
 				@Override
 				public void run() {
 					try {
-                        ParsedURL documentParsedURL = ((SVGOMDocument)document).getParsedURL();
-                        ParsedURL purl = new ParsedURL(documentParsedURL, uri);
-                        userAgent.checkLoadExternalResource(purl, documentParsedURL);
+						ParsedURL documentParsedURL = ((SVGOMDocument) document).getParsedURL();
+						ParsedURL purl = new ParsedURL(documentParsedURL, uri);
+						userAgent.checkLoadExternalResource(purl, documentParsedURL);
 
-                        URL url = new URL(purl.toString());
-                        final URLConnection conn = url.openConnection();
-                        if (conn instanceof HttpURLConnection) {
-                            // Do not follow redirects to locations that
-                            // were not checked by the user agent.
-                            ((HttpURLConnection) conn).setInstanceFollowRedirects(false);
-                        }
+						URL url = new URL(purl.toString());
+						final URLConnection conn = url.openConnection();
+						if (conn instanceof HttpURLConnection) {
+							// Do not follow redirects to locations that
+							// were not checked by the user agent.
+							((HttpURLConnection) conn).setInstanceFollowRedirects(false);
+						}
 						conn.setDoOutput(true);
 						conn.setDoInput(true);
 						conn.setUseCaches(false);
