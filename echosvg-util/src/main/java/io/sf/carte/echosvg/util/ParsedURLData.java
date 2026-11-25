@@ -53,6 +53,9 @@ public class ParsedURLData implements Serializable {
 	protected static final String HTTP_ACCEPT_HEADER = "Accept";
 	protected static final String HTTP_ACCEPT_LANGUAGE_HEADER = "Accept-Language";
 	protected static final String HTTP_ACCEPT_ENCODING_HEADER = "Accept-Encoding";
+	private static final int HTTP_TEMPORARY_REDIRECT = 307;
+	private static final int HTTP_PERMANENT_REDIRECT = 308;
+	private static final int MAX_REDIRECTS = 20;
 
 	protected static List<String> acceptedEncodings = new LinkedList<>();
 	static {
@@ -693,33 +696,42 @@ public class ParsedURLData implements Serializable {
 		if (url == null)
 			return null;
 
+		String acceptHeader = getHeaderTypes(mimeTypes);
+		String encodingHeader = getHeaderTypes(encodingTypes);
+
 		URLConnection urlC = url.openConnection();
 		if (urlC instanceof HttpURLConnection) {
-			if (userAgent != null)
-				urlC.setRequestProperty(HTTP_USER_AGENT_HEADER, userAgent);
+			for (int redirects = 0; redirects <= MAX_REDIRECTS; redirects++) {
+				HttpURLConnection httpC = (HttpURLConnection) urlC;
+				httpC.setInstanceFollowRedirects(false);
+				if (userAgent != null)
+					httpC.setRequestProperty(HTTP_USER_AGENT_HEADER, userAgent);
+				if (acceptHeader != null)
+					httpC.setRequestProperty(HTTP_ACCEPT_HEADER, acceptHeader);
+				if (encodingHeader != null)
+					httpC.setRequestProperty(HTTP_ACCEPT_ENCODING_HEADER, encodingHeader);
 
-			if (mimeTypes != null) {
-				String acceptHeader = "";
-				while (mimeTypes.hasNext()) {
-					acceptHeader += mimeTypes.next();
-					if (mimeTypes.hasNext())
-						acceptHeader += ",";
+				// Connect first so that a SecurityException is thrown as is,
+				// getResponseCode() would wrap it in a RuntimeException.
+				httpC.connect();
+				String location = null;
+				if (isRedirect(httpC.getResponseCode()))
+					location = httpC.getHeaderField("Location");
+				if (location == null)
+					break;
+
+				URL target = new URL(httpC.getURL(), location);
+				if (!isSameOrigin(url, target)) {
+					httpC.disconnect();
+					throw new IOException("Redirect from " + url + " to a different origin "
+							+ target + " is not allowed");
 				}
-				urlC.setRequestProperty(HTTP_ACCEPT_HEADER, acceptHeader);
-			}
-
-			if (encodingTypes != null) {
-				String encodingHeader = "";
-				while (encodingTypes.hasNext()) {
-					encodingHeader += encodingTypes.next();
-					if (encodingTypes.hasNext())
-						encodingHeader += ",";
+				httpC.disconnect();
+				if (redirects == MAX_REDIRECTS) {
+					throw new IOException("Too many redirects for " + url);
 				}
-				urlC.setRequestProperty(HTTP_ACCEPT_ENCODING_HEADER, encodingHeader);
+				urlC = target.openConnection();
 			}
-
-			urlC.setConnectTimeout(connectTimeout);
-			urlC.setReadTimeout(readTimeout);
 
 			contentType = urlC.getContentType();
 			contentEncoding = urlC.getContentEncoding();
@@ -744,7 +756,52 @@ public class ParsedURLData implements Serializable {
 
 	}
 
+	private String getHeaderTypes(Iterator<String> encodingTypes) {
+		if (encodingTypes != null) {
+			StringBuilder sb = new StringBuilder();
+			while (encodingTypes.hasNext()) {
+				sb.append(encodingTypes.next());
+				if (encodingTypes.hasNext()) {
+					sb.append(",");
+				}
+			}
+
+			return sb.toString();
+		}
+
+		return null;
+	}
+
 	/**
+	 * Returns true if the HTTP status code is a redirect.
+	 */
+	public static boolean isRedirect(int code) {
+		return code == HttpURLConnection.HTTP_MULT_CHOICE
+				|| code == HttpURLConnection.HTTP_MOVED_PERM
+				|| code == HttpURLConnection.HTTP_MOVED_TEMP
+				|| code == HttpURLConnection.HTTP_SEE_OTHER || code == HTTP_TEMPORARY_REDIRECT
+				|| code == HTTP_PERMANENT_REDIRECT;
+	}
+
+	/**
+	 * Returns true if both URLs have the same protocol, host and port.
+	 */
+	protected static boolean isSameOrigin(URL originUrl, URL targetUrl) {
+		if (!originUrl.getProtocol().equalsIgnoreCase(targetUrl.getProtocol())) {
+			return false;
+		}
+		if (!originUrl.getHost().equalsIgnoreCase(targetUrl.getHost())) {
+			return false;
+		}
+
+		int originPort = (originUrl.getPort() == -1) ? originUrl.getDefaultPort()
+				: originUrl.getPort();
+		int targetPort = (targetUrl.getPort() == -1) ? targetUrl.getDefaultPort()
+				: targetUrl.getPort();
+		return originPort == targetPort;
+	}
+
+    /**
 	 * Returns the URL up to and include the port number on the host. Does not
 	 * include the path or fragment pieces.
 	 */

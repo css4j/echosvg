@@ -6,15 +6,16 @@ dependencies {
 	api project(':echosvg-anim')
 	api project(':echosvg-gvt')
 	api project(':echosvg-script')
+	testImplementation "org.mockito:mockito-core:${mockitoVersion}"
 	testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
+description = 'io.sf.carte:echosvg-bridge'
+
 test {
 	useJUnitPlatform()
 }
-
-description = 'io.sf.carte:echosvg-bridge'
 
 publishing.publications.maven(MavenPublication).pom {
 	description = "EchoSVG bridge"
