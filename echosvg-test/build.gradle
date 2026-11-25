@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 plugins {
 	id 'echosvg.java-conventions'
 }
@@ -82,6 +84,20 @@ test {
 	testLogging {
 		exceptionFormat 'full'
 	}
+}
+
+configurations {
+	tests
+}
+
+tasks.register('testsJar', Jar) {
+	dependsOn lineEndingConvCopy
+	archiveClassifier = 'tests'
+	from(sourceSets.test.output)
+}
+
+artifacts {
+	tests testsJar
 }
 
 tasks.withType(Test) {

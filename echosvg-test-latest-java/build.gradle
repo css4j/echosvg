@@ -1,0 +1,51 @@
+// SPDX-License-Identifier: Apache-2.0
+
+plugins {
+	id 'echosvg.java-conventions'
+}
+
+description = 'io.sf.carte:echosvg-test-latest-java'
+
+publishing.publications.maven(MavenPublication).pom {
+	description = 'EchoSVG Test with latest Java'
+}
+
+dependencies {
+	testImplementation project(':echosvg-bridge')
+	testImplementation "io.sf.carte:svgom-api:${svgomVersion}"
+	testImplementation "org.mockito:mockito-core:${mockitoVersion}"
+	testImplementation "io.github.robaho:httpserver:${robahoHttpServerVersion}"
+	testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+	useJUnitPlatform()
+}
+
+compileTestJava {
+	dependsOn ':echosvg-bridge:compileTestJava'
+}
+
+tasks.withType(JavaCompile) {
+	enabled = JavaVersion.current() >= JavaVersion.VERSION_21
+	options.release = 21
+	options.encoding = 'UTF-8'
+}
+
+tasks.withType(Test) {
+	enabled = JavaVersion.current() >= JavaVersion.VERSION_21
+	jvmArgs += ['-Xshare:off']
+}
+
+checkLegacyJava.enabled = false
+
+jar.enabled = false
+sourcesJar.enabled = false
+
+/*
+ * Maven repository deployments (disabled)
+ */
+tasks.withType(AbstractPublishToMaven).configureEach {
+	it.enabled = false
+}
