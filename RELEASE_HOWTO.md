@@ -8,7 +8,7 @@ Please follow these steps to produce a new release of EchoSVG.
 obtain the sources. Any recent version should suffice.
 
 - Java 11 to 25, which you can install from your favourite package manager or
-by downloading from [Adoptium](https://adoptium.net/). Generally, Java 21 is
+by downloading from [Adoptium](https://adoptium.net/). Generally, Java 17 is
 used for compiling releases.
 
 - The [`genindex.py`](https://github.com/carlosame/index-html-generator/blob/main/genindex.py)
@@ -44,7 +44,7 @@ gpg --armor --export-secret-subkeys ABCDEFGH! > ABCDEFGH.key
 
 ## Steps
 
-1) In the `master` branch of your local copy of the EchoSVG Git repository, bump
+1) In the `1-stable` branch of your local copy of the EchoSVG Git repository, bump
 the `version` in the [`echosvg.java-conventions.gradle`](buildSrc/src/main/groovy/echosvg.java-conventions.gradle)
 file or remove the `-SNAPSHOT` suffix as necessary. Bump also the latest version
 in the [`README`](README.md). Commit the changes to the Git repository.
@@ -54,7 +54,7 @@ in the [`README`](README.md). Commit the changes to the Git repository.
 a milestone.
 
 3) If your local copy of the EchoSVG Git repository exactly matches the current
-`master` HEAD, use that copy to execute the `./gradlew` commands shown later,
+`1-stable` HEAD, use that copy to execute the `./gradlew` commands shown later,
 otherwise create a new clone of the `git@github.com:css4j/echosvg.git`
 repository with `git clone` and use it.
 

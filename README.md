@@ -260,7 +260,7 @@ dependencies {
 }
 ```
 where `echosvgVersion` would be defined in a `gradle.properties` file (current
-legacy 1.x version is `1.2.5`).
+legacy 1.x version is `1.2.6`).
 
 <br/>
 
