@@ -108,6 +108,7 @@ Maven repository using [`genindex.py`](https://raw.githubusercontent.com/carlosa
 cd /path/to/css4j.github.io/maven/io/sf
 genindex.py -t -r carte
 ```
+This may take some time.
 
 If the changes to the `css4j.github.io` repository look correct, commit them.
 
@@ -130,9 +131,6 @@ mv modular echosvg-1.2.6-modular-javadocs
 
 The compressed archives will be part of the published release. Notice that the
 `.7z` archive is much smaller than the `.zip`.
-
-_Currently, the javadocs are online at the https://carte.sourceforge.io/api/echosvg/ website.
-Provided that you have the required credentials, you could update it via_ `rsync`.
 
 11) Create a `v<version>` tag in the EchoSVG Git repository. For example:
 
