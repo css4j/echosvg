@@ -8,7 +8,7 @@ Please follow these steps to produce a new release of EchoSVG.
 obtain the sources. Any recent version should suffice.
 
 - Java 11 to 25, which you can install from your favourite package manager or
-by downloading from [Adoptium](https://adoptium.net/). Generally, Java 21 is
+by downloading from [Adoptium](https://adoptium.net/). Generally, Java 17 is
 used for compiling releases.
 
 - The [`genindex.py`](https://github.com/carlosame/index-html-generator/blob/main/genindex.py)
@@ -108,6 +108,7 @@ Maven repository using [`genindex.py`](https://raw.githubusercontent.com/carlosa
 cd /path/to/css4j.github.io/maven/io/sf
 genindex.py -t -r carte
 ```
+This may take some time.
 
 If the changes to the `css4j.github.io` repository look correct, commit them.
 
